@@ -33,7 +33,12 @@ class LoginController {
     }
 
     async addUser({ request }) {
-        return await Login.create(request.post)
+        try {
+            const insert = await Login.create(request.all())            
+            return this.response(true, null, insert)            
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)   
+        }
     }
 
     async response(success, message, data) {

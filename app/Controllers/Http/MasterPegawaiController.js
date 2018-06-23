@@ -6,7 +6,7 @@ class MasterPegawaiController {
     async show({params}){
         const data = await MasterPegawai.query()
                                         .with('lokasi')
-                                        .whereRaw((params.nama) ? `nama LIKE '%` + params.nama + `%'` : ``)
+                                        .whereRaw(`nama LIKE '%` + params.nama + `%'`)
                                         .paginate(Number(params.page), Number(params.limit))
         return this.response(true, null, data)
     }

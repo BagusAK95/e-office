@@ -183,7 +183,7 @@ Route.group(() => {
     *       - name: nama
     *         in: path
     *         description: Nama Pegawai
-    *         required: false
+    *         required: true
     *         type: string
     *       - name: page
     *         in: path
