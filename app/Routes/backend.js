@@ -168,7 +168,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/addUser', 'LoginController.addUser')
+    Route.post('/addUser', 'LoginController.addUser').middleware('auth')
 
     /**
     * @swagger
@@ -196,7 +196,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/:nama/:page/:limit', 'MasterPegawaiController.show')
+    Route.get('/master-pegawai/:nama/:page/:limit', 'MasterPegawaiController.show').middleware('auth')
 
     /**
     * @swagger
@@ -214,5 +214,5 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-   Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail')
+   Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('auth')
 }).prefix('api')
