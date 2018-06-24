@@ -11,10 +11,6 @@ class MasterPegawai extends Model {
         return 'nip'
     }
 
-    static get hidden () {
-        return ['kode_lokasi']
-    }
-
     lokasi () {
         return this.hasOne('App/Models/MasterKantor', 'kode_lokasi', 'kdlokasi')
     }
