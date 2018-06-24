@@ -4,7 +4,7 @@ const Hash = use('Hash')
 const Login = use('App/Models/Login')
 
 class ProfileController {
-    async myProfile({auth}){
+    async detail({auth}){
         try {
             const user = await auth.getUser()
             return this.response(true, null, user)            
@@ -13,7 +13,7 @@ class ProfileController {
         }
     }
 
-    async editProfile({ request, auth }) {
+    async edit({ request, auth }) {
         try {
             const user = await auth.getUser()
 

@@ -4,7 +4,7 @@ const Hash = use('Hash')
 const Login = use('App/Models/Login')
 
 class UserController {
-    async addUser({ request }) { //Todo: Check Kode Lokasi
+    async add({ request }) { //Todo: Check Kode Lokasi
         try {
             let data = request.all()
             data.password = await Hash.make(data.password)
@@ -16,7 +16,7 @@ class UserController {
         }
     }
 
-    async editUser({ params, request, auth }) {
+    async edit({ params, request, auth }) {
         try {
             const user = await auth.getUser()
             const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
@@ -38,7 +38,7 @@ class UserController {
         }
     }
 
-    async deleteUser({ params, auth }) {
+    async destroy({ params, auth }) {
         try {
             const user = await auth.getUser()
             const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
@@ -55,7 +55,7 @@ class UserController {
         }
     }
 
-    async listUser({ params, auth }) {
+    async list({ params, auth }) {
         try {
             const user = await auth.getUser()
             const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
@@ -76,7 +76,7 @@ class UserController {
         }
     }
 
-    async detailUser({ params, auth }) {
+    async detail({ params, auth }) {
         try {
             const user = await auth.getUser()
             const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')

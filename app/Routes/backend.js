@@ -82,7 +82,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/profile', 'ProfileController.myProfile').middleware('checkToken')
+    Route.get('/profile', 'ProfileController.detail').middleware('checkToken')
 
     /**
     * @swagger
@@ -133,7 +133,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/profile', 'ProfileController.editProfile').middleware('checkToken')
+    Route.put('/profile', 'ProfileController.edit').middleware('checkToken')
 
     /**
     * @swagger
@@ -219,7 +219,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/user', 'UserController.addUser').middleware('checkToken')
+    Route.post('/user', 'UserController.add').middleware('checkToken')
 
     /**
     * @swagger
@@ -275,7 +275,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/user/:nip', 'UserController.editUser').middleware('checkToken')
+    Route.put('/user/:nip', 'UserController.edit').middleware('checkToken')
 
     /**
     * @swagger
@@ -295,7 +295,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/user/:nip', 'UserController.deleteUser').middleware('checkToken')
+    Route.delete('/user/:nip', 'UserController.destroy').middleware('checkToken')
 
     /**
     * @swagger
@@ -323,7 +323,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/user/:nama/:page/:limit', 'UserController.listUser').middleware('checkToken')
+    Route.get('/user/:nama/:page/:limit', 'UserController.list').middleware('checkToken')
 
     /**
     * @swagger
@@ -343,7 +343,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/user/:nip', 'UserController.detailUser').middleware('checkToken')
+    Route.get('/user/:nip', 'UserController.detail').middleware('checkToken')
 
     /**
     * @swagger
@@ -351,7 +351,7 @@ Route.group(() => {
     *   get:
     *     tags:
     *       - Master Pegawai
-    *     summary: Show
+    *     summary: List
     *     produces:
     *       - application/json
     *     parameters:
@@ -371,7 +371,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/:nama/:page/:limit', 'MasterPegawaiController.show').middleware('checkToken')
+    Route.get('/master-pegawai/:nama/:page/:limit', 'MasterPegawaiController.list').middleware('checkToken')
 
     /**
     * @swagger

@@ -3,7 +3,7 @@
 const MasterPegawai = use('App/Models/MasterPegawai')
 
 class MasterPegawaiController {
-    async show({params, auth}){
+    async list({params, auth}){
         try {
             const user = await auth.getUser()
             const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
@@ -27,8 +27,7 @@ class MasterPegawaiController {
     async detail({params}){
         try {
             const data = await MasterPegawai.query()
-                                            .where({nip: params.nip})
-                                            .with('lokasi')
+                                            .where('nip', params.nip)
                                             .first()
             if (data) {
                 return this.response(true, null, data)            
