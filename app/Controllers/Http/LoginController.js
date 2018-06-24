@@ -7,8 +7,9 @@ class LoginController {
     async getUser({auth}){
         try {
             const user = await auth.getUser()
-        } catch (err) {
-            return this.response(false, 'Missing or invalid jwt token', null)
+            return this.response(true, null, user)            
+        } catch (error) {
+            return this.response(false, 'Missing or invalid jwt token', null)            
         }
     }
     
@@ -20,7 +21,7 @@ class LoginController {
             if (isSame) {
                 if (data.status == 1) {
                     const token = await auth.generate(data)
-                    return this.response(false, null, token)
+                    return this.response(true, null, token)
                 } else {
                     return this.response(false, 'User is non active', null)
                 }
