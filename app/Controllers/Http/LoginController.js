@@ -4,15 +4,6 @@ const Hash = use('Hash')
 const Login = use('App/Models/Login')
 
 class LoginController {
-    async getUser({auth}){
-        try {
-            const user = await auth.getUser()
-            return this.response(true, null, user)            
-        } catch (error) {
-            return this.response(false, 'Missing or invalid jwt token', null)            
-        }
-    }
-    
     async getToken ({ request, auth }) {
         try {
             const { nip, password } = request.all()
@@ -34,18 +25,6 @@ class LoginController {
             }    
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            
-        }
-    }
-
-    async addUser({ request }) {
-        try {
-            let data = request.all()
-            data.password = await Hash.make(data.password)
-
-            const insert = await Login.create(data)
-            return this.response(true, null, insert)
-        } catch (error) {
-            return this.response(false, error, null)
         }
     }
 

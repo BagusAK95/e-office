@@ -74,23 +74,74 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /getUser:
+    * /profile:
     *   get:
     *     tags:
-    *       - Login
-    *     summary: Get User
+    *       - Profile
+    *     summary: Detail
     *     produces:
     *       - application/json
     */
-    Route.get('/getUser', 'LoginController.getUser').middleware('checkToken')
+    Route.get('/profile', 'ProfileController.myProfile').middleware('checkToken')
 
     /**
     * @swagger
-    * /addUser:
+    * /profile:
+    *   put:
+    *     tags:
+    *       - Profile
+    *     summary: Edit
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: nohp
+    *         in: formData
+    *         description: Nomor Handphone
+    *         required: false
+    *         type: string
+    *       - name: email
+    *         in: formData
+    *         description: Email
+    *         required: false
+    *         type: string
+    *       - name: foto
+    *         in: formData
+    *         description: Url Foto
+    *         required: false
+    *         type: string
+    *       - name: password
+    *         in: formData
+    *         description: Password
+    *         required: false
+    *         type: string
+    *         format: password
+    *       - name: level
+    *         in: formData
+    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf
+    *         required: false
+    *         type: string
+    *       - name: akses
+    *         in: formData
+    *         description: Daftar Akses Menu
+    *         required: false
+    *         type: string
+    *       - name: status
+    *         in: formData
+    *         description: 0=Non Aktif, 1=Aktif
+    *         required: false
+    *         type: string
+    */
+    Route.put('/profile', 'ProfileController.editProfile').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /user:
     *   post:
     *     tags:
-    *       - Login
-    *     summary: Add User
+    *       - User
+    *     summary: Add
     *     consumes:
     *       - application/x-www-form-urlencoded
     *     produces:
@@ -168,7 +219,131 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/addUser', 'LoginController.addUser').middleware('checkToken')
+    Route.post('/user', 'UserController.addUser').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /user/{nip}:
+    *   put:
+    *     tags:
+    *       - User
+    *     summary: Edit
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: nip
+    *         in: path
+    *         description: Nomor Induk Pegawai
+    *         required: true
+    *         type: string
+    *       - name: nohp
+    *         in: formData
+    *         description: Nomor Handphone
+    *         required: false
+    *         type: string
+    *       - name: email
+    *         in: formData
+    *         description: Email
+    *         required: false
+    *         type: string
+    *       - name: foto
+    *         in: formData
+    *         description: Url Foto
+    *         required: false
+    *         type: string
+    *       - name: password
+    *         in: formData
+    *         description: Password
+    *         required: false
+    *         type: string
+    *         format: password
+    *       - name: level
+    *         in: formData
+    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf
+    *         required: false
+    *         type: string
+    *       - name: akses
+    *         in: formData
+    *         description: Daftar Akses Menu
+    *         required: false
+    *         type: string
+    *       - name: status
+    *         in: formData
+    *         description: 0=Non Aktif, 1=Aktif
+    *         required: false
+    *         type: string
+    */
+    Route.put('/user/:nip', 'UserController.editUser').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /user/{nip}:
+    *   delete:
+    *     tags:
+    *       - User
+    *     summary: Delete
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: nip
+    *         in: path
+    *         description: Nomor Induk Pegawai
+    *         required: true
+    *         type: string
+    */
+    Route.delete('/user/:nip', 'UserController.deleteUser').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /user/{nama}/{page}/{limit}:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: List
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: nama
+    *         in: path
+    *         description: Nama Pegawai
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: path
+    *         description: Page
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: path
+    *         description: Limit
+    *         required: true
+    *         type: string
+    */
+    Route.get('/user/:nama/:page/:limit', 'UserController.listUser').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /user/{nip}:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: nip
+    *         in: path
+    *         description: Nomor Induk Pegawai
+    *         required: true
+    *         type: string
+    */
+    Route.get('/user/:nip', 'UserController.detailUser').middleware('checkToken')
 
     /**
     * @swagger
@@ -183,7 +358,7 @@ Route.group(() => {
     *       - name: nama
     *         in: path
     *         description: Nama Pegawai
-    *         required: true
+    *         required: false
     *         type: string
     *       - name: page
     *         in: path
