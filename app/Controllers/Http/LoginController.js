@@ -39,10 +39,13 @@ class LoginController {
 
     async addUser({ request }) {
         try {
-            const insert = await Login.create(request.all())            
-            return this.response(true, null, insert)            
+            let data = request.all()
+            data.password = await Hash.make(data.password)
+
+            const insert = await Login.create(data)
+            return this.response(true, null, insert)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)   
+            return this.response(false, error, null)
         }
     }
 
