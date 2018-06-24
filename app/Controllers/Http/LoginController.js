@@ -14,22 +14,26 @@ class LoginController {
     }
     
     async getToken ({ request, auth }) {
-        const { nip, password } = request.all()
-        const data = await Login.query().where({'nip': nip}).first()
-        if (data) {
-            const isSame = await Hash.verify(password, data.password)
-            if (isSame) {
-                if (data.status == 1) {
-                    const token = await auth.generate(data)
-                    return this.response(true, null, token)
+        try {
+            const { nip, password } = request.all()
+            const data = await Login.query().where({'nip': nip}).first()
+            if (data) {
+                const isSame = await Hash.verify(password, data.password)
+                if (isSame) {
+                    if (data.status == 1) {
+                        const token = await auth.generate(data)
+                        return this.response(true, null, token)
+                    } else {
+                        return this.response(false, 'User is non active', null)
+                    }
                 } else {
-                    return this.response(false, 'User is non active', null)
+                    return this.response(false, 'Invalid user password', null)
                 }
             } else {
-                return this.response(false, 'Invalid user password', null)
-            }
-        } else {
-            return this.response(false, 'Cannot find user with provided nip', null)
+                return this.response(false, 'Cannot find user with provided nip', null)
+            }    
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)            
         }
     }
 
