@@ -390,4 +390,16 @@ Route.group(() => {
     *         type: string
     */
    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /master-kantor:
+    *   get:
+    *     tags:
+    *       - Master Kantor
+    *     summary: Tree
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-kantor', 'MasterKantorController.tree').middleware('checkToken')
 }).prefix('api')
