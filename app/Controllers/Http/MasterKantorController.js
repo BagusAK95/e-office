@@ -10,19 +10,19 @@ class MasterKantorController {
         let data = {}
         const lokasi1 = await MasterKantor.query().where('kdlokasi', Number(parentLokasi)).first()
         if (lokasi1) {
-            data[lokasi1.nmlokasi] = {}
+            data[lokasi1.nmlokasi.trim()] = {}
 
             const lokasi2 = await MasterKantor.query().where('kdparent', lokasi1.kdlokasi)
             for (let i = 0; i < lokasi2.length; i++) {
-                data[lokasi1.nmlokasi][lokasi2[i].nmlokasi] = {}
+                data[lokasi1.nmlokasi.trim()][lokasi2[i].nmlokasi.trim()] = {}
 
                 const lokasi3 = await MasterKantor.query().where('kdparent', lokasi2[i].kdlokasi)
                 for (let j = 0; j < lokasi3.length; j++) {
-                    data[lokasi1.nmlokasi][lokasi2[i].nmlokasi][lokasi3[j].nmlokasi] = {}
+                    data[lokasi1.nmlokasi.trim()][lokasi2[i].nmlokasi.trim()][lokasi3[j].nmlokasi.trim()] = {}
 
                     const lokasi4 = await MasterKantor.query().where('kdparent', lokasi3[j].kdlokasi)
                     for (let k = 0; k < lokasi4.length; k++) {
-                        data[lokasi1.nmlokasi][lokasi2[i].nmlokasi][lokasi3[j].nmlokasi][lokasi4[k].nmlokasi] = {}
+                        data[lokasi1.nmlokasi.trim()][lokasi2[i].nmlokasi.trim()][lokasi3[j].nmlokasi.trim()][lokasi4[k].nmlokasi.trim()] = {}
                     }
                 }
             }
