@@ -1,0 +1,118 @@
+@layout('frontend/main')
+@section('content')
+      <div class="page-content container-fluid">
+        <div class="row">
+          <div class="col-xxl-4 col-lg-12">
+            <!-- Example Panel With Heading -->
+            <div class="panel panel-bordered">
+              <div class="panel-heading">
+                <h3 class="panel-title">Data Pegawai</h3>
+              </div>
+              <div class="panel-body">
+
+              <div class="float-right search">
+              <input class="form-control" placeholder="Search" id='search' type="text">
+              <div>
+              </div>
+              </div>
+<br>
+<br>
+                <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>NIP</th>
+            <th>Nama</th>
+            <th>Detail</th>
+        </tr>
+        </thead>
+        <tbody id="body">
+            
+        </tbody>
+    </table>
+    <div id="pagination"></div>
+    <span id="showing"></span>
+
+              </div>
+            </div>
+            <!-- End Example Panel With Heading -->
+          </div>
+        </div>
+      </div>
+      
+
+     <script>
+
+    $("#search").keyup(function(){
+        if($("#search").val())    
+        {
+            showbrand(1,$("#search").val());
+        }
+        else
+        {
+            showbrand(1,'null');
+        }
+        
+    });
+
+     showbrand(1,'null');
+        function showbrand(page,nama)
+        {
+            if(nama=='null')
+            {
+                var naman = "{nama}";
+            }
+            else
+            {
+                var naman = nama;
+            }
+            $.ajax({ 
+                type: 'GET', 
+                url: '/admin/gettoken', 
+                success: function (data) { 
+                    $.ajax({ 
+                        type: 'GET', 
+                        url: '/api/master-pegawai/'+naman+'/' + page + '/10', 
+                        headers: {
+                            'Authorization': 'Bearer ' + data.token
+                        },
+                        dataType: 'json',
+                        success: function (data) { 
+                            var text="";
+                            $.each(data.data.data, function(index, element) {
+                                var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama+", "+element.gelar_belakang+"</td><td><a class='btn btn-block btn-primary waves-effect waves-classic' style='color:white'>Detail</a></td></tr>";
+                                text += tr_data;
+                            });
+
+                            $("#body").html(text).show();
+
+                            var disbalenext = '';
+                            if(data.data.lastPage==data.data.page)
+                            {
+                                disbalenext='disabled';
+                            }
+
+                            if(naman=="{nama}")
+                            {
+                                var isi_nama = 'null';
+                            }
+                            else
+                            {
+                                var isi_nama = nama;
+                            }
+
+                            $("#pagination").html("<br><div style='float:center' class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-info' onclick=showbrand(1,'"+isi_nama+"')>First</button><button class='btn btn-info' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"')>Prev</button>  <button class='btn btn-info' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"')>Next</button><button class='btn btn-info' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"')>Last</button></div>").show();
+                            $("#showing").html("<span style='float:center'>Halaman ke "+data.data.page+" dari "+data.data.lastPage+", jumlah data "+data.data.total+"</span>");
+                        }
+                    });
+
+
+                },
+                error: function ()
+                {
+                    return false;
+                }
+            });
+        }
+
+     </script> 
+@endsection

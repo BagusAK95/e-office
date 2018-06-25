@@ -14,3 +14,18 @@
 */
 
 const Route = use('Route')
+
+Route.on('/login').render('frontend/login')
+
+Route.get('/puttoken/:id', async ({ params , session }) => {
+    const post = params.id
+    session.put('token', post)
+    //return post
+})
+
+Route.on('/admin/home').render('frontend/home')
+Route.on('/admin/profile').render('frontend/profile')
+Route.on('/admin/pegawai').render('frontend/pegawai')
+Route.get('/admin/gettoken', ({ session }) => {
+    return session.all()
+  })
