@@ -10,10 +10,6 @@ class MasterKantor extends Model {
     static get primaryKey () {
         return 'kdlokasi'
     }
-
-    static get hidden () {
-        return ['kdparent', 'kdeselon']
-    }
 }
 
 module.exports = MasterKantor

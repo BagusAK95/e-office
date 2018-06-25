@@ -14,7 +14,21 @@ class MasterPegawaiController {
             const data = await MasterPegawai.query()
                                             .whereRaw(sql1 + sql2)
                                             .paginate(Number(params.page), Number(params.limit))
-            if (data) {
+            if (data.length > 0) {
+                return this.response(true, null, data)
+            } else {
+                return this.response(false, 'Not found', null)
+            }
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)                
+        }
+    }
+
+    async listByLocation({ params }) {
+        try {
+            const data = await MasterPegawai.query()
+                                            .where('kode_lokasi', params.kode_lokasi)
+            if (data.length > 0) {
                 return this.response(true, null, data)
             } else {
                 return this.response(false, 'Not found', null)

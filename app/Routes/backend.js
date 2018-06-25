@@ -375,6 +375,24 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /master-pegawai/byLocation/{kode_lokasi}:
+    *   get:
+    *     tags:
+    *       - Master Pegawai
+    *     summary: List By Location
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: kode_lokasi
+    *         in: path
+    *         description: Kode Lokasi
+    *         required: true
+    *         type: string
+    */
+    Route.get('/master-pegawai/byLocation/:kode_lokasi', 'MasterPegawaiController.listByLocation').middleware('checkToken')
+
+    /**
+    * @swagger
     * /master-pegawai/{nip}:
     *   get:
     *     tags:
@@ -389,5 +407,17 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-   Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkToken')
+    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /master-kantor:
+    *   get:
+    *     tags:
+    *       - Master Kantor
+    *     summary: Tree
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-kantor', 'MasterKantorController.tree').middleware('checkToken')
 }).prefix('api')
