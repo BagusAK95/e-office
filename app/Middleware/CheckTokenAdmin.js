@@ -1,9 +1,16 @@
 'use strict'
 
-class CheckToken {
+class CheckTokenAdmin {
   async handle ({ auth, response }, next) {
     try {
       const user = await auth.getUser()
+      if (user.level != 1) {
+        response.send({
+          success: false, 
+          message: 'You are not admin',
+          data: null
+        })
+      }
     } catch (error) {
       response.send({
         success: false, 
@@ -16,4 +23,4 @@ class CheckToken {
   }
 }
 
-module.exports = CheckToken
+module.exports = CheckTokenAdmin
