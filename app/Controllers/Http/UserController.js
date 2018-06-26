@@ -66,7 +66,7 @@ class UserController {
             const data = await Login.query()
                                     .whereRaw(sql1 + sql2)
                                     .paginate(Number(params.page), Number(params.limit))
-            if (data.data.length > 0) {
+            if (data) {
                 return this.response(true, null, data)
             } else {
                 return this.response(false, 'Not found', null)
