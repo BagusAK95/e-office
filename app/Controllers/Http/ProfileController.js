@@ -17,10 +17,7 @@ class ProfileController {
         try {
             const user = await auth.getUser()
 
-            let data = request.only(['nohp', 'email', 'foto', 'password', 'level', 'akses', 'status'])
-            if (data.password != null) {
-                data.password = await Hash.make(data.password)
-            }
+            let data = request.only(['nohp', 'email', 'foto', 'level', 'akses', 'status'])
     
             const edit = await Login.query().where('nip', user.nip).update(data)
             if (edit > 0) {
@@ -30,6 +27,30 @@ class ProfileController {
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            
+        }
+    }
+
+    async editPassword({ request, auth }) {
+        const user = await auth.getUser()
+
+        let dataRequest = request.only(['password_old', 'password_new'])
+        dataRequest.password_new = await Hash.make(dataRequest.password_new)
+
+        const dataUser = await Login.query().where({'nip': user.nip}).first()
+        if (dataUser) {
+            const isSame = await Hash.verify(dataRequest.password_old, dataUser.password)
+            if (isSame) {
+                const edit = await Login.query().where('nip', user.nip).update({ password: dataRequest.password_new })
+                if (edit > 0) {
+                    return this.response(true, null, edit)                
+                } else {
+                    return this.response(false, 'Not found', null)
+                }
+            } else {
+                return this.response(false, 'Password not match', null)
+            }
+        } else {
+            return this.response(false, 'Missing or invalid jwt token', null)
         }
     }
 

@@ -111,12 +111,6 @@ Route.group(() => {
     *         description: Url Foto
     *         required: false
     *         type: string
-    *       - name: password
-    *         in: formData
-    *         description: Password
-    *         required: false
-    *         type: string
-    *         format: password
     *       - name: level
     *         in: formData
     *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf
@@ -134,6 +128,33 @@ Route.group(() => {
     *         type: string
     */
     Route.put('/profile', 'ProfileController.edit').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /profile/editPassword:
+    *   put:
+    *     tags:
+    *       - Profile
+    *     summary: Edit Password
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: password_old
+    *         in: formData
+    *         description: Old Password
+    *         required: true
+    *         type: string
+    *         format: password
+    *       - name: password_new
+    *         in: formData
+    *         description: New Password
+    *         required: true
+    *         type: string
+    *         format: password
+    */
+    Route.put('/profile/editPassword', 'ProfileController.editPassword').middleware('checkToken')
 
     /**
     * @swagger
