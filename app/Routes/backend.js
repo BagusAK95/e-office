@@ -82,7 +82,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/profile', 'ProfileController.detail').middleware('checkToken')
+    Route.get('/profile', 'ProfileController.detail').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -127,7 +127,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/profile', 'ProfileController.edit').middleware('checkToken')
+    Route.put('/profile', 'ProfileController.edit').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -154,7 +154,7 @@ Route.group(() => {
     *         type: string
     *         format: password
     */
-    Route.put('/profile/editPassword', 'ProfileController.editPassword').middleware('checkToken')
+    Route.put('/profile/editPassword', 'ProfileController.editPassword').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -240,7 +240,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/user', 'UserController.add').middleware('checkToken')
+    Route.post('/user', 'UserController.add').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -296,7 +296,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/user/:nip', 'UserController.edit').middleware('checkToken')
+    Route.put('/user/:nip', 'UserController.edit').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -316,7 +316,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/user/:nip', 'UserController.destroy').middleware('checkToken')
+    Route.delete('/user/:nip', 'UserController.destroy').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -344,7 +344,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/user/:nama/:page/:limit', 'UserController.list').middleware('checkToken')
+    Route.get('/user/:nama/:page/:limit', 'UserController.list').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -364,7 +364,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/user/:nip', 'UserController.detail').middleware('checkToken')
+    Route.get('/user/:nip', 'UserController.detail').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -392,7 +392,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/:nama/:page/:limit', 'MasterPegawaiController.list').middleware('checkToken')
+    Route.get('/master-pegawai/:nama/:page/:limit', 'MasterPegawaiController.list').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -410,7 +410,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/byLocation/:kode_lokasi', 'MasterPegawaiController.listByLocation').middleware('checkToken')
+    Route.get('/master-pegawai/byLocation/:kode_lokasi', 'MasterPegawaiController.listByLocation').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -428,7 +428,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkToken')
+    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkTokenAdmin')
 
     /**
     * @swagger
@@ -440,5 +440,5 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-kantor', 'MasterKantorController.tree').middleware('checkToken')
+    Route.get('/master-kantor', 'MasterKantorController.tree').middleware('checkTokenAdmin')
 }).prefix('api')
