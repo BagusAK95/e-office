@@ -22,10 +22,17 @@ Route.get('/puttoken/:id', async ({ params , session }) => {
     session.put('token', post)
     //return post
 })
-
+//Home
 Route.on('/admin/home').render('frontend/home')
+//Profile
 Route.on('/admin/profile').render('frontend/profile')
-Route.on('/admin/pegawai').render('frontend/pegawai')
+//User
+Route.on('/admin/user').render('frontend/user')
+Route.on('/admin/adduser').render('frontend/adduser')
+
+
+
 Route.get('/admin/gettoken', ({ session }) => {
     return session.all()
   })
+Route.on('/admin/change_password').render('frontend/change_password')

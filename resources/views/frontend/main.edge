@@ -28,9 +28,12 @@
     <link rel="stylesheet" href="../material/global/vendor/slidepanel/slidePanel.css">
     <link rel="stylesheet" href="../material/global/vendor/flag-icon-css/flag-icon.css">
     <link rel="stylesheet" href="../material/global/vendor/waves/waves.css">
-        <link rel="stylesheet" href="../material/global/vendor/asscrollable/asScrollable.css">
-    
-    
+    <link rel="stylesheet" href="../material/global/vendor/asscrollable/asScrollable.css">
+   
+    <link rel="stylesheet" href="../material/global/vendor/select2/select2.css">
+    <link rel="stylesheet" href="../material/global/vendor/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="../material/global/vendor/multi-select/multi-select.css">
+
     <!-- Fonts -->
     <link rel="stylesheet" href="../material/global/fonts/material-design/material-design.min.css">
     <link rel="stylesheet" href="../material/global/fonts/brand-icons/brand-icons.min.css">
@@ -192,6 +195,7 @@
               </a>
               <div class="dropdown-menu" role="menu">
                 <a class="dropdown-item" href="/admin/profile" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
+                <a class="dropdown-item" href="/admin/change_password" role="menuitem"><i class="icon md-key" aria-hidden="true"></i> Change Password</a>
                 <a class="dropdown-item" href="../login" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
               </div>
             </li>
@@ -221,7 +225,7 @@
         <div>
           <div>
             <ul class="site-menu" data-plugin="menu">
-              <li class="site-menu-category">General</li>
+              <li class="site-menu-category">Master</li>
               <li class="site-menu-item">
                 <a class="animsition-link" href="/admin/home">
                         <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
@@ -229,15 +233,22 @@
                     </a>
               </li>
               <li class="site-menu-item">
-                <a class="animsition-link" href="/admin/pegawai">
+                <a class="animsition-link" href="/admin/user">
                         <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
-                        <span class="site-menu-title">Master Pegawai</span>
+                        <span class="site-menu-title">Master User</span>
+                    </a>
+              </li>
+              <li class="site-menu-category">Surat</li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="#">
+                        <i class="site-menu-icon md-email-open" aria-hidden="true"></i>
+                        <span class="site-menu-title">Surat Masuk</span>
                     </a>
               </li>
               <li class="site-menu-item">
-                <a class="animsition-link" href="../login">
-                        <i class="site-menu-icon md-lock-open" aria-hidden="true"></i>
-                        <span class="site-menu-title">Logout</span>
+                <a class="animsition-link" href="#">
+                        <i class="site-menu-icon md-email" aria-hidden="true"></i>
+                        <span class="site-menu-title">Surat Keluar</span>
                     </a>
               </li>
               
@@ -376,6 +387,12 @@
         <script src="../material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
         <script src="../material/global/js/Plugin/bootstrap-sweetalert.js"></script>
         <script src="../material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
+
+        
+
+        <script src="../material/global/vendor/select2/select2.full.min.js"></script>
+        <script src="../material/global/js/Plugin/select2.js"></script>
+        <script src="../material/global/js/Plugin/multi-select.js"></script>
     <script>
         cek_token()
         function cek_token()
