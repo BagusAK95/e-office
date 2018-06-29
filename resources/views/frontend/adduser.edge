@@ -16,13 +16,10 @@
                         </div>
                         <div class="panel-body container-fluid">
                           <form autocomplete="off" id="simpan">
-                            <div class="form-group" data-plugin="formMaterial">
-                              <label class="form-control-label" for="inputText">Cari Pegawai</label>
-                              <input type="text" class="form-control input_pegawai" placeholder="Masukan Nama Pegawai" />
-                            </div>
+                            
                             <div class="form-group" data-plugin="formMaterial">
                               <label class="form-control-label" for="inputEmail">Pegawai</label>
-                              <select id="pegawai" class="form-control" onchange="do_pegawai()" name="nip" required>
+                              <select id="pegawai" class="form-control" name="nip" required onchange='do_pegawai()' data-plugin="select2">
                               </select>
                             </div>
                             <div class="form-group" data-plugin="formMaterial">
@@ -101,8 +98,8 @@
       </div>
 
 <script>
-        $(".input_pegawai").keyup(function() {
-            var nama = $(".input_pegawai").val();
+        pegawaiall();
+        function pegawaiall() {
             $.ajax({ 
                 type: 'GET', 
                 url: '/admin/gettoken', 
@@ -110,7 +107,7 @@
                 { 
                         $.ajax({ 
                             type: 'GET', 
-                            url: '/api/master-pegawai/'+nama+'/1/1000', 
+                            url: '/api/master-pegawai', 
                             headers: {
                                         'Authorization': 'Bearer ' + data.token
                                     },
@@ -118,8 +115,19 @@
                             success: function (data) 
                             {   
                                 var isi = "<option>Pilih Pegawai</option>";
-                                $.each(data.data.data, function(index, element) {
-                                    isi += "<option value='"+element.nip+"'>"+element.nama+"</option>";
+                                $.each(data.data, function(index, element) {
+                                    var depan = ''
+                                    var belakang = ''
+                                    if(element.gelar_depan)
+                                    {
+                                        depan += element.gelar_depan+" ";
+                                    }
+                                    var belakang = "";
+                                    if(element.gelar_belakang)
+                                    {
+                                        belakang += ", "+element.gelar_belakang;
+                                    }
+                                    isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
                                 })
                                 $("#pegawai").html(isi).show();
                             },
@@ -130,7 +138,7 @@
                         });
                 }
             });
-        });
+        }
          
         function do_pegawai()
         {

@@ -30,9 +30,19 @@ Route.on('/admin/profile').render('frontend/profile')
 Route.on('/admin/user').render('frontend/user')
 Route.on('/admin/adduser').render('frontend/adduser')
 
-
-
 Route.get('/admin/gettoken', ({ session }) => {
     return session.all()
   })
 Route.on('/admin/change_password').render('frontend/change_password')
+  
+Route.get('/admin/cek_session', ({ session }) => {
+    return session.get('token')
+})
+
+Route.get('/admin/logout', ({ session,response }) => {
+    session.put('token', '')
+    response.redirect('/login')
+})
+
+Route.on('/admin/tree').render('frontend/tree')
+

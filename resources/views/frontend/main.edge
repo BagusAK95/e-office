@@ -10,34 +10,34 @@
     
     <title>e-Office</title>
     
-    <link rel="apple-touch-icon" href="../material/base/assets/images/apple-touch-icon.png">
-    <link rel="shortcut icon" href="../material/base/assets/images/favicon.ico">
+    <link rel="apple-touch-icon" href="/material/base/assets/images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/material/base/assets/images/favicon.ico">
     
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="../material/global/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../material/global/css/bootstrap-extend.min.css">
-    <link rel="stylesheet" href="../material/base/assets/css/site.min.css">
+    <link rel="stylesheet" href="/material/global/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/material/global/css/bootstrap-extend.min.css">
+    <link rel="stylesheet" href="/material/base/assets/css/site.min.css">
     
-     <link rel="stylesheet" href="../material/global/vendor/bootstrap-sweetalert/sweetalert.css">
+     <link rel="stylesheet" href="/material/global/vendor/bootstrap-sweetalert/sweetalert.css">
     
     <!-- Plugins -->
-    <link rel="stylesheet" href="../material/global/vendor/animsition/animsition.css">
-    <link rel="stylesheet" href="../material/global/vendor/asscrollable/asScrollable.css">
-    <link rel="stylesheet" href="../material/global/vendor/switchery/switchery.css">
-    <link rel="stylesheet" href="../material/global/vendor/intro-js/introjs.css">
-    <link rel="stylesheet" href="../material/global/vendor/slidepanel/slidePanel.css">
-    <link rel="stylesheet" href="../material/global/vendor/flag-icon-css/flag-icon.css">
-    <link rel="stylesheet" href="../material/global/vendor/waves/waves.css">
-    <link rel="stylesheet" href="../material/global/vendor/asscrollable/asScrollable.css">
+    <link rel="stylesheet" href="/material/global/vendor/animsition/animsition.css">
+    <link rel="stylesheet" href="/material/global/vendor/asscrollable/asScrollable.css">
+    <link rel="stylesheet" href="/material/global/vendor/switchery/switchery.css">
+    <link rel="stylesheet" href="/material/global/vendor/intro-js/introjs.css">
+    <link rel="stylesheet" href="/material/global/vendor/slidepanel/slidePanel.css">
+    <link rel="stylesheet" href="/material/global/vendor/flag-icon-css/flag-icon.css">
+    <link rel="stylesheet" href="/material/global/vendor/waves/waves.css">
+    <link rel="stylesheet" href="/material/global/vendor/asscrollable/asScrollable.css">
    
-    <link rel="stylesheet" href="../material/global/vendor/select2/select2.css">
-    <link rel="stylesheet" href="../material/global/vendor/bootstrap-select/bootstrap-select.css">
-    <link rel="stylesheet" href="../material/global/vendor/multi-select/multi-select.css">
+    <link rel="stylesheet" href="/material/global/vendor/select2/select2.css">
+    <link rel="stylesheet" href="/material/global/vendor/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="/material/global/vendor/multi-select/multi-select.css">
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="../material/global/fonts/material-design/material-design.min.css">
-    <link rel="stylesheet" href="../material/global/fonts/brand-icons/brand-icons.min.css">
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+    <link rel="stylesheet" href="/material/global/fonts/material-design/material-design.min.css">
+    <link rel="stylesheet" href="/material/global/fonts/brand-icons/brand-icons.min.css">
+    <link rel='stylesheet' href='/material/font.css'>
     
     <!--[if lt IE 9]>
     <script src="material/global/vendor/html5shiv/html5shiv.min.js"></script>
@@ -49,12 +49,16 @@
     <![endif]-->
     
     <!-- Scripts -->
-    <script src="../material/global/vendor/breakpoints/breakpoints.js"></script>
+    <script src="/material/global/vendor/breakpoints/breakpoints.js"></script>
     <script>
       Breakpoints();
     </script>
 
-    <script src="../material/global/vendor/jquery/jquery.js"></script>
+    <script src="/material/global/vendor/jquery/jquery.js"></script>
+
+     <link rel="stylesheet" href="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.css">
+        <link rel="stylesheet" href="/material/global/vendor/jstree/jstree.min.css">
+
   </head>
   <body class="animsition">
     <!--[if lt IE 8]>
@@ -74,7 +78,7 @@
           <i class="icon md-more" aria-hidden="true"></i>
         </button>
         <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
-          <img class="navbar-brand-logo" src="../material/base/assets/images/logo.png" title="Remark">
+          <img class="navbar-brand-logo" src="/material/base/assets/images/logo.png" title="Remark">
           <span class="navbar-brand-text hidden-xs-down"> e-Office</span>
         </div>
         <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
@@ -196,7 +200,7 @@
               <div class="dropdown-menu" role="menu">
                 <a class="dropdown-item" href="/admin/profile" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
                 <a class="dropdown-item" href="/admin/change_password" role="menuitem"><i class="icon md-key" aria-hidden="true"></i> Change Password</a>
-                <a class="dropdown-item" href="../login" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+                <a class="dropdown-item" href="/admin/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
               </div>
             </li>
             
@@ -263,56 +267,7 @@
       </div>    <div class="site-gridmenu">
       <div>
         <div>
-          <ul>
-            <li>
-              <a href="../apps/mailbox/mailbox.html">
-                <i class="icon md-email"></i>
-                <span>Mailbox</span>
-              </a>
-            </li>
-            <li>
-              <a href="../apps/calendar/calendar.html">
-                <i class="icon md-calendar"></i>
-                <span>Calendar</span>
-              </a>
-            </li>
-            <li>
-              <a href="../apps/contacts/contacts.html">
-                <i class="icon md-account"></i>
-                <span>Contacts</span>
-              </a>
-            </li>
-            <li>
-              <a href="../apps/media/overview.html">
-                <i class="icon md-videocam"></i>
-                <span>Media</span>
-              </a>
-            </li>
-            <li>
-              <a href="../apps/documents/categories.html">
-                <i class="icon md-receipt"></i>
-                <span>Documents</span>
-              </a>
-            </li>
-            <li>
-              <a href="../apps/projects/projects.html">
-                <i class="icon md-image"></i>
-                <span>Project</span>
-              </a>
-            </li>
-            <li>
-              <a href="../apps/forum/forum.html">
-                <i class="icon md-comments"></i>
-                <span>Forum</span>
-              </a>
-            </li>
-            <li>
-              <a href="../index.html">
-                <i class="icon md-view-dashboard"></i>
-                <span>Dashboard</span>
-              </a>
-            </li>
-          </ul>
+         
         </div>
       </div>
     </div>
@@ -334,66 +289,95 @@
     </footer>
 
    
-    <script src="../material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+    <script src="/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
     
-    <script src="../material/global/vendor/popper-js/umd/popper.min.js"></script>
-    <script src="../material/global/vendor/bootstrap/bootstrap.js"></script>
-    <script src="../material/global/vendor/animsition/animsition.js"></script>
-    <script src="../material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
-    <script src="../material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
-    <script src="../material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
-    <script src="../material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
-    <script src="../material/global/vendor/waves/waves.js"></script>
+    <script src="/material/global/vendor/popper-js/umd/popper.min.js"></script>
+    <script src="/material/global/vendor/bootstrap/bootstrap.js"></script>
+    <script src="/material/global/vendor/animsition/animsition.js"></script>
+    <script src="/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+    <script src="/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+    <script src="/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+    <script src="/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+    <script src="/material/global/vendor/waves/waves.js"></script>
     
     <!-- Plugins -->
-    <script src="../material/global/vendor/switchery/switchery.js"></script>
-    <script src="../material/global/vendor/intro-js/intro.js"></script>
-    <script src="../material/global/vendor/screenfull/screenfull.js"></script>
-    <script src="../material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
-        <script src="../material/global/vendor/asprogress/jquery-asProgress.js"></script>
-        <script src="../material/global/vendor/draggabilly/draggabilly.pkgd.js"></script>
-        <script src="../material/global/vendor/raty/jquery.raty.js"></script>
+    <script src="/material/global/vendor/switchery/switchery.js"></script>
+    <script src="/material/global/vendor/intro-js/intro.js"></script>
+    <script src="/material/global/vendor/screenfull/screenfull.js"></script>
+    <script src="/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+        <script src="/material/global/vendor/asprogress/jquery-asProgress.js"></script>
+        <script src="/material/global/vendor/draggabilly/draggabilly.pkgd.js"></script>
+        <script src="/material/global/vendor/raty/jquery.raty.js"></script>
     
     <!-- Scripts -->
-    <script src="../material/global/js/Component.js"></script>
-    <script src="../material/global/js/Plugin.js"></script>
-    <script src="../material/global/js/Base.js"></script>
-    <script src="../material/global/js/Config.js"></script>
+    <script src="/material/global/js/Component.js"></script>
+    <script src="/material/global/js/Plugin.js"></script>
+    <script src="/material/global/js/Base.js"></script>
+    <script src="/material/global/js/Config.js"></script>
     
-    <script src="../material/base/assets/js/Section/Menubar.js"></script>
-    <script src="../material/base/assets/js/Section/GridMenu.js"></script>
-    <script src="../material/base/assets/js/Section/Sidebar.js"></script>
-    <script src="../material/base/assets/js/Section/PageAside.js"></script>
-    <script src="../material/base/assets/js/Plugin/menu.js"></script>
+    <script src="/material/base/assets/js/Section/Menubar.js"></script>
+    <script src="/material/base/assets/js/Section/GridMenu.js"></script>
+    <script src="/material/base/assets/js/Section/Sidebar.js"></script>
+    <script src="/material/base/assets/js/Section/PageAside.js"></script>
+    <script src="/material/base/assets/js/Plugin/menu.js"></script>
     
-    <script src="../material/global/js/config/colors.js"></script>
-    <script src="../material/base/assets/js/config/tour.js"></script>
-    <script>Config.set('assets', '../material/base/assets');</script>
+    <script src="/material/global/js/config/colors.js"></script>
+    <script src="/material/base/assets/js/config/tour.js"></script>
+    <script>Config.set('assets', '/material/base/assets');</script>
     
     <!-- Page -->
-    <script src="../material/base/assets/js/Site.js"></script>
-    <script src="../material/global/js/Plugin/asscrollable.js"></script>
-    <script src="../material/global/js/Plugin/slidepanel.js"></script>
-    <script src="../material/global/js/Plugin/switchery.js"></script>
-        <script src="../material/global/js/Plugin/responsive-tabs.js"></script>
-        <script src="../material/global/js/Plugin/tabs.js"></script>
-        <script src="../material/global/js/Plugin/asprogress.js"></script>
-        <script src="../material/global/js/Plugin/panel.js"></script>
-        <script src="../material/global/js/Plugin/asscrollable.js"></script>
-        <script src="../material/global/js/Plugin/raty.js"></script>
+    <script src="/material/base/assets/js/Site.js"></script>
+    <script src="/material/global/js/Plugin/asscrollable.js"></script>
+    <script src="/material/global/js/Plugin/slidepanel.js"></script>
+    <script src="/material/global/js/Plugin/switchery.js"></script>
+        <script src="/material/global/js/Plugin/responsive-tabs.js"></script>
+        <script src="/material/global/js/Plugin/tabs.js"></script>
+        <script src="/material/global/js/Plugin/asprogress.js"></script>
+        <script src="/material/global/js/Plugin/panel.js"></script>
+        <script src="/material/global/js/Plugin/asscrollable.js"></script>
+        <script src="/material/global/js/Plugin/raty.js"></script>
     
-        <script src="../material/base/assets/examples/js/uikit/panel-structure.js"></script>
+        <script src="/material/base/assets/examples/js/uikit/panel-structure.js"></script>
         
-        <script src="../material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
-        <script src="../material/global/js/Plugin/bootstrap-sweetalert.js"></script>
-        <script src="../material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
+        <script src="/material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
+        <script src="/material/global/js/Plugin/bootstrap-sweetalert.js"></script>
+        <script src="/material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
 
         
 
-        <script src="../material/global/vendor/select2/select2.full.min.js"></script>
-        <script src="../material/global/js/Plugin/select2.js"></script>
-        <script src="../material/global/js/Plugin/multi-select.js"></script>
+        <script src="/material/global/vendor/select2/select2.full.min.js"></script>
+        <script src="/material/global/js/Plugin/select2.js"></script>
+        <script src="/material/global/js/Plugin/multi-select.js"></script>
+
+        <script src="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+        <script src="/material/global/vendor/jstree/jstree.min.js"></script>
+        <script src="/material/global/js/Plugin/bootstrap-treeview.js"></script>
+        <script src="/material/global/js/Plugin/jstree.js"></script>
+        <script src="/material/base/assets/examples/js/advanced/treeview.js"></script>
     <script>
+      cek_session()
+      function cek_session()
+        {
+          $.ajax({ 
+              type: 'GET', 
+              url: '/admin/cek_session', 
+              success: function (data) { 
+                  if(data)
+                  {
+                    return false;
+                  }
+                  else
+                  {
+                    swal({title: "Session Time Out", text: "Silahkan login kembali.", type: "error"},
+                    function(){ 
+                        window.location.href='/login';
+                    }
+                    );
+                  }
+              }
+          });
+        }
+
         cek_token()
         function cek_token()
         {
@@ -420,6 +404,8 @@
                 }
                 });
         }
+        
+        
       </script>
   </body>
 </html>
