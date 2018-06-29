@@ -396,6 +396,18 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /master-pegawai:
+    *   get:
+    *     tags:
+    *       - Master Pegawai
+    *     summary: List All
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-pegawai', 'MasterPegawaiController.listAll').middleware('checkTokenAdmin')
+
+    /**
+    * @swagger
     * /master-pegawai/byLocation/{kode_lokasi}:
     *   get:
     *     tags:

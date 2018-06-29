@@ -38,6 +38,24 @@ class MasterPegawaiController {
         }
     }
 
+    async listAll({auth}){
+        try {
+            const user = await auth.getUser()
+            const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
+            const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
+
+            const data = await MasterPegawai.query()
+                                            .whereBetween('kode_lokasi', [startLokasi, endLokasi])
+            if (data) {
+                return this.response(true, null, data)
+            } else {
+                return this.response(false, 'Not found', null)
+            }
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)                
+        }
+    }
+
     async detail({params}){
         try {
             const data = await MasterPegawai.query()
