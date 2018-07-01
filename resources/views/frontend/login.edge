@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="material/global/vendor/waves/waves.css">
         <link rel="stylesheet" href="material/base/assets/examples/css/pages/login-v2.css">
     
-    
+    <link rel="stylesheet" href="material/global/vendor/bootstrap-sweetalert/sweetalert.css">
     <!-- Fonts -->
     <link rel="stylesheet" href="material/global/fonts/material-design/material-design.min.css">
     <link rel="stylesheet" href="material/global/fonts/brand-icons/brand-icons.min.css">
@@ -148,7 +148,9 @@
     <script src="material/global/js/Plugin/switchery.js"></script>
         <script src="material/global/js/Plugin/jquery-placeholder.js"></script>
         <script src="material/global/js/Plugin/material.js"></script>
-    
+     <script src="/material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
+        <script src="/material/global/js/Plugin/bootstrap-sweetalert.js"></script>
+        <script src="/material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
     <script>
       (function(document, window, $){
         'use strict';
@@ -176,14 +178,22 @@
                 }
                 else if(data.success==false)
                 {
-                    alert("Invalid Username and Password.");
+                    swal({title: "Login Failed!", text: "Invalid Username and Password.", type: "error"},
+                    function(){ 
+                        return false;
+                    }
+                    );
                     $(".loader").hide();
                 }
                 
             },
             error : function(data)
             {
-                alert("Invalid Username and Password.");
+               swal({title: "Login Failed!", text: "Invalid Username and Password.", type: "error"},
+                    function(){ 
+                        return false;
+                    }
+                    );
                 $(".loader").hide();
             }
      });
@@ -202,7 +212,11 @@
         },
         error : function(data)
         {
-            alert("Login Failed!");
+           swal({title: "Login Failed!", text: "Invalid Username and Password.", type: "error"},
+                    function(){ 
+                        return false;
+                    }
+                    );
             $(".loader").hide();
         }
      });
