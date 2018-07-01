@@ -453,4 +453,124 @@ Route.group(() => {
     *       - application/json
     */
     Route.get('/master-kantor', 'MasterKantorController.tree').middleware('checkTokenAdmin')
+
+    /**
+    * @swagger
+    * /surat-masuk:
+    *   post:
+    *     tags:
+    *       - Surat Masuk
+    *     summary: Add
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: tgl_terima
+    *         in: formData
+    *         description: Tanggal Terima
+    *         required: true
+    *         type: string
+    *       - name: tgl_surat
+    *         in: formData
+    *         description: Tanggal Surat
+    *         required: true
+    *         type: string
+    *       - name: nomor_surat
+    *         in: formData
+    *         description: Nomor Surat
+    *         required: true
+    *         type: string
+    *       - name: nomor_agenda
+    *         in: formData
+    *         description: Nomor Agenda
+    *         required: true
+    *         type: string
+    *       - name: perihal
+    *         in: formData
+    *         description: Perihal
+    *         required: true
+    *         type: string
+    *       - name: jenis_instansi
+    *         in: formData
+    *         description: Jenis Instansi (1=PNS, 2=Swasta)
+    *         required: true
+    *         type: string
+    *       - name: nama_instansi
+    *         in: formData
+    *         description: Nama Instansi
+    *         required: true
+    *         type: string
+    *       - name: nama_pengirim
+    *         in: formData
+    *         description: Nama Pengirim
+    *         required: true
+    *         type: string
+    *       - name: jabatan_pengirim
+    *         in: formData
+    *         description: Jabatan Pengirim
+    *         required: true
+    *         type: string
+    *       - name: alamat_pengirim
+    *         in: formData
+    *         description: Alamat Pengirim
+    *         required: true
+    *         type: string
+    *       - name: keamanan
+    *         in: formData
+    *         description: Tingkat Keamanan (1=Biasa, 2=Rahasia Terbatas, 3=Rahasia, 4=Sangat Rahasia)
+    *         required: true
+    *         type: string
+    *       - name: kecepatan
+    *         in: formData
+    *         description: Tingkat Kecepatan (1=Biasa, 2=Segera, 3=Amat Segera)
+    *         required: true
+    *         type: string
+    *       - name: nip_penerima
+    *         in: formData
+    *         description: NIP Penerima
+    *         required: true
+    *         type: string
+    *       - name: nama_penerima
+    *         in: formData
+    *         description: Nama Penerima
+    *         required: true
+    *         type: string
+    *       - name: jabatan_penerima
+    *         in: formData
+    *         description: Jabatan Penerima
+    *         required: true
+    *         type: string
+    *       - name: nip_tembusan
+    *         in: formData
+    *         description: NIP Tembusan
+    *         required: false
+    *         type: string
+    *       - name: nama_tembusan
+    *         in: formData
+    *         description: Nama Tembusan
+    *         required: false
+    *         type: string
+    *       - name: jabatan_tembusan
+    *         in: formData
+    *         description: Jabatan Tembusan
+    *         required: false
+    *         type: string
+    *       - name: ringkasan
+    *         in: formData
+    *         description: Ringkasan Surat
+    *         required: false
+    *         type: string
+    *       - name: isi_surat
+    *         in: formData
+    *         description: Isi Surat
+    *         required: false
+    *         type: string
+    *       - name: lampiran
+    *         in: formData
+    *         description: File Lampiran
+    *         required: true
+    *         type: string
+    */
+    Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkTokenTU')
 }).prefix('api')

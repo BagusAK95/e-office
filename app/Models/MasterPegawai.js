@@ -10,10 +10,6 @@ class MasterPegawai extends Model {
     static get primaryKey () {
         return 'nip'
     }
-
-    lokasi () {
-        return this.hasOne('App/Models/MasterKantor', 'kode_lokasi', 'kdlokasi')
-    }
 }
 
 module.exports = MasterPegawai
