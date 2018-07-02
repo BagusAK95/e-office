@@ -456,6 +456,30 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /master-instruksi:
+    *   get:
+    *     tags:
+    *       - Master Instruksi
+    *     summary: List All
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-instruksi', 'MasterInstruksiController.listAll').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /master-klasifikasi:
+    *   get:
+    *     tags:
+    *       - Master Klasifikasi
+    *     summary: List All
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-klasifikasi', 'MasterklasifikasiController.listAll').middleware('checkToken')
+
+    /**
+    * @swagger
     * /surat-masuk:
     *   post:
     *     tags:
