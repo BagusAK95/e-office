@@ -573,4 +573,59 @@ Route.group(() => {
     *         type: string
     */
     Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkTokenTU')
+
+    /**
+    * @swagger
+    * /disposisi:
+    *   post:
+    *     tags:
+    *       - Disposisi
+    *     summary: Add
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_surat_masuk
+    *         in: formData
+    *         description: ID Surat Masuk
+    *         required: true
+    *         type: string
+    *       - name: nip_penerima
+    *         in: formData
+    *         description: NIP Penerima
+    *         required: true
+    *         type: string
+    *       - name: nama_penerima
+    *         in: formData
+    *         description: Nama Penerima
+    *         required: true
+    *         type: string
+    *       - name: jabatan_penerima
+    *         in: formData
+    *         description: Jabatan Penerima
+    *         required: true
+    *         type: string
+    *       - name: instruksi
+    *         in: formData
+    *         description: Instruksi
+    *         required: true
+    *         type: string
+    *       - name: keamanan
+    *         in: formData
+    *         description: Tingkat Keamanan (1=Biasa, 2=Rahasia Terbatas, 3=Rahasia, 4=Sangat Rahasia)
+    *         required: true
+    *         type: string
+    *       - name: kecepatan
+    *         in: formData
+    *         description: Tingkat Kecepatan (1=Biasa, 2=Segera, 3=Amat Segera)
+    *         required: true
+    *         type: string
+    *       - name: isi_disposisi
+    *         in: formData
+    *         description: Isi Disposisi
+    *         required: true
+    *         type: string
+    */
+    Route.post('/disposisi', 'DisposisiController.add').middleware('checkToken')
 }).prefix('api')
