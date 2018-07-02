@@ -1,7 +1,7 @@
 'use strict'
 
 class CheckToken {
-  async handle ({ request }, next) {
+  async handle ({ auth, response }, next) {
     try {
       const user = await auth.getUser()
     } catch (error) {
