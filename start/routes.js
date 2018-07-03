@@ -15,6 +15,6 @@
 
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+Route.on('/').render('/frontend/login')
 
 use('require-all')(`${use('Helpers').appRoot()}/app/Routes`)

@@ -1,53 +1,89 @@
 @layout('frontend/main')
-@section('content')
+@section('content')    
       <div class="page-content container-fluid">
         <div class="row">
-          <div class="col-xxl-4 col-lg-12">
+          <div class="col-xxl-4 col-lg-8">
             <!-- Example Panel With Heading -->
             <div class="panel panel-bordered">
               <div class="panel-heading">
-                <h3 class="panel-title">Instansi</h3>
+                <h3 class="panel-title">Master Kantor</h3>
               </div>
               <div class="panel-body">
-                  <div id="tampil">
-
-                  </div>
+                    <div class="col-xl-12 col-md-6">
+                            <!-- Example Expanded -->
+                            <div class="example-wrap">
+                              <h4 class="example-title"></h4>
+                              <div class="example">
+                                <div data-plugin="treeview" data-source="getExampleTreeview" data-levels="99" id="exampleExpanded"></div>
+                              </div>
+                            </div>
+                            <!-- End Example Expanded -->
+                          </div>
+            
+                    
               </div>
+
+              
             </div>
             <!-- End Example Panel With Heading -->
           </div>
+          <div class="col-xxl-4 col-lg-4">
+                <div class="panel panel-bordered">
+                        <div class="panel-heading">
+                          <h3 class="panel-title">Data Pegawai</h3>
+                        </div>
+                        <div class="panel-body">
+                              <div class="col-xl-12 col-md-6">
+                              </div>
+                        </div>
+                </div>
+            </div>
+
+
+          </div>
+
+
+
+
         </div>
       </div>
       <script>
-      tampil()
-      function tampil()
+        function detail_pegawai(id)
         {
             $.ajax({ 
                 type: 'GET', 
                 url: '/admin/gettoken', 
-                success: function (data) 
-                { 
-                        $.ajax({ 
-                            type: 'GET', 
-                            url: '/api/master-kantor', 
-                            headers: {
-                                        'Authorization': 'Bearer ' + data.token
-                                    },
-                            dataType: 'json',
-                            success: function (data) 
-                            {   
-                               
-                                $.each(data.data, function(index, element) {
-                                    console.log(element)
-                                })
-                            },
-                            error: function ()
-                            {
-                                return false;
-                            }
-                        });
+                success: function (data) { 
+                    $.ajax({ 
+                        type: 'GET', 
+                        url: '/api/master-pegawai/byLocation/'+id, 
+                        headers: {
+                            'Authorization': 'Bearer ' + data.token
+                        },
+                        success: function (data) { 
+                            var isi = "";
+                            $.each(data.data, function(index, element) {
+                                if(element.gelar_depan)
+                                {
+                                    depan += element.gelar_depan+" ";
+                                }
+                                var belakang = "";
+                                if(element.gelar_belakang)
+                                {
+                                    belakang += ", "+element.gelar_belakang;
+                                }
+                                isi += depan+element.nama+belakang+" ("+element.nama_jabatan+")";
+                            });
+                            $("#detail").html().show();
+                        }
+                    });
+                },
+                error: function ()
+                {
+                    return false;
                 }
-            });
+                });
         }
+        
       </script>
 @endsection

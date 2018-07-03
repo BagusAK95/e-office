@@ -18,87 +18,56 @@
   (0, _jquery2.default)(document).ready(function ($$$1) {
     (0, _Site.run)();
   });
+  
+  var return_first = function () {
+      var semua = "";
+      $.ajax({ 
+          type: 'GET', 
+          url: '/admin/gettoken', 
+          async: false,
+          success: function (data) 
+          { 
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/master-kantor', 
+                headers: {
+                            'Authorization': 'Bearer ' + data.token
+                        },
+                dataType: 'json',
+                async: false,
+                success: function (data) 
+                {   
+                    var lengkap = data.data.toSource();
+                    var datanya = lengkap.replace('(', '[');
+                    var siap = datanya.replace(')', ']');
+                    var siap1 = siap.replace(/text:/g, '"text":');
+                    var siap2 = siap1.replace(/id:/g, '"id":');
+                    var siap3 = siap2.replace(/nodes:/g, '"nodes":');
+                    semua = siap3;
+                }
+            });
+          }
+      });
+      return semua;
+      //return [{"id":12000000, "text":"DINAS KOMUNIKASI DAN INFORMATIKA", "nodes":[{"id":12010000, "text":"SEKRETARIAT ", "nodes":[{"id":12010100, "text":"SUB BAGIAN PROGRAM DAN KEUANGAN ", "nodes":[]}, {"id":12010200, "text":"SUB BAGIAN UMUM DAN KEPEGAWAIAN ", "nodes":[]}]}, {"id":12020000, "text":"BIDANG INFORMASI DAN KOMUNIKASI PUBLIK ", "nodes":[{"id":12020100, "text":"SEKSI PELAYANAN INFORMASI PUBLIK ", "nodes":[]}, {"id":12020200, "text":"SEKSI PENGELOLAAN JARINGAN KOMUNIKASI PUBLIK ", "nodes":[]}]}, {"id":12030000, "text":"BIDANG E-GOVERMENT ", "nodes":[{"id":12030100, "text":"SEKSI PENGELOLAAN INFRASTRUKTUR DAN MENARA TELEKOMUNIKASI ", "nodes":[]}, {"id":12030200, "text":"SEKSI PELAYANAN PENGELOLAAN DAN PENGEMBANGAN APLIKASI ", "nodes":[]}]}, {"id":12040000, "text":"BIDANG PERSANDIAN ", "nodes":[{"id":12040100, "text":"SEKSI TATA KELOLA PERSANDIAN ", "nodes":[]}, {"id":12040200, "text":"SEKSI OPERASIONAL PENGAMANAN PERSANDIAN", "nodes":[]}]}]}];
+  }();
+
 
   window.getExampleTreeview = function () {
-    return [{
-      text: 'Parent 1',
-      href: '#parent1',
-      tags: ['4'],
-      nodes: [{
-        text: 'Child 1',
-        href: '#child1',
-        tags: ['2'],
-        nodes: [{
-          text: 'Grandchild 1',
-          href: '#grandchild1',
-          tags: ['0']
-        }, {
-          text: 'Grandchild 2',
-          href: '#grandchild2',
-          tags: ['0']
-        }]
-      }, {
-        text: 'Child 2',
-        href: '#child2',
-        tags: ['0']
-      }]
-    }, {
-      text: 'Parent 2',
-      href: '#parent2',
-      tags: ['0']
-    }, {
-      text: 'Parent 3',
-      href: '#parent3',
-      tags: ['0']
-    }, {
-      text: 'Parent 4',
-      href: '#parent4',
-      tags: ['0']
-    }, {
-      text: 'Parent 5',
-      href: '#parent5',
-      tags: ['0']
-    }];
+    //alert(return_first);
+    //console.log(return_first)
+    return return_first;
   };
 
   var defaults = Plugin.getDefaults("treeview");
 
-  // Example TreeView Json Data
-  // --------------------------
-  (function () {
-    var json = '[' + '{' + '"text": "Parent 1",' + '"nodes": [' + '{' + '"text": "Child 1",' + '"nodes": [' + '{' + '"text": "Grandchild 1"' + '},' + '{' + '"text": "Grandchild 2"' + '}' + ']' + '},' + '{' + '"text": "Child 2"' + '}' + ']' + '},' + '{' + '"text": "Parent 2"' + '},' + '{' + '"text": "Parent 3"' + '},' + '{' + '"text": "Parent 4"' + '},' + '{' + '"text": "Parent 5"' + '}' + ']';
-
-    var json_options = _jquery2.default.extend({}, defaults, {
-      data: json
-    });
-
-    (0, _jquery2.default)('#exampleJsonData').treeview(json_options);
-  })();
-
-  // Example TreeView Searchable
-  // ---------------------------
-  (function () {
-    var options = _jquery2.default.extend({}, defaults, {
-      data: getExampleTreeview()
-    });
-
-    var $searchableTree = (0, _jquery2.default)('#exampleSearchableTree').treeview(options);
-
-    (0, _jquery2.default)('#inputSearchable').on('keyup', function (e) {
-      var pattern = (0, _jquery2.default)(e.target).val();
-
-      var results = $searchableTree.treeview('search', [pattern, {
-        'ignoreCase': true,
-        'exactMatch': false
-      }]);
-    });
-  })();
+  
 
   // Example TreeView Expandible
   // ---------------------------
   (function () {
     var options = _jquery2.default.extend({}, defaults, {
-      data: getExampleTreeview()
+      data: return_first
     });
 
     // Expandible
@@ -116,198 +85,6 @@
     });
   })();
 
-  // Example TreeView Events
-  // -----------------------
-  (function () {
-    // Events
-    var events_toastr = function events_toastr(msg) {
-      toastr.info(msg, '', {
-        iconClass: 'toast-just-text toast-info',
-        positionClass: 'toast-bottom-right',
-        containertId: 'toast-bottom-right'
-      });
-    };
 
-    var options = _jquery2.default.extend({}, defaults, {
-      data: getExampleTreeview(),
-      onNodeCollapsed: function onNodeCollapsed(event, node) {
-        events_toastr(node.text + ' was collapsed');
-      },
-      onNodeExpanded: function onNodeExpanded(event, node) {
-        events_toastr(node.text + ' was expanded');
-      },
-      onNodeSelected: function onNodeSelected(event, node) {
-        events_toastr(node.text + ' was selected');
-      },
-      onNodeUnselected: function onNodeUnselected(event, node) {
-        events_toastr(node.text + ' was unselected');
-      }
-    });
 
-    (0, _jquery2.default)('#exampleEvents').treeview(options);
-  })();
-  // Example jstree use JSON format
-  // ------------------------
-  (function () {
-    (0, _jquery2.default)('#jstreeExample_3').jstree({
-      'core': {
-        'data': [{
-          'text': 'Simple root node',
-          "icon": "md-folder"
-        }, {
-          'text': 'Root node 2',
-          "icon": "md-folder",
-          'state': {
-            'opened': false,
-            'selected': true
-          },
-          'children': [{
-            'text': 'Child 1',
-            "icon": "md-folder"
-          }, {
-            'text': 'Child 2',
-            "icon": "md-folder"
-          }]
-        }]
-      }
-    });
-  })();
-
-  // Example jstree use AJAX
-  // ------------------------
-  (function () {
-    (0, _jquery2.default)('#jstreeExample_4').jstree({
-      'core': {
-        'data': {
-          "url": "../../assets/data/treeview_jstree.json",
-          "dataType": "json"
-        }
-      }
-    });
-  })();
-
-  // Example jstree use checkbox Plugin
-  // ------------------------------------
-  (function () {
-    (0, _jquery2.default)('#jstreeExample_5').jstree({
-      'core': {
-        'data': [{
-          'text': 'Simple root node',
-          "icon": "md-folder"
-        }, {
-          'text': 'Root node 2',
-          "icon": "md-folder",
-          'state': {
-            'opened': true,
-            'selected': true
-          },
-          'children': [{
-            'text': 'Child 1',
-            "icon": "md-folder"
-          }, {
-            'text': 'Child 2',
-            "icon": "md-folder"
-          }]
-        }]
-      },
-      'plugins': ['checkbox']
-    });
-  })();
-
-  // Example jstree use Contextmenu Plugin
-  // ------------------------------------
-  (function () {
-    (0, _jquery2.default)('#jstreeExample_6').jstree({
-      'core': {
-        "check_callback": true,
-        'data': [{
-          'text': 'Simple root node',
-          "icon": "md-folder"
-        }, {
-          'text': 'Root node 2',
-          "icon": "md-folder",
-          'state': {
-            'opened': true,
-            'selected': true
-          },
-          'children': [{
-            'text': 'Child 1',
-            "icon": "md-folder"
-          }, {
-            'text': 'Child 2',
-            "icon": "md-folder"
-          }]
-        }]
-      },
-      'plugins': ['contextmenu']
-    });
-  })();
-
-  // Example jstree use Search Plugin
-  // ------------------------------------
-  (function () {
-    (0, _jquery2.default)('#jstreeExample_7').jstree({
-      'core': {
-        'data': [{
-          'text': 'Simple root node',
-          "icon": "md-folder"
-        }, {
-          'text': 'Root node 2',
-          "icon": "md-folder",
-          'state': {
-            'opened': true,
-            'selected': true
-          },
-          'children': [{
-            'text': 'Child 1',
-            "icon": "md-folder"
-          }, {
-            'text': 'Child 2',
-            "icon": "md-folder"
-          }]
-        }]
-      },
-      'plugins': ['search']
-    });
-
-    var to = false;
-    (0, _jquery2.default)('#jstreeSearch').keyup(function () {
-      if (to) {
-        clearTimeout(to);
-      }
-      to = setTimeout(function () {
-        var v = (0, _jquery2.default)('#jstreeSearch').val();
-        (0, _jquery2.default)('#jstreeExample_7').jstree(true).search(v);
-      }, 250);
-    });
-  })();
-
-  // Example jstree use Drag & drop Plugin
-  // ------------------------------------
-  (function () {
-    (0, _jquery2.default)('#jstreeExample_8').jstree({
-      'core': {
-        "check_callback": true,
-        'data': [{
-          'text': 'Simple root node',
-          "icon": "md-folder"
-        }, {
-          'text': 'Root node 2',
-          "icon": "md-folder",
-          'state': {
-            'opened': true,
-            'selected': true
-          },
-          'children': [{
-            'text': 'Child 1',
-            "icon": "md-folder"
-          }, {
-            'text': 'Child 2',
-            "icon": "md-folder"
-          }]
-        }]
-      },
-      'plugins': ['dnd']
-    });
-  })();
 });
