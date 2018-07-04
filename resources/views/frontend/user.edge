@@ -136,16 +136,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit User</h4>
+                    <h4 class="modal-title">Edit User - <span id="orange"></span></h4>
                 </div>
                 <div class="modal-body">
                         <div class="panel-body container-fluid">
                                 <form autocomplete="off" id="simpan">
-                                  <div class="form-group" data-plugin="formMaterial">
+                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
                                     <label class="form-control-label" for="inputEmail">NIP</label>
-                                    <input type="text" readonly id="pegawai" name="nip" class="form-control">
+                                    <input type="hidden" readonly id="pegawai" name="nip" class="form-control">
                                   </div>
-                                  <div class="form-group" data-plugin="formMaterial">
+                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
                                   <label class="form-control-label" for="inputEmail">Nama Lengkap</label>
                                     <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" readonly >
                                   </div>
@@ -161,23 +161,23 @@
                                   <label class="form-control-label" for="inputEmail">Foto</label>
                                       <input type="file" name="foto" class="form-control btn" >
                                   </div>-->
-                                  <div class="form-group" data-plugin="formMaterial">
+                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
                                   <label class="form-control-label" for="inputEmail">Kode Lokasi</label>
                                       <input type="text" class="form-control" name="kode_lokasi" id="kode_lokasi" readonly >
                                   </div>
-                                  <div class="form-group" data-plugin="formMaterial">
+                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
                                   <label class="form-control-label" for="inputEmail">Kode Jabatan </label>
                                       <input type="text" class="form-control" name="kode_jabatan" id="kode_jabatan" readonly >
                                   </div>
-                                  <div class="form-group" data-plugin="formMaterial">
+                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
                                   <label class="form-control-label" for="inputEmail">Nama Jabatan </label>
                                       <input type="text" class="form-control" name="nama_jabatan" id="nama_jabatan" readonly >
                                   </div>
-                                  <div class="form-group" data-plugin="formMaterial">
+                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
                                   <label class="form-control-label" for="inputEmail">Kode Eselon </label>
                                       <input type="text" class="form-control" name="kode_eselon" id="kode_eselon" readonly >
                                   </div>
-                                  <div class="form-group" data-plugin="formMaterial">
+                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
                                   <label class="form-control-label" for="inputEmail">Golongan</label>
                                       <input type="text" class="form-control" name="golongan" id="golongan" readonly >
                                   </div>
@@ -301,7 +301,7 @@
                                 var isi_nama = nama;
                             }
 
-                            $("#pagination").html("<center><br><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-xs btn-info' onclick=showbrand(1,'"+isi_nama+"')><i class='icon md-fast-rewind'></i></button><button class='btn btn-xs btn-info' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"')>Prev</button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'>  <button class='btn btn-xs btn-info' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"')>Next</button><button class='btn btn-xs btn-info' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"')><i class='icon md-fast-forward'></i></button></div><br>Total record "+data.data.total+"</center>").show();
+                            $("#pagination").html("<center><br><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-xs btn-info' onclick=showbrand(1,'"+isi_nama+"')><i class='icon fa-angle-double-left'></i></button><button class='btn btn-xs btn-info' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-info' disabled> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-info' disabled> Of "+data.data.lastPage+" </button><button class='btn btn-xs btn-info' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-info' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"')><i class='icon fa-angle-double-right'></i></button></div>").show();
                         }
                     });
 
@@ -366,6 +366,7 @@
                             $("#e_foto").html('<a class="avatar avatar-lg"><img width="99" height="132" src="'+foto+'"/></a>').show();
                             $("#e_nip").html(data.data.nip).show();
                             $("#e_nama").html(data.data.nama_lengkap).show();
+                            
                             $("#e_nohp").html(data.data.nohp).show();
                             $("#e_email").html(data.data.email).show();
                             $("#e_lokasi").html(data.data.kode_lokasi).show();
@@ -422,7 +423,7 @@
                             $("#level").val(data.data.level);
                             $("#status").val(data.data.status);
                             $("#kode_eselon").val(data.data.kode_eselon);
-                            
+                            $("#orange").html(data.data.nama_lengkap).show();
                             $('#editmodaln').modal('show');
                             
                         },
@@ -482,6 +483,10 @@
                         return false;
                     }
                 });
+            }
+            else
+            {
+                return false;
             }
         }
 
