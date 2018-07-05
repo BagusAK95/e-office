@@ -31,7 +31,7 @@ class UserController {
             if (edit > 0) {
                 return this.response(true, null, edit)
             } else {
-                return this.response(false, 'Not found', null)
+                return this.response(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)
@@ -48,7 +48,7 @@ class UserController {
             if (destroy > 0) {
                 return this.response(true, null, destroy)                
             } else {
-                return this.response(false, 'Not found', null)
+                return this.response(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)
@@ -69,7 +69,7 @@ class UserController {
             if (data) {
                 return this.response(true, null, data)
             } else {
-                return this.response(false, 'Not found', null)
+                return this.response(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            
@@ -88,7 +88,7 @@ class UserController {
             if (data) {
                 return this.response(true, null, data)
             } else {
-                return this.response(false, 'Not found', null)
+                return this.response(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            

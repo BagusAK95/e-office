@@ -7,14 +7,14 @@ class CheckTokenAdmin {
       if (user.level != 1) {
         response.send({
           success: false, 
-          message: 'You are not admin',
+          message: 'Akses ditolak',
           data: null
         })
       }
     } catch (error) {
       response.send({
         success: false, 
-        message: 'Missing or invalid jwt token',
+        message: 'Token tidak valid',
         data: null
       })
     }

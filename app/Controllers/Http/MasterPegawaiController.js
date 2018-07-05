@@ -17,7 +17,7 @@ class MasterPegawaiController {
             if (data) {
                 return this.response(true, null, data)
             } else {
-                return this.response(false, 'Not found', null)
+                return this.response(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)                
@@ -31,7 +31,7 @@ class MasterPegawaiController {
             if (data.length > 0) {
                 return this.response(true, null, data)
             } else {
-                return this.response(false, 'Not found', null)
+                return this.response(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)                
@@ -49,7 +49,7 @@ class MasterPegawaiController {
             if (data) {
                 return this.response(true, null, data)
             } else {
-                return this.response(false, 'Not found', null)
+                return this.response(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)                
@@ -64,7 +64,7 @@ class MasterPegawaiController {
             if (data) {
                 return this.response(true, null, data)            
             } else {
-                return this.response(false, 'Not found', null)
+                return this.response(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            

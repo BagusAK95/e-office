@@ -7,7 +7,7 @@ class CheckToken {
     } catch (error) {
       response.send({
         success: false, 
-        message: 'Missing or invalid jwt token',
+        message: 'Token tidak valid',
         data: null
       })
     }

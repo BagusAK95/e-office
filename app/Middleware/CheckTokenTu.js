@@ -7,14 +7,14 @@ class CheckTokenTu {
       if (user.level != 3) {
         response.send({
           success: false, 
-          message: `You can't access this feature`,
+          message: 'Akses ditolak',
           data: null
         })
       }
     } catch (error) {
       response.send({
         success: false, 
-        message: 'Missing or invalid jwt token',
+        message: 'Token tidak valid',
         data: null
       })
     }

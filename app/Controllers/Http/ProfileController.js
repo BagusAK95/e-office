@@ -9,7 +9,7 @@ class ProfileController {
             const user = await auth.getUser()
             return this.response(true, null, user)            
         } catch (error) {
-            return this.response(false, 'Missing or invalid jwt token', null)            
+            return this.response(false, 'Token tidak valid', null)            
         }
     }
 
@@ -23,7 +23,7 @@ class ProfileController {
             if (edit > 0) {
                 return this.response(true, null, edit)                
             } else {
-                return this.response(false, 'Not found', null)
+                return this.response(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            
@@ -44,13 +44,13 @@ class ProfileController {
                 if (edit > 0) {
                     return this.response(true, null, edit)                
                 } else {
-                    return this.response(false, 'Not found', null)
+                    return this.response(false, 'Data tidak ditemukan', null)
                 }
             } else {
-                return this.response(false, 'Password not match', null)
+                return this.response(false, 'Kata sandi tidak cocok', null)
             }
         } else {
-            return this.response(false, 'Missing or invalid jwt token', null)
+            return this.response(false, 'Token tidak valid', null)
         }
     }
 
