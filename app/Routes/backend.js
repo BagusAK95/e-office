@@ -444,7 +444,7 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /master-kantor:
+    * /master-kantor/tree:
     *   get:
     *     tags:
     *       - Master Kantor
@@ -452,7 +452,19 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-kantor', 'MasterKantorController.tree').middleware('checkTokenAdmin')
+    Route.get('/master-kantor/tree', 'MasterKantorController.tree').middleware('checkTokenAdmin')
+
+    /**
+    * @swagger
+    * /master-kantor/tree-html:
+    *   get:
+    *     tags:
+    *       - Master Kantor
+    *     summary: Tree Html
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-kantor/tree-html', 'MasterKantorController.treeHtml').middleware('checkTokenAdmin')
 
     /**
     * @swagger
