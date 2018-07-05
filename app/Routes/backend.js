@@ -652,4 +652,29 @@ Route.group(() => {
     *         type: string
     */
     Route.post('/disposisi', 'DisposisiController.add').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /komentar:
+    *   post:
+    *     tags:
+    *       - Komentar
+    *     summary: Add
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_disposisi
+    *         in: formData
+    *         description: ID Disposisi
+    *         required: true
+    *         type: string
+    *       - name: isi_komentar
+    *         in: formData
+    *         description: Isi Komentar
+    *         required: true
+    *         type: string
+    */
+    Route.post('/komentar', 'KomentarController.add').middleware('checkToken')
 }).prefix('api')
