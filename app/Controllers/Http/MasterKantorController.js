@@ -11,6 +11,7 @@ class MasterKantorController {
             let data = {
                 id: null,
                 text: null,
+                html: null,
                 nodes: []
             }
 
@@ -18,12 +19,14 @@ class MasterKantorController {
             if (lokasi1) {
                 data.id = lokasi1.kdlokasi
                 data.text = lokasi1.nmlokasi
+                data.html = "<a onclick='detail_pegawai(" + lokasi1.kdlokasi + ")'>" + lokasi1.nmlokasi + "</a>"
 
                 const lokasi2 = await MasterKantor.query().where('kdparent', lokasi1.kdlokasi)
                 for (let i = 0; i < lokasi2.length; i++) {
                     data.nodes.push({
                         id: lokasi2[i].kdlokasi,
                         text: lokasi2[i].nmlokasi,
+                        html: "<a onclick='detail_pegawai(" + lokasi2[i].kdlokasi + ")'>" + lokasi2[i].nmlokasi + "</a>",
                         nodes: []
                     })
 
@@ -32,6 +35,7 @@ class MasterKantorController {
                         data.nodes[i].nodes.push({
                             id: lokasi3[j].kdlokasi,
                             text: lokasi3[j].nmlokasi,
+                            html: "<a onclick='detail_pegawai(" + lokasi3[j].kdlokasi + ")'>" + lokasi3[j].nmlokasi + "</a>",
                             nodes: []
                         })
 
@@ -40,6 +44,7 @@ class MasterKantorController {
                             data.nodes[i].nodes[j].nodes.push({
                                 id: lokasi4[k].kdlokasi,
                                 text: lokasi4[k].nmlokasi,
+                                html: "<a onclick='detail_pegawai(" + lokasi4[k].kdlokasi + ")'>" + lokasi4[k].nmlokasi + "</a>",
                                 nodes: []
                             })
                         }
