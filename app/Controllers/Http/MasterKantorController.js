@@ -72,32 +72,44 @@ class MasterKantorController {
                 data.text = "<a onclick='detail_pegawai(" + lokasi1.kdlokasi + ")'>" + lokasi1.nmlokasi + "</a>"
 
                 const lokasi2 = await MasterKantor.query().where('kdparent', lokasi1.kdlokasi)
-                for (let i = 0; i < lokasi2.length; i++) {
-                    data.nodes.push({
-                        id: lokasi2[i].kdlokasi,
-                        text: "<a onclick='detail_pegawai(" + lokasi2[i].kdlokasi + ")'>" + lokasi2[i].nmlokasi + "</a>",
-                        nodes: []
-                    })
-
-                    const lokasi3 = await MasterKantor.query().where('kdparent', lokasi2[i].kdlokasi)
-                    for (let j = 0; j < lokasi3.length; j++) {
-                        data.nodes[i].nodes.push({
-                            id: lokasi3[j].kdlokasi,
-                            text: "<a onclick='detail_pegawai(" + lokasi3[j].kdlokasi + ")'>" + lokasi3[j].nmlokasi + "</a>",
+                if (lokasi2.length > 0) {
+                    for (let i = 0; i < lokasi2.length; i++) {
+                        data.nodes.push({
+                            id: lokasi2[i].kdlokasi,
+                            text: "<a onclick='detail_pegawai(" + lokasi2[i].kdlokasi + ")'>" + lokasi2[i].nmlokasi + "</a>",
                             nodes: []
                         })
-
-                        const lokasi4 = await MasterKantor.query().where('kdparent', lokasi3[j].kdlokasi)
-                        for (let k = 0; k < lokasi4.length; k++) {
-                            data.nodes[i].nodes[j].nodes.push({
-                                id: lokasi4[k].kdlokasi,
-                                text: "<a onclick='detail_pegawai(" + lokasi4[k].kdlokasi + ")'>" + lokasi4[k].nmlokasi + "</a>",
-                                nodes: []
-                            })
+    
+                        const lokasi3 = await MasterKantor.query().where('kdparent', lokasi2[i].kdlokasi)
+                        if (lokasi3.length > 0) {
+                            for (let j = 0; j < lokasi3.length; j++) {
+                                data.nodes[i].nodes.push({
+                                    id: lokasi3[j].kdlokasi,
+                                    text: "<a onclick='detail_pegawai(" + lokasi3[j].kdlokasi + ")'>" + lokasi3[j].nmlokasi + "</a>",
+                                    nodes: []
+                                })
+        
+                                const lokasi4 = await MasterKantor.query().where('kdparent', lokasi3[j].kdlokasi)
+                                if (lokasi4.length > 0) {
+                                    for (let k = 0; k < lokasi4.length; k++) {
+                                        data.nodes[i].nodes[j].nodes.push({
+                                            id: lokasi4[k].kdlokasi,
+                                            text: "<a onclick='detail_pegawai(" + lokasi4[k].kdlokasi + ")'>" + lokasi4[k].nmlokasi + "</a>",
+                                            nodes: 0
+                                        })
+                                    }
+                                } else {
+                                    data.nodes[i].nodes[j].nodes = 0
+                                }                                
+                            }
+                        } else {
+                            data.nodes[i].nodes = 0
                         }
-                    }
+                    }    
+                } else {
+                    data.nodes = 0
                 }
-
+                
                 return this.response(true, null, data)
             } else {
                 return this.response(false, 'Data tidak ditemukan', null)
