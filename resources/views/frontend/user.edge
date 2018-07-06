@@ -43,6 +43,8 @@
             
         </tbody>
     </table>
+
+    
     <div id="pagination"></div>
     <span id="showing"></span>
 
@@ -301,7 +303,7 @@
                                 var isi_nama = nama;
                             }
 
-                            $("#pagination").html("<center><br><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-xs btn-info' onclick=showbrand(1,'"+isi_nama+"')><i class='icon fa-angle-double-left'></i></button><button class='btn btn-xs btn-info' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-info' disabled> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-info' disabled> Of "+data.data.lastPage+" </button><button class='btn btn-xs btn-info' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-info' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"')><i class='icon fa-angle-double-right'></i></button></div>").show();
+                            $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-info btn-pill-left' onclick=showbrand(1,'"+isi_nama+"')><i class='icon fa-angle-double-left'></i></button><button class='btn btn-xs btn-info' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-info' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-info' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-info' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-info btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"')><i class='icon fa-angle-double-right'></i></button></div>").show();
                         }
                     });
 

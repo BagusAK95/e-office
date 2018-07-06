@@ -29,7 +29,7 @@
           { 
             $.ajax({ 
                 type: 'GET', 
-                url: '/api/master-kantor', 
+                url: '/api/master-kantor/tree-html', 
                 headers: {
                             'Authorization': 'Bearer ' + data.token
                         },
@@ -37,12 +37,14 @@
                 async: false,
                 success: function (data) 
                 {   
+                    //alert(data.data.toSource());
                     var lengkap = data.data.toSource();
                     var datanya = lengkap.replace('(', '[');
-                    var siap = datanya.replace(')', ']');
+                    var siap = datanya.replace('})', '}]');
                     var siap1 = siap.replace(/text:/g, '"text":');
                     var siap2 = siap1.replace(/id:/g, '"id":');
-                    var siap3 = siap2.replace(/nodes:/g, '"nodes":');
+                    var siap3 = siap2.replace(/nodes:/g, '"nodes":'); 
+                    //alert(siap3)
                     semua = siap3;
                 }
             });

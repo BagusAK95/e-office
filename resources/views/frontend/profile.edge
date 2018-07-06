@@ -42,17 +42,19 @@
                                     </div>
                                     <div class="form-group form-material" data-plugin="formMaterial">
                                       <label class="form-control-label" for="inputEmail">Email</label>
-                                      <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                      <input type="email" disabled class="form-control" id="email" name="email" placeholder="Email"
                                       />
                                     </div>
                                     <div class="form-group form-material" data-plugin="formMaterial">
                                       <label class="form-control-label" for="inputEmail">No HP</label>
-                                      <input type="text" class="form-control" id="no_hp" name="nohp" placeholder="Email"
+                                      <input type="text" disabled class="form-control" id="no_hp" name="nohp" placeholder="Email"
                                       />
                                     </div>
                                     
                                     <div class='form-group form-material col-xl-12 text-right padding-top-m'>
-                                    <a onclick='simpan()' class='btn btn-primary' style='color:white'>Simpan</a>
+                                    <a href='#' onclick='edt()' class='btn btn-success waves-effect waves-classic' id='btnedit' style="color:white"><i class="icon md-edit"></i>Edit</a>
+                                    <a href='#' onclick='simpan()' style="display:none;" id='btnsimpan' class='btn btn-primary waves-effect waves-classic' style="color:white">Simpan</a>
+                                    <a href='#' onclick='batal()' style="display:none;" id='btnbatal' class='btn btn-danger waves-effect waves-classic' style="color:white">Batal</a>
                                     </div>
                                     </div>
                                   </form>
@@ -70,6 +72,22 @@
         </div>
       </div>
       <script>
+      function edt()
+      {
+        $('#email').prop('disabled', false);
+        $('#no_hp').prop('disabled', false);
+        $("#btnsimpan").show();
+        $("#btnbatal").show();
+        $("#btnedit").hide();
+      }
+      function batal()
+      {
+        $('#email').prop('disabled', true);
+        $('#no_hp').prop('disabled', true);
+        $("#btnsimpan").hide();
+        $("#btnbatal").hide();
+        $("#btnedit").show();
+      }
       data_profile()
       function data_profile()
       {
@@ -131,6 +149,7 @@
                         data : $("#simpan").serialize(),
                         success: function (data) { 
                             swal("Berhasil!", "Data telah disimpan.", "success");
+                            batal();
                         }
                     });
                 },

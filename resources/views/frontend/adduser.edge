@@ -9,80 +9,155 @@
                 <h3 class="panel-title">Add Data User</h3>
               </div>
               <div class="panel-body">
-                
+                    <div class="col-lg-12">
+                            <!-- Example Default -->
+                            
+                           
+                            
+                            
+                            
+                              <div class="example">
+                                <div class="steps row">
+                                  <div id="satu" class="step col-lg-3 current"  onclick="next1()">
+                                    <span class="step-number">1</span>
+                                    <div class="step-desc">
+                                      <span class="step-title">Pegawai</span>
+                                      <p>Pilih Pegawai</p>
+                                    </div>
+                                  </div>
+                                  
+                                  <div id="dua" class="step col-lg-3" onclick="next2()">
+                                    <span class="step-number">2</span>
+                                    <div class="step-desc">
+                                      <span class="step-title">Data</span>
+                                      <p>Masukkan Data</p>
+                                    </div>
+                                  </div>
+            
+                                  <div id="tiga" class="step col-lg-3" onclick="next3()">
+                                    <span class="step-number">3</span>
+                                    <div class="step-desc">
+                                      <span class="step-title">Password</span>
+                                      <p>Masukkan Password</p>
+                                    </div>
+                                  </div>
+
+                                    <div id="empat" class="step col-lg-3" onclick="next4()">
+                                        <span class="step-number">4</span>
+                                        <div class="step-desc">
+                                          <span class="step-title">Akses</span>
+                                          <p>Pilih Hak Akses</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                              </div>
+                            <!-- End Example Default -->
+                          </div>
+                          
                 <!--Main-->
                 <div class="panel">
-                        <div class="panel-heading">
-                        </div>
+                      
                         <div class="panel-body container-fluid">
                           <form autocomplete="off" id="simpan">
-                            
-                            <div class="form-group" data-plugin="formMaterial">
-                              <label class="form-control-label" for="inputEmail">Pegawai</label>
-                              <select id="pegawai" class="form-control" name="nip" required onchange='do_pegawai()' data-plugin="select2">
-                              </select>
+                            <div id="step1">
+                                <div class="form-group form-material" data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">Pegawai</label>
+                                    <select id="pegawai" class="form-control" name="nip" required onchange='do_pegawai()' data-plugin="select2">
+                                    </select>
+                                </div>
+                                <div class="form-group form-material" data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">NIP</label>
+                                    <input type="text" disabled class="form-control" id="tampil_nip" >
+                                </div>
+                                <div class="form-group form-material" data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">Jabatan</label>
+                                    <input type="text" disabled class="form-control" id="tampil_jabatan" >
+                                </div>
+                                <div class="form-group form-material" data-plugin="formMaterial">
+                                        <label class="form-control-label" for="inputEmail">Golongan</label>
+                                        <input type="text" disabled class="form-control" id="tampil_golongan" >
+                                    </div>
+
                             </div>
-                            <div class="form-group" data-plugin="formMaterial">
+                            <div class="form-group" data-plugin="formMaterial" style="display:none;">
                             <label class="form-control-label" for="inputEmail">Nama Lengkap</label>
                               <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" readonly >
                             </div>
-                            <div class="form-group" data-plugin="formMaterial">
-                            <label class="form-control-label" for="inputEmail">No HP</label>
-                                <input type="text" class="form-control" name="nohp" id="nohp" >
-                            </div>
-                            <div class="form-group" data-plugin="formMaterial">
-                            <label class="form-control-label" for="inputEmail">Email</label>
-                                <input type="email" class="form-control" name="email" id="email" >
+                            <div id="step2" style="display: none;">
+                                <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">No HP</label>
+                                    <input type="text" class="form-control" name="nohp" id="nohp" >
+                                </div>
+                                <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">Email</label>
+                                    <input type="email" class="form-control" name="email" id="email" >
+                                </div>
                             </div>
                             <!--<div class="form-group" data-plugin="formMaterial">
                             <label class="form-control-label" for="inputEmail">Foto</label>
                                 <input type="file" name="foto" class="form-control btn" >
                             </div>-->
-                            <div class="form-group" data-plugin="formMaterial">
+                            <div class="form-group" data-plugin="formMaterial" style="display:none;">
                             <label class="form-control-label" for="inputEmail">Kode Lokasi</label>
                                 <input type="text" class="form-control" name="kode_lokasi" id="kode_lokasi" readonly >
                             </div>
-                            <div class="form-group" data-plugin="formMaterial">
+                            <div class="form-group" data-plugin="formMaterial" style="display:none;">
                             <label class="form-control-label" for="inputEmail">Kode Jabatan </label>
                                 <input type="text" class="form-control" name="kode_jabatan" id="kode_jabatan" readonly >
                             </div>
-                            <div class="form-group" data-plugin="formMaterial">
+                            <div class="form-group" data-plugin="formMaterial" style="display:none;">
                             <label class="form-control-label" for="inputEmail">Nama Jabatan </label>
                                 <input type="text" class="form-control" name="nama_jabatan" id="nama_jabatan" readonly >
                             </div>
-                            <div class="form-group" data-plugin="formMaterial">
+                            <div class="form-group" data-plugin="formMaterial" style="display:none;">
                             <label class="form-control-label" for="inputEmail">Kode Eselon </label>
                                 <input type="text" class="form-control" name="kode_eselon" id="kode_eselon" readonly >
                             </div>
-                            <div class="form-group" data-plugin="formMaterial">
+                            <div class="form-group" data-plugin="formMaterial" style="display:none;">
                             <label class="form-control-label" for="inputEmail">Golongan</label>
                                 <input type="text" class="form-control" name="golongan" id="golongan" readonly >
                             </div>
-                            <div class="form-group" data-plugin="formMaterial">
-                            <label class="form-control-label" for="inputEmail">Password</label>
-                                <input type="passswrod" class="form-control" name="password" id="password" >
+                            <div id="step3" style="display: none;">
+                                <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">Password</label>
+                                    <input type="passswrod" class="form-control" name="password" id="password" >
+                                </div>
+                                <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">Ulangi Password</label>
+                                    <input type="passswrod" onkeyup="ulangipassword()" class="form-control" id="ulangi_password" >
+                                    <span id="statuss"></span>
+                                </div>
                             </div>
-                            <div class="form-group" data-plugin="formMaterial">
-                            <label class="form-control-label" for="inputEmail">Level</label>
-                            <select name="level" id="level" class="form-control">
-                                <option value="1">Admin</option>
-                                <option value="2">Pimpinan</option>
-                                <option value="3">Tata Usaha</option>
-                                <option value="4">Staff</option>
-                            </select>
+                            <div id="step4" style="display: none;">
+                                <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">Level</label>
+                                <select name="level" id="level" class="form-control">
+                                    <option value="1">Admin</option>
+                                    <option value="2">Pimpinan</option>
+                                    <option value="3">Tata Usaha</option>
+                                    <option value="4">Staff</option>
+                                </select>
+                                </div>
+                                <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">Status</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="1">Aktif</option>
+                                    <option value="0">Non Aktif</option>
+                                </select>
+                                </div>
                             </div>
-                            <div class="form-group" data-plugin="formMaterial">
-                            <label class="form-control-label" for="inputEmail">Status</label>
-                            <select name="status" id="status" class="form-control">
-                                <option value="1">Aktif</option>
-                                <option value="0">Non Aktif</option>
-                            </select>
-                            </div>
-
                            <br>
-                            <div style="float:right">
-                            <button type="submit" class="btn btn-success waves-effect waves-classic">Simpan</button>
-                            <a href="/admin/user" class="btn btn-danger waves-effect waves-classic">Kembali</a>       
+                            <div style="float:right" >
+                            
+                            
+                            <a href="/admin/user"  class="btn btn-danger waves-effect waves-classic">Kembali</a>       
+
+                            <!--<a onclick="next1()" id="next1" style="color: white;" class="btn btn-info btn-group waves-effect waves-classic">1</a>    
+                            <a onclick="next2()" id="next2" style="color: white;" class="btn btn-info btn-group waves-effect waves-classic">2</a>
+                            <a onclick="next3()" id="next3" style="color: white;" class="btn btn-info btn-group waves-effect waves-classic">3</a>
+                            <a onclick="next4()" id="next4" style="color: white;" class="btn btn-info btn-group waves-effect waves-classic">4</a>-->
+                            <button type="submit" style="display: none;" id="tombol_simpan" class="btn btn-success waves-effect waves-classic">Simpan</button>
                         </div>
                             </div>
                             
@@ -98,6 +173,87 @@
       </div>
 
 <script>
+        function next1()
+        {
+            $("#step2").hide();
+            $("#step3").hide();
+            $("#step4").hide();
+            $("#step1").prop("disabled");
+
+            $("#step1").show();
+            $("#tombol_simpan").hide();
+
+            $("#dua").removeClass("current");
+            $("#tiga").removeClass("current");
+            $("#empat").removeClass("current");
+
+            $("#satu").addClass("current");
+        }
+        function next2()
+        {
+            if($("#pegawai").val())
+            {
+            $("#step2").prop("disabled");
+            $("#step1").hide();
+            $("#step3").hide();
+            $("#step4").hide();
+
+            $("#step2").show();
+            $("#tombol_simpan").hide();
+
+            $("#satu").removeClass("current");
+            $("#tiga").removeClass("current");
+            $("#empat").removeClass("current");
+
+            $("#dua").addClass("current");
+            }
+            else
+            {
+                swal("Gagal!", "Data Pegawai Belum Diisi.", "error");
+            }
+        }
+
+        function next3()
+        {
+            $("#step3").prop("disabled");
+            $("#step2").hide();
+            $("#step1").hide();
+            $("#step4").hide();
+
+            $("#step3").show();
+            $("#tombol_simpan").hide();
+
+            $("#dua").removeClass("current");
+            $("#satu").removeClass("current");
+            $("#empat").removeClass("current");
+
+            $("#tiga").addClass("current");
+        }
+
+         function next4()
+        {
+            if($("#password").val()==$("#ulangi_password").val())
+            {
+                $("#step4").prop("disabled");
+                $("#step2").hide();
+                $("#step1").hide();
+                $("#step3").hide();
+
+                $("#step4").show();
+                $("#tombol_simpan").show();
+
+                $("#dua").removeClass("current");
+                $("#satu").removeClass("current");
+                $("#tiga").removeClass("current");
+
+                $("#empat").addClass("current");
+            }
+            else
+            {
+                swal("Gagal!", "Password Tidak Sama.", "error");
+            }
+        }
+
         pegawaiall();
         function pegawaiall() {
             $.ajax({ 
@@ -114,7 +270,7 @@
                             dataType: 'json',
                             success: function (data) 
                             {   
-                                var isi = "<option>Pilih Pegawai</option>";
+                                var isi = "<option value=''>Pilih Pegawai</option>";
                                 $.each(data.data, function(index, element) {
                                     var depan = ''
                                     var belakang = ''
@@ -174,6 +330,10 @@
                                 $("#nama_jabatan").val(element.nama_jabatan);
                                 $("#kode_eselon").val(element.kode_eselon);
                                 $("#golongan").val(element.golongan);
+
+                                 $("#tampil_nip").val(nip);
+                                 $("#tampil_jabatan").val(element.nama_jabatan);
+                                 $("#tampil_golongan").val(element.golongan);
                             },
                             error: function ()
                             {
@@ -224,6 +384,17 @@
             });
             return false;
         });
+        function ulangipassword()
+        {
+          if($("#password").val()==$("#ulangi_password").val())
+          {
+            $("#statuss").html("<i class='icon md-check-all'></i>&nbsp;Password Sama").show();
+          }
+          else
+          {
+            $("#statuss").html("<i class='icon md-close'></i>&nbsp;Password Tidak Sama").show();
+          }
+        }
 
  </script> 
 @endsection

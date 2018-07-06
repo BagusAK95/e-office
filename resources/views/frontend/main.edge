@@ -106,6 +106,7 @@
     
           <!-- Navbar Toolbar Right -->
           <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+
           <li class="nav-item dropdown">
               <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
                 aria-expanded="false" data-animation="scale-up" role="button">
@@ -229,7 +230,7 @@
         <div>
           <div>
             <ul class="site-menu" data-plugin="menu">
-              <li class="site-menu-category">Master</li>
+              <li class="site-menu-category">Administrator</li>
               <li class="site-menu-item">
                 <a class="animsition-link" href="/admin/home">
                         <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
@@ -364,6 +365,7 @@
       cek_session()
       function cek_session()
         {
+          
           $.ajax({ 
               type: 'GET', 
               url: '/admin/cek_session', 
@@ -411,6 +413,8 @@
                 });
         }
         
+        var Site = window.Site;
+        Site.run();
         
       </script>
   </body>
