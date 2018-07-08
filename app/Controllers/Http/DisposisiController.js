@@ -14,6 +14,88 @@ class DisposisiController {
         }
     }
 
+    async ListIn({ params, auth }) {
+        try {
+            const user = await auth.getUser()
+            if (user.akses.split(',').indexOf('disposisi') == -1) {
+                return this.response(false, 'Akses ditolak', null)
+            }
+
+            let sql = []
+            sql.push(`nip_penerima = '` + user.nip + `'`)
+            if (params.tgl_awal != '%7Btgl_awal%7D') {
+                sql.push('tgl_disposisi >= ' + params.tgl_awal)
+            }
+            if (params.tgl_akhir != '%7Btgl_akhir%7D') {
+                sql.push('tgl_disposisi <= ' + params.tgl_akhir)
+            }
+            if (params.keyword != '%7Bkeyword%7D') {
+                sql.push(`MATCH(keyword) AGAINST('` + params.keyword + `' IN BOOLEAN MODE)`)
+            }
+
+            const data = await Disposisi.query()
+                                    .whereRaw(sql.join(' AND '))
+                                    .paginate(Number(params.page), Number(params.limit))
+            if (data) {
+                return this.response(true, null, data)
+            } else {
+                return this.response(false, 'Data tidak ditemukan', null)
+            }
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)            
+        }
+    }
+
+    async ListOut({ params, auth }) {
+        try {
+            const user = await auth.getUser()
+            if (user.akses.split(',').indexOf('disposisi') == -1) {
+                return this.response(false, 'Akses ditolak', null)
+            }
+
+            let sql = []
+            sql.push(`nip_pengirim = '` + user.nip + `'`)
+            if (params.tgl_awal != '%7Btgl_awal%7D') {
+                sql.push('tgl_disposisi >= ' + params.tgl_awal)
+            }
+            if (params.tgl_akhir != '%7Btgl_akhir%7D') {
+                sql.push('tgl_disposisi <= ' + params.tgl_akhir)
+            }
+            if (params.keyword != '%7Bkeyword%7D') {
+                sql.push(`MATCH(keyword) AGAINST('` + params.keyword + `' IN BOOLEAN MODE)`)
+            }
+
+            const data = await Disposisi.query()
+                                    .whereRaw(sql.join(' AND '))
+                                    .paginate(Number(params.page), Number(params.limit))
+            if (data) {
+                return this.response(true, null, data)
+            } else {
+                return this.response(false, 'Data tidak ditemukan', null)
+            }
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)            
+        }
+    }
+
+    async delete({ params, auth }) {
+        try {
+            const user = await auth.getUser()
+            if (user.akses.split(',').indexOf('disposisi') == -1) {
+                return this.response(false, 'Akses ditolak', null)
+            }
+            
+            const destroy = await Disposisi.query().whereRaw(`id = ` + params.id + ` AND nip_pengirim = '` + user.nip + `'`).delete()
+            if (destroy > 0) {
+                return this.response(true, null, destroy)
+            } else {
+                return this.response(false, 'Data tidak ditemukan', null)
+            }
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)
+        }
+    }
+
     async response(success, message, data) {
         return {
             success: success, 

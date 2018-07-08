@@ -612,6 +612,66 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /surat-masuk/{keyword}/{tgl_awal}/{tgl_akhir}/{page}/{limit}:
+    *   delete:
+    *     tags:
+    *       - Surat Masuk
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: keyword
+    *         in: path
+    *         description: Kata Kunci
+    *         required: false
+    *         type: string
+    *       - name: tgl_awal
+    *         in: path
+    *         description: Tanggal Awal
+    *         required: false
+    *         type: string
+    *       - name: tgl_akhir
+    *         in: path
+    *         description: Tanggal Akhir
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: path
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: path
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-masuk/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'SuratMasukController.list').middleware('checkTokenTU')
+
+    /**
+    * @swagger
+    * /surat-masuk/{id}:
+    *   delete:
+    *     tags:
+    *       - Surat Masuk
+    *     summary: Delete
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkTokenTU')
+
+    /**
+    * @swagger
     * /disposisi:
     *   post:
     *     tags:
@@ -664,6 +724,106 @@ Route.group(() => {
     *         type: string
     */
     Route.post('/disposisi', 'DisposisiController.add').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /disposisi/masuk/{keyword}/{tgl_awal}/{tgl_akhir}/{page}/{limit}:
+    *   get:
+    *     tags:
+    *       - Disposisi
+    *     summary: List In
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: keyword
+    *         in: path
+    *         description: Kata Kunci
+    *         required: false
+    *         type: string
+    *       - name: tgl_awal
+    *         in: path
+    *         description: Tanggal Awal
+    *         required: false
+    *         type: string
+    *       - name: tgl_akhir
+    *         in: path
+    *         description: Tanggal Akhir
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: path
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: path
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.get('/disposisi/masuk/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'DisposisiController.listIn').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /disposisi/keluar/{keyword}/{tgl_awal}/{tgl_akhir}/{page}/{limit}:
+    *   get:
+    *     tags:
+    *       - Disposisi
+    *     summary: List Out
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: keyword
+    *         in: path
+    *         description: Kata Kunci
+    *         required: false
+    *         type: string
+    *       - name: tgl_awal
+    *         in: path
+    *         description: Tanggal Awal
+    *         required: false
+    *         type: string
+    *       - name: tgl_akhir
+    *         in: path
+    *         description: Tanggal Akhir
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: path
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: path
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.get('/disposisi/keluar/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'DisposisiController.listOut').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /disposisi/{id}:
+    *   delete:
+    *     tags:
+    *       - Disposisi
+    *     summary: Delete
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.delete('/disposisi/:id', 'DisposisiController.delete').middleware('checkToken')
 
     /**
     * @swagger
