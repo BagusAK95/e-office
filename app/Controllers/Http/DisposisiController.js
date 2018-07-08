@@ -3,9 +3,17 @@
 const Disposisi = use('App/Models/Disposisi')
 
 class DisposisiController {
-    async add({ request }) { //Todo: Kirim Notifikasi ke Pemimpin
+    async add({ request, auth }) { //Todo: Kirim Notifikasi ke Pemimpin
         try {
+            const user = await auth.getUser()
+            if (user.akses.split(',').indexOf('disposisi') == -1) {
+                return this.response(false, 'Akses ditolak', null)
+            }
+
             const data = request.all()
+            data.nip_pengirim = user.nip
+            data.nama_pengirim = user.nama_lengkap
+            data.jabatan_pengirim = user.nama_jabatan
 
             const insert = await Disposisi.create(data)
             return this.response(true, null, insert)
@@ -14,7 +22,7 @@ class DisposisiController {
         }
     }
 
-    async ListIn({ params, auth }) {
+    async listIn({ params, auth }) {
         try {
             const user = await auth.getUser()
             if (user.akses.split(',').indexOf('disposisi') == -1) {
@@ -46,7 +54,7 @@ class DisposisiController {
         }
     }
 
-    async ListOut({ params, auth }) {
+    async listOut({ params, auth }) {
         try {
             const user = await auth.getUser()
             if (user.akses.split(',').indexOf('disposisi') == -1) {
