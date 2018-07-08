@@ -3,7 +3,7 @@
 const SuratMasuk = use('App/Models/SuratMasuk')
 
 class SuratMasukController {
-    async add({ request }) { //Todo: Kirim Notifikasi ke Pemimpin
+    async add({ request, auth }) { //Todo: Kirim Notifikasi ke Pemimpin
         try {
             const user = await auth.getUser()
             if (user.akses.split(',').indexOf('suratmasuk') == -1) {

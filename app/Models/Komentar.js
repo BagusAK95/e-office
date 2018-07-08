@@ -10,6 +10,14 @@ class Komentar extends Model {
     static get primaryKey () {
         return 'id'
     }
+
+    static get createdAtColumn () {
+        return ''
+    }
+
+    static get updatedAtColumn () {
+        return ''
+    }
 }
 
 module.exports = Komentar
