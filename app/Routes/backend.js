@@ -82,7 +82,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/profile', 'ProfileController.detail').middleware('checkTokenAdmin')
+    Route.get('/profile', 'ProfileController.detail').middleware('checkToken')
 
     /**
     * @swagger
@@ -127,7 +127,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/profile', 'ProfileController.edit').middleware('checkTokenAdmin')
+    Route.put('/profile', 'ProfileController.edit').middleware('checkToken')
 
     /**
     * @swagger
@@ -154,7 +154,7 @@ Route.group(() => {
     *         type: string
     *         format: password
     */
-    Route.put('/profile/editPassword', 'ProfileController.editPassword').middleware('checkTokenAdmin')
+    Route.put('/profile/editPassword', 'ProfileController.editPassword').middleware('checkToken')
 
     /**
     * @swagger
