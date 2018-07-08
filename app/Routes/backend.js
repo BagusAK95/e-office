@@ -608,7 +608,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkTokenTU')
+    Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkTokenTu')
 
     /**
     * @swagger
@@ -648,7 +648,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-masuk/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'SuratMasukController.list').middleware('checkTokenTU')
+    Route.get('/surat-masuk/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'SuratMasukController.list').middleware('checkTokenTu')
 
     /**
     * @swagger
@@ -668,7 +668,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkTokenTU')
+    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkTokenTu')
 
     /**
     * @swagger
