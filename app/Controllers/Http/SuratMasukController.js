@@ -29,10 +29,10 @@ class SuratMasukController {
             
             let sql = []
             if (params.tgl_awal != '%7Btgl_awal%7D') {
-                sql.push('tgl_surat >= ' + params.tgl_awal)
+                sql.push(`tgl_surat >= '` + params.tgl_awal + `'`)
             }
             if (params.tgl_akhir != '%7Btgl_akhir%7D') {
-                sql.push('tgl_surat <= ' + params.tgl_akhir)
+                sql.push(`tgl_surat <= ` + params.tgl_akhir + `'`)
             }
             if (params.keyword != '%7Bkeyword%7D') {
                 sql.push(`MATCH(keyword) AGAINST('` + params.keyword + `' IN BOOLEAN MODE)`)
@@ -49,6 +49,8 @@ class SuratMasukController {
                     sql.push('instansi_penerima = ' + user.kode_lokasi)
                     break;
             }
+            
+            console.log(sql.join(' AND '));
 
             const data = await SuratMasuk.query()
                                     .whereRaw(sql.join(' AND '))

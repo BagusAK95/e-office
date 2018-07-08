@@ -24,10 +24,10 @@ class DisposisiController {
             let sql = []
             sql.push(`nip_penerima = '` + user.nip + `'`)
             if (params.tgl_awal != '%7Btgl_awal%7D') {
-                sql.push('tgl_disposisi >= ' + params.tgl_awal)
+                sql.push(`tgl_disposisi >= '` + params.tgl_awal + `'`)
             }
             if (params.tgl_akhir != '%7Btgl_akhir%7D') {
-                sql.push('tgl_disposisi <= ' + params.tgl_akhir)
+                sql.push(`tgl_disposisi <= ` + params.tgl_akhir + `'`)
             }
             if (params.keyword != '%7Bkeyword%7D') {
                 sql.push(`MATCH(keyword) AGAINST('` + params.keyword + `' IN BOOLEAN MODE)`)
@@ -56,10 +56,10 @@ class DisposisiController {
             let sql = []
             sql.push(`nip_pengirim = '` + user.nip + `'`)
             if (params.tgl_awal != '%7Btgl_awal%7D') {
-                sql.push('tgl_disposisi >= ' + params.tgl_awal)
+                sql.push(`tgl_disposisi >= '` + params.tgl_awal + `'`)
             }
             if (params.tgl_akhir != '%7Btgl_akhir%7D') {
-                sql.push('tgl_disposisi <= ' + params.tgl_akhir)
+                sql.push(`tgl_disposisi <= ` + params.tgl_akhir + `'`)
             }
             if (params.keyword != '%7Bkeyword%7D') {
                 sql.push(`MATCH(keyword) AGAINST('` + params.keyword + `' IN BOOLEAN MODE)`)
