@@ -613,7 +613,7 @@ Route.group(() => {
     /**
     * @swagger
     * /surat-masuk/{keyword}/{tgl_awal}/{tgl_akhir}/{page}/{limit}:
-    *   delete:
+    *   get:
     *     tags:
     *       - Surat Masuk
     *     summary: List
