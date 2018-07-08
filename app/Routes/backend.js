@@ -648,7 +648,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-masuk/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'SuratMasukController.list').middleware('checkTokenTu')
+    Route.get('/surat-masuk/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'SuratMasukController.list').middleware('checkToken')
 
     /**
     * @swagger
