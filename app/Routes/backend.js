@@ -612,6 +612,56 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /surat-masuk/{keyword}/{tgl_awal}/{tgl_akhir}:
+    *   delete:
+    *     tags:
+    *       - Surat Masuk
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: keyword
+    *         in: path
+    *         description: Kata Kunci
+    *         required: false
+    *         type: string
+    *       - name: tgl_awal
+    *         in: path
+    *         description: Tanggal Awal
+    *         required: false
+    *         type: string
+    *       - name: tgl_akhir
+    *         in: path
+    *         description: Tanggal Akhir
+    *         required: false
+    *         type: string
+    */
+    Route.get('/surat-masuk/:keyword/:tgl_awal/:tgl_akhir', 'SuratMasukController.list').middleware('checkTokenTU')
+
+    /**
+    * @swagger
+    * /surat-masuk/{id}:
+    *   delete:
+    *     tags:
+    *       - Surat Masuk
+    *     summary: Delete
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkTokenTU')
+
+    /**
+    * @swagger
     * /disposisi:
     *   post:
     *     tags:
