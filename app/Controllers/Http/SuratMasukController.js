@@ -50,7 +50,7 @@ class SuratMasukController {
                     break;
             }
 
-            const data = await Login.query()
+            const data = await SuratMasuk.query()
                                     .whereRaw(sql.join(' AND '))
                                     .paginate(Number(params.page), Number(params.limit))
             if (data) {
@@ -72,7 +72,7 @@ class SuratMasukController {
             
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
-            const destroy = await Login.query().whereRaw(`id = ` + params.id + ` AND instansi_penerima = ` + instansi).delete()
+            const destroy = await SuratMasuk.query().whereRaw(`id = ` + params.id + ` AND instansi_penerima = ` + instansi).delete()
             if (destroy > 0) {
                 return this.response(true, null, destroy)                
             } else {
