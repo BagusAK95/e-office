@@ -612,7 +612,7 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /surat-masuk/{keyword}/{tgl_awal}/{tgl_akhir}:
+    * /surat-masuk/{keyword}/{tgl_awal}/{tgl_akhir}/{page}/{limit}:
     *   delete:
     *     tags:
     *       - Surat Masuk
@@ -637,8 +637,18 @@ Route.group(() => {
     *         description: Tanggal Akhir
     *         required: false
     *         type: string
+    *       - name: page
+    *         in: path
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: path
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
     */
-    Route.get('/surat-masuk/:keyword/:tgl_awal/:tgl_akhir', 'SuratMasukController.list').middleware('checkTokenTU')
+    Route.get('/surat-masuk/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'SuratMasukController.list').middleware('checkTokenTU')
 
     /**
     * @swagger
