@@ -468,6 +468,18 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /master-kantor/listAllParent:
+    *   get:
+    *     tags:
+    *       - Master Kantor
+    *     summary: List All Parent
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-kantor/listAllParent', 'MasterKantorController.listAllParent').middleware('checkToken')
+
+    /**
+    * @swagger
     * /master-instruksi:
     *   get:
     *     tags:
