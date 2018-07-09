@@ -404,7 +404,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-pegawai', 'MasterPegawaiController.listAll').middleware('checkTokenAdmin')
+    Route.get('/master-pegawai', 'MasterPegawaiController.listAll').middleware('checkToken')
 
     /**
     * @swagger
@@ -440,7 +440,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkTokenAdmin')
+    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkToken')
 
     /**
     * @swagger
