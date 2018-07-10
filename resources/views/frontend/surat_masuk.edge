@@ -1,0 +1,349 @@
+
+
+@layout('frontend/main')
+@section('content')
+<div class="page-content container-fluid">
+   <div class="row">
+      <div class="col-xxl-4 col-lg-12">
+         <!-- Example Panel With Heading -->
+         <div class="panel panel-bordered">
+            <div class="panel-heading">
+               <h3 class="panel-title">Surat Masuk</h3>
+            </div>
+            <div class="panel-body">
+               <div class="example example-grid">
+                  <div class="row">
+                     <div class="col-sm-12 col-lg-6">
+                        <div class="">
+                           <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                              <div class='btn-group' role='group'>
+                                 <a href='/admin/addsuratmasuk' class='btn btn-icon btn-info'>
+                                 <i class='icon md-plus' aria-hidden='true'></i>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-sm-6 col-lg-6">
+                        <div class="">
+                           <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                              <div class='btn-group' role='group'>
+                                 <input style="width:130px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal" id='tgawl' type="text">
+                                 &nbsp;
+                                 &nbsp;
+                                 <input style="width:130px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir" id='tgawl' type="text">
+                                 &nbsp;
+                                 &nbsp;
+                                 <input style="width:120px;" class="form-control" placeholder="Search" id='search' type="text">
+                                 &nbsp;
+                                 &nbsp;
+                                 <a onclick="cari()" href="#" class='btn btn-icon btn-info'>
+                                 <i class='icon md-search' aria-hidden='true'></i>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <table class="table table-striped table-bordered" data-tablesaw-mode="swipe"
+                  data-tablesaw-mode-switch data-tablesaw-minimap data-tablesaw-mode-exclude="columntoggle">
+                  <thead>
+                     <tr>
+                        <th>Tanggal</th>
+                        <th>Nomor Surat</th>
+                        <th>Nomor Agenda</th>
+                        <th>Atas Nama</th>
+                        <th>Perihal</th>
+                        <th style='width:120px'>Action</th>
+                     </tr>
+                  </thead>
+                  <tbody id="body">
+                  </tbody>
+               </table>
+               <div id="pagination"></div>
+               <span id="showing"></span>
+            </div>
+         </div>
+         <!-- End Example Panel With Heading -->
+      </div>
+   </div>
+</div>
+<script>
+   function cari()
+   {
+       var search = $("#search").val();
+       var tgawl = $("#tgawl").val();
+       var tgakh = $("#tgakh").val();
+   
+       if($("#search").val())    
+       {
+           if($("#tgawl").val())
+           {
+               if($("#tgakh").val())
+               {
+                   
+                   showbrand(1,search,tgawl,tgakh);
+               }
+               else
+               {
+                   showbrand(1,search,tgawl,'null');
+               }
+           }
+           else
+           {
+               showbrand(1,search,'null','null');
+           }
+       }
+       else
+       {
+           if($("#tgawl").val())
+           {
+               if($("#tgakh").val())
+               {
+                   
+                   showbrand(1,"null",tgawl,tgakh);
+               }
+               else
+               {
+                   showbrand(1,"null",tgawl,'null');
+               }
+           }
+           else
+           {
+               showbrand(1,"null",'null','null');
+           }
+       }
+   }
+   
+   function dopagin()
+   {
+       var halaman = $("#pagin").val();
+       var search = $("#search").val();
+       var tgawl = $("#tgawl").val();
+       var tgakh = $("#tgakh").val();
+   
+       if($("#search").val())    
+       {
+           if($("#tgawl").val())
+           {
+               if($("#tgakh").val())
+               {
+                   
+                   showbrand(halaman,search,tgawl,tgakh);
+               }
+               else
+               {
+                   showbrand(halaman,search,tgawl,'null');
+               }
+           }
+           else
+           {
+               showbrand(halaman,search,'null','null');
+           }
+       }
+       else
+       {
+           if($("#tgawl").val())
+           {
+               if($("#tgakh").val())
+               {
+                   
+                   showbrand(halaman,"null",tgawl,tgakh);
+               }
+               else
+               {
+                   showbrand(halaman,"null",tgawl,'null');
+               }
+           }
+           else
+           {
+               showbrand(halaman,"null",'null','null');
+           }
+       }
+   }
+   
+       showbrand(1,'null','null','null');
+       function showbrand(page,nama,tgawl,tgakh)
+       {
+           
+           if(nama=='null')
+           {
+               var naman = "{nama}";
+           }
+           else
+           {
+               var naman = nama;
+           }
+   
+           if(tgawl=='null')
+           {
+               var tgl_awal = "{tgl_awal}";
+           }
+           else
+           {
+               var tgl_awal = tgawl;
+           }
+   
+           if(tgakh=='null')
+           {
+               var tgl_akhir = "{tgl_akhir}";
+           }
+           else
+           {
+               var tgl_akhir = tgakh;
+           }
+   
+           $.ajax({ 
+               type: 'GET', 
+               url: '/admin/gettoken', 
+               success: function (data) { 
+                   $.ajax({ 
+                       type: 'GET', 
+                       url: '/api/surat-masuk/{keyword}/'+tgl_awal+'/'+tgl_akhir+'/'+ page + '/10', 
+                       headers: {
+                           'Authorization': 'Bearer ' + data.token
+                       },
+                       dataType: 'json',
+                       success: function (data) { 
+                           var text="";
+                           $.each(data.data.data, function(index, element) 
+                           {
+                               var tangg = tanggal_indo(element.tgl_surat);
+                               var tr_data = "<tr><td>"+tangg+"</td><td>"+element.nomor_surat+"</td><td>"+element.nomor_agenda+"</td><td>"+element.nama_pengirim+","+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-info'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                               text += tr_data;
+                           });
+   
+                           $("#body").html(text).show();
+   
+                           var disbalenext = '';
+                           if(data.data.lastPage==data.data.page)
+                           {
+                               disbalenext='disabled';
+                           }
+   
+                           if(naman=="{nama}")
+                           {
+                               var isi_nama = 'null';
+                           }
+                           else
+                           {
+                               var isi_nama = nama;
+                           }
+                           
+   
+                           if(tgawl=='null')
+                           {
+                               var tgl_awal = "{tgl_awal}";
+                           }
+                           else
+                           {
+                               var tgl_awal = tgawl;
+                           }
+   
+                           if(tgakh=='null')
+                           {
+                               var tgl_akhir = "{tgl_awal}";
+                           }
+                           else
+                           {
+                               var tgl_akhir = tgakh;
+                           }
+   
+   
+                           var prev="";
+                           if(page==1)
+                           {
+                               prev = "disabled";
+                           }
+   
+                           $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-info btn-pill-left' "+prev+" onclick=showbrand(1,'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-info' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-info' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-info' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-info' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-info btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div>").show();
+                       }
+                   });
+   
+   
+               },
+               error: function ()
+               {
+                   return false;
+               }
+           });
+       }
+   
+       
+   
+       function isNumber(evt) {
+           evt = (evt) ? evt : window.event;
+           var charCode = (evt.which) ? evt.which : evt.keyCode;
+           if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+               return false;
+           }
+           return true;
+       }
+   
+   
+   
+       function delete_data(nip)
+       {
+           if(confirm('Yakin menghapus data ini?'))
+           {
+               $.ajax({ 
+                   type: 'GET', 
+                   url: '/admin/gettoken', 
+                   success: function (data) {
+                       $.ajax({ 
+                           type: 'DELETE', 
+                           url: '/api/surat-masuk/'+nip, 
+                           headers: {
+                               'Authorization': 'Bearer ' + data.token
+                           },
+                           dataType: 'json',
+                           success: function (data) 
+                           { 
+                               if(data.success==false)
+                               {
+                                   swal("Gagal!", "Hapus data gagal.", "error");
+                               }
+                               else if(data.success==true)
+                               {
+                                   swal({title: "Berhasil", text: "Berhasil hapus data.", type: "success"},
+                                   function(){ 
+                                       location.reload();
+                                   }
+                                   );
+                               }
+                           },
+                           error: function ()
+                           {
+                               return false;
+                           }
+                       });
+                   },
+                   error: function ()
+                   {
+                       return false;
+                   }
+               });
+           }
+           else
+           {
+               return false;
+           }
+       }
+       
+       function tanggal_indo(tanggal)
+       {
+            var res = tanggal.split("T");
+            var tgl = res[0];
+
+            var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            var semua = tgl.split("-");
+            var tg = semua[2];
+            var bl = parseInt(semua[1]);
+            var bulan = bulan[bl];
+            var th = semua[0];
+            return tg+" "+bulan+" "+th;
+       }
+</script> 
+@endsection
+

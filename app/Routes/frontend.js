@@ -46,3 +46,6 @@ Route.get('/admin/logout', ({ session,response }) => {
 
 Route.on('/admin/tree').render('frontend/tree')
 
+Route.on('/admin/surat_masuk').render('frontend/surat_masuk')
+
+Route.on('/admin/addsuratmasuk').render('frontend/addsuratmasuk')

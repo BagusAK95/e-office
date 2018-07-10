@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="bootstrap material admin template">
+    <meta name="author" content="">
+    
+    <title>e-Office</title>
+    
+    <link rel="apple-touch-icon" href="/material/base/assets/images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/material/base/assets/images/favicon.ico">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/material/global/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/material/global/css/bootstrap-extend.min.css">
+    <link rel="stylesheet" href="/material/base/assets/css/site.min.css">
+    <link rel="stylesheet" href="/material/global/fonts/font-awesome/font-awesome.css">
+     <link rel="stylesheet" href="/material/global/vendor/bootstrap-sweetalert/sweetalert.css">
+    
+    <!-- Plugins -->
+    <link rel="stylesheet" href="/material/global/vendor/animsition/animsition.css">
+    <link rel="stylesheet" href="/material/global/vendor/asscrollable/asScrollable.css">
+    <link rel="stylesheet" href="/material/global/vendor/switchery/switchery.css">
+    <link rel="stylesheet" href="/material/global/vendor/intro-js/introjs.css">
+    <link rel="stylesheet" href="/material/global/vendor/slidepanel/slidePanel.css">
+    <link rel="stylesheet" href="/material/global/vendor/flag-icon-css/flag-icon.css">
+    <link rel="stylesheet" href="/material/global/vendor/waves/waves.css">
+    <link rel="stylesheet" href="/material/global/vendor/asscrollable/asScrollable.css">
+   
+    <link rel="stylesheet" href="/material/global/vendor/select2/select2.css">
+    <link rel="stylesheet" href="/material/global/vendor/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="/material/global/vendor/multi-select/multi-select.css">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="/material/global/fonts/material-design/material-design.min.css">
+    <link rel="stylesheet" href="/material/global/fonts/brand-icons/brand-icons.min.css">
+    <link rel='stylesheet' href='/material/font.css'>
+    
+    <!--[if lt IE 9]>
+    <script src="material/global/vendor/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+    
+    <!--[if lt IE 10]>
+    <script src="material/global/vendor/media-match/media.match.min.js"></script>
+    <script src="material/global/vendor/respond/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Scripts -->
+    <script src="/material/global/vendor/breakpoints/breakpoints.js"></script>
+    <script>
+      Breakpoints();
+    </script>
+
+    <script src="/material/global/vendor/jquery/jquery.js"></script>
+
+     <link rel="stylesheet" href="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.css">
+        <link rel="stylesheet" href="/material/global/vendor/jstree/jstree.min.css">
+
+  </head>
+  <body class="animsition">
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
+    
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
+          data-toggle="menubar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="hamburger-bar"></span>
+        </button>
+        <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse"
+          data-toggle="collapse">
+          <i class="icon md-more" aria-hidden="true"></i>
+        </button>
+        <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
+          <img class="navbar-brand-logo" src="/material/base/assets/images/logo.png" title="Remark">
+          <span class="navbar-brand-text hidden-xs-down"> e-Office</span>
+        </div>
+        <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
+          data-toggle="collapse">
+          <span class="sr-only">Toggle Search</span>
+          <i class="icon md-search" aria-hidden="true"></i>
+        </button>
+      </div>
+    
+      <div class="navbar-container container-fluid">
+        <!-- Navbar Collapse -->
+        <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
+          <!-- Navbar Toolbar -->
+          <ul class="nav navbar-toolbar">
+            <li class="nav-item hidden-float" id="toggleMenubar">
+              <a class="nav-link" data-toggle="menubar" href="#" role="button">
+                <i class="icon hamburger hamburger-arrow-left">
+                  <span class="sr-only">Toggle menubar</span>
+                  <span class="hamburger-bar"></span>
+                </i>
+              </a>
+            </li>
+          </ul>
+          <!-- End Navbar Toolbar -->
+    
+          <!-- Navbar Toolbar Right -->
+          <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+
+          <li class="nav-item dropdown">
+              <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
+                aria-expanded="false" data-animation="scale-up" role="button">
+                <i class="icon md-notifications" aria-hidden="true"></i>
+                <span class="badge badge-pill badge-danger up">5</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+                <div class="dropdown-menu-header">
+                  <h5>NOTIFICATIONS</h5>
+                  <span class="badge badge-round badge-danger">New 5</span>
+                </div>
+    
+                <div class="list-group">
+                  <div data-role="container">
+                    <div data-role="content">
+                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                          <div class="pr-10">
+                            <i class="icon md-receipt bg-red-600 white icon-circle" aria-hidden="true"></i>
+                          </div>
+                          <div class="media-body">
+                            <h6 class="media-heading">A new order has been placed</h6>
+                            <time class="media-meta" datetime="2017-06-12T20:50:48+08:00">5 hours ago</time>
+                          </div>
+                        </div>
+                      </a>
+                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                          <div class="pr-10">
+                            <i class="icon md-account bg-green-600 white icon-circle" aria-hidden="true"></i>
+                          </div>
+                          <div class="media-body">
+                            <h6 class="media-heading">Completed the task</h6>
+                            <time class="media-meta" datetime="2017-06-11T18:29:20+08:00">2 days ago</time>
+                          </div>
+                        </div>
+                      </a>
+                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                          <div class="pr-10">
+                            <i class="icon md-settings bg-red-600 white icon-circle" aria-hidden="true"></i>
+                          </div>
+                          <div class="media-body">
+                            <h6 class="media-heading">Settings updated</h6>
+                            <time class="media-meta" datetime="2017-06-11T14:05:00+08:00">2 days ago</time>
+                          </div>
+                        </div>
+                      </a>
+                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                          <div class="pr-10">
+                            <i class="icon md-calendar bg-blue-600 white icon-circle" aria-hidden="true"></i>
+                          </div>
+                          <div class="media-body">
+                            <h6 class="media-heading">Event started</h6>
+                            <time class="media-meta" datetime="2017-06-10T13:50:18+08:00">3 days ago</time>
+                          </div>
+                        </div>
+                      </a>
+                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
+                        <div class="media">
+                          <div class="pr-10">
+                            <i class="icon md-comment bg-orange-600 white icon-circle" aria-hidden="true"></i>
+                          </div>
+                          <div class="media-body">
+                            <h6 class="media-heading">Message received</h6>
+                            <time class="media-meta" datetime="2017-06-10T12:34:48+08:00">3 days ago</time>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="dropdown-menu-footer">
+                  <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
+                    <i class="icon md-settings" aria-hidden="true"></i>
+                  </a>
+                  <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
+                    All notifications
+                  </a>
+                </div>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
+                data-animation="scale-up" role="button">
+                <span class="avatar avatar-online">
+                  <span class='foto'></span>
+                  <i></i>
+                </span>
+              </a>
+              <div class="dropdown-menu" role="menu">
+                <a class="dropdown-item" href="/admin/profile" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
+                <a class="dropdown-item" href="/admin/change_password" role="menuitem"><i class="icon md-key" aria-hidden="true"></i> Change Password</a>
+                <a class="dropdown-item" href="/admin/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+              </div>
+            </li>
+            
+          </ul>
+          <!-- End Navbar Toolbar Right -->
+        </div>
+        <!-- End Navbar Collapse -->
+    
+        <!-- Site Navbar Seach -->
+        <div class="collapse navbar-search-overlap" id="site-navbar-search">
+          <form role="search">
+            <div class="form-group">
+              <div class="input-search">
+                <i class="input-search-icon md-search" aria-hidden="true"></i>
+                <input type="text" class="form-control" name="site-search" placeholder="Search...">
+                <button type="button" class="input-search-close icon md-close" data-target="#site-navbar-search"
+                  data-toggle="collapse" aria-label="Close"></button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- End Site Navbar Seach -->
+      </div>
+    </nav>    <div class="site-menubar">
+      <div class="site-menubar-body">
+        <div>
+          <div>
+            <ul class="site-menu" data-plugin="menu">
+              <li class="site-menu-category">Administrator</li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="/admin/home">
+                        <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                        <span class="site-menu-title">Dashboard</span>
+                    </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="/admin/user">
+                        <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
+                        <span class="site-menu-title">Master User</span>
+                    </a>
+              </li>
+              <li class="site-menu-item">
+                  <a class="animsition-link" href="/admin/tree">
+                          <i class="site-menu-icon md-account-box-o" aria-hidden="true"></i>
+                          <span class="site-menu-title">Master Kantor</span>
+                      </a>
+                </li>
+              <li class="site-menu-category">Surat</li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="#">
+                        <i class="site-menu-icon md-email-open" aria-hidden="true"></i>
+                        <span class="site-menu-title">Surat Masuk</span>
+                    </a>
+              </li>
+              <li class="site-menu-item">
+                <a class="animsition-link" href="#">
+                        <i class="site-menu-icon md-email" aria-hidden="true"></i>
+                        <span class="site-menu-title">Surat Keluar</span>
+                    </a>
+              </li>
+              
+              
+            </ul>
+            <div class="site-menubar-section">
+             
+            </div>      </div>
+        </div>
+      </div>
+    
+      </div>    <div class="site-gridmenu">
+      <div>
+        <div>
+         
+        </div>
+      </div>
+    </div>
+
+    <!-- Page -->
+    <div class="page">
+      <!-- Page Content -->
+      @!section('content')
+      <!-- End Page Content -->
+    </div>
+    <!-- End Page -->
+
+     <!-- Footer -->
+    <footer class="site-footer">
+      <div class="site-footer-legal">© 2018 e-Office</div>
+      <div class="site-footer-right">
+        Crafted with <i class="red-600 icon md-favorite"></i> by <a href="https://themeforest.net/user/creation-studio">Creation Studio</a>
+      </div>
+    </footer>
+
+   
+    <script src="/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+    
+    <script src="/material/global/vendor/popper-js/umd/popper.min.js"></script>
+    <script src="/material/global/vendor/bootstrap/bootstrap.js"></script>
+    <script src="/material/global/vendor/animsition/animsition.js"></script>
+    <script src="/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+    <script src="/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+    <script src="/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+    <script src="/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+    <script src="/material/global/vendor/waves/waves.js"></script>
+    
+    <!-- Plugins -->
+    <script src="/material/global/vendor/switchery/switchery.js"></script>
+    <script src="/material/global/vendor/intro-js/intro.js"></script>
+    <script src="/material/global/vendor/screenfull/screenfull.js"></script>
+    <script src="/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+        <script src="/material/global/vendor/asprogress/jquery-asProgress.js"></script>
+        <script src="/material/global/vendor/draggabilly/draggabilly.pkgd.js"></script>
+        <script src="/material/global/vendor/raty/jquery.raty.js"></script>
+    
+    <!-- Scripts -->
+    <script src="/material/global/js/Component.js"></script>
+    <script src="/material/global/js/Plugin.js"></script>
+    <script src="/material/global/js/Base.js"></script>
+    <script src="/material/global/js/Config.js"></script>
+    
+    <script src="/material/base/assets/js/Section/Menubar.js"></script>
+    <script src="/material/base/assets/js/Section/GridMenu.js"></script>
+    <script src="/material/base/assets/js/Section/Sidebar.js"></script>
+    <script src="/material/base/assets/js/Section/PageAside.js"></script>
+    <script src="/material/base/assets/js/Plugin/menu.js"></script>
+    
+    <script src="/material/global/js/config/colors.js"></script>
+    <script src="/material/base/assets/js/config/tour.js"></script>
+    <script>Config.set('assets', '/material/base/assets');</script>
+    
+    <!-- Page -->
+    <script src="/material/base/assets/js/Site.js"></script>
+    <script src="/material/global/js/Plugin/asscrollable.js"></script>
+    <script src="/material/global/js/Plugin/slidepanel.js"></script>
+    <script src="/material/global/js/Plugin/switchery.js"></script>
+        <script src="/material/global/js/Plugin/responsive-tabs.js"></script>
+        <script src="/material/global/js/Plugin/tabs.js"></script>
+        <script src="/material/global/js/Plugin/asprogress.js"></script>
+        <script src="/material/global/js/Plugin/panel.js"></script>
+        <script src="/material/global/js/Plugin/asscrollable.js"></script>
+        <script src="/material/global/js/Plugin/raty.js"></script>
+    
+        <script src="/material/base/assets/examples/js/uikit/panel-structure.js"></script>
+        
+        <script src="/material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
+        <script src="/material/global/js/Plugin/bootstrap-sweetalert.js"></script>
+        <script src="/material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
+
+        
+
+        <script src="/material/global/vendor/select2/select2.full.min.js"></script>
+        <script src="/material/global/js/Plugin/select2.js"></script>
+        <script src="/material/global/js/Plugin/multi-select.js"></script>
+
+        <script src="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+        <script src="/material/global/vendor/jstree/jstree.min.js"></script>
+        <script src="/material/global/js/Plugin/bootstrap-treeview.js"></script>
+        <script src="/material/global/js/Plugin/jstree.js"></script>
+        <script src="/material/base/assets/examples/js/advanced/treeview.js"></script>
+    <script>
+      cek_session()
+      function cek_session()
+        {
+          
+          $.ajax({ 
+              type: 'GET', 
+              url: '/admin/cek_session', 
+              success: function (data) { 
+                  if(data)
+                  {
+                    return false;
+                  }
+                  else
+                  {
+                    swal({title: "Session Time Out", text: "Silahkan login kembali.", type: "error"},
+                    function(){ 
+                        window.location.href='/login';
+                    }
+                    );
+                  }
+              }
+          });
+        }
+
+        cek_token()
+        function cek_token()
+        {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/admin/gettoken', 
+                success: function (data) { 
+                    $.ajax({ 
+                        type: 'GET', 
+                        url: '/api/profile', 
+                        headers: {
+                            'Authorization': 'Bearer ' + data.token
+                        },
+                        success: function (data) { 
+                            $(".nama_user").html(data.data.nama_lengkap).show();
+                            $(".foto").html('<img src="'+data.data.foto+'">').show();
+                            $(".jabatan").html(data.data.nama_jabatan).show();
+                        }
+                    });
+                },
+                error: function ()
+                {
+                    return false;
+                }
+                });
+        }
+        
+        var Site = window.Site;
+        Site.run();
+        
+      </script>
+  </body>
+</html>

@@ -157,13 +157,22 @@
                                     <option value="0">Non Aktif</option>
                                 </select>
                                 </div>
+
+                                <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">Akses</label>
+                                <BR>
+                                <input type="checkbox" name="sm" id="sm" value="suratmasuk"> Surat Masuk<br>
+                                <input type="checkbox" name="sk" id="sk" value="suratkeluar"> Surat Keluar<br>
+                                <input type="checkbox" name="di" id="di" value="disposisi"> Disposisi<br>
+                                </div>
                             </div>
                            <br>
+                           <a class="btn btn-warning waves-classic" href="/admin/user" style="color:white">Batal</a>
                             <div style="float:right" >                            
                                 <div style="overflow:auto;">
                                     <div style="float:right;">
-                                        <button type="button" class="btn btn-danger waves-classic" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                                        <button type="button" class="btn btn-success waves-classic" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                                        <button type="button" class="btn btn-danger waves-classic" style="color:white" id="prevBtn" onclick="nextPrev(-1)">Kembali</button>
+                                        <button type="button" class="btn btn-success waves-classic" id="nextBtn" onclick="nextPrev(1)">Selanjutnya</button>
                                         <span id="submit"></span>
                                     </div>
                                 </div>
@@ -274,8 +283,24 @@
                 }
             });
         }
+        function simpan()
+        {
+            var akses = "";
+            if($("#sm").val())
+            {
+                 akses += $("#sm").val();
+            }
 
-        $( "#simpan" ).submit(function( event ) {
+            if($("#sk").val())
+            {
+                akses += ","+$("#sk").val();
+            }
+
+            if($("#di").val())
+            {
+                akses += ","+$("#di").val();
+            }
+
             $.ajax({ 
             type: 'GET', 
             url: '/admin/gettoken', 
@@ -286,7 +311,64 @@
                 headers: {
 					'Authorization': 'Bearer ' + data.token
 				},
-                data : "nip="+$("#pegawai").val()+"&nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&password="+$("#password").val()+"&level="+$("#level").val()+"&status="+$("#status").val()+"&kode_eselon="+$("#kode_eselon").val(),
+                data : "nip="+$("#pegawai").val()+"&nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&password="+$("#password").val()+"&level="+$("#level").val()+"&status="+$("#status").val()+"&kode_eselon="+$("#kode_eselon").val()+"&akses="+akses,
+                success: function (data) 
+                { 
+                    if(data.success==false)
+                    {
+                        swal("Gagal!", "Gagal Menyimpan data.", "error");
+                    }
+                    else if(data.success==true)
+                    {
+                        swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
+                        function(){ 
+                            window.location.href="/admin/user";
+                        }
+                        );
+                    }
+                },
+                error: function(data)
+                {
+                    swal("Gagal!", "Gagal Menyimpan data.", "error");
+                }
+                });
+            },
+            error: function ()
+            {
+                return false;
+            }
+            });
+            return false;
+        }
+
+        $( "#simpan" ).submit(function( event ) {
+            var akses = "";
+            if($("#sm").val())
+            {
+                 akses += $("#sm").val();
+            }
+
+            if($("#sk").val())
+            {
+                akses += ","+$("#sk").val();
+            }
+
+            if($("#di").val())
+            {
+                akses += ","+$("#di").val();
+            }
+
+            $.ajax({ 
+            type: 'GET', 
+            url: '/admin/gettoken', 
+            success: function (data) { 
+               $.ajax({ 
+                type: 'POST', 
+                url: '/api/user', 
+                headers: {
+					'Authorization': 'Bearer ' + data.token
+				},
+                data : "nip="+$("#pegawai").val()+"&nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&password="+$("#password").val()+"&level="+$("#level").val()+"&status="+$("#status").val()+"&kode_eselon="+$("#kode_eselon").val()+"&akses="+akses,
                 success: function (data) 
                 { 
                     if(data.success==false)
@@ -351,11 +433,11 @@
           if (n == (x.length - 1)) {
             document.getElementById("nextBtn").innerHTML = "Submit";
             $("#nextBtn").hide();
-            $("#submit").html("<input class='btn btn-success waves-classic' type='submit' value='Submit'/>");
+            $("#submit").html("<a onclick='simpan()' class='btn btn-success' style='color:white'>Simpan</a>");
           } else {
             $("#nextBtn").show();
             $("#submit").html("");
-            document.getElementById("nextBtn").innerHTML = "Next";
+            document.getElementById("nextBtn").innerHTML = "Selanjutnya";
           }
 
 

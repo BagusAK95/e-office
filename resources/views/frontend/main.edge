@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="/material/global/css/bootstrap-extend.min.css">
     <link rel="stylesheet" href="/material/base/assets/css/site.min.css">
     <link rel="stylesheet" href="/material/global/fonts/font-awesome/font-awesome.css">
-     <link rel="stylesheet" href="/material/global/vendor/bootstrap-sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="/material/global/vendor/bootstrap-sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="/material/global/vendor/summernote/summernote.css">
     
     <!-- Plugins -->
     <link rel="stylesheet" href="/material/global/vendor/animsition/animsition.css">
@@ -56,8 +57,10 @@
 
     <script src="/material/global/vendor/jquery/jquery.js"></script>
 
-     <link rel="stylesheet" href="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.css">
-        <link rel="stylesheet" href="/material/global/vendor/jstree/jstree.min.css">
+    <link rel="stylesheet" href="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.css">
+    <link rel="stylesheet" href="/material/global/vendor/jstree/jstree.min.css">
+
+    <link rel="stylesheet" href="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css">
 
   </head>
   <body class="animsition">
@@ -230,38 +233,45 @@
         <div>
           <div>
             <ul class="site-menu" data-plugin="menu">
-              <li class="site-menu-category">Administrator</li>
-              <li class="site-menu-item">
+             
+              <li class="site-menu-category konsol">Administrator</li>
+              <li class="site-menu-item konsol">
                 <a class="animsition-link" href="/admin/home">
                         <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                         <span class="site-menu-title">Dashboard</span>
                     </a>
               </li>
-              <li class="site-menu-item">
+              <li class="site-menu-item konsol">
                 <a class="animsition-link" href="/admin/user">
                         <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
                         <span class="site-menu-title">Master User</span>
                     </a>
               </li>
-              <li class="site-menu-item">
+              <li class="site-menu-item konsol">
                   <a class="animsition-link" href="/admin/tree">
                           <i class="site-menu-icon md-account-box-o" aria-hidden="true"></i>
                           <span class="site-menu-title">Master Kantor</span>
                       </a>
-                </li>
+              </li>
               <li class="site-menu-category">Surat</li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="#">
+              <li class="site-menu-item" id="surat_masuk" style="display: none">
+                <a class="animsition-link" href="/admin/surat_masuk">
                         <i class="site-menu-icon md-email-open" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Masuk</span>
                     </a>
               </li>
-              <li class="site-menu-item">
+              <li class="site-menu-item" id="surat_keluar" style="display: none">
                 <a class="animsition-link" href="#">
                         <i class="site-menu-icon md-email" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Keluar</span>
                     </a>
               </li>
+              <li class="site-menu-item" id="disposisi" style="display: none">
+                  <a class="animsition-link" href="#">
+                          <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
+                          <span class="site-menu-title">Disposisi</span>
+                      </a>
+                </li>
               
               
             </ul>
@@ -289,9 +299,9 @@
 
      <!-- Footer -->
     <footer class="site-footer">
-      <div class="site-footer-legal">© 2018 e-Office</div>
+      <div class="site-footer-legal"></div>
       <div class="site-footer-right">
-        Crafted with <i class="red-600 icon md-favorite"></i> by <a href="https://themeforest.net/user/creation-studio">Creation Studio</a>
+        © 2018 e-Office
       </div>
     </footer>
 
@@ -361,6 +371,13 @@
         <script src="/material/global/js/Plugin/bootstrap-treeview.js"></script>
         <script src="/material/global/js/Plugin/jstree.js"></script>
         <script src="/material/base/assets/examples/js/advanced/treeview.js"></script>
+
+        <script src="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+        <script src="/material/global/js/Plugin/bootstrap-datepicker.js"></script>
+
+        <script src="/material/global/vendor/summernote/summernote.min.js"></script>
+        <script src="/material/global/js/Plugin/summernote.js"></script>
+        <script src="/material/base/assets/examples/js/forms/editor-summernote.js"></script>
     <script>
       cek_session()
       function cek_session()
@@ -401,8 +418,48 @@
                         },
                         success: function (data) { 
                             $(".nama_user").html(data.data.nama_lengkap).show();
-                            $(".foto").html('<img src="'+data.data.foto+'">').show();
+                            if(data.data.foto)
+                            {
+                              $(".foto").html('<img src="'+data.data.foto+'">').show();
+                            }
+                            else
+                            {
+                              $(".foto").html('<img src="/material/base/src/images/user.png">').show();
+                            }
+                            
                             $(".jabatan").html(data.data.nama_jabatan).show();
+
+                            if(data.data.level==1)
+                            {
+                              $(".konsol").show();
+                            }
+                            else
+                            {
+                              $(".konsol").hide();
+                            }
+
+                            var akses = data.data.akses;
+                            var smu = "";
+                            if(akses)
+                            {
+                                var max = akses.split(",").length;
+                                var data_akses = akses.split(",");
+                                for (var index = 0; index < max; index++) 
+                                {
+                                    if(data_akses[index]=="suratmasuk")
+                                    {
+                                      $("#surat_masuk").show();
+                                    }
+                                    if(data_akses[index]=="suratkeluar")
+                                    {
+                                      $("#surat_keluar").show();
+                                    }
+                                    if(data_akses[index]=="disposisi")
+                                    {
+                                      $("#disposisi").show();
+                                    }
+                                }
+                            }
                         }
                     });
                 },
