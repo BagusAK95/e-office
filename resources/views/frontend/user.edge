@@ -200,6 +200,14 @@
                                       <option value="0">Non Aktif</option>
                                   </select>
                                   </div>
+
+                                <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">Akses</label>
+                                <BR>
+                                <input type="checkbox" name="sm" id="sm" value="suratmasuk"> Surat Masuk<br>
+                                <input type="checkbox" name="sk" id="sk" value="suratkeluar"> Surat Keluar<br>
+                                <input type="checkbox" name="di" id="di" value="disposisi"> Disposisi<br>
+                                </div>
       
                                  <br>
                                   <div style="float:right">
@@ -282,7 +290,7 @@
                                     level = 'Staff';
                                 }
 
-                                var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+element.nama_jabatan+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-info' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-info' onclick=edit('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-info'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                                var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+element.nama_jabatan+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-info' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-info' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-info'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
                                 text += tr_data;
                             });
 
@@ -371,6 +379,18 @@
                                 foto = data.data.foto;
                             }
 
+
+                            var akses = data.data.akses;
+                            var smu = "";
+                            if(akses)
+                            {
+                                var max = akses.split(",").length;
+                                var data_akses = akses.split(",");
+                                for (var index = 0; index < max; index++) 
+                                {
+                                    smu += (index+1)+". "+data_akses[index]+"<br>";
+                                }
+                            }
                             $("#e_foto").html('<a class="avatar avatar-lg"><img width="99" height="132" src="'+foto+'"/></a>').show();
                             $("#e_nip").html(data.data.nip).show();
                             $("#e_nama").html(data.data.nama_lengkap).show();
@@ -381,7 +401,7 @@
                             $("#e_jabatan").html(data.data.nama_jabatan).show();
                             $("#e_golongan").html(data.data.golongan).show();
                             $("#e_level").html(level).show();
-                            $("#e_akses").html(data.data.akses).show();
+                            $("#e_akses").html(smu).show();
                             $("#e_kode_eselon").html(data.data.kode_eselon).show();
                             $("#e_status").html(status).show();
                             $("#e_keterangan").html(data.data.keterangan).show();
@@ -402,10 +422,11 @@
             });
         }
 
-
-
-        function edit(nip)
+        function editcok(nip)
         {
+            $("#sm").prop( "checked",false );
+            $("#sk").prop( "checked",false );
+            $("#di").prop( "checked",false );
             $.ajax({ 
                 type: 'GET', 
                 url: '/admin/gettoken', 
@@ -419,7 +440,31 @@
                         dataType: 'json',
                         success: function (data) { 
                           
-                         
+                            var akses = data.data.akses;
+                            var smu = "";
+                            if(akses)
+                            {
+                                var max = akses.split(",").length;
+                                var data_akses = akses.split(",");
+                                for (var index = 0; index < max; index++) 
+                                {
+                                    if(data_akses[index]=="suratmasuk")
+                                    {
+                                        $("#sm").prop( "checked",true );
+                                    }
+
+                                    if(data_akses[index]=="suratkeluar")
+                                    {
+                                        $("#sk").prop( "checked",true );
+                                    }
+
+                                    if(data_akses[index]=="disposisi")
+                                    {
+                                        $("#di").prop( "checked",true );
+                                    }
+                                    
+                                }
+                            }
                             $("#pegawai").val(data.data.nip);
                             $("#nama_lengkap").val(data.data.nama_lengkap);
                             $("#nohp").val(data.data.nohp);
@@ -433,7 +478,6 @@
                             $("#kode_eselon").val(data.data.kode_eselon);
                             $("#orange").html(data.data.nama_lengkap).show();
                             $('#editmodaln').modal('show');
-                            
                         },
                          error: function ()
                         {
@@ -500,6 +544,22 @@
 
         
         $( "#simpan" ).submit(function( event ) {
+            var akses = "";
+            if($("#sm").is(':checked'))
+            {
+                 akses += $("#sm").val();
+            }
+
+            if($("#sk").is(':checked'))
+            {
+                akses += ","+$("#sk").val();
+            }
+
+            if($("#di").is(':checked'))
+            {
+                akses += ","+$("#di").val();
+            }
+
             $.ajax({ 
             type: 'GET', 
             url: '/admin/gettoken', 
@@ -510,7 +570,7 @@
                 headers: {
 					'Authorization': 'Bearer ' + data.token
 				},
-                data : "nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&level="+$("#level").val()+"&status="+$("#status").val(),
+                data : "nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&level="+$("#level").val()+"&status="+$("#status").val()+"&akses="+akses,
                 success: function (data) 
                 { 
                     if(data.success==false)

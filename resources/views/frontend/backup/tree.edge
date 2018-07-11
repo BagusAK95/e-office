@@ -1,0 +1,105 @@
+@layout('frontend/main')
+@section('content')    
+      <div class="page-content container-fluid">
+        <div class="row">
+          <div class="col-xxl-4 col-lg-12">
+            <!-- Example Panel With Heading -->
+            <div class="panel panel-bordered">
+              <div class="panel-heading">
+                <h3 class="panel-title">Master Kantor</h3>
+              </div>
+              <div class="panel-body">
+                    <div class="col-xl-12 col-md-12">
+                            <!-- Example Expanded -->
+                            <div class="example-wrap">
+                              <h4 class="example-title"></h4>
+                              <div class="example">
+                                <div data-plugin="treeview" data-expand-icon="icon md-chevron-right" data-collapse-icon="icon md-chevron-down" data-source="getExampleTreeview" data-levels="99" data-node-icon="icon md-account" id="exampleExpanded"></div>
+                              </div>
+                            </div>
+                            <!-- End Example Expanded -->
+                          </div>
+            
+                    
+              </div>
+
+              
+            </div>
+            <!-- End Example Panel With Heading -->
+          </div>
+         
+
+
+          </div>
+
+
+
+
+        </div>
+      </div>
+
+      <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Detail<h4>
+        </div>
+        <div class="modal-body">
+          <span id="detail"></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+      <script>
+        function detail_pegawai(id)
+        {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/admin/gettoken', 
+                success: function (data) { 
+                    $.ajax({ 
+                        type: 'GET', 
+                        url: '/api/master-pegawai/byLocation/'+id, 
+                        headers: {
+                            'Authorization': 'Bearer ' + data.token
+                        },
+                        success: function (data) { 
+                            var isi = "";
+                            var number = 1;
+                            $.each(data.data, function(index, element) {
+                                var depan="";
+                                if(element.gelar_depan)
+                                {
+                                    depan += element.gelar_depan+" ";
+                                }
+                                var belakang = "";
+                                if(element.gelar_belakang)
+                                {
+                                    belakang += ", "+element.gelar_belakang;
+                                }
+                                isi += "<tr><td>"+depan+element.nama+belakang+"</td> <td>"+element.nama_jabatan+"</td></tr>";
+                                number++;
+                            });
+                            var html = "<table class='table table-striped'><tr><th>Nama Pegawai</th><th>Jabatan</th></tr>";
+                            $("#detail").html(html+isi).show();
+                            $('#myModal').modal('show');
+                        }
+                    });
+                },
+                error: function ()
+                {
+                    return false;
+                }
+                });
+        }
+        
+      </script>
+@endsection
