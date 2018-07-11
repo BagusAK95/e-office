@@ -56,6 +56,31 @@ class MasterPegawaiController {
         }
     }
 
+    async listAllSubEmployes({ auth }) {
+        try {
+            const user = await auth.getUser()
+
+            let startLokasi = user.kode_lokasi.toString() 
+            let endLokasi = user.kode_lokasi.toString().replace(/0+$/g, '')
+
+            const objMatch = user.kode_lokasi.toString().match(/0+$/g)
+            if (objMatch) {
+                for (let i = 0; i < objMatch[0].split('').length; i++) {
+                   endLokasi += '9' 
+                }
+            }
+    
+            const data = await MasterPegawai.query().whereBetween('kode_lokasi', [startLokasi, endLokasi])
+            if (data) {
+                return this.response(true, null, data)
+            } else {
+                return this.response(false, 'Data tidak ditemukan', null)
+            }   
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)
+        }
+    }
+
     async detail({params}){
         try {
             const data = await MasterPegawai.query()

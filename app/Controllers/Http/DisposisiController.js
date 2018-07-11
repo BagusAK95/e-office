@@ -104,6 +104,24 @@ class DisposisiController {
         }
     }
 
+    async detail({ params, auth }) {
+        try {
+            const user = await auth.getUser()
+            if (user.akses.split(',').indexOf('disposisi') == -1) {
+                return this.response(false, 'Akses ditolak', null)
+            }
+            
+            const data = await Disposisi.query().whereRaw(`id = ` + params.id + ` AND (nip_penerima = '` + user.nip + `' OR nip_pengirim = '` + user.nip + `')`).first()
+            if (data) {
+                return this.response(true, null, data)
+            } else {
+                return this.response(false, 'Data tidak ditemukan', null)
+            }
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)
+        }
+    }
+
     async response(success, message, data) {
         return {
             success: success, 

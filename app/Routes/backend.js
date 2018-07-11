@@ -426,6 +426,18 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /master-pegawai/subEmployes:
+    *   get:
+    *     tags:
+    *       - Master Pegawai
+    *     summary: List All Sub Employes
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-pegawai/subEmployes', 'MasterPegawaiController.listAllSubEmployes').middleware('checkToken')
+
+    /**
+    * @swagger
     * /master-pegawai/{nip}:
     *   get:
     *     tags:
@@ -836,6 +848,26 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/disposisi/keluar/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'DisposisiController.listOut').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /disposisi/{id}:
+    *   get:
+    *     tags:
+    *       - Disposisi
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.get('/disposisi/:id', 'DisposisiController.detail').middleware('checkToken')
 
     /**
     * @swagger
