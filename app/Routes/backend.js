@@ -665,6 +665,26 @@ Route.group(() => {
     /**
     * @swagger
     * /surat-masuk/{id}:
+    *   get:
+    *     tags:
+    *       - Surat Masuk
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-masuk/:id', 'SuratMasukController.detail').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /surat-masuk/{id}:
     *   delete:
     *     tags:
     *       - Surat Masuk

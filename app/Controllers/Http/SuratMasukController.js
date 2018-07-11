@@ -83,6 +83,26 @@ class SuratMasukController {
         }
     }
 
+    async detail({ params, auth}) {
+        try {
+            const user = await auth.getUser()
+            if (user.akses.split(',').indexOf('suratmasuk') == -1) {
+                return this.response(false, 'Akses ditolak', null)
+            }
+            
+            const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
+
+            const data = await SuratMasuk.query().whereRaw(`id = ` + params.id + ` AND instansi_penerima = ` + instansi).first()
+            if (data) {
+                return this.response(true, null, data)                
+            } else {
+                return this.response(false, 'Data tidak ditemukan', null)
+            }
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)
+        }
+    }
+
     async response(success, message, data) {
         return {
             success: success, 
