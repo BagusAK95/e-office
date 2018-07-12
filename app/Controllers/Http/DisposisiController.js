@@ -42,8 +42,8 @@ class DisposisiController {
             }
 
             const data = await Disposisi.query()
-                                    .whereRaw(sql.join(' AND '))
-                                    .paginate(Number(params.page), Number(params.limit))
+                                        .whereRaw(sql.join(' AND '))
+                                        .paginate(Number(params.page), Number(params.limit))
             if (data) {
                 return this.response(true, null, data)
             } else {
@@ -74,8 +74,8 @@ class DisposisiController {
             }
 
             const data = await Disposisi.query()
-                                    .whereRaw(sql.join(' AND '))
-                                    .paginate(Number(params.page), Number(params.limit))
+                                        .whereRaw(sql.join(' AND '))
+                                        .paginate(Number(params.page), Number(params.limit))
             if (data) {
                 return this.response(true, null, data)
             } else {
@@ -93,7 +93,7 @@ class DisposisiController {
                 return this.response(false, 'Akses ditolak', null)
             }
             
-            const destroy = await Disposisi.query().whereRaw(`id = ` + params.id + ` AND nip_pengirim = '` + user.nip + `'`).delete()
+            const destroy = await Disposisi.query().where({id: Number(params.id), nip_pengirim: user.nip}).delete()
             if (destroy > 0) {
                 return this.response(true, null, destroy)
             } else {

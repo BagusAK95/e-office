@@ -7,7 +7,7 @@ class KomentarController {
         try {
             const user = await auth.getUser()
             
-            let data = request.only(['id_surat_masuk', 'id_disposisi', 'isi_komentar'])
+            let data = request.all()
             data.nip = user.nip
 
             const insert = await Komentar.create(data)
