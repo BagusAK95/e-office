@@ -901,10 +901,15 @@ Route.group(() => {
     *     produces:
     *       - application/json
     *     parameters:
+    *       - name: id_surat_masuk
+    *         in: formData
+    *         description: ID Surat Masuk
+    *         required: false
+    *         type: string
     *       - name: id_disposisi
     *         in: formData
     *         description: ID Disposisi
-    *         required: true
+    *         required: false
     *         type: string
     *       - name: isi_komentar
     *         in: formData
@@ -913,4 +918,59 @@ Route.group(() => {
     *         type: string
     */
     Route.post('/komentar', 'KomentarController.add').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /komentar:
+    *   get:
+    *     tags:
+    *       - Komentar
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_surat_masuk
+    *         in: query
+    *         description: ID Surat Masuk
+    *         required: false
+    *         type: string
+    *       - name: id_disposisi
+    *         in: query
+    *         description: ID Disposisi
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: query
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Limit
+    *         required: true
+    *         type: string
+    */
+    Route.get('/komentar', 'KomentarController.list').middleware('checkToken')
+
+    /**
+    * @swagger
+    * /komentar/{id}:
+    *   delete:
+    *     tags:
+    *       - Komentar
+    *     summary: Delete
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.delete('/komentar/:id', 'KomentarController.delete').middleware('checkToken')
 }).prefix('api')
