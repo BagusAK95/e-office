@@ -18,6 +18,14 @@ class Disposisi extends Model {
     static get updatedAtColumn () {
         return ''
     }
+
+    static get hidden () {
+        return ['instruksi']
+    }
+
+    instruksi_ () {
+        return this.hasOne('App/Models/MasterInstruksi', 'instruksi', 'id')
+    }
 }
 
 module.exports = Disposisi

@@ -131,7 +131,10 @@ class DisposisiController {
                 return this.response(false, 'Akses ditolak', null)
             }
             
-            const data = await Disposisi.query().whereRaw(`id = ` + params.id + ` AND (nip_penerima = '` + user.nip + `' OR nip_pengirim = '` + user.nip + `')`).first()
+            const data = await Disposisi.query()
+                                        .whereRaw(`id = ` + params.id + ` AND (nip_penerima = '` + user.nip + `' OR nip_pengirim = '` + user.nip + `')`)
+                                        .with('instruksi_')                                        
+                                        .first()
             if (data) {
                 return this.response(true, null, data)
             } else {

@@ -18,6 +18,14 @@ class SuratMasuk extends Model {
     static get updatedAtColumn () {
         return ''
     }
+
+    static get hidden () {
+        return ['klasifikasi']
+    }
+
+    klasifikasi_ () {
+        return this.hasOne('App/Models/MasterKlasifikasi', 'klasifikasi', 'id')
+    }
 }
 
 module.exports = SuratMasuk

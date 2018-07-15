@@ -59,8 +59,8 @@ class SuratMasukController {
             }
 
             const data = await SuratMasuk.query()
-                                    .whereRaw(sql.join(' AND '))
-                                    .paginate(Number(params.page), Number(params.limit))
+                                        .whereRaw(sql.join(' AND '))
+                                        .paginate(Number(params.page), Number(params.limit))
             if (data) {
                 return this.response(true, null, data)
             } else {
@@ -100,7 +100,10 @@ class SuratMasukController {
             
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
-            const data = await SuratMasuk.query().whereRaw(`id = ` + params.id + ` AND instansi_penerima = ` + instansi).first()
+            const data = await SuratMasuk.query()
+                                        .whereRaw(`id = ` + params.id + ` AND instansi_penerima = ` + instansi)
+                                        .with('klasifikasi_')                                        
+                                        .first()
             if (data) {
                 return this.response(true, null, data)                
             } else {
