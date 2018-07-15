@@ -1,6 +1,7 @@
 'use strict'
 
 const SuratMasuk = use('App/Models/SuratMasuk')
+const MasterPegawai = use('App/Models/MasterPegawai')
 
 class SuratMasukController {
     async add({ request, auth }) { //Todo: Kirim Notifikasi ke Pemimpin
@@ -14,6 +15,12 @@ class SuratMasukController {
 
             let data = request.all()
             data.instansi_penerima = instansi
+            data.nip_tata_usaha = user.nip
+
+            const dataPimpinan = await MasterPegawai.query().whereRaw('kode_lokasi = ' + instansi + ' AND kode_eselon <> NULL').first()
+            if (dataPimpinan) {
+                data.nip_pimpinan = dataPimpinan.nip
+            }
 
             const insert = await SuratMasuk.create(data)
             return this.response(true, null, insert)

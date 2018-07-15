@@ -1,14 +1,30 @@
 'use strict'
 
 const Komentar = use('App/Models/Komentar')
+const SuratMasuk = use('App/Models/SuratMasuk')
+const Disposisi = use('App/Models/Disposisi')
 
 class KomentarController {
     async add({ request, auth }){
         try {
             const user = await auth.getUser()
-            
+
             let data = request.all()
-            data.nip = user.nip
+            data.nip_pengirim = user.nip
+
+            if (data.id_surat_masuk) {
+                const dataSurat = await SuratMasuk.query().where('id', data.id_surat_masuk).first()
+                if (dataSurat) {
+                    data.nip_penerima = dataSurat.nip_tata_usaha
+                }
+            }
+
+            if (data.id_disposisi) {
+                const dataDisposisi = await Disposisi.query().where('id', data.id_disposisi).first()
+                if (dataDisposisi) {
+                    data.nip_penerima = dataDisposisi.nip_pengirim
+                }
+            }
 
             const insert = await Komentar.create(data)
             return this.response(true, null, insert)
