@@ -576,6 +576,11 @@ Route.group(() => {
     *         description: Alamat Pengirim
     *         required: true
     *         type: string
+    *       - name: klasifikasi
+    *         in: formData
+    *         description: Klasifikasi
+    *         required: true
+    *         type: string
     *       - name: keamanan
     *         in: formData
     *         description: Tingkat Keamanan (1=Biasa, 2=Rahasia Terbatas, 3=Rahasia, 4=Sangat Rahasia)
@@ -849,6 +854,26 @@ Route.group(() => {
     */
     Route.get('/disposisi/keluar/:keyword/:tgl_awal/:tgl_akhir/:page/:limit', 'DisposisiController.listOut').middleware('checkToken')
 
+    /**
+    * @swagger
+    * /disposisi/surat/{id_surat_masuk}:
+    *   get:
+    *     tags:
+    *       - Disposisi
+    *     summary: List By Mail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_surat_masuk
+    *         in: path
+    *         description: Id Surat Masuk
+    *         required: true
+    *         type: string
+    */
+    Route.get('/disposisi/surat/:id_surat_masuk', 'DisposisiController.listAllByMail').middleware('checkToken')
+    
     /**
     * @swagger
     * /disposisi/{id}:

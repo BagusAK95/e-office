@@ -86,6 +86,25 @@ class DisposisiController {
         }
     }
 
+    async listAllByMail({ params, auth }) {
+        try {
+            const user = await auth.getUser()
+            if (user.akses.split(',').indexOf('disposisi') == -1) {
+                return this.response(false, 'Akses ditolak', null)
+            }
+
+            const data = await Disposisi.query()
+                                        .where('id_surat_masuk', Number(params.id_surat_masuk))
+            if (data) {
+                return this.response(true, null, data)
+            } else {
+                return this.response(false, 'Data tidak ditemukan', null)
+            }
+        } catch (error) {
+            return this.response(false, error.sqlMessage, null)            
+        }
+    }
+
     async delete({ params, auth }) {
         try {
             const user = await auth.getUser()
