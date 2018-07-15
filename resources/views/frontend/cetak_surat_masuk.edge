@@ -1,0 +1,146 @@
+<html>
+  <head>
+    <title>Cetak Surat Masuk</title>
+    <script src="/material/global/vendor/jquery/jquery.js"></script>
+    <meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+    <style type="text/css">
+    .prtext {
+    color: #000000;
+    font-family: tahoma;
+    font-size: 13px;
+    }
+    .prhead {
+    color: #000000;
+    font-family: tahoma;
+    font-size: 14px;
+    }
+    .prtext_blacksmall {
+    font-size: 11px;
+    color: #00000;
+    font-family: tahoma;
+    }
+    .prtitle1 {
+    font-size: 20px;
+    color: #000000;
+    font-family: times new roman;
+    font-weight: bold;
+    }
+    .prtitle {
+    font-size: 18px;
+    color: #000000;
+    font-family: tahoma;
+    font-weight: bold;
+    }
+    .logo {
+      width:100px;
+      height:100px;
+    }
+</style>
+</head>
+<body bgcolor="#ffffff">
+<br>
+<br>
+<center>
+<div class="prtitle1">Cetak Surat Masuk</div>
+
+
+<br>
+<table cellspacing="0"  bordercolor="#000000" cellpadding="4" border="1" style="border: solid 1.5pt black; border-collapse: collapse;">
+    <tbody id='tabel'>
+    </tbody>
+</table>
+</center>
+<body>
+</html>
+<script>
+    showtable();
+    function showtable()
+    {
+        //alert("ssdsd");
+        $.ajax({ 
+            type: 'GET', 
+            url: '/admin/gettoken', 
+            success: function (data) { 
+                
+                $.ajax({ 
+                    type: 'GET', 
+                    headers: {
+                            'Authorization': 'Bearer ' + data.token
+                    },
+                    url: '/api/surat-masuk/{{params.id}}', 
+                    success: function (data) 
+                    { 
+                        var element = data.data;
+
+                        var keamanan = "";
+                        if(element.keamanan==1)
+                        {
+                            keamanan = "Biasa";
+                        }
+                        else if(element.keamanan==2)
+                        {
+                            keamanan = "Rahasia Terbatas";
+                        }
+                        else if(element.keamanan==3)
+                        {
+                            keamanan = "Rahasia";
+                        }
+                        else if(element.keamanan==4)
+                        {
+                            keamanan = "Sangat Rahasia";
+                        }
+
+                        var kecepatan = "";
+                        if(element.kecepatan==1)
+                        {
+                            kecepatan = "Biasa";
+                        }
+                        else if(element.kecepatan==2)
+                        {
+                            kecepatan = "Segera";
+                        }
+                        else if(element.kecepatan==3)
+                        {
+                            kecepatan = "Amat Segera";
+                        }
+
+                        var tanggal_surat = tanggal_indo(element.tgl_surat);
+                        var tanggal_terima = tanggal_indo(element.tgl_terima);
+                        var tabel = "";
+                        tabel += "<tr height='35' bgcolor='#ffffff' align='left' class='prtext'><th>KLASIFIKASI</th><td colspan='3'>"+element.klasifikasi_.nama+"</td></tr>";
+                        tabel += "<tr height='35' bgcolor='#ffffff' align='left' class='prtext'><th>NOMOR SURAT</th><td>"+element.nomor_surat+"</td><th>NOMOR AGENDA</th><td>"+element.nomor_agenda+"</td></tr>";
+                        tabel += "<tr height='35' bgcolor='#ffffff' align='left' class='prtext'><th>TANGGAL SURAT</th><td>"+tanggal_surat+"</td><th>TANGGAL TERIMA</th><td>"+tanggal_terima+"</td></tr>";
+                        tabel += "<tr height='35' bgcolor='#ffffff' align='left' class='prtext'><th>PENGIRIM</th><td>"+element.nama_pengirim+"<br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th>TUJUAN</th><td>"+element.nama_penerima+"<br>"+element.jabatan_penerima+"</td></tr>";
+                        tabel += "<tr height='35' bgcolor='#ffffff' align='left' class='prtext'><th>KECEPATAN/KEAMANAN</th><td>"+kecepatan+"/"+keamanan+"</td><th>TEMBUSAN</th><td>"+element.nama_tembusan+" <br> "+element.jabatan_tembusan+"</td></tr>";
+                        tabel += "<tr height='35' bgcolor='#ffffff' align='left' class='prtext'><th>PERIHAL</th><td colspan='3'>"+element.perihal+"</td></tr>";
+                        tabel += "<tr height='35' bgcolor='#ffffff' align='left' class='prtext'><th>RINGKASAN</th><td colspan='3'>"+element.ringkasan+"</td></tr>";
+                        $("#tabel").html(tabel).show();
+                        if(element.lampiran)
+                        {
+                            $("#lampiran").html("<a target='_blank' href='"+element.lampiran+"' class='btn btn-warning' style='color:white;width:100%'><i class='md-file'></i>&nbsp;Lampiran</a>").show();
+                        }
+                        window.print();
+                    },
+                    error : function(data)
+                    {
+
+                    }
+                });
+            }
+        });
+    }
+
+    function tanggal_indo(tanggal)
+    {
+            var res = tanggal.split("T");
+            var tgl = res[0];
+
+            var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+            var semua = tgl.split("-");
+            var tg = semua[2];
+            var bl = parseInt(semua[1]);
+            var bulan = bulan[bl-1];
+            var th = semua[0];
+            return tg+" "+bulan+" "+th;
+    }
+    </script>

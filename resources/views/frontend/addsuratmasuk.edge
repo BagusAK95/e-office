@@ -138,6 +138,13 @@
                            </div>
                            <div class="tab">
                               <div class="form-group" data-plugin="formMaterial">
+                                 <label class="form-control-label" for="inputEmail">Klasifikasi&nbsp;<span style="color:red">*</span></label>
+                                 <select name="klasifikasi" id="klasifikasi" class="form-control" required='true'>
+                                   
+                                 </select>
+                              </div>
+
+                              <div class="form-group" data-plugin="formMaterial">
                                  <label class="form-control-label" for="inputEmail">Keamanan&nbsp;<span style="color:red">*</span></label>
                                  <select name="keamanan" id="keamanan" class="form-control" required='true'>
                                     <option value="1">Biasa</option>
@@ -395,7 +402,7 @@
            headers: {
    'Authorization': 'Bearer ' + data.token
    },
-           data : "tgl_terima="+$("#tanggal_terima").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_surat="+$("#nomor_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&perihal="+$("#perihal").val()+"&jenis_instansi="+$("#instansi").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&nip_penerima="+$("#nip_penerima").val()+"&nama_penerima="+$("#nama_penerima").val()+"&jabatan_penerima="+$("#jabatan_penerima").val()+"&nip_tembusan="+$("#nip_tembusan").val()+"&nama_tembusan="+$("#nama_tembusan").val()+"&jabatan_tembusan="+$("#jabatan_tembusan").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue+"&lampiran="+$("#lampiran").val()+jeniss,
+           data : "tgl_terima="+$("#tanggal_terima").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_surat="+$("#nomor_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&perihal="+$("#perihal").val()+"&jenis_instansi="+$("#instansi").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&nip_penerima="+$("#nip_penerima").val()+"&nama_penerima="+$("#nama_penerima").val()+"&jabatan_penerima="+$("#jabatan_penerima").val()+"&nip_tembusan="+$("#nip_tembusan").val()+"&nama_tembusan="+$("#nama_tembusan").val()+"&jabatan_tembusan="+$("#jabatan_tembusan").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue+"&lampiran="+$("#lampiran").val()+jeniss+"&klasifikasi="+$("#klasifikasi").val(),
            success: function (data) 
            { 
                if(data.success==false)
@@ -645,13 +652,13 @@
    
    
            var tanggal = year+""+month+""+day+""+hours+""+minutes+""+seconds;
-           $("#lampiran").val("http://rafiisa.co/googledrive/files/"+tanggal+"."+eks);
+           $("#lampiran").val("http://rafiisa.com/googledrive/files/"+tanggal+"."+eks);
    
            e.preventDefault();
            var form = e.target;
            var data = new FormData(form);
            $.ajax({
-           url: "http://rafiisa.co/googledrive/upload.php?file="+tanggal,
+           url: "http://rafiisa.com/googledrive/upload.php?file="+tanggal,
            method: form.method,
            processData: false,
            contentType: false,
@@ -669,6 +676,40 @@
            });
            
        });
+
+
+
+       klasifikasi();
+        function klasifikasi() 
+        {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/admin/gettoken', 
+                success: function (data) 
+                { 
+                        $.ajax({ 
+                            type: 'GET', 
+                            url: '/api/master-klasifikasi', 
+                            headers: {
+                                        'Authorization': 'Bearer ' + data.token
+                                    },
+                            dataType: 'json',
+                            success: function (data) 
+                            {   
+                                var isi = "";
+                                $.each(data.data, function(index, element) {
+                                    isi += "<option value='"+element.id+"'>"+element.nama+"</option>";
+                                })
+                                $("#klasifikasi").html(isi).show();
+                            },
+                            error: function ()
+                            {
+                                return false;
+                            }
+                        });
+                }
+            });
+        }
 </script>
 @endsection
 

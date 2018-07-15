@@ -64,6 +64,7 @@
 
   </head>
   <body class="animsition">
+  <input type="hidden" name='level' class='level' id='level_main'>
     <!--[if lt IE 8]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -97,12 +98,7 @@
           <!-- Navbar Toolbar -->
           <ul class="nav navbar-toolbar">
             <li class="nav-item hidden-float" id="toggleMenubar">
-              <a class="nav-link" data-toggle="menubar" href="#" role="button">
-                <i class="icon hamburger hamburger-arrow-left">
-                  <span class="sr-only">Toggle menubar</span>
-                  <span class="hamburger-bar"></span>
-                </i>
-              </a>
+              
             </li>
           </ul>
           <!-- End Navbar Toolbar -->
@@ -228,19 +224,38 @@
         </div>
         <!-- End Site Navbar Seach -->
       </div>
-    </nav>    <div class="site-menubar">
+    </nav>    
+    <div class="site-menubar">
+      <div class="site-menubar-header">
+      <center>
+        <div class="cover overlay">
+          <img class="cover-image" src="/material/base/assets/examples/images/dashboard-header.jpg" alt="..." style='height:200px'>
+            <div class="overlay-panel vertical-align overlay-background">
+              <div class="vertical-align-middle">
+                <a class="avatar avatar-lg" href="javascript:void(0)">
+                  <img class="foto" alt=""  >
+                </a>
+                <div class="site-menubar-info">
+                  <h4 class="profile-user"><span class='nama_user'></span><br><span style='font-size:9pt' class='jabatan'></span></h4>
+                </div>
+              </div>
+          </div>
+        </div>
+        </center>
+      </div>
+
       <div class="site-menubar-body">
         <div>
           <div>
             <ul class="site-menu" data-plugin="menu">
-             
-              <li class="site-menu-category konsol">Administrator</li>
-              <li class="site-menu-item konsol">
+            <li class="site-menu-category">Dashboard</li>
+              <li class="site-menu-item">
                 <a class="animsition-link" href="/admin/home">
                         <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                         <span class="site-menu-title">Dashboard</span>
                     </a>
               </li>
+              <li class="site-menu-category konsol">Administrator</li>
               <li class="site-menu-item konsol">
                 <a class="animsition-link" href="/admin/user">
                         <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
@@ -253,7 +268,7 @@
                           <span class="site-menu-title">Master Kantor</span>
                       </a>
               </li>
-              <li class="site-menu-category">Surat</li>
+              <li class="site-menu-category surat">Surat</li>
               <li class="site-menu-item" id="surat_masuk" style="display: none">
                 <a class="animsition-link" href="/admin/surat_masuk">
                         <i class="site-menu-icon md-email-open" aria-hidden="true"></i>
@@ -267,9 +282,15 @@
                     </a>
               </li>
               <li class="site-menu-item" id="disposisi" style="display: none">
-                  <a class="animsition-link" href="#">
-                          <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
-                          <span class="site-menu-title">Disposisi</span>
+                  <a class="animsition-link" href="/admin/disposisi_masuk">
+                          <i class="site-menu-icon md-inbox" aria-hidden="true"></i>
+                          <span class="site-menu-title">Disposisi Masuk</span>
+                      </a>
+                </li>
+               <li class="site-menu-item" id="disposisi_keluar" style="display: none">
+                  <a class="animsition-link" href="/admin/disposisi_keluar">
+                          <i class="site-menu-icon md-cloud-upload" aria-hidden="true"></i>
+                          <span class="site-menu-title">Disposisi Keluar</span>
                       </a>
                 </li>
               
@@ -417,26 +438,33 @@
                             'Authorization': 'Bearer ' + data.token
                         },
                         success: function (data) { 
+                            //alert(data.data.level);
+                            $("#level_main").val(data.data.level);
+                            //putlevel(data.data.level)
                             $(".nama_user").html(data.data.nama_lengkap).show();
                             if(data.data.foto)
                             {
-                              $(".foto").html('<img src="'+data.data.foto+'">').show();
+                              $(".foto").html('<img src="'+data.data.foto+'" style="width:70px">').show();
                             }
                             else
                             {
-                              $(".foto").html('<img src="/material/base/src/images/user.png">').show();
+                              $(".foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
                             }
                             
                             $(".jabatan").html(data.data.nama_jabatan).show();
+                            $(".jabatanm").html(data.data.nama_jabatan).show();
 
                             if(data.data.level==1)
                             {
                               $(".konsol").show();
+                              $(".surat").hide();
                             }
                             else
                             {
                               $(".konsol").hide();
+                              $(".surat").show();
                             }
+
 
                             var akses = data.data.akses;
                             var smu = "";
@@ -448,6 +476,14 @@
                                 {
                                     if(data_akses[index]=="suratmasuk")
                                     {
+                                      /*if(data.data.level==3)
+                                      {
+                                        $("#surat_masuk").show();
+                                      }
+                                      else if(data.data.level==2)
+                                      {
+                                        $("#surat_masuk").show();
+                                      }*/
                                       $("#surat_masuk").show();
                                     }
                                     if(data_akses[index]=="suratkeluar")
@@ -457,6 +493,7 @@
                                     if(data_akses[index]=="disposisi")
                                     {
                                       $("#disposisi").show();
+                                      $("#disposisi_keluar").show();
                                     }
                                 }
                             }
@@ -473,6 +510,22 @@
         var Site = window.Site;
         Site.run();
         
+
+        /*function putlevel(level)
+        {
+            $.ajax({ 
+            type: 'GET', 
+            url: '/putlevel/'+level, 
+            success: function (data) 
+            { 
+                
+            },
+            error : function(data)
+            {
+              
+            }
+        });
+        }*/
       </script>
   </body>
 </html>

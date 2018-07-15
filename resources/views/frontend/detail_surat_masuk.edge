@@ -1,0 +1,406 @@
+@layout('frontend/main')
+@section('content')
+
+<style type="text/css">
+    .prtext {
+    color: #000000;
+    font-family: tahoma;
+    font-size: 13px;
+    }
+    .prhead {
+    color: #000000;
+    font-family: tahoma;
+    font-size: 14px;
+    }
+    .prtext_blacksmall {
+    font-size: 11px;
+    color: #00000;
+    font-family: tahoma;
+    }
+    .prtitle1 {
+    font-size: 20px;
+    color: #000000;
+    font-family: times new roman;
+    font-weight: bold;
+    }
+    .prtitle {
+    font-size: 18px;
+    color: #000000;
+    font-family: tahoma;
+    font-weight: bold;
+    }
+    .logo {
+      width:100px;
+      height:100px;
+    }
+</style>
+
+      <div class="page-content container-fluid">
+        <div class="row">
+
+          <div class="col-xxl-4 col-lg-9">
+            <!-- Example Panel With Heading -->
+            <div class="panel panel-bordered">
+              <div class="panel-heading">
+                <h3 class="panel-title">Detail Surat Masuk</h3>
+                <ul class="panel-actions panel-actions-keep">
+                  <li><a href='/admin/cetak-surat-masuk/{{params.id}}' class='btn btn-primary' target="_blank" style='float:right'><i class='md-print'></i>&nbsp;Cetak</a></li>
+                </ul>
+              </div>
+              <div class="panel-body">
+                <div class="col-lg-12">
+                    <div class="row">
+                            <input type='hidden' value='{{params.id}}' id='id_surat'/>
+                            <table cellspacing="0"  bordercolor="#000000" cellpadding="4" border="1" style="border: solid 1.5pt black; border-collapse: collapse;" width='100%' class='table-bordered'>
+                                <tbody id='tabel'>
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="row">
+                        
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Example Panel With Heading -->
+          </div>
+
+
+
+         <!-- Aksi -->
+          <div class="col-xxl-4 col-lg-3">
+            <!-- Example Panel With Heading -->
+            <div class="panel panel-bordered">
+              <div class="panel-heading">
+                <h3 class="panel-title">Aksi</h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-lg-12">
+                <div class="row" >
+                            <a style='width:100%' href='/admin/dispo-surat-masuk/{{params.id}}' class='btn btn-success' style='color:white'><i class='md-mail-send'></i>&nbsp;Buat DIsposisi</a>
+                            &nbsp;
+                            <div id='lampiran' style='width:100%'></div>
+                            &nbsp;
+                            <a style='width:100%' href='/admin/surat_masuk' class='btn btn-danger' style='color:white'><i class='md-undo'></i>&nbsp;Kembali</a>
+                 
+                </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Example Panel With Heading -->
+          </div>
+
+
+
+
+         <div class="col-xxl-4 col-lg-9">
+            <!-- Example Panel With Heading -->
+            <div class="panel panel-bordered">
+              <div class="panel-heading">
+                <h3 class="panel-title">Komentar</h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-lg-12">
+                <div class="row">
+                    <!-- Panel Comments Full -->
+                        <div class="comments" id="komentar" style='width:100%'>
+                        </div>
+
+                      
+                </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Example Panel With Heading -->
+          </div>
+
+
+          <div class="col-xxl-4 col-lg-9">
+            <!-- Example Panel With Heading -->
+            <div class="panel panel-bordered">
+              <div class="panel-heading">
+                <h3 class="panel-title">History Disposisi</h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-lg-12">
+                <div class="row">
+                    <table class='table table-striped'>
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Jabatan</th>
+                                <th>Isi Disposisi</th>
+                                <th width='100px'>Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dispo">
+                            <tr align='center'>
+                            <td colspan='5'>Data tidak tersedia.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Example Panel With Heading -->
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Trigger the modal with a button -->
+
+      <script>
+      //$( document ).ready(function() {
+        //alert("asd");
+        showtable();
+      //)};
+        function showtable()
+        {
+            //alert("ssdsd");
+            $.ajax({ 
+               type: 'GET', 
+               url: '/admin/gettoken', 
+               success: function (data) { 
+                    
+                    $.ajax({ 
+                        type: 'GET', 
+                        headers: {
+                                'Authorization': 'Bearer ' + data.token
+                        },
+                        url: '/api/surat-masuk/{{params.id}}', 
+                        success: function (data) 
+                        { 
+                            var element = data.data;
+
+                            var keamanan = "";
+                            if(element.keamanan==1)
+                            {
+                                keamanan = "Biasa";
+                            }
+                            else if(element.keamanan==2)
+                            {
+                                keamanan = "Rahasia Terbatas";
+                            }
+                            else if(element.keamanan==3)
+                            {
+                                keamanan = "Rahasia";
+                            }
+                            else if(element.keamanan==4)
+                            {
+                                keamanan = "Sangat Rahasia";
+                            }
+
+                            var kecepatan = "";
+                            if(element.kecepatan==1)
+                            {
+                                kecepatan = "Biasa";
+                            }
+                            else if(element.kecepatan==2)
+                            {
+                                kecepatan = "Segera";
+                            }
+                            else if(element.kecepatan==3)
+                            {
+                                kecepatan = "Amat Segera";
+                            }
+
+                            if(element.klasifikasi_!=null)
+                            {
+                                var kla = element.klasifikasi_.nama;
+                            }
+                            else
+                            {
+                                var kla = "";
+                            }
+
+                            var tanggal_surat = tanggal_indo(element.tgl_surat);
+                            var tanggal_terima = tanggal_indo(element.tgl_terima);
+                            var tabel = "";
+                            tabel += "<tr><th>KLASIFIKASI</th><td colspan='3'>"+kla+"</td></tr>";
+                            tabel += "<tr><th>NOMOR SURAT</th><td>"+element.nomor_surat+"</td><th>NOMOR AGENDA</th><td>"+element.nomor_agenda+"</td></tr>";
+                            tabel += "<tr><th>TANGGAL SURAT</th><td>"+tanggal_surat+"</td><th>TANGGAL TERIMA</th><td>"+tanggal_terima+"</td></tr>";
+                            tabel += "<tr><th>PENGIRIM</th><td>"+element.nama_pengirim+"<br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th>TUJUAN</th><td>"+element.nama_penerima+"<br>"+element.jabatan_penerima+"</td></tr>";
+                            tabel += "<tr><th>KECEPATAN/KEAMANAN</th><td>"+kecepatan+"/"+keamanan+"</td><th>TEMBUSAN</th><td>"+element.nama_tembusan+" <br> "+element.jabatan_tembusan+"</td></tr>";
+                            tabel += "<tr><th>PERIHAL</th><td colspan='3'>"+element.perihal+"</td></tr>";
+                            tabel += "<tr><th>RINGKASAN</th><td colspan='3'>"+element.ringkasan+"</td></tr>";
+                            $("#tabel").html(tabel).show();
+                            if(element.lampiran)
+                            {
+                                $("#lampiran").html("<a target='_blank' href='"+element.lampiran+"' class='btn btn-warning' style='color:white;width:100%'><i class='md-file'></i>&nbsp;Lampiran</a>").show();
+                            }
+                            //showdisposisi();
+                        },
+                        error : function(data)
+                        {
+
+                        }
+                    });
+               }
+            });
+        }
+
+
+        showcomment();
+        function showcomment()
+        {
+            //alert("ssdsd");
+            $.ajax({ 
+               type: 'GET', 
+               url: '/admin/gettoken', 
+               success: function (data) { 
+                    
+                    $.ajax({ 
+                        type: 'GET', 
+                        headers: {
+                                'Authorization': 'Bearer ' + data.token
+                        },
+                        url: '/api/komentar?id_surat_masuk={{params.id}}&page=1&limit=10000', 
+                        success: function (data) 
+                        { 
+                            var isi="";
+                            $.each(data.data.data, function(index, element) 
+                            {
+                                //alert(element.pengirim_);
+                                if(element.pengirim_!=null)
+                                {
+                                    var pengi = element.pengirim_.nama;
+                                }
+                                else
+                                {
+                                    var pengi = "";
+                                }
+                                
+
+                                var tagg = tanggal_indo(element.tgl);
+                                isi+='<div class="comment media">';
+                                isi+='<div class="pr-20">';
+                                isi+='<a class="avatar avatar-lg" href="javascript:void(0)" style="width:50px">';
+                                isi+='<img src="/material/base/src/images/user.png" alt="...">';
+                                isi+='</a>';
+                                isi+='</div>';
+                                isi+='<div class="media-body">';
+                                isi+='<div class="comment-body">';
+                                isi+='<a class="comment-author"><b>'+pengi+'</b></a>';
+                                isi+='<div class="comment-meta">';
+                                isi+='<span class="date">'+tagg+'</span>';
+                                isi+='</div>';
+                                isi+='<div class="comment-content">';
+                                isi+='<p>'+element.isi_komentar+'</p>';
+                                isi+='</div>';
+                                isi+='</div>';
+                                isi+='</div>';
+                                isi+='</div>';
+                            });
+                            
+                            isi+='<form class="comments-add mt-35" id="dokomen" method="post">';
+                            isi+='<div class="form-group">';
+                            isi+='<textarea style="width:100%"" class="form-control" id="isi_komentar" name="isi_komentar" rows="5" placeholder="Tuliskan Komentar"></textarea>';
+                            isi+='</div>';
+                            isi+='<div class="form-group">';
+                            isi+='<a class="btn btn-primary" style="float:right;color:white;" onclick="dokomen()">Submit</a>';
+                            isi+='</div>';
+                            isi+='</form>';
+
+                            $(".comments").html(isi).show();
+                        },
+                        error : function(data)
+                        {
+
+                        }
+                    });
+               }
+            });
+        }
+        
+        showdisposisi();
+        function showdisposisi()
+        {
+            //alert("ssdsd");
+            $.ajax({ 
+               type: 'GET', 
+               url: '/admin/gettoken', 
+               success: function (data) { 
+                    
+                    $.ajax({ 
+                        type: 'GET', 
+                        headers: {
+                                'Authorization': 'Bearer ' + data.token
+                        },
+                        url: '/api/disposisi/surat/{{params.id}}', 
+                        success: function (data) 
+                        { 
+                            var isi="";
+                            $.each(data.data, function(index, element) 
+                            {
+                                var tagg = tanggal_indo(element.tgl_disposisi);
+                                isi+='<tr><td>'+element.nama_penerima+'</td><td>'+element.jabatan_penerima+'</td><td>'+element.isi_disposisi+'</td><td>'+tagg+'</td></tr>';
+                               
+                            });
+                           //alert(isi);
+                            $("#dispo").html(isi).show();
+                        },
+                        error : function(data)
+                        {
+
+                        }
+                    });
+               }
+            });
+        }
+
+        function tanggal_indo(tanggal)
+        {
+                var res = tanggal.split("T");
+                var tgl = res[0];
+
+                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+                var semua = tgl.split("-");
+                var tg = semua[2];
+                var bl = parseInt(semua[1]);
+                var bulan = bulan[bl-1];
+                var th = semua[0];
+                return tg+" "+bulan+" "+th;
+        }
+
+
+       function dokomen()
+       {
+           $.ajax({ 
+               type: 'GET', 
+               url: '/admin/gettoken', 
+               success: function (data) { 
+                    
+                    $.ajax({ 
+                        type: 'POST', 
+                        headers: {
+                                'Authorization': 'Bearer ' + data.token
+                        },
+                        url: '/api/komentar', 
+                        data: 'isi_komentar='+$("#isi_komentar").val()+"&id_surat_masuk={{params.id}}",
+                        success: function (data) 
+                        { 
+                            if(data.success==false)
+                            {
+                                swal("Gagal!", data.message, "error");
+                            }
+                            else if(data.success==true)
+                            {
+                                window.location.href="/admin/detail_surat_masuk/{{params.id}}";
+                            }
+                        },
+                        error : function(data)
+                        {
+                            swal("Gagal!", data.message, "error");
+                        }
+                    });
+               }
+            });
+       }
+      </script>
+@endsection
+

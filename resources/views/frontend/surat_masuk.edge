@@ -14,10 +14,10 @@
                <div class="example example-grid">
                   <div class="row">
                      <div class="col-sm-12 col-lg-6">
-                        <div class="">
+                        <div class="addsurat">
                            <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
-                              <div class='btn-group' role='group'>
-                                 <a href='/admin/addsuratmasuk' class='btn btn-icon btn-info'>
+                              <div class='btn-group' role='group' >
+                                 <a href='/admin/addsuratmasuk' class='btn btn-icon btn-info add' >
                                  <i class='icon md-plus' aria-hidden='true'></i>
                                  </a>
                               </div>
@@ -28,13 +28,13 @@
                         <div class="">
                            <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
                               <div class='btn-group' role='group'>
-                                 <input style="width:130px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal" id='tgawl' type="text">
+                                 <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal" id='tgawl' type="text">
                                  &nbsp;
                                  &nbsp;
-                                 <input style="width:130px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir" id='tgawl' type="text">
+                                 <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir" id='tgakh' type="text">
                                  &nbsp;
                                  &nbsp;
-                                 <input style="width:120px;" class="form-control" placeholder="Search" id='search' type="text">
+                                 <input style="width:120px;height:45px;" class="form-control" placeholder="Search" id='search' type="text">
                                  &nbsp;
                                  &nbsp;
                                  <a onclick="cari()" href="#" class='btn btn-icon btn-info'>
@@ -50,11 +50,13 @@
                   data-tablesaw-mode-switch data-tablesaw-minimap data-tablesaw-mode-exclude="columntoggle">
                   <thead>
                      <tr>
-                        <th>Tanggal</th>
-                        <th>Nomor Surat</th>
-                        <th>Nomor Agenda</th>
-                        <th>Atas Nama</th>
-                        <th>Perihal</th>
+                        <th width='120px'>Nomor Surat<br> Nomor Agenda</th>
+                        <th width='120px'>Kecepatan Keamanan</th>
+                        <th>Tanggal Terima</th>
+                        <th >Tanggal Surat</th>
+                        <th>Asal Surat</th>
+                        <th>Tujuan Surat</th>
+                        <th>Prihal</th>
                         <th style='width:120px'>Action</th>
                      </tr>
                   </thead>
@@ -70,6 +72,40 @@
    </div>
 </div>
 <script>
+$( document ).ready(function() {
+    getsession()
+});
+    
+    function getsession()
+    {
+        $.ajax({ 
+        type: 'GET', 
+        url: '/getlevel', 
+        success: function (data) 
+        { 
+            if(data==3)
+            {
+                $(".add").css('display','block');
+                $(".delete").css('display','block');   
+            }
+            else if(data==2)
+            {
+                $(".add").css("display", "none");
+                $(".delete").css("display", "none");
+            }
+            else if(data==1)
+            {
+                $(".add").css("display", "none");
+                $(".delete").css("display", "none");
+            }
+        },
+        error : function(data)
+        {
+
+        }
+    });
+    }
+
    function cari()
    {
        var search = $("#search").val();
@@ -169,7 +205,7 @@
            
            if(nama=='null')
            {
-               var naman = "{nama}";
+               var naman = "{keyword}";
            }
            else
            {
@@ -200,7 +236,7 @@
                success: function (data) { 
                    $.ajax({ 
                        type: 'GET', 
-                       url: '/api/surat-masuk/{keyword}/'+tgl_awal+'/'+tgl_akhir+'/'+ page + '/10', 
+                       url: '/api/surat-masuk/'+naman+'/'+tgl_awal+'/'+tgl_akhir+'/'+ page + '/10', 
                        headers: {
                            'Authorization': 'Bearer ' + data.token
                        },
@@ -209,8 +245,42 @@
                            var text="";
                            $.each(data.data.data, function(index, element) 
                            {
-                               var tangg = tanggal_indo(element.tgl_surat);
-                               var tr_data = "<tr><td>"+tangg+"</td><td>"+element.nomor_surat+"</td><td>"+element.nomor_agenda+"</td><td>"+element.nama_pengirim+","+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-info'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                               var keamanan = "";
+                               if(element.keamanan==1)
+                               {
+                                   keamanan = "Biasa";
+                               }
+                               else if(element.keamanan==2)
+                               {
+                                   keamanan = "Rahasia Terbatas";
+                               }
+                               else if(element.keamanan==3)
+                               {
+                                   keamanan = "Rahasia";
+                               }
+                               else if(element.keamanan==4)
+                               {
+                                   keamanan = "Sangat Rahasia";
+                               }
+
+                               var kecepatan = "";
+                               if(element.kecepatan==1)
+                               {
+                                   kecepatan = "Biasa";
+                               }
+                               else if(element.kecepatan==2)
+                               {
+                                   kecepatan = "Segera";
+                               }
+                               else if(element.kecepatan==3)
+                               {
+                                   kecepatan = "Amat Segera";
+                               }
+
+                               var tgl_surat = tanggal_indo(element.tgl_surat);
+                               var tgl_terima = tanggal_indo(element.tgl_terima);
+
+                               var tr_data = "<tr><td><b>"+element.nomor_surat+"</b><br>"+element.nomor_agenda+"</td><td>"+kecepatan+" "+keamanan+"</td><td>"+tgl_terima+"</td><td>"+tgl_surat+"</td><td>"+element.nama_pengirim+","+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.nama_penerima+","+element.jabatan_penerima+"</td><td>"+element.perihal+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/admin/detail_surat_masuk/"+element.id+"'class='btn btn-icon btn-info'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><button onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-info delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
                                text += tr_data;
                            });
    
@@ -333,14 +403,16 @@
        
        function tanggal_indo(tanggal)
        {
+           
             var res = tanggal.split("T");
             var tgl = res[0];
 
             var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
             var semua = tgl.split("-");
+            //alert(semua[1]);
             var tg = semua[2];
             var bl = parseInt(semua[1]);
-            var bulan = bulan[bl];
+            var bulan = bulan[bl-1];
             var th = semua[0];
             return tg+" "+bulan+" "+th;
        }
