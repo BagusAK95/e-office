@@ -48,6 +48,8 @@ class KomentarController {
     
             const data = await Komentar.query()
                                         .whereRaw(sql.join(' AND '))
+                                        .with('penerima_')
+                                        .with('pengirim_')
                                         .paginate(Number(request.get().page), Number(request.get().limit))
             if (data) {
                 return this.response(true, null, data)
