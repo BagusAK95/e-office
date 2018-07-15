@@ -14,6 +14,7 @@ class DisposisiController {
             data.nip_pengirim = user.nip
             data.nama_pengirim = user.nama_lengkap
             data.jabatan_pengirim = user.nama_jabatan
+            data.keyword = ''.concat(data.nama_penerima, ' | ', data.isi_disposisi)
 
             const insert = await Disposisi.create(data)
             return this.response(true, null, insert)
