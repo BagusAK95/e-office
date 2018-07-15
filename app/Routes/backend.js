@@ -512,7 +512,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-klasifikasi', 'MasterklasifikasiController.listAll').middleware('checkToken')
+    Route.get('/master-klasifikasi', 'MasterKlasifikasiController.listAll').middleware('checkToken')
 
     /**
     * @swagger
