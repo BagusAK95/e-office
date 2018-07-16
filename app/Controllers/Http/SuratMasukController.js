@@ -47,14 +47,14 @@ class SuratMasukController {
             }
 
             switch (user.level) {
-                case 3: //Pimpinan
-                    sql.push('instansi_penerima = ' + instansi)
-                    break;
                 case 2: //Tata Usaha
                     sql.push('instansi_penerima = ' + instansi)
                     break;
+                case 3: //Pimpinan
+                    sql.push(`nip_pimpinan = '` + user.nip + `'`)
+                    break;
                 default:
-                    sql.push('nip_penerima = ' + user.nip)
+                    sql.push(`(nip_penerima = '` + user.nip + `' OR nip_tembusan = '` + user.nip + `')`)
                     break;
             }
 
