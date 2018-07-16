@@ -23,10 +23,6 @@ class Komentar extends Model {
         return ['nip_pengirim', 'nip_penerima']
     }
 
-    penerima_ () {
-        return this.hasOne('App/Models/MasterPegawai', 'nip_penerima', 'nip')
-    }
-
     pengirim_ () {
         return this.hasOne('App/Models/MasterPegawai', 'nip_pengirim', 'nip')
     }

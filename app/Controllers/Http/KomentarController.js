@@ -1,8 +1,6 @@
 'use strict'
 
 const Komentar = use('App/Models/Komentar')
-const SuratMasuk = use('App/Models/SuratMasuk')
-const Disposisi = use('App/Models/Disposisi')
 
 class KomentarController {
     async add({ request, auth }){
@@ -11,20 +9,6 @@ class KomentarController {
 
             let data = request.all()
             data.nip_pengirim = user.nip
-
-            if (data.id_surat_masuk) {
-                const dataSurat = await SuratMasuk.query().where('id', data.id_surat_masuk).first()
-                if (dataSurat) {
-                    data.nip_penerima = dataSurat.nip_tata_usaha
-                }
-            }
-
-            if (data.id_disposisi) {
-                const dataDisposisi = await Disposisi.query().where('id', data.id_disposisi).first()
-                if (dataDisposisi) {
-                    data.nip_penerima = dataDisposisi.nip_pengirim
-                }
-            }
 
             const insert = await Komentar.create(data)
             return this.response(true, null, insert)
@@ -44,11 +28,9 @@ class KomentarController {
             if (request.get().id_disposisi) {
                 sql.push('id_disposisi = ' + request.get().id_disposisi)
             }
-            sql.push(`(nip_pengirim = '` + user.nip + `' OR nip_penerima = '` + user.nip + `')`)
     
             const data = await Komentar.query()
                                         .whereRaw(sql.join(' AND '))
-                                        .with('penerima_')
                                         .with('pengirim_')
                                         .paginate(Number(request.get().page), Number(request.get().limit))
             if (data) {
