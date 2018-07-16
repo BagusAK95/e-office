@@ -20,7 +20,7 @@ class SuratMasuk extends Model {
     }
 
     static get hidden () {
-        return ['klasifikasi']
+        return ['klasifikasi', 'keyword']
     }
 
     klasifikasi_ () {

@@ -20,7 +20,7 @@ class Disposisi extends Model {
     }
 
     static get hidden () {
-        return ['instruksi']
+        return ['instruksi', 'keyword']
     }
 
     instruksi_ () {
