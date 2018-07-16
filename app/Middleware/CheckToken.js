@@ -3,7 +3,8 @@
 class CheckToken {
   async handle ({ auth, response }, next) {
     try {
-      const user = await auth.getUser()
+      await auth.getUser()
+      await next()
     } catch (error) {
       response.send({
         success: false, 
@@ -11,8 +12,6 @@ class CheckToken {
         data: null
       })
     }
-
-    await next()
   }
 }
 

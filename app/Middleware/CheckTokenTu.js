@@ -10,6 +10,8 @@ class CheckTokenTu {
           message: 'Akses ditolak',
           data: null
         })
+      } else {
+        await next()
       }
     } catch (error) {
       response.send({
@@ -18,8 +20,6 @@ class CheckTokenTu {
         data: null
       })
     }
-
-    await next()
   }
 }
 

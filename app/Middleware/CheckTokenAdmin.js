@@ -10,6 +10,8 @@ class CheckTokenAdmin {
           message: 'Akses ditolak',
           data: null
         })
+      } else {
+        await next()
       }
     } catch (error) {
       response.send({
@@ -18,8 +20,6 @@ class CheckTokenAdmin {
         data: null
       })
     }
-
-    await next()
   }
 }
 
