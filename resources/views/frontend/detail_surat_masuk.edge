@@ -275,12 +275,22 @@
                                     var pengi = "";
                                 }
                                 
+                                var foto = "";
+                                if(element.foto)
+                                {
+                                    foto = '<img src="'+element.foto+'">';
+                                }
+                                else
+                                {
+                                    foto = '<img src="/material/base/src/images/user.png">';
+                                }
+
 
                                 var tagg = tanggal_indo(element.tgl);
                                 isi+='<div class="comment media">';
                                 isi+='<div class="pr-20">';
                                 isi+='<a class="avatar avatar-lg" href="javascript:void(0)" style="width:50px">';
-                                isi+='<img src="/material/base/src/images/user.png" alt="...">';
+                                isi+=foto;
                                 isi+='</a>';
                                 isi+='</div>';
                                 isi+='<div class="media-body">';

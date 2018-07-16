@@ -42,12 +42,12 @@
                                     </div>
                                     <div class="form-group form-material" data-plugin="formMaterial">
                                       <label class="form-control-label" for="inputEmail">Email</label>
-                                      <input type="email" disabled class="form-control" id="email" name="email" placeholder="Email"
+                                      <input type="email" disabled class="form-control" id="email" name="email" placeholder=""
                                       />
                                     </div>
                                     <div class="form-group form-material" data-plugin="formMaterial">
                                       <label class="form-control-label" for="inputEmail">No HP</label>
-                                      <input type="text" disabled class="form-control" id="no_hp" name="nohp" placeholder="Email"
+                                      <input type="text" disabled class="form-control" id="no_hp" name="nohp" placeholder=""
                                       />
                                     </div>
                                     
@@ -123,7 +123,7 @@
                           {
                             level = 'Staff';
                           }
-                          $("#jabatan").html(level).show();
+                          $("#jabatan").html(data.data.nama_jabatan).show();
                       }
                   });
               },
