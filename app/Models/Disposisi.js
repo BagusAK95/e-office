@@ -26,6 +26,10 @@ class Disposisi extends Model {
     instruksi_ () {
         return this.hasOne('App/Models/MasterInstruksi', 'instruksi', 'id')
     }
+    
+    surat_ () {
+        return this.hasOne('App/Models/SuratMasuk', 'id_surat_masuk', 'id')
+    }
 }
 
 module.exports = Disposisi

@@ -133,9 +133,16 @@ class DisposisiController {
             
             const data = await Disposisi.query()
                                         .whereRaw(`id = ` + params.id + ` AND (nip_penerima = '` + user.nip + `' OR nip_pengirim = '` + user.nip + `')`)
-                                        .with('instruksi_')                                        
+                                        .with('instruksi_')
+                                        .with('surat_')
                                         .first()
             if (data) {
+                if (data.status == 0) {
+                    data.status = 1
+                    data.tgl_baca = new Date()
+                    await data.save()    
+                }
+
                 return this.response(true, null, data)
             } else {
                 return this.response(false, 'Data tidak ditemukan', null)

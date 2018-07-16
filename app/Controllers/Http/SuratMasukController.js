@@ -101,10 +101,16 @@ class SuratMasukController {
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
             const data = await SuratMasuk.query()
-                                        .whereRaw(`id = ` + params.id + ` AND instansi_penerima = ` + instansi)
-                                        .with('klasifikasi_')                                        
-                                        .first()
+                                         .whereRaw(`id = ` + params.id + ` AND instansi_penerima = ` + instansi)
+                                         .with('klasifikasi_')                                        
+                                         .first()
             if (data) {
+                if (data.status == 0) {
+                    data.status = 1
+                    data.tgl_baca = new Date()
+                    await data.save()                    
+                }
+
                 return this.response(true, null, data)                
             } else {
                 return this.response(false, 'Data tidak ditemukan', null)
