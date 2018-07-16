@@ -54,7 +54,7 @@ class SuratMasukController {
                     sql.push('instansi_penerima = ' + instansi)
                     break;
                 default:
-                    sql.push('instansi_penerima = ' + user.kode_lokasi)
+                    sql.push('nip_penerima = ' + user.nip)
                     break;
             }
 
