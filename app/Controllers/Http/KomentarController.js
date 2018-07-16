@@ -19,8 +19,6 @@ class KomentarController {
 
     async list({ request, auth }) {
         try {
-            const user = await auth.getUser()
-
             let sql = []
             if (request.get().id_surat_masuk) {
                 sql.push('id_surat_masuk = ' + request.get().id_surat_masuk)
