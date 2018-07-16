@@ -20,7 +20,7 @@ class Komentar extends Model {
     }
 
     static get hidden () {
-        return ['nip_pengirim', 'nip_penerima']
+        return ['nip_pengirim']
     }
 
     pengirim_ () {
