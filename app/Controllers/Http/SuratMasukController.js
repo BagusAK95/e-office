@@ -18,7 +18,7 @@ class SuratMasukController {
             data.nip_tata_usaha = user.nip
             data.keyword = ''.concat(data.nomor_surat, ' | ', data.nama_instansi, ' | ', data.perihal, ' | ', data.nama_pengirim, ' | ', data.nama_penerima)
             
-            const dataPimpinan = await MasterPegawai.query().whereRaw('kode_lokasi = ' + instansi + ' AND kode_eselon <> NULL').first()
+            const dataPimpinan = await MasterPegawai.query().whereRaw('kode_lokasi = ' + instansi + ' AND kode_eselon IS NOT NULL').first()
             if (dataPimpinan) {
                 data.nip_pimpinan = dataPimpinan.nip
             }
