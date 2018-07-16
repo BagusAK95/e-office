@@ -94,9 +94,6 @@ class SuratMasukController {
     async detail({ params, auth}) {
         try {
             const user = await auth.getUser()
-            if (user.akses.split(',').indexOf('suratmasuk') == -1) {
-                return this.response(false, 'Akses ditolak', null)
-            }
             
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
