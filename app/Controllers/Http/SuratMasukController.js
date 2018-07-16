@@ -105,12 +105,26 @@ class SuratMasukController {
                                          .with('klasifikasi_')                                        
                                          .first()
             if (data) {
-                if (data.status == 0) {
-                    data.status = 1
-                    data.tgl_baca = new Date()
-                    await data.save()                    
+                if (data.nip_pimpinan == user.nip) {
+                    if (data.status_pimpinan == 0) {
+                        data.status_pimpinan = 1
+                        data.tgl_baca_pimpinan = new Date()
+                        await data.save()                    
+                    }
+                } else if (data.nip_penerima == user.nip) {
+                    if (data.status_penerima == 0) {
+                        data.status_penerima = 1
+                        data.tgl_baca_penerima = new Date()
+                        await data.save()                    
+                    }
+                } else if (data.nip_tembusan == user.nip) {
+                    if (data.status_tembusan == 0) {
+                        data.status_tembusan = 1
+                        data.tgl_baca_tembusan = new Date()
+                        await data.save()                    
+                    }
                 }
-
+                
                 return this.response(true, null, data)                
             } else {
                 return this.response(false, 'Data tidak ditemukan', null)
