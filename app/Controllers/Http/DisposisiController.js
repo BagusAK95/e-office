@@ -68,7 +68,7 @@ class DisposisiController {
                 sql.push(`tgl_disposisi >= '` + params.tgl_awal + `'`)
             }
             if (params.tgl_akhir != '%7Btgl_akhir%7D') {
-                sql.push(`tgl_disposisi <= ` + params.tgl_akhir + `'`)
+                sql.push(`tgl_disposisi <= '` + params.tgl_akhir + `'`)
             }
             if (params.keyword != '%7Bkeyword%7D') {
                 sql.push(`MATCH(keyword) AGAINST('` + params.keyword + `' IN BOOLEAN MODE)`)
