@@ -58,7 +58,6 @@ class SuratMasukController {
                     break;
             }
 
-            console.log(sql.join(' AND '))
             const data = await SuratMasuk.query()
                                         .whereRaw(sql.join(' AND '))
                                         .paginate(Number(params.page), Number(params.limit))
