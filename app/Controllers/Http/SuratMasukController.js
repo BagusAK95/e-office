@@ -60,6 +60,7 @@ class SuratMasukController {
 
             const data = await SuratMasuk.query()
                                         .whereRaw(sql.join(' AND '))
+                                        .orderBy('tgl_terima', 'desc')
                                         .paginate(Number(params.page), Number(params.limit))
             if (data) {
                 return this.response(true, null, data)

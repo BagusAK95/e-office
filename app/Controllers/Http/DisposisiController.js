@@ -41,6 +41,7 @@ class DisposisiController {
 
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
+                                        .orderBy('tgl_disposisi', 'desc')
                                         .paginate(Number(params.page), Number(params.limit))
             if (data) {
                 return this.response(true, null, data)
@@ -70,6 +71,7 @@ class DisposisiController {
 
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
+                                        .orderBy('tgl_disposisi', 'desc')
                                         .paginate(Number(params.page), Number(params.limit))
             if (data) {
                 return this.response(true, null, data)
@@ -85,6 +87,8 @@ class DisposisiController {
         try {
             const data = await Disposisi.query()
                                         .where('id_surat_masuk', Number(params.id_surat_masuk))
+                                        .orderBy('tgl_disposisi', 'desc')
+
             if (data) {
                 return this.response(true, null, data)
             } else {

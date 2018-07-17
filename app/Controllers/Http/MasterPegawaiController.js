@@ -28,6 +28,8 @@ class MasterPegawaiController {
         try {
             const data = await MasterPegawai.query()
                                             .where('kode_lokasi', params.kode_lokasi)
+                                            .orderBy('kode_eselon', 'desc')
+                                            .orderBy('kode_jabatan', 'desc')
             if (data.length > 0) {
                 return this.response(true, null, data)
             } else {
