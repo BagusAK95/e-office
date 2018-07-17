@@ -8,10 +8,7 @@ class SuratMasukController {
     async add({ request, auth }) { //Todo: Kirim Notifikasi ke Pemimpin
         try {
             const user = await auth.getUser()
-            if (user.akses.split(',').indexOf('suratmasuk') == -1) {
-                return Response.format(false, 'Akses ditolak', null)
-            }
-
+            
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
             let data = request.all()
@@ -75,10 +72,7 @@ class SuratMasukController {
     async delete({ params, auth }) {
         try {
             const user = await auth.getUser()
-            if (user.akses.split(',').indexOf('suratmasuk') == -1) {
-                return Response.format(false, 'Akses ditolak', null)
-            }
-            
+
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
             const destroy = await SuratMasuk.query()

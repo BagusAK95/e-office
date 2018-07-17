@@ -82,7 +82,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/profile', 'ProfileController.detail').middleware('checkToken')
+    Route.get('/profile', 'ProfileController.detail').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -127,7 +127,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/profile', 'ProfileController.edit').middleware('checkToken')
+    Route.put('/profile', 'ProfileController.edit').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -154,7 +154,7 @@ Route.group(() => {
     *         type: string
     *         format: password
     */
-    Route.put('/profile/editPassword', 'ProfileController.editPassword').middleware('checkToken')
+    Route.put('/profile/editPassword', 'ProfileController.editPassword').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -240,7 +240,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/user', 'UserController.add').middleware('checkTokenAdmin')
+    Route.post('/user', 'UserController.add').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -296,7 +296,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/user/:nip', 'UserController.edit').middleware('checkTokenAdmin')
+    Route.put('/user/:nip', 'UserController.edit').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -316,7 +316,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/user/:nip', 'UserController.delete').middleware('checkTokenAdmin')
+    Route.delete('/user/:nip', 'UserController.delete').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -344,7 +344,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/user', 'UserController.list').middleware('checkTokenAdmin')
+    Route.get('/user', 'UserController.list').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -364,7 +364,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/user/:nip', 'UserController.detail').middleware('checkTokenAdmin')
+    Route.get('/user/:nip', 'UserController.detail').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -392,7 +392,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai', 'MasterPegawaiController.list').middleware('checkTokenAdmin')
+    Route.get('/master-pegawai', 'MasterPegawaiController.list').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -404,7 +404,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-pegawai', 'MasterPegawaiController.listAll').middleware('checkToken')
+    Route.get('/master-pegawai', 'MasterPegawaiController.listAll').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -422,7 +422,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/byLocation/:kode_lokasi', 'MasterPegawaiController.listByLocation').middleware('checkTokenAdmin')
+    Route.get('/master-pegawai/byLocation/:kode_lokasi', 'MasterPegawaiController.listByLocation').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -434,7 +434,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-pegawai/subEmployes', 'MasterPegawaiController.listAllSubEmployes').middleware('checkToken')
+    Route.get('/master-pegawai/subEmployes', 'MasterPegawaiController.listAllSubEmployes').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -452,7 +452,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkToken')
+    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -464,7 +464,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-kantor/tree', 'MasterKantorController.tree').middleware('checkTokenAdmin')
+    Route.get('/master-kantor/tree', 'MasterKantorController.tree').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -476,7 +476,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-kantor/tree-html', 'MasterKantorController.treeHtml').middleware('checkTokenAdmin')
+    Route.get('/master-kantor/tree-html', 'MasterKantorController.treeHtml').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -488,7 +488,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-kantor/listAllParent', 'MasterKantorController.listAllParent').middleware('checkToken')
+    Route.get('/master-kantor/listAllParent', 'MasterKantorController.listAllParent').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -500,7 +500,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-instruksi', 'MasterInstruksiController.listAll').middleware('checkToken')
+    Route.get('/master-instruksi', 'MasterInstruksiController.listAll').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -512,7 +512,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-klasifikasi', 'MasterKlasifikasiController.listAll').middleware('checkToken')
+    Route.get('/master-klasifikasi', 'MasterKlasifikasiController.listAll').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -637,7 +637,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkTokenTu')
+    Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkToken:tatausaha,suratmasuk')
 
     /**
     * @swagger
@@ -677,7 +677,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-masuk', 'SuratMasukController.list').middleware('checkToken')
+    Route.get('/surat-masuk', 'SuratMasukController.list').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -697,7 +697,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-masuk/:id', 'SuratMasukController.detail').middleware('checkToken')
+    Route.get('/surat-masuk/:id', 'SuratMasukController.detail').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -717,7 +717,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkTokenTu')
+    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkToken:tatausaha,suratmasuk')
 
     /**
     * @swagger
@@ -772,7 +772,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/disposisi', 'DisposisiController.add').middleware('checkToken')
+    Route.post('/disposisi', 'DisposisiController.add').middleware('checkToken:umum,disposisi')
 
     /**
     * @swagger
@@ -812,7 +812,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/disposisi/masuk', 'DisposisiController.listIn').middleware('checkToken')
+    Route.get('/disposisi/masuk', 'DisposisiController.listIn').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -852,7 +852,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/disposisi/keluar', 'DisposisiController.listOut').middleware('checkToken')
+    Route.get('/disposisi/keluar', 'DisposisiController.listOut').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -872,7 +872,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/disposisi/surat/:id_surat_masuk', 'DisposisiController.listAllByMail').middleware('checkToken')
+    Route.get('/disposisi/surat/:id_surat_masuk', 'DisposisiController.listAllByMail').middleware('checkToken:umum')
     
     /**
     * @swagger
@@ -892,7 +892,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/disposisi/:id', 'DisposisiController.detail').middleware('checkToken')
+    Route.get('/disposisi/:id', 'DisposisiController.detail').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -912,7 +912,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/disposisi/:id', 'DisposisiController.delete').middleware('checkToken')
+    Route.delete('/disposisi/:id', 'DisposisiController.delete').middleware('checkToken:umum,disposisi')
 
     /**
     * @swagger
@@ -942,7 +942,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/komentar', 'KomentarController.add').middleware('checkToken')
+    Route.post('/komentar', 'KomentarController.add').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -977,7 +977,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/komentar', 'KomentarController.list').middleware('checkToken')
+    Route.get('/komentar', 'KomentarController.list').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -997,5 +997,5 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/komentar/:id', 'KomentarController.delete').middleware('checkToken')
+    Route.delete('/komentar/:id', 'KomentarController.delete').middleware('checkToken:umum')
 }).prefix('api')

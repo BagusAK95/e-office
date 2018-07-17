@@ -7,9 +7,6 @@ class DisposisiController {
     async add({ request, auth }) { //Todo: Kirim Notifikasi ke Pemimpin
         try {
             const user = await auth.getUser()
-            if (user.akses.split(',').indexOf('disposisi') == -1) {
-                return Response.format(false, 'Akses ditolak', null)
-            }
 
             const data = request.all()
             data.nip_pengirim = user.nip
@@ -84,7 +81,7 @@ class DisposisiController {
                                         .where('id_surat_masuk', Number(params.id_surat_masuk))
                                         .orderBy('tgl_disposisi', 'desc')
 
-            return Response.format(false, 'Data tidak ditemukan', null)
+            return Response.format(false, null, data)
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)            
         }
@@ -93,9 +90,6 @@ class DisposisiController {
     async delete({ params, auth }) {
         try {
             const user = await auth.getUser()
-            if (user.akses.split(',').indexOf('disposisi') == -1) {
-                return Response.format(false, 'Akses ditolak', null)
-            }
             
             const destroy = await Disposisi.query()
                                            .where({id: Number(params.id), nip_pengirim: user.nip})

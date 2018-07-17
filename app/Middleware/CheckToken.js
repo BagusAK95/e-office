@@ -3,12 +3,32 @@
 const Response = use('App/Helpers/ResponseHelper')
 
 class CheckToken {
-  async handle ({ auth, response }, next) {
+  async handle ({ auth, response }, next, rule) {
     try {
-      await auth.getUser()
+      const user = await auth.getUser()
+      if (rule[0] == 'admin') {
+        if (user.level != 1) {
+          return response.send(Response.format(false, 'Akses ditolak', null))
+        }
+      } else if (rule[0] == 'tatausaha') {
+        if (user.level != 3) {
+          return response.send(Response.format(false, 'Akses ditolak', null))
+        }
+      }
+
+      if (rule[1]) {
+        if (user.akses) {
+          if (user.akses.split(',').indexOf(rule[1]) == -1) {
+            return response.send(Response.format(false, 'Akses ditolak', null))
+          }  
+        } else {
+          return response.send(Response.format(false, 'Akses ditolak', null))
+        }
+      }
+
       await next()
     } catch (error) {
-      response.send(Response.format(false, 'Token tidak valid', null))
+      return response.send(Response.format(false, 'Token tidak valid', null))
     }
   }
 }
