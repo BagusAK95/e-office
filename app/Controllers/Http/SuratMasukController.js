@@ -47,10 +47,10 @@ class SuratMasukController {
             }
 
             switch (user.level) {
-                case 2: //Tata Usaha
+                case 3: //Tata Usaha
                     sql.push('instansi_penerima = ' + instansi)
                     break;
-                case 3: //Pimpinan
+                case 2: //Pimpinan
                     sql.push(`nip_pimpinan = '` + user.nip + `'`)
                     break;
                 default:
@@ -58,6 +58,7 @@ class SuratMasukController {
                     break;
             }
 
+            console.log(sql.join(' AND '))
             const data = await SuratMasuk.query()
                                         .whereRaw(sql.join(' AND '))
                                         .paginate(Number(params.page), Number(params.limit))
