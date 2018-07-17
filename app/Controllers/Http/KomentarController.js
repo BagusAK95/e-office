@@ -17,7 +17,7 @@ class KomentarController {
         }
     }
 
-    async list({ request, auth }) {
+    async list({ request }) {
         try {
             let sql = []
             if (request.get().id_surat_masuk) {
@@ -28,15 +28,12 @@ class KomentarController {
             }
     
             const data = await Komentar.query()
-                                        .whereRaw(sql.join(' AND '))
-                                        .with('pengirim_')
-                                        .orderBy('tgl', 'asc')
-                                        .paginate(Number(request.get().page), Number(request.get().limit))
-            if (data) {
-                return this.response(true, null, data)
-            } else {
-                return this.response(false, 'Data tidak ditemukan', null)
-            }   
+                                       .whereRaw(sql.join(' AND '))
+                                       .with('pengirim_')
+                                       .orderBy('tgl', 'asc')
+                                       .paginate(Number(request.get().page), Number(request.get().limit))
+                        
+            return this.response(true, null, data)
         } catch (error) {            
             return this.response(false, error.sqlMessage, null)
         }
@@ -46,7 +43,9 @@ class KomentarController {
         try {
             const user = await auth.getUser()
             
-            const destroy = await Komentar.query().where({ id: Number(params.id), nip_pengirim: user.nip }).delete()
+            const destroy = await Komentar.query()
+                                          .where({ id: Number(params.id), nip_pengirim: user.nip })
+                                          .delete()
             if (destroy > 0) {                
                 return this.response(true, null, destroy)
             } else {

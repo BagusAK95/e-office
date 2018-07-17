@@ -6,11 +6,7 @@ class MasterInstruksiController {
     async listAll(){
         try {
             const data = await MasterInstruksi.query()
-            if (data.length > 0) {
-                return this.response(true, null, data)
-            } else {
-                return this.response(false, 'Data tidak ditemukan', null)
-            }
+            return this.response(true, null, data)
         } catch (error) {
             return this.response(false, error.sqlMessage, null)                
         }

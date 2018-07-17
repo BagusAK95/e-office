@@ -121,12 +121,10 @@ class MasterKantorController {
 
     async listAllParent() {
         try {
-            const data = await MasterKantor.query().where('kdparent', null)
-            if (data) {
-                return this.response(data, null, data)                
-            } else {
-                return this.response(false, 'Data tidak ditemukan', null)
-            }
+            const data = await MasterKantor.query()
+                                           .where('kdparent', null)
+                                           
+            return this.response(data, null, data)
         } catch (error) {
             return this.response(false, error.sqlMessage, null)
         }

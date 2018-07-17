@@ -23,77 +23,67 @@ class DisposisiController {
         }
     }
 
-    async listIn({ params, auth }) {
+    async listIn({ request, auth }) {
         try {
             const user = await auth.getUser()
 
             let sql = []
             sql.push(`nip_penerima = '` + user.nip + `'`)
-            if (params.tgl_awal != '%7Btgl_awal%7D') {
-                sql.push(`tgl_disposisi >= '` + params.tgl_awal + `'`)
+            if (request.get().tgl_awal) {
+                sql.push(`tgl_disposisi >= '` + request.get().tgl_awal + `'`)
             }
-            if (params.tgl_akhir != '%7Btgl_akhir%7D') {
-                sql.push(`tgl_disposisi <= '` + params.tgl_akhir + `'`)
+            if (request.get().tgl_akhir) {
+                sql.push(`tgl_disposisi <= '` + request.get().tgl_akhir + `'`)
             }
-            if (params.keyword != '%7Bkeyword%7D') {
-                sql.push(`MATCH(keyword) AGAINST('` + params.keyword + `' IN BOOLEAN MODE)`)
+            if (request.get().keyword) {
+                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
             }
 
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
                                         .orderBy('tgl_disposisi', 'desc')
-                                        .paginate(Number(params.page), Number(params.limit))
-            if (data) {
-                return this.response(true, null, data)
-            } else {
-                return this.response(false, 'Data tidak ditemukan', null)
-            }
+                                        .paginate(Number(request.get().page), Number(request.get().limit))
+            
+            return this.response(true, null, data)
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            
         }
     }
 
-    async listOut({ params, auth }) {
+    async listOut({ request, auth }) {
         try {
             const user = await auth.getUser()
 
             let sql = []
             sql.push(`nip_pengirim = '` + user.nip + `'`)
-            if (params.tgl_awal != '%7Btgl_awal%7D') {
-                sql.push(`tgl_disposisi >= '` + params.tgl_awal + `'`)
+            if (request.get().tgl_awal) {
+                sql.push(`tgl_disposisi >= '` + request.get().tgl_awal + `'`)
             }
-            if (params.tgl_akhir != '%7Btgl_akhir%7D') {
-                sql.push(`tgl_disposisi <= '` + params.tgl_akhir + `'`)
+            if (request.get().tgl_akhir) {
+                sql.push(`tgl_disposisi <= '` + request.get().tgl_akhir + `'`)
             }
-            if (params.keyword != '%7Bkeyword%7D') {
-                sql.push(`MATCH(keyword) AGAINST('` + params.keyword + `' IN BOOLEAN MODE)`)
+            if (request.get().keyword) {
+                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
             }
 
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
                                         .orderBy('tgl_disposisi', 'desc')
-                                        .paginate(Number(params.page), Number(params.limit))
-            if (data) {
-                return this.response(true, null, data)
-            } else {
-                return this.response(false, 'Data tidak ditemukan', null)
-            }
+                                        .paginate(Number(request.get().page), Number(request.get().limit))
+
+            return this.response(true, null, data)
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            
         }
     }
 
-    async listAllByMail({ params, auth }) {
+    async listAllByMail({ params }) {
         try {
             const data = await Disposisi.query()
                                         .where('id_surat_masuk', Number(params.id_surat_masuk))
                                         .orderBy('tgl_disposisi', 'desc')
 
-            if (data) {
-                return this.response(true, null, data)
-            } else {
-                return this.response(false, 'Data tidak ditemukan', null)
-            }
+            return this.response(false, 'Data tidak ditemukan', null)
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            
         }
@@ -106,7 +96,9 @@ class DisposisiController {
                 return this.response(false, 'Akses ditolak', null)
             }
             
-            const destroy = await Disposisi.query().where({id: Number(params.id), nip_pengirim: user.nip}).delete()
+            const destroy = await Disposisi.query()
+                                           .where({id: Number(params.id), nip_pengirim: user.nip})
+                                           .delete()
             if (destroy > 0) {
                 return this.response(true, null, destroy)
             } else {

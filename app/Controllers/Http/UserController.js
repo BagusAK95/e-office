@@ -27,7 +27,10 @@ class UserController {
                 data.password = await Hash.make(data.password)
             }
 
-            const edit = await Login.query().whereRaw(`(nip = '` + params.nip + `') AND (kode_lokasi BETWEEN ` + startLokasi + ` AND ` +  endLokasi + `)`).update(data)
+            const edit = await Login.query()
+                                    .where('nip', params.nip)
+                                    .whereBetween('kode_lokasi', [Number(startLokasi), Number(endLokasi)])
+                                    .update(data)
             if (edit > 0) {
                 return this.response(true, null, edit)
             } else {
@@ -38,13 +41,16 @@ class UserController {
         }
     }
 
-    async destroy({ params, auth }) {
+    async delete({ params, auth }) {
         try {
             const user = await auth.getUser()
             const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
             const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
 
-            const destroy = await Login.query().whereRaw(`(nip = '` + params.nip + `') AND (kode_lokasi BETWEEN ` + startLokasi + ` AND ` +  endLokasi + `)`).delete()
+            const destroy = await Login.query()
+                                       .where('nip', params.nip)
+                                       .whereBetween('kode_lokasi', [Number(startLokasi), Number(endLokasi)])
+                                       .delete()
             if (destroy > 0) {
                 return this.response(true, null, destroy)                
             } else {
@@ -55,22 +61,23 @@ class UserController {
         }
     }
 
-    async list({ params, auth }) {
+    async list({ request, auth }) {
         try {
             const user = await auth.getUser()
             const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
             const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
-            const sql1 = '(kode_lokasi BETWEEN ' + startLokasi + ' AND ' +  endLokasi + ')'
-            const sql2 = (params.nama != '%7Bnama%7D') ? ` AND (nama_lengkap LIKE '%` + params.nama + `%')` : ''
+
+            let sql = []
+            if (request.get().nama) {
+                sql.push(`nama_lengkap LIKE '%` + request.get().nama + `%'`)
+            }
+            sql.push('kode_lokasi BETWEEN ' + startLokasi + ' AND ' +  endLokasi)
 
             const data = await Login.query()
-                                    .whereRaw(sql1 + sql2)
-                                    .paginate(Number(params.page), Number(params.limit))
-            if (data) {
-                return this.response(true, null, data)
-            } else {
-                return this.response(false, 'Data tidak ditemukan', null)
-            }
+                                    .whereRaw(sql.join(' AND '))
+                                    .paginate(Number(request.get().page), Number(request.get().limit))
+                                
+            return this.response(true, null, data)
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            
         }
@@ -81,10 +88,11 @@ class UserController {
             const user = await auth.getUser()
             const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
             const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
-            const sql1 = '(kode_lokasi BETWEEN ' + startLokasi + ' AND ' +  endLokasi + ')'
-            const sql2 = ` AND (nip = '` + params.nip + `')`
 
-            const data = await Login.query().whereRaw(sql1 + sql2).first()
+            const data = await Login.query()
+                                    .where('nip', params.nip)
+                                    .whereBetween('kode_lokasi', [Number(startLokasi), Number(endLokasi)])
+                                    .first()
             if (data) {
                 return this.response(true, null, data)
             } else {

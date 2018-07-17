@@ -18,7 +18,9 @@ class SuratMasukController {
             data.nip_tata_usaha = user.nip
             data.keyword = ''.concat(data.nomor_surat, ' | ', data.nama_instansi, ' | ', data.perihal, ' | ', data.nama_pengirim, ' | ', data.nama_penerima)
             
-            const dataPimpinan = await MasterPegawai.query().whereRaw('kode_lokasi = ' + instansi + ' AND kode_eselon IS NOT NULL').first()
+            const dataPimpinan = await MasterPegawai.query()
+                                                    .whereRaw('kode_lokasi = ' + instansi + ' AND kode_eselon IS NOT NULL')
+                                                    .first()
             if (dataPimpinan) {
                 data.nip_pimpinan = dataPimpinan.nip
             }
@@ -30,20 +32,20 @@ class SuratMasukController {
         }
     }
 
-    async list({ params, auth }) {
+    async list({ request, auth }) {
         try {
             const user = await auth.getUser()
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
             
             let sql = []
-            if (params.tgl_awal != '%7Btgl_awal%7D') {
-                sql.push(`tgl_surat >= '` + params.tgl_awal + `'`)
+            if (request.get().tgl_awal) {
+                sql.push(`tgl_surat >= '` + request.get().tgl_awal + `'`)
             }
-            if (params.tgl_akhir != '%7Btgl_akhir%7D') {
-                sql.push(`tgl_surat <= '` + params.tgl_akhir + `'`)
+            if (request.get().tgl_akhir) {
+                sql.push(`tgl_surat <= '` + request.get().tgl_akhir + `'`)
             }
-            if (params.keyword != '%7Bkeyword%7D') {
-                sql.push(`MATCH(keyword) AGAINST('` + params.keyword + `' IN BOOLEAN MODE)`)
+            if (request.get().keyword) {
+                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
             }
 
             switch (user.level) {
@@ -59,14 +61,11 @@ class SuratMasukController {
             }
 
             const data = await SuratMasuk.query()
-                                        .whereRaw(sql.join(' AND '))
-                                        .orderBy('tgl_terima', 'desc')
-                                        .paginate(Number(params.page), Number(params.limit))
-            if (data) {
-                return this.response(true, null, data)
-            } else {
-                return this.response(false, 'Data tidak ditemukan', null)
-            }
+                                         .whereRaw(sql.join(' AND '))
+                                         .orderBy('tgl_terima', 'desc')
+                                         .paginate(Number(request.get().page), Number(request.get().limit))
+            
+            return this.response(true, null, data)            
         } catch (error) {
             return this.response(false, error.sqlMessage, null)            
         }
@@ -81,7 +80,10 @@ class SuratMasukController {
             
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
-            const destroy = await SuratMasuk.query().whereRaw(`id = ` + params.id + ` AND instansi_penerima = ` + instansi).delete()
+            const destroy = await SuratMasuk.query()
+                                            .where({ id: Number(params.id), instansi_penerima: Number(instansi) })
+                                            .delete()
+
             if (destroy > 0) {
                 return this.response(true, null, destroy)                
             } else {
@@ -99,7 +101,7 @@ class SuratMasukController {
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
             const data = await SuratMasuk.query()
-                                         .whereRaw(`id = ` + params.id + ` AND instansi_penerima = ` + instansi)
+                                         .where({ id: Number(params.id), instansi_penerima: Number(instansi) })
                                          .with('klasifikasi_')                                        
                                          .first()
             if (data) {
