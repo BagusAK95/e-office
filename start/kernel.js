@@ -36,8 +36,6 @@ const globalMiddleware = [
 |
 */
 const namedMiddleware = {
-  checkTokenAdmin: 'App/Middleware/CheckTokenAdmin',
-  checkTokenTu: 'App/Middleware/CheckTokenTu',
   checkToken: 'App/Middleware/CheckToken'
 }
 
