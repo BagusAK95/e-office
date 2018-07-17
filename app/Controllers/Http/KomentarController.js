@@ -1,6 +1,7 @@
 'use strict'
 
 const Komentar = use('App/Models/Komentar')
+const Response = use('App/Helpers/ResponseHelper')
 
 class KomentarController {
     async add({ request, auth }){
@@ -11,9 +12,9 @@ class KomentarController {
             data.nip_pengirim = user.nip
 
             const insert = await Komentar.create(data)
-            return this.response(true, null, insert)
+            return Response.format(true, null, insert)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -33,9 +34,9 @@ class KomentarController {
                                        .orderBy('tgl', 'asc')
                                        .paginate(Number(request.get().page), Number(request.get().limit))
                         
-            return this.response(true, null, data)
+            return Response.format(true, null, data)
         } catch (error) {            
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -47,20 +48,12 @@ class KomentarController {
                                           .where({ id: Number(params.id), nip_pengirim: user.nip })
                                           .delete()
             if (destroy > 0) {                
-                return this.response(true, null, destroy)
+                return Response.format(true, null, destroy)
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
-        }
-    }
-
-    async response(success, message, data) {
-        return {
-            success: success, 
-            message: message,
-            data: data
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 }

@@ -1,6 +1,7 @@
 'use strict'
 
 const MasterKantor = use('App/Models/MasterKantor')
+const Response = use('App/Helpers/ResponseHelper')
 
 class MasterKantorController {
     async tree({ auth }) {
@@ -46,12 +47,12 @@ class MasterKantorController {
                     }
                 }
 
-                return this.response(true, null, data)
+                return Response.format(true, null, data)
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)            
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 
@@ -110,12 +111,12 @@ class MasterKantorController {
                     data.nodes = 0
                 }
                 
-                return this.response(true, null, data)
+                return Response.format(true, null, data)
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)            
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 
@@ -124,17 +125,9 @@ class MasterKantorController {
             const data = await MasterKantor.query()
                                            .where('kdparent', null)
                                            
-            return this.response(data, null, data)
+            return Response.format(data, null, data)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
-        }
-    }
-
-    async response(success, message, data) {
-        return {
-            success: success, 
-            message: message,
-            data: data
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 }

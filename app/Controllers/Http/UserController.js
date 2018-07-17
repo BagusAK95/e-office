@@ -2,6 +2,7 @@
 
 const Hash = use('Hash')
 const Login = use('App/Models/Login')
+const Response = use('App/Helpers/ResponseHelper')
 
 class UserController {
     async add({ request }) { //Todo: Check Kode Lokasi
@@ -10,9 +11,9 @@ class UserController {
             data.password = await Hash.make(data.password)
 
             const insert = await Login.create(data)
-            return this.response(true, null, insert)
+            return Response.format(true, null, insert)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -32,12 +33,12 @@ class UserController {
                                     .whereBetween('kode_lokasi', [Number(startLokasi), Number(endLokasi)])
                                     .update(data)
             if (edit > 0) {
-                return this.response(true, null, edit)
+                return Response.format(true, null, edit)
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -52,12 +53,12 @@ class UserController {
                                        .whereBetween('kode_lokasi', [Number(startLokasi), Number(endLokasi)])
                                        .delete()
             if (destroy > 0) {
-                return this.response(true, null, destroy)                
+                return Response.format(true, null, destroy)                
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -77,9 +78,9 @@ class UserController {
                                     .whereRaw(sql.join(' AND '))
                                     .paginate(Number(request.get().page), Number(request.get().limit))
                                 
-            return this.response(true, null, data)
+            return Response.format(true, null, data)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)            
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 
@@ -94,20 +95,12 @@ class UserController {
                                     .whereBetween('kode_lokasi', [Number(startLokasi), Number(endLokasi)])
                                     .first()
             if (data) {
-                return this.response(true, null, data)
+                return Response.format(true, null, data)
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)            
-        }
-    }
-
-    async response(success, message, data) {
-        return {
-            success: success, 
-            message: message,
-            data: data
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 }

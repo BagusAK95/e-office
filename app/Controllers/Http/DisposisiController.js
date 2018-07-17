@@ -1,13 +1,14 @@
 'use strict'
 
 const Disposisi = use('App/Models/Disposisi')
+const Response = use('App/Helpers/ResponseHelper')
 
 class DisposisiController {
     async add({ request, auth }) { //Todo: Kirim Notifikasi ke Pemimpin
         try {
             const user = await auth.getUser()
             if (user.akses.split(',').indexOf('disposisi') == -1) {
-                return this.response(false, 'Akses ditolak', null)
+                return Response.format(false, 'Akses ditolak', null)
             }
 
             const data = request.all()
@@ -17,9 +18,9 @@ class DisposisiController {
             data.keyword = ''.concat(data.nama_penerima, ' | ', data.isi_disposisi)
 
             const insert = await Disposisi.create(data)
-            return this.response(true, null, insert)
+            return Response.format(true, null, insert)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -44,9 +45,9 @@ class DisposisiController {
                                         .orderBy('tgl_disposisi', 'desc')
                                         .paginate(Number(request.get().page), Number(request.get().limit))
             
-            return this.response(true, null, data)
+            return Response.format(true, null, data)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)            
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 
@@ -71,9 +72,9 @@ class DisposisiController {
                                         .orderBy('tgl_disposisi', 'desc')
                                         .paginate(Number(request.get().page), Number(request.get().limit))
 
-            return this.response(true, null, data)
+            return Response.format(true, null, data)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)            
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 
@@ -83,9 +84,9 @@ class DisposisiController {
                                         .where('id_surat_masuk', Number(params.id_surat_masuk))
                                         .orderBy('tgl_disposisi', 'desc')
 
-            return this.response(false, 'Data tidak ditemukan', null)
+            return Response.format(false, 'Data tidak ditemukan', null)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)            
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 
@@ -93,19 +94,19 @@ class DisposisiController {
         try {
             const user = await auth.getUser()
             if (user.akses.split(',').indexOf('disposisi') == -1) {
-                return this.response(false, 'Akses ditolak', null)
+                return Response.format(false, 'Akses ditolak', null)
             }
             
             const destroy = await Disposisi.query()
                                            .where({id: Number(params.id), nip_pengirim: user.nip})
                                            .delete()
             if (destroy > 0) {
-                return this.response(true, null, destroy)
+                return Response.format(true, null, destroy)
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -125,20 +126,12 @@ class DisposisiController {
                     await data.save()    
                 }
 
-                return this.response(true, null, data)
+                return Response.format(true, null, data)
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
-        }
-    }
-
-    async response(success, message, data) {
-        return {
-            success: success, 
-            message: message,
-            data: data
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 }

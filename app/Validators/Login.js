@@ -1,5 +1,7 @@
 'use strict'
 
+const Response = use('App/Helpers/ResponseHelper')
+
 class Login {
   get rules () {
     return {
@@ -9,11 +11,7 @@ class Login {
   }
 
   async fails (errorMessages) {
-    return this.ctx.response.send({
-      success: false,
-      message: errorMessages[0].message,
-      data: null
-    })
+    return this.ctx.response.send(Response.format(false, errorMessages[0].message, null))
   }
 }
 

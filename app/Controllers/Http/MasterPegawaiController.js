@@ -1,6 +1,7 @@
 'use strict'
 
 const MasterPegawai = use('App/Models/MasterPegawai')
+const Response = use('App/Helpers/ResponseHelper')
 
 class MasterPegawaiController {
     async list({request, auth}){
@@ -19,9 +20,9 @@ class MasterPegawaiController {
                                             .whereRaw(sql.join(' AND '))
                                             .paginate(Number(request.get().page), Number(request.get().limit))
                                     
-            return this.response(true, null, data)
+            return Response.format(true, null, data)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)                
+            return Response.format(false, error.sqlMessage, null)                
         }
     }
 
@@ -32,9 +33,9 @@ class MasterPegawaiController {
                                             .orderBy('kode_eselon', 'desc')
                                             .orderBy('kode_jabatan', 'desc')
             
-            return this.response(true, null, data)
+            return Response.format(true, null, data)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)                
+            return Response.format(false, error.sqlMessage, null)                
         }
     }
 
@@ -47,9 +48,9 @@ class MasterPegawaiController {
             const data = await MasterPegawai.query()
                                             .whereBetween('kode_lokasi', [startLokasi, endLokasi])
                                             
-            return this.response(true, null, data)
+            return Response.format(true, null, data)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)                
+            return Response.format(false, error.sqlMessage, null)                
         }
     }
 
@@ -70,9 +71,9 @@ class MasterPegawaiController {
             const data = await MasterPegawai.query()
                                             .whereBetween('kode_lokasi', [startLokasi, endLokasi])
                                             
-            return this.response(true, null, data)   
+            return Response.format(true, null, data)   
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -82,21 +83,13 @@ class MasterPegawaiController {
                                             .where('nip', params.nip)
                                             .first()
             if (data) {
-                return this.response(true, null, data)            
+                return Response.format(true, null, data)            
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)            
+            return Response.format(false, error.sqlMessage, null)            
         }   
-    }
-
-    async response(success, message, data) {
-        return {
-            success: success, 
-            message: message,
-            data: data
-        }
     }
 }
 

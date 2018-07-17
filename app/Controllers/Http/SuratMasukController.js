@@ -2,13 +2,14 @@
 
 const SuratMasuk = use('App/Models/SuratMasuk')
 const MasterPegawai = use('App/Models/MasterPegawai')
+const Response = use('App/Helpers/ResponseHelper')
 
 class SuratMasukController {
     async add({ request, auth }) { //Todo: Kirim Notifikasi ke Pemimpin
         try {
             const user = await auth.getUser()
             if (user.akses.split(',').indexOf('suratmasuk') == -1) {
-                return this.response(false, 'Akses ditolak', null)
+                return Response.format(false, 'Akses ditolak', null)
             }
 
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
@@ -26,9 +27,9 @@ class SuratMasukController {
             }
 
             const insert = await SuratMasuk.create(data)
-            return this.response(true, null, insert)
+            return Response.format(true, null, insert)
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -65,9 +66,9 @@ class SuratMasukController {
                                          .orderBy('tgl_terima', 'desc')
                                          .paginate(Number(request.get().page), Number(request.get().limit))
             
-            return this.response(true, null, data)            
+            return Response.format(true, null, data)            
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)            
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 
@@ -75,7 +76,7 @@ class SuratMasukController {
         try {
             const user = await auth.getUser()
             if (user.akses.split(',').indexOf('suratmasuk') == -1) {
-                return this.response(false, 'Akses ditolak', null)
+                return Response.format(false, 'Akses ditolak', null)
             }
             
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
@@ -85,12 +86,12 @@ class SuratMasukController {
                                             .delete()
 
             if (destroy > 0) {
-                return this.response(true, null, destroy)                
+                return Response.format(true, null, destroy)                
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 
@@ -125,20 +126,12 @@ class SuratMasukController {
                     }
                 }
                 
-                return this.response(true, null, data)                
+                return Response.format(true, null, data)                
             } else {
-                return this.response(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Data tidak ditemukan', null)
             }
         } catch (error) {
-            return this.response(false, error.sqlMessage, null)
-        }
-    }
-
-    async response(success, message, data) {
-        return {
-            success: success, 
-            message: message,
-            data: data
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 }
