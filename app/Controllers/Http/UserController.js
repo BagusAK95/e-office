@@ -65,7 +65,6 @@ class UserController {
 
             const data = await Login.query()
                                     .whereRaw(sql1 + sql2)
-                                    .orderBy('kode_eselon', 'asc')
                                     .paginate(Number(params.page), Number(params.limit))
             if (data) {
                 return this.response(true, null, data)
