@@ -1,239 +1,266 @@
 @layout('frontend/main')
 @section('content')
-      <div class="page-content container-fluid">
-        <div class="row">
-          <div class="col-xxl-4 col-lg-12">
-            <!-- Example Panel With Heading -->
-            <div class="panel panel-bordered">
-              <div class="panel-heading">
-                <h3 class="panel-title">Data User</h3>
-              </div>
-              <div class="panel-body">
-                <div class="example example-grid">
-                <div class="row">
-                    <div class="col-sm-12 col-lg-8">
-                    <div class="">
-                            <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
-                                <div class='btn-group' role='group'>
-                                    <a href='/admin/adduser' class='btn btn-icon btn-info'>
-                                        <i class='icon md-plus' aria-hidden='true'></i>
-                                    </a>
-                                </div>
-                            </div>
-                    </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-4">
-                    <div class=""> <input class="form-control" placeholder="Search" id='search' type="text"></div>
-                    </div>
-                </div>
-                </div>
-                <table class="table table-striped table-bordered" data-tablesaw-mode="swipe"
-                  data-tablesaw-mode-switch data-tablesaw-minimap data-tablesaw-mode-exclude="columntoggle">
-        <thead>
-        <tr>
-            <th>NIP</th>
-            <th>Nama</th>
-            <th style='width:200px'>Jabatan</th>
-            <th>Golongan</th>
-            <th>Level</th>
-            <th style='width:120px'>Action</th>
-        </tr>
-        </thead>
-        <tbody id="body">
-            
-        </tbody>
-    </table>
 
-    
-    <div id="pagination"></div>
-    <span id="showing"></span>
-
-              </div>
+<div class="page-content container-fluid">
+   <div class="row">
+      <div class="col-xxl-4 col-lg-12">
+      <div id="cover-spin" style="width:100%"></div>
+         <!-- Example Panel With Heading -->
+         <div class="panel panel-bordered">
+            <div class="panel-heading">
+               <h3 class="panel-title">Master User</h3>
+               
             </div>
-            <!-- End Example Panel With Heading -->
-          </div>
-        </div>
+            <div class="panel-body">
+               <div class="example example-grid">
+                  <div class="row">
+                     <div class="col-sm-12 col-lg-8">
+                        <div class="">
+                           <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                              <div class='btn-group' role='group'>
+                                 <a href='/user/add' class='btn btn-icon btn-info'>
+                                 <i class='icon md-plus' aria-hidden='true'></i>
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-sm-6 col-lg-4">
+                        <div class=""> <input class="form-control" placeholder="Search" id='search' type="text"></div>
+                     </div>
+                  </div>
+               </div>
+               <div class="table-responsive"> 
+               <table class="table table-striped table-bordered table-hover" data-role="content">
+                  <thead style=''>
+                     <tr>
+                        <th>NIP</th>
+                        <th>Nama</th>
+                        <th style='width:200px'>Jabatan</th>
+                        <th>Golongan</th>
+                        <th>Level</th>
+                        <th style='width:120px'>Action</th>
+                     </tr>
+                  </thead>
+                  <tbody id="body">
+                  </tbody>
+               </table>
+               </div>
+               <div id="pagination"></div>
+               <span id="showing"></span>
+            </div>
+         </div>
+         <!-- End Example Panel With Heading -->
       </div>
-      
-
+   </div>
+</div>
 <!--Detail Data-->
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editModal" class="modal fade modal-info show" style="display: none;">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">Detail User</h4>
-			</div>
-			<div class="modal-body">
-				<form role="form" id='ajax_edit' method="POST">
-					<div class="adv-table">
-						<table  class="display table table-bordered table-striped" id="example">
-							<tbody>
-								<tr>
-									<td width="100px" rowspan="3" align="center"><div id="e_foto"></div></td>
-									<td width="200px"><b>NIP</b></td>
-									<td width="300px"><div id="e_nip"></div></td>
-								</tr>
-								<tr>
-									<td width="200px"><b>Nama</b></td>
-									<td width="300px"><div id="e_nama"></div></td>
-								</tr>
-								<tr>
-									<td width="200px"><b>No HP</b></td>
-									<td width="300px" colspan="2"><div id="e_nohp"></div></td>
-								</tr>
-								<tr>
-									<td width="200px"><b>Email</b></td>
-									<td width="300px" colspan="2"><div id="e_email"></div></td>
-								</tr>
-								<tr>
-									<td><b>Lokasi</b></td>
-									<td colspan="2"><div id="e_lokasi"></div></td>
-								</tr>
-								<tr>
-									<td><b>Jabatan</b></td>
-									<td colspan="2"><div id="e_jabatan"></div></td>
-                                </tr>
-                                <tr>
-                                        <td><b>Kode Eselon</b></td>
-                                        <td colspan="2"><div id="e_kode_eselon"></div></td>
-                                    </tr>
-                                <tr>
-									<td><b>Golongan</b></td>
-									<td colspan="2"><div id="e_golongan"></div></td>
-								</tr>
-								<tr>
-									<td><b>Level</b></td>
-									<td colspan="2"><div id="e_level"></div></td>
-								</tr>
-								<tr>
-									<td><b>Akses</b></td>
-									<td colspan="2"><div id="e_akses"></div></td>
-                                </tr>
-                                
-                                
-								<tr>
-									<td><b>Status</b></td>
-									<td colspan="2"><div id="e_status"></div></td>
-								</tr>
-								<tr>
-									<td><b>Keterangan</b></td>
-									<td colspan="2"><div id="e_keterangan"></div></td>
-								</tr>
-								
-							</tbody>
-						</table>
-					</div>
-					<div class="modal-footer">
-	    				
-					</div>					
-				</form>
-			</div>
-		</div>
-	</div>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Detail User</h4>
+         </div>
+         <div class="modal-body">
+            <form role="form" id='ajax_edit' method="POST">
+               <div class="adv-table">
+                  <table  class="display table table-bordered table-striped" id="example">
+                     <tbody>
+                        <tr>
+                           <td width="100px" rowspan="3" align="center">
+                              <div id="e_foto"></div>
+                           </td>
+                           <td width="200px"><b>NIP</b></td>
+                           <td width="300px">
+                              <div id="e_nip"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td width="200px"><b>Nama</b></td>
+                           <td width="300px">
+                              <div id="e_nama"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td width="200px"><b>No HP</b></td>
+                           <td width="300px" colspan="2">
+                              <div id="e_nohp"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td width="200px"><b>Email</b></td>
+                           <td width="300px" colspan="2">
+                              <div id="e_email"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Lokasi</b></td>
+                           <td colspan="2">
+                              <div id="e_lokasi"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Jabatan</b></td>
+                           <td colspan="2">
+                              <div id="e_jabatan"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Kode Eselon</b></td>
+                           <td colspan="2">
+                              <div id="e_kode_eselon"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Golongan</b></td>
+                           <td colspan="2">
+                              <div id="e_golongan"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Level</b></td>
+                           <td colspan="2">
+                              <div id="e_level"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Akses</b></td>
+                           <td colspan="2">
+                              <div id="e_akses"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Status</b></td>
+                           <td colspan="2">
+                              <div id="e_status"></div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td><b>Keterangan</b></td>
+                           <td colspan="2">
+                              <div id="e_keterangan"></div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <div class="modal-footer">
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
 </div>
-
-
 <!--Data Edit-->
 <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editmodaln" class="modal fade modal-info show" style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit User - <span id="orange"></span></h4>
-                </div>
-                <div class="modal-body">
-                        <div class="panel-body container-fluid">
-                                <form autocomplete="off" id="simpan">
-                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
-                                    <label class="form-control-label" for="inputEmail">NIP</label>
-                                    <input type="hidden" readonly id="pegawai" name="nip" class="form-control">
-                                  </div>
-                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
-                                  <label class="form-control-label" for="inputEmail">Nama Lengkap</label>
-                                    <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" readonly >
-                                  </div>
-                                  <div class="form-group" data-plugin="formMaterial">
-                                  <label class="form-control-label" for="inputEmail">No HP</label>
-                                      <input type="text" class="form-control" name="nohp" id="nohp" >
-                                  </div>
-                                  <div class="form-group" data-plugin="formMaterial">
-                                  <label class="form-control-label" for="inputEmail">Email</label>
-                                      <input type="email" class="form-control" name="email" id="email" >
-                                  </div>
-                                  <!--<div class="form-group" data-plugin="formMaterial">
-                                  <label class="form-control-label" for="inputEmail">Foto</label>
-                                      <input type="file" name="foto" class="form-control btn" >
-                                  </div>-->
-                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
-                                  <label class="form-control-label" for="inputEmail">Kode Lokasi</label>
-                                      <input type="text" class="form-control" name="kode_lokasi" id="kode_lokasi" readonly >
-                                  </div>
-                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
-                                  <label class="form-control-label" for="inputEmail">Kode Jabatan </label>
-                                      <input type="text" class="form-control" name="kode_jabatan" id="kode_jabatan" readonly >
-                                  </div>
-                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
-                                  <label class="form-control-label" for="inputEmail">Nama Jabatan </label>
-                                      <input type="text" class="form-control" name="nama_jabatan" id="nama_jabatan" readonly >
-                                  </div>
-                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
-                                  <label class="form-control-label" for="inputEmail">Kode Eselon </label>
-                                      <input type="text" class="form-control" name="kode_eselon" id="kode_eselon" readonly >
-                                  </div>
-                                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
-                                  <label class="form-control-label" for="inputEmail">Golongan</label>
-                                      <input type="text" class="form-control" name="golongan" id="golongan" readonly >
-                                  </div>
-                                  
-                                  <div class="form-group" data-plugin="formMaterial">
-                                  <label class="form-control-label" for="inputEmail">Level</label>
-                                  <select name="level" id="level" class="form-control">
-                                      <option value="1">Admin</option>
-                                      <option value="2">Pimpinan</option>
-                                      <option value="3">Tata Usaha</option>
-                                      <option value="4">Staff</option>
-                                  </select>
-                                  </div>
-                                  <div class="form-group" data-plugin="formMaterial">
-                                  <label class="form-control-label" for="inputEmail">Status</label>
-                                  <select name="status" id="status" class="form-control">
-                                      <option value="1">Aktif</option>
-                                      <option value="0">Non Aktif</option>
-                                  </select>
-                                  </div>
-
-                                <div class="form-group" data-plugin="formMaterial">
-                                <label class="form-control-label" for="inputEmail">Akses</label>
-                                <BR>
-                                <input type="checkbox" name="sm" id="sm" value="suratmasuk"> Surat Masuk<br>
-                                <input type="checkbox" name="sk" id="sk" value="suratkeluar"> Surat Keluar<br>
-                                <input type="checkbox" name="di" id="di" value="disposisi"> Disposisi<br>
-                                </div>
-      
-                                 <br>
-                                  <div style="float:right">
-                                  <button type="submit" class="btn btn-success waves-effect waves-classic">Simpan</button>
-                              </div>
-                              </form>
-                                  </div>
-                </div>
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Edit User - <span id="orange"></span></h4>
+         </div>
+         <div class="modal-body">
+            <div class="panel-body container-fluid">
+               <form autocomplete="off" id="simpan">
+                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                     <label class="form-control-label" for="inputEmail">NIP</label>
+                     <input type="hidden" readonly id="pegawai" name="nip" class="form-control">
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                     <label class="form-control-label" for="inputEmail">Nama Lengkap</label>
+                     <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" readonly >
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial">
+                     <label class="form-control-label" for="inputEmail">No HP</label>
+                     <input type="text" class="form-control" name="nohp" id="nohp" >
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial">
+                     <label class="form-control-label" for="inputEmail">Email</label>
+                     <input type="email" class="form-control" name="email" id="email" >
+                  </div>
+                  <!--<div class="form-group" data-plugin="formMaterial">
+                     <label class="form-control-label" for="inputEmail">Foto</label>
+                         <input type="file" name="foto" class="form-control btn" >
+                     </div>-->
+                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                     <label class="form-control-label" for="inputEmail">Kode Lokasi</label>
+                     <input type="text" class="form-control" name="kode_lokasi" id="kode_lokasi" readonly >
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                     <label class="form-control-label" for="inputEmail">Kode Jabatan </label>
+                     <input type="text" class="form-control" name="kode_jabatan" id="kode_jabatan" readonly >
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                     <label class="form-control-label" for="inputEmail">Nama Jabatan </label>
+                     <input type="text" class="form-control" name="nama_jabatan" id="nama_jabatan" readonly >
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                     <label class="form-control-label" for="inputEmail">Kode Eselon </label>
+                     <input type="text" class="form-control" name="kode_eselon" id="kode_eselon" readonly >
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                     <label class="form-control-label" for="inputEmail">Golongan</label>
+                     <input type="text" class="form-control" name="golongan" id="golongan" readonly >
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial">
+                     <label class="form-control-label" for="inputEmail">Level</label>
+                     <select name="level" id="level" class="form-control">
+                        <option value="1">Admin</option>
+                        <option value="2">Pimpinan</option>
+                        <option value="3">Tata Usaha</option>
+                        <option value="4">Staff</option>
+                     </select>
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial">
+                     <label class="form-control-label" for="inputEmail">Status</label>
+                     <select name="status" id="status" class="form-control">
+                        <option value="1">Aktif</option>
+                        <option value="0">Non Aktif</option>
+                     </select>
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial">
+                     <label class="form-control-label" for="inputEmail">Akses</label>
+                     <BR>
+                     <input type="checkbox" name="sm" id="sm" value="suratmasuk"> Surat Masuk<br>
+                     <input type="checkbox" name="sk" id="sk" value="suratkeluar"> Surat Keluar<br>
+                     <input type="checkbox" name="di" id="di" value="disposisi"> Disposisi<br>
+                  </div>
+                  <br>
+                  <div style="float:right">
+                     <button type="submit" class="btn btn-success waves-effect waves-classic">Simpan</button>
+                  </div>
+               </form>
             </div>
-        </div>
-    </div>
-
-
+         </div>
+      </div>
+   </div>
+</div>
 <script>
-    $("#search").keyup(function(){
-        if($("#search").val())    
-        {
-            showbrand(1,$("#search").val());
-        }
-        else
-        {
-            showbrand(1,'null');
-        }
+    $( document ).ready(function() {
+        /*Main*/
+        $("#loader").fadeIn("slow");
+        cek_session();
+        cek_token();
+        /*End Main*/
         
+        /*Page*/
+        showbrand(1,'');
+        $("#loader").fadeOut("xslow");
+        /*Page*/
     });
+    /*Search Function*/
+   $("#search").keyup(function(){
+       if($("#search").val())    
+       {
+           showbrand(1,$("#search").val());
+       }
+       else
+       {
+           showbrand(1,'');
+       }
+   });
+   /*End Search Function*/
 
+   /*Pagination Function*/
     function dopagin()
     {
         var halaman = $("#pagin").val();
@@ -243,371 +270,392 @@
         }
         else
         {
-            showbrand(halaman,'null');
+            showbrand(halaman,'');
         } 
     }
+    /*End Pagination Function*/
 
-     showbrand(1,'null');
-        function showbrand(page,nama)
+    /*Show Data Function*/
+    function showbrand(page,nama)
+    {
+        if(nama)
         {
-            if(nama=='null')
-            {
-                var naman = "{nama}";
-            }
-            else
-            {
-                var naman = nama;
-            }
-            $.ajax({ 
-                type: 'GET', 
-                url: '/admin/gettoken', 
-                success: function (data) { 
-                    $.ajax({ 
-                        type: 'GET', 
-                        url: '/api/user/'+naman+'/' + page + '/10', 
-                        headers: {
-                            'Authorization': 'Bearer ' + data.token
-                        },
-                        dataType: 'json',
-                        success: function (data) { 
-                            var text="";
-                            $.each(data.data.data, function(index, element) {
-                                var level='';
-                                if(element.level==1)
-                                {
-                                    level = 'Admin';
-                                }
-                                else if(element.level==2)
-                                {
-                                    level = 'Pimpinan';
-                                }
-                                else if(element.level==3)
-                                {
-                                    level = 'Tata Usaha';
-                                }
-                                else if(element.level==4)
-                                {
-                                    level = 'Staff';
-                                }
-
-                                var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+element.nama_jabatan+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-info' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-info' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-info'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
-                                text += tr_data;
-                            });
-
-                            $("#body").html(text).show();
-
-                            var disbalenext = '';
-                            if(data.data.lastPage==data.data.page)
-                            {
-                                disbalenext='disabled';
-                            }
-
-                            if(naman=="{nama}")
-                            {
-                                var isi_nama = 'null';
-                            }
-                            else
-                            {
-                                var isi_nama = nama;
-                            }
-
-                            var prev="";
-                            if(page==1)
-                            {
-                                prev = "disabled";
-                            }
-
-                            $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-info btn-pill-left' "+prev+" onclick=showbrand(1,'"+isi_nama+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-info' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-info' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-info' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-info' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-info btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div>").show();
-                        }
-                    });
-
-
-                },
-                error: function ()
-                {
-                    return false;
-                }
-            });
+            var search = 'nama='+nama+'&';
         }
-
-        function detail(nip)
+        else
         {
-            $.ajax({ 
-                type: 'GET', 
-                url: '/admin/gettoken', 
-                success: function (data) {
-                    $.ajax({ 
-                        type: 'GET', 
-                        url: '/api/user/'+nip, 
-                        headers: {
-                            'Authorization': 'Bearer ' + data.token
-                        },
-                        dataType: 'json',
-                        success: function (data) { 
-                          
-                          var level='';
-                          if(data.data.level==1)
-                          {
-                            level = 'Admin';
-                          }
-                          else if(data.data.level==2)
-                          {
-                            level = 'Pimpinan';
-                          }
-                          else if(data.data.level==3)
-                          {
-                            level = 'Tata Usaha';
-                          }
-                          else if(data.data.level==4)
-                          {
-                            level = 'Staff';
-                          }
-
-                          var status = ''
-                          if(data.data.status==1)
-                          {
-                              status = "Aktif";
-                          }
-                          else
-                          {
-                              status="Non Aktif";
-                          }
-                            
-                            var foto = "../material/base/src/images/user.png";
-                            if(data.data.foto)
-                            {
-                                foto = data.data.foto;
-                            }
-
-
-                            var akses = data.data.akses;
-                            var smu = "";
-                            if(akses)
-                            {
-                                var max = akses.split(",").length;
-                                var data_akses = akses.split(",");
-                                for (var index = 0; index < max; index++) 
-                                {
-                                    smu += (index+1)+". "+data_akses[index]+"<br>";
-                                }
-                            }
-                            $("#e_foto").html('<a class="avatar avatar-lg"><img width="99" height="132" src="'+foto+'"/></a>').show();
-                            $("#e_nip").html(data.data.nip).show();
-                            $("#e_nama").html(data.data.nama_lengkap).show();
-                            
-                            $("#e_nohp").html(data.data.nohp).show();
-                            $("#e_email").html(data.data.email).show();
-                            $("#e_lokasi").html(data.data.kode_lokasi).show();
-                            $("#e_jabatan").html(data.data.nama_jabatan).show();
-                            $("#e_golongan").html(data.data.golongan).show();
-                            $("#e_level").html(level).show();
-                            $("#e_akses").html(smu).show();
-                            $("#e_kode_eselon").html(data.data.kode_eselon).show();
-                            $("#e_status").html(status).show();
-                            $("#e_keterangan").html(data.data.keterangan).show();
-                            
-                            $('#editModal').modal('show');
-                            
-                        },
-                         error: function ()
-                        {
-                            return false;
-                        }
-                    });
-                },
-                error: function ()
-                {
-                    return false;
-                }
-            });
+            var search = '';
         }
-
-        function editcok(nip)
-        {
-            $("#sm").prop( "checked",false );
-            $("#sk").prop( "checked",false );
-            $("#di").prop( "checked",false );
-            $.ajax({ 
-                type: 'GET', 
-                url: '/admin/gettoken', 
-                success: function (data) {
-                    $.ajax({ 
-                        type: 'GET', 
-                        url: '/api/user/'+nip, 
-                        headers: {
-                            'Authorization': 'Bearer ' + data.token
-                        },
-                        dataType: 'json',
-                        success: function (data) { 
-                          
-                            var akses = data.data.akses;
-                            var smu = "";
-                            if(akses)
-                            {
-                                var max = akses.split(",").length;
-                                var data_akses = akses.split(",");
-                                for (var index = 0; index < max; index++) 
-                                {
-                                    if(data_akses[index]=="suratmasuk")
-                                    {
-                                        $("#sm").prop( "checked",true );
-                                    }
-
-                                    if(data_akses[index]=="suratkeluar")
-                                    {
-                                        $("#sk").prop( "checked",true );
-                                    }
-
-                                    if(data_akses[index]=="disposisi")
-                                    {
-                                        $("#di").prop( "checked",true );
-                                    }
-                                    
-                                }
-                            }
-                            $("#pegawai").val(data.data.nip);
-                            $("#nama_lengkap").val(data.data.nama_lengkap);
-                            $("#nohp").val(data.data.nohp);
-                            $("#email").val(data.data.email);
-                            $("#kode_lokasi").val(data.data.kode_lokasi);
-                            $("#kode_jabatan").val(data.data.kode_jabatan);
-                            $("#nama_jabatan").val(data.data.nama_jabatan);
-                            $("#golongan").val(data.data.golongan);
-                            $("#level").val(data.data.level);
-                            $("#status").val(data.data.status);
-                            $("#kode_eselon").val(data.data.kode_eselon);
-                            $("#orange").html(data.data.nama_lengkap).show();
-                            $('#editmodaln').modal('show');
-                        },
-                         error: function ()
-                        {
-                            return false;
-                        }
-                    });
-                },
-                error: function ()
-                {
-                    return false;
-                }
-            });
-        }
-
-        
-
-        function delete_data(nip)
-        {
-            if(confirm('Yakin menghapus data ini?'))
-            {
+        $.ajax({ 
+            type: 'GET', 
+            url: '/gettoken', 
+            success: function (data) { 
                 $.ajax({ 
                     type: 'GET', 
-                    url: '/admin/gettoken', 
-                    success: function (data) {
-                        $.ajax({ 
-                            type: 'DELETE', 
-                            url: '/api/user/'+nip, 
-                            headers: {
-                                'Authorization': 'Bearer ' + data.token
-                            },
-                            dataType: 'json',
-                            success: function (data) 
-                            { 
-                                if(data.success==false)
-                                {
-                                    swal("Gagal!", "Hapus data gagal.", "error");
-                                }
-                                else if(data.success==true)
-                                {
-                                    swal({title: "Berhasil", text: "Berhasil hapus data.", type: "success"},
-                                    function(){ 
-                                        location.reload();
-                                    }
-                                    );
-                                }
-                            },
-                            error: function ()
+                    url: '/api/user?'+search+'page='+page+'&limit=10', 
+                    headers: {
+                        'Authorization': 'Bearer ' + data.token
+                    },
+                    dataType: 'json',
+                    success: function (data) { 
+                        var text="";
+                        $.each(data.data.data, function(index, element) {
+                            var level='';
+                            if(element.level==1)
                             {
-                                return false;
+                                level = 'Admin';
                             }
+                            else if(element.level==2)
+                            {
+                                level = 'Pimpinan';
+                            }
+                            else if(element.level==3)
+                            {
+                                level = 'Tata Usaha';
+                            }
+                            else if(element.level==4)
+                            {
+                                level = 'Staff';
+                            }
+
+                            var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+element.nama_jabatan+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-info' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-info' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-info'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                            text += tr_data;
                         });
+
+                        $("#body").html(text).show();
+
+                        var disbalenext = '';
+                        if(data.data.lastPage==data.data.page)
+                        {
+                            disbalenext='disabled';
+                        }
+
+                        if(nama)
+                        {
+                            var naman = nama;
+                        }
+                        else
+                        {
+                            var naman = '';
+                        }
+
+                        var prev="";
+                        if(page==1)
+                        {
+                            prev = "disabled";
+                        }
+
+                        $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-info btn-pill-left' "+prev+" onclick=showbrand(1,'"+naman+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-info' onclick=showbrand(" + (data.data.page - 1) + ",'"+naman+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-info' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-info' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-info' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+naman+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-info btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+naman+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div>").show();
+                    }
+                });
+
+
+            },
+            error: function ()
+            {
+                return false;
+            }
+        });
+    }
+    /*End Show Data Function*/
+
+    /*Show Detail Function*/
+    function detail(nip)
+    {
+        $("#loader").fadeIn("slow");
+        $.ajax({ 
+            type: 'GET', 
+            url: '/gettoken', 
+            success: function (data) {
+                $.ajax({ 
+                    type: 'GET', 
+                    url: '/api/user/'+nip, 
+                    headers: {
+                        'Authorization': 'Bearer ' + data.token
+                    },
+                    dataType: 'json',
+                    success: function (data) { 
+                        
+                        var level='';
+                        if(data.data.level==1)
+                        {
+                        level = 'Admin';
+                        }
+                        else if(data.data.level==2)
+                        {
+                        level = 'Pimpinan';
+                        }
+                        else if(data.data.level==3)
+                        {
+                        level = 'Tata Usaha';
+                        }
+                        else if(data.data.level==4)
+                        {
+                        level = 'Staff';
+                        }
+
+                        var status = ''
+                        if(data.data.status==1)
+                        {
+                            status = "Aktif";
+                        }
+                        else
+                        {
+                            status="Non Aktif";
+                        }
+                        
+                        var foto = "../material/base/src/images/user.png";
+                        if(data.data.foto)
+                        {
+                            foto = data.data.foto;
+                        }
+
+
+                        var akses = data.data.akses;
+                        var smu = "";
+                        if(akses)
+                        {
+                            var max = akses.split(",").length;
+                            var data_akses = akses.split(",");
+                            for (var index = 0; index < max; index++) 
+                            {
+                                smu += (index+1)+". "+data_akses[index]+"<br>";
+                            }
+                        }
+                        $("#e_foto").html('<a class="avatar avatar-lg"><img width="99" height="132" src="'+foto+'"/></a>').show();
+                        $("#e_nip").html(data.data.nip).show();
+                        $("#e_nama").html(data.data.nama_lengkap).show();
+                        
+                        $("#e_nohp").html(data.data.nohp).show();
+                        $("#e_email").html(data.data.email).show();
+                        $("#e_lokasi").html(data.data.kode_lokasi).show();
+                        $("#e_jabatan").html(data.data.nama_jabatan).show();
+                        $("#e_golongan").html(data.data.golongan).show();
+                        $("#e_level").html(level).show();
+                        $("#e_akses").html(smu).show();
+                        $("#e_kode_eselon").html(data.data.kode_eselon).show();
+                        $("#e_status").html(status).show();
+                        $("#e_keterangan").html(data.data.keterangan).show();
+                        
+                        $("#loader").fadeOut("xslow");
+                        $('#editModal').modal('show');
+                        
                     },
                     error: function ()
                     {
                         return false;
                     }
                 });
-            }
-            else
+            },
+            error: function ()
             {
                 return false;
             }
-        }
+        });
+    }
+    /*End Show Detail Function*/
 
-        
-        $( "#simpan" ).submit(function( event ) {
-            var akses = "";
-            if($("#sm").is(':checked'))
-            {
-                 akses += $("#sm").val();
-            }
-
-            if($("#sk").is(':checked'))
-            {
-                akses += ","+$("#sk").val();
-            }
-
-            if($("#di").is(':checked'))
-            {
-                akses += ","+$("#di").val();
-            }
-
-            $.ajax({ 
+    /*Edit Data Function*/
+    function editcok(nip)
+    {
+        $("#loader").fadeIn("slow");
+        $("#sm").prop( "checked",false );
+        $("#sk").prop( "checked",false );
+        $("#di").prop( "checked",false );
+        $.ajax({ 
             type: 'GET', 
-            url: '/admin/gettoken', 
-            success: function (data) { 
-               $.ajax({ 
-                type: 'PUT', 
-                url: '/api/user/'+$("#pegawai").val(), 
-                headers: {
-					'Authorization': 'Bearer ' + data.token
-				},
-                data : "nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&level="+$("#level").val()+"&status="+$("#status").val()+"&akses="+akses,
-                success: function (data) 
-                { 
-                    if(data.success==false)
-                    {
-                        swal("Gagal!", "Gagal Menyimpan data.", "error");
-                    }
-                    else if(data.success==true)
-                    {
-                        swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
-                        function(){ 
-                            location.reload();
+            url: '/gettoken', 
+            success: function (data) {
+                $.ajax({ 
+                    type: 'GET', 
+                    url: '/api/user/'+nip, 
+                    headers: {
+                        'Authorization': 'Bearer ' + data.token
+                    },
+                    dataType: 'json',
+                    success: function (data) { 
+                        
+                        var akses = data.data.akses;
+                        var smu = "";
+                        if(akses)
+                        {
+                            var max = akses.split(",").length;
+                            var data_akses = akses.split(",");
+                            for (var index = 0; index < max; index++) 
+                            {
+                                if(data_akses[index]=="suratmasuk")
+                                {
+                                    $("#sm").prop( "checked",true );
+                                }
+
+                                if(data_akses[index]=="suratkeluar")
+                                {
+                                    $("#sk").prop( "checked",true );
+                                }
+
+                                if(data_akses[index]=="disposisi")
+                                {
+                                    $("#di").prop( "checked",true );
+                                }
+                                
+                            }
                         }
-                        );
+                        $("#pegawai").val(data.data.nip);
+                        $("#nama_lengkap").val(data.data.nama_lengkap);
+                        $("#nohp").val(data.data.nohp);
+                        $("#email").val(data.data.email);
+                        $("#kode_lokasi").val(data.data.kode_lokasi);
+                        $("#kode_jabatan").val(data.data.kode_jabatan);
+                        $("#nama_jabatan").val(data.data.nama_jabatan);
+                        $("#golongan").val(data.data.golongan);
+                        $("#level").val(data.data.level);
+                        $("#status").val(data.data.status);
+                        $("#kode_eselon").val(data.data.kode_eselon);
+                        $("#orange").html(data.data.nama_lengkap).show();
+                        $("#loader").fadeOut("xslow");
+                        $('#editmodaln').modal('show');
+                    },
+                    error: function ()
+                    {
+                        return false;
                     }
-                },
-                error: function(data)
-                {
-                    swal("Gagal!", "Gagal Menyimpan data.", "error");
-                }
                 });
             },
             error: function ()
             {
                 return false;
             }
-            });
-            return false;
         });
+    }
+    /*End Edit Data Function*/
+       
+    /*Delete Data Function*/
+    function delete_data(nip)
+    {
         
-
-        function isNumber(evt) {
-            evt = (evt) ? evt : window.event;
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            return true;
+        if(confirm('Yakin menghapus data ini?'))
+        {
+            
+            $("#loader").fadeIn("slow");
+            $.ajax({ 
+                type: 'GET', 
+                url: '/gettoken', 
+                success: function (data) {
+                    $.ajax({ 
+                        type: 'DELETE', 
+                        url: '/api/user/'+nip, 
+                        headers: {
+                            'Authorization': 'Bearer ' + data.token
+                        },
+                        dataType: 'json',
+                        success: function (data) 
+                        { 
+                            if(data.success==false)
+                            {
+                                swal("Gagal!", "Hapus data gagal.", "error");
+                            }
+                            else if(data.success==true)
+                            {
+                                swal({title: "Berhasil", text: "Berhasil hapus data.", type: "success"},
+                                function(){ 
+                                    location.reload();
+                                }
+                                );
+                            }
+                            $("#loader").fadeOut("xslow");
+                        },
+                        error: function ()
+                        {
+                            return false;
+                        }
+                    });
+                },
+                error: function ()
+                {
+                    return false;
+                }
+            });
         }
-     </script> 
+        else
+        {
+            return false;
+        }
+    }
+    /*End Delete Data Function*/
+       
+    /*Save Data Function*/
+    $( "#simpan" ).submit(function( event ) {
+        
+        $("#loader").fadeIn("slow");
+        var akses = "";
+        if($("#sm").is(':checked'))
+        {
+            akses += $("#sm").val();
+        }
+
+        if($("#sk").is(':checked'))
+        {
+            akses += ","+$("#sk").val();
+        }
+
+        if($("#di").is(':checked'))
+        {
+            akses += ","+$("#di").val();
+        }
+
+        $.ajax({ 
+        type: 'GET', 
+        url: '/gettoken', 
+        success: function (data) { 
+            $.ajax({ 
+            type: 'PUT', 
+            url: '/api/user/'+$("#pegawai").val(), 
+            headers: {
+                    'Authorization': 'Bearer ' + data.token
+            },
+            data : "nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&level="+$("#level").val()+"&status="+$("#status").val()+"&akses="+akses,
+            success: function (data) 
+            { 
+                if(data.success==false)
+                {
+                    swal("Gagal!", "Gagal Menyimpan data.", "error");
+                }
+                else if(data.success==true)
+                {
+                    swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
+                    function(){ 
+                        location.reload();
+                    }
+                    );
+                }
+                
+                $("#loader").fadeOut("xslow");
+            },
+            error: function(data)
+            {
+                swal("Gagal!", "Gagal Menyimpan data.", "error");
+            }
+            });
+        },
+        error: function ()
+        {
+            return false;
+        }
+        });
+        return false;
+    });
+    /*End Save Data Function*/
+    
+    /*Addon Function*/
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+    /*End Addon Function*/
+    
+</script> 
 @endsection

@@ -9,7 +9,7 @@
     <meta name="author" content="">
     
     <title>e-Office</title>
-    
+   
     <link rel="apple-touch-icon" href="/material/base/assets/images/apple-touch-icon.png">
     <link rel="shortcut icon" href="/material/base/assets/images/favicon.ico">
     
@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="/material/global/fonts/material-design/material-design.min.css">
     <link rel="stylesheet" href="/material/global/fonts/brand-icons/brand-icons.min.css">
     <link rel='stylesheet' href='/material/font.css'>
+    <script src="/material/moment-with-locales.js"></script>
     
     <!--[if lt IE 9]>
     <script src="material/global/vendor/html5shiv/html5shiv.min.js"></script>
@@ -96,9 +97,15 @@
         <!-- Navbar Collapse -->
         <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
           <!-- Navbar Toolbar -->
+          
           <ul class="nav navbar-toolbar">
             <li class="nav-item hidden-float" id="toggleMenubar">
-              
+             <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
+                data-animation="scale-up" role="button">
+                <img src='/material/loader.gif' style='width:35px' id='loader' style='display:none' >
+                  <i></i>
+                </span>
+              </a>
             </li>
           </ul>
           <!-- End Navbar Toolbar -->
@@ -198,9 +205,9 @@
                 </span>
               </a>
               <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" href="/admin/profile" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
-                <a class="dropdown-item" href="/admin/change_password" role="menuitem"><i class="icon md-key" aria-hidden="true"></i> Change Password</a>
-                <a class="dropdown-item" href="/admin/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+                <a class="dropdown-item" href="/profile" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
+                <a class="dropdown-item" href="/change-password" role="menuitem"><i class="icon md-key" aria-hidden="true"></i> Change Password</a>
+                <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
               </div>
             </li>
             
@@ -257,38 +264,38 @@
               </li>
               <li class="site-menu-category konsol">Administrator</li>
               <li class="site-menu-item konsol">
-                <a class="animsition-link" href="/admin/user">
+                <a class="animsition-link" href="/user">
                         <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
                         <span class="site-menu-title">Master User</span>
                     </a>
               </li>
               <li class="site-menu-item konsol">
-                  <a class="animsition-link" href="/admin/tree">
+                  <a class="animsition-link" href="/kantor">
                           <i class="site-menu-icon md-account-box-o" aria-hidden="true"></i>
                           <span class="site-menu-title">Master Kantor</span>
                       </a>
               </li>
               <li class="site-menu-category surat">Surat</li>
               <li class="site-menu-item" id="surat_masuk" style="display: none">
-                <a class="animsition-link" href="/admin/surat_masuk">
+                <a class="animsition-link" href="/surat-masuk">
                         <i class="site-menu-icon md-email-open" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Masuk</span>
                     </a>
               </li>
-              <li class="site-menu-item" id="surat_keluar" style="display: none">
+              <li class="site-menu-item" id="surat-keluar" style="display: none">
                 <a class="animsition-link" href="#">
                         <i class="site-menu-icon md-email" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Keluar</span>
                     </a>
               </li>
               <li class="site-menu-item" id="disposisi" style="display: none">
-                  <a class="animsition-link" href="/admin/disposisi_masuk">
+                  <a class="animsition-link" href="/disposisi-masuk">
                           <i class="site-menu-icon md-inbox" aria-hidden="true"></i>
                           <span class="site-menu-title">Disposisi Masuk</span>
                       </a>
                 </li>
                <li class="site-menu-item" id="disposisi_keluar" style="display: none">
-                  <a class="animsition-link" href="/admin/disposisi_keluar">
+                  <a class="animsition-link" href="/disposisi-keluar">
                           <i class="site-menu-icon md-cloud-upload" aria-hidden="true"></i>
                           <span class="site-menu-title">Disposisi Keluar</span>
                       </a>
@@ -309,9 +316,12 @@
         </div>
       </div>
     </div>
-
+    <style>
+      
+    </style>
     <!-- Page -->
-    <div class="page">
+    <div class="page" >
+ 
       <!-- Page Content -->
       @!section('content')
       <!-- End Page Content -->
@@ -326,7 +336,7 @@
       </div>
     </footer>
 
-   
+    <input type="hidden" id="nip_login" id="nip_login">
     <script src="/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
     
     <script src="/material/global/vendor/popper-js/umd/popper.min.js"></script>
@@ -399,133 +409,115 @@
         <script src="/material/global/vendor/summernote/summernote.min.js"></script>
         <script src="/material/global/js/Plugin/summernote.js"></script>
         <script src="/material/base/assets/examples/js/forms/editor-summernote.js"></script>
+        
     <script>
-      cek_session()
-      function cek_session()
-        {
-          
-          $.ajax({ 
-              type: 'GET', 
-              url: '/admin/cek_session', 
-              success: function (data) { 
-                  if(data)
-                  {
-                    return false;
-                  }
-                  else
-                  {
-                    swal({title: "Session Time Out", text: "Silahkan login kembali.", type: "error"},
-                    function(){ 
-                        window.location.href='/login';
-                    }
-                    );
-                  }
+    
+    function cek_session()
+    {
+      $.ajax({ 
+          type: 'GET', 
+          url: '/cek_session', 
+          success: function (data) { 
+              if(data)
+              {
+                return false;
               }
-          });
-        }
+              else
+              {
+                swal({title: "Session Time Out", text: "Silahkan login kembali.", type: "error"},
+                function(){ 
+                    window.location.href='/login';
+                }
+                );
+              }
+          }
+      });
+    }
 
-        cek_token()
-        function cek_token()
-        {
-            $.ajax({ 
-                type: 'GET', 
-                url: '/admin/gettoken', 
-                success: function (data) { 
-                    $.ajax({ 
-                        type: 'GET', 
-                        url: '/api/profile', 
-                        headers: {
-                            'Authorization': 'Bearer ' + data.token
-                        },
-                        success: function (data) { 
-                            //alert(data.data.level);
-                            $("#level_main").val(data.data.level);
-                            //putlevel(data.data.level)
-                            $(".nama_user").html(data.data.nama_lengkap).show();
-                            if(data.data.foto)
-                            {
-                              $(".foto").html('<img src="'+data.data.foto+'" style="width:70px">').show();
-                            }
-                            else
-                            {
-                              $(".foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
-                            }
-                            
-                            $(".jabatan").html(data.data.nama_jabatan).show();
-                            $(".jabatanm").html(data.data.nama_jabatan).show();
+    function cek_token()
+    {
+        $.ajax({ 
+            type: 'GET', 
+            url: '/gettoken', 
+            success: function (data) { 
+                $.ajax({ 
+                    type: 'GET', 
+                    url: '/api/profile', 
+                    headers: {
+                        'Authorization': 'Bearer ' + data.token
+                    },
+                    success: function (data) { 
+                        //alert(data.data.level);
+                        $("#level_main").val(data.data.level);
+                        $("#nip_login").val(data.data.nip);
+                        //putlevel(data.data.level)
+                        $(".nama_user").html(data.data.nama_lengkap).show();
+                        if(data.data.foto)
+                        {
+                          $(".foto").html('<img src="'+data.data.foto+'" style="width:70px">').show();
+                        }
+                        else
+                        {
+                          $(".foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
+                        }
+                        
+                        $(".jabatan").html(data.data.nama_jabatan).show();
+                        $(".jabatanm").html(data.data.nama_jabatan).show();
 
-                            if(data.data.level==1)
-                            {
-                              $(".konsol").show();
-                              $(".surat").hide();
-                            }
-                            else
-                            {
-                              $(".konsol").hide();
-                              $(".surat").show();
-                            }
+                        if(data.data.level==1)
+                        {
+                          $(".konsol").show();
+                          $(".surat").hide();
+                        }
+                        else
+                        {
+                          $(".konsol").hide();
+                          $(".surat").show();
+                        }
 
 
-                            var akses = data.data.akses;
-                            var smu = "";
-                            if(akses)
+                        var akses = data.data.akses;
+                        var smu = "";
+                        if(akses)
+                        {
+                            var max = akses.split(",").length;
+                            var data_akses = akses.split(",");
+                            for (var index = 0; index < max; index++) 
                             {
-                                var max = akses.split(",").length;
-                                var data_akses = akses.split(",");
-                                for (var index = 0; index < max; index++) 
+                                if(data_akses[index]=="suratmasuk")
                                 {
-                                    if(data_akses[index]=="suratmasuk")
-                                    {
-                                      /*if(data.data.level==3)
-                                      {
-                                        $("#surat_masuk").show();
-                                      }
-                                      else if(data.data.level==2)
-                                      {
-                                        $("#surat_masuk").show();
-                                      }*/
-                                      $("#surat_masuk").show();
-                                    }
-                                    if(data_akses[index]=="suratkeluar")
-                                    {
-                                      $("#surat_keluar").show();
-                                    }
-                                    if(data_akses[index]=="disposisi")
-                                    {
-                                      $("#disposisi").show();
-                                      $("#disposisi_keluar").show();
-                                    }
+                                  $("#surat_masuk").show();
+                                }
+                                if(data_akses[index]=="suratkeluar")
+                                {
+                                  $("#surat_keluar").show();
+                                }
+                                if(data_akses[index]=="disposisi")
+                                {
+                                  $("#disposisi").show();
+                                  $("#disposisi_keluar").show();
                                 }
                             }
                         }
-                    });
-                },
-                error: function ()
-                {
-                    return false;
-                }
+                    }
                 });
-        }
-        
-        var Site = window.Site;
-        Site.run();
-        
-
-        /*function putlevel(level)
-        {
-            $.ajax({ 
-            type: 'GET', 
-            url: '/putlevel/'+level, 
-            success: function (data) 
-            { 
-                
             },
-            error : function(data)
+            error: function ()
             {
-              
+                return false;
             }
+            });
+    }
+  </script>
+  <script>
+      (function(document, window, $){
+        'use strict';
+    
+        var Site = window.Site;
+        $(document).ready(function(){
+          Site.run();
         });
-        }*/
-      </script>
+      })(document, window, jQuery);
+    </script>
   </body>
 </html>

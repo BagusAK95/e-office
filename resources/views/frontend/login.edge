@@ -50,23 +50,21 @@
       <div class="page" data-animsition-in="fade-in" data-animsition-out="fade-out">
          <div class="page-content">
             <div class="page-brand-info">
-               <div class="brand">
+                <div class="brand">
                   <img class="brand-img" src="material/base/assets/images/logo@2x.png" alt="...">
                   <h2 class="brand-text font-size-40">e-OFFICE</h2>
                </div>
                <p class="font-size-20">Aplikasi yang digunakan untuk mempermudah pengarsipan dan pengolahan persuratan pada perusahaan di Lingkungan Pemerintah Kabupaten Pati</p>
             </div>
             <div class="page-login-main">
-               <div class="brand hidden-md-up">
-                  <img class="brand-img" src="material/base/assets/images/logo-colored@2x.png" alt="...">
-                  <h3 class="brand-text font-size-40">E-OFFICE</h3>
+               <div class="brand">
+                 <center> <img class="brand-img" style='margin-top:-30px;width:85px;' src="material/base/assets/logo.png" alt="..."></center>
                </div>
-               <h3 class="font-size-24">Sign In</h3>
-               <p>Gunakan aplikasi ini dengan bijaksana.</p>
+               
                <form method="post" class='form-signin' autocomplete="off">
                   <div class="form-group form-material floating" data-plugin="formMaterial">
                      <input type="text" class="form-control empty" id="inputEmail" name="nip">
-                     <label class="floating-label" for="inputEmail">Username</label>
+                     <label class="floating-label" for="inputEmail">Nomor Induk Pegawai</label>
                   </div>
                   <div class="form-group form-material floating" data-plugin="formMaterial">
                      <input type="password" class="form-control empty" id="inputPassword" name="password">
@@ -75,7 +73,7 @@
                   <div class="form-group clearfix">
                      <div class="checkbox-custom checkbox-inline checkbox-primary float-left">
                         <input type="checkbox" id="remember" name="checkbox">
-                        <label for="inputCheckbox">Remember me</label>
+                       
                      </div>
                      <a class="float-right" href="#">Forgot password?</a>
                   </div>
@@ -135,7 +133,7 @@
          
            var Site = window.Site;
            $(document).ready(function(){
-             Site.run();
+                Site.run();
            });
          })(document, window, jQuery);
       </script>
@@ -214,7 +212,7 @@
              success: function (data) 
              { 
                  $(".loader").hide();
-                 window.location.href='/admin/home'
+                 window.location.href='/home'
              },
              error : function(data)
              {

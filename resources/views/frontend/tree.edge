@@ -59,11 +59,23 @@
     </div>
   </div>
       <script>
+        $( document ).ready(function() {
+            /*Main*/
+            $("#loader").fadeIn("slow");
+            cek_session();
+            cek_token();
+            /*End Main*/
+            
+            /*Page*/
+            $("#loader").fadeOut("xslow");
+            /*Page*/
+        });
         function detail_pegawai(id)
         {
+            $("#loader").fadeIn("slow");
             $.ajax({ 
                 type: 'GET', 
-                url: '/admin/gettoken', 
+                url: '/gettoken', 
                 success: function (data) { 
                     $.ajax({ 
                         type: 'GET', 
@@ -90,6 +102,7 @@
                             });
                             var html = "<table class='table table-striped'><tr><th>Nama Pegawai</th><th>Jabatan</th></tr>";
                             $("#detail").html(html+isi).show();
+                            $("#loader").fadeOut("xslow");
                             $('#myModal').modal('show');
                         }
                     });

@@ -49,6 +49,25 @@
     <tbody id='tabel'>
     </tbody>
 </table>
+<br>
+<div class="prtitle1">History Disposisi</div>
+
+<br>
+<table cellspacing="0"  bordercolor="#000000" cellpadding="4" border="1" style="width:56%;border: solid 1.5pt black; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th height='35' bgcolor='#ffffff' align='left' class='prtext'>Nama</th>
+            <th height='35' bgcolor='#ffffff' align='left' class='prtext'>Jabatan</th>
+            <th height='35' bgcolor='#ffffff' align='left' class='prtext'>Isi Disposisi</th>
+            <th height='35' bgcolor='#ffffff' align='left' class='prtext'>Tanggal</th>
+        </tr>
+    </thead>
+    <tbody id="dispo">
+        <tr height='35' bgcolor='#ffffff' align='left' class='prtext' align='center'>
+        <td colspan='5'>Data tidak tersedia.</td>
+        </tr>
+    </tbody>
+</table>
 </center>
 <body>
 </html>
@@ -59,7 +78,7 @@
         //alert("ssdsd");
         $.ajax({ 
             type: 'GET', 
-            url: '/admin/gettoken', 
+            url: '/gettoken', 
             success: function (data) { 
                 
                 $.ajax({ 
@@ -119,7 +138,44 @@
                         {
                             $("#lampiran").html("<a target='_blank' href='"+element.lampiran+"' class='btn btn-warning' style='color:white;width:100%'><i class='md-file'></i>&nbsp;Lampiran</a>").show();
                         }
+                        showdisposisi();
                         window.print();
+                    },
+                    error : function(data)
+                    {
+
+                    }
+                });
+            }
+        });
+    }
+
+    
+    function showdisposisi()
+    {
+        //alert("ssdsd");
+        $.ajax({ 
+            type: 'GET', 
+            url: '/gettoken', 
+            success: function (data) { 
+                
+                $.ajax({ 
+                    type: 'GET', 
+                    headers: {
+                            'Authorization': 'Bearer ' + data.token
+                    },
+                    url: '/api/disposisi/surat/{{params.id}}', 
+                    success: function (data) 
+                    { 
+                        var isi="";
+                        $.each(data.data, function(index, element) 
+                        {
+                            var tagg = tanggal_indo(element.tgl_disposisi);
+                            isi+='<tr><td>'+element.nama_penerima+'</td><td>'+element.jabatan_penerima+'</td><td>'+element.isi_disposisi+'</td><td>'+tagg+'</td></tr>';
+                            
+                        });
+                        //alert(isi);
+                        $("#dispo").html(isi).show();
                     },
                     error : function(data)
                     {

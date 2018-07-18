@@ -51,7 +51,7 @@
                 <div class="col-lg-12">
                     <div class="row">
                         <input type='hidden' value='{{params.id}}' id='id_surat'/>
-                        <table cellspacing="0"  bordercolor="#000000" cellpadding="4" border="1" style="border: solid 1.5pt black; border-collapse: collapse;" width='100%' class='table-bordered'>
+                        <table class="table table-striped table-bordered ">
                             <tbody id='tabel'>
                             </tbody>
                         </table>
@@ -83,7 +83,7 @@
                             
                             <div id='lampiran' style='width:100%'></div>
                             &nbsp;
-                            <a style='width:100%' href='/admin/disposisi_keluar' class='btn btn-danger' style='color:white'><i class='md-undo'></i>&nbsp;Kembali</a>
+                            <a style='width:100%' href='/disposisi-keluar' class='btn btn-danger' style='color:white'><i class='md-undo'></i>&nbsp;Kembali</a>
                  
                 </div>
                 </div>
@@ -105,7 +105,7 @@
                 <div class="col-lg-12">
                 <div class="row">
                     <!-- Panel Comments Full -->
-                        <div class="comments" id="komentar">
+                        <div class="comments" id="komentar" style='width:100%'>
                         </div>
 
                       
@@ -116,7 +116,36 @@
             <!-- End Example Panel With Heading -->
           </div>
 
-
+          <div class="col-xxl-4 col-lg-9">
+            <!-- Example Panel With Heading -->
+            <div class="panel panel-bordered">
+              <div class="panel-heading">
+                <h3 class="panel-title">History Disposisi</h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-lg-12">
+                <div class="row">
+                    <table class='table table-striped table-bordered'>
+                        <thead>
+                            <tr>
+                                <th>Nama Pengirim</th>
+                                <th>Nama Penerima</th>
+                                <th>Isi Disposisi</th>
+                                <th width='100px'>Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dispo">
+                            <tr align='center'>
+                            <td colspan='5'>Data tidak tersedia.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+              </div>
+            </div>
+            <!-- End Example Panel With Heading -->
+          </div>
           
 
         </div>
@@ -128,14 +157,28 @@
       <script>
       //$( document ).ready(function() {
         //alert("asd");
-        showtable();
+        
       //)};
+
+        $( document ).ready(function() {
+            /*Main*/
+            $("#loader").fadeIn("slow");
+            cek_session();
+            cek_token();
+            /*End Main*/
+            
+            /*Page*/
+            showtable();
+            showcomment();
+            $("#loader").fadeOut("xslow");
+            /*Page*/
+        });
         function showtable()
         {
             //alert("ssdsd");
             $.ajax({ 
                type: 'GET', 
-               url: '/admin/gettoken', 
+               url: '/gettoken', 
                success: function (data) { 
                     
                     $.ajax({ 
@@ -150,72 +193,64 @@
                             var element_dispo = datanya.data;
                             var id_surat_masuk = element_dispo.id_surat_masuk;
 
-                            $.ajax({ 
-                                type: 'GET', 
-                                headers: {
-                                        'Authorization': 'Bearer ' + data.token
-                                },
-                                url: '/api/surat-masuk/'+id_surat_masuk, 
-                                success: function (data) 
-                                { 
-                                    var element = data.data;
+                            var element = datanya.data.surat_;
 
-                                    var keamanan = "";
-                                    if(element.keamanan==1)
-                                    {
-                                        keamanan = "Biasa";
-                                    }
-                                    else if(element.keamanan==2)
-                                    {
-                                        keamanan = "Rahasia Terbatas";
-                                    }
-                                    else if(element.keamanan==3)
-                                    {
-                                        keamanan = "Rahasia";
-                                    }
-                                    else if(element.keamanan==4)
-                                    {
-                                        keamanan = "Sangat Rahasia";
-                                    }
+                            var keamanan = "";
+                            if(element.keamanan==1)
+                            {
+                                keamanan = "Biasa";
+                            }
+                            else if(element.keamanan==2)
+                            {
+                                keamanan = "Rahasia Terbatas";
+                            }
+                            else if(element.keamanan==3)
+                            {
+                                keamanan = "Rahasia";
+                            }
+                            else if(element.keamanan==4)
+                            {
+                                keamanan = "Sangat Rahasia";
+                            }
 
-                                    var kecepatan = "";
-                                    if(element.kecepatan==1)
-                                    {
-                                        kecepatan = "Biasa";
-                                    }
-                                    else if(element.kecepatan==2)
-                                    {
-                                        kecepatan = "Segera";
-                                    }
-                                    else if(element.kecepatan==3)
-                                    {
-                                        kecepatan = "Amat Segera";
-                                    }
+                            var kecepatan = "";
+                            if(element.kecepatan==1)
+                            {
+                                kecepatan = "Biasa";
+                            }
+                            else if(element.kecepatan==2)
+                            {
+                                kecepatan = "Segera";
+                            }
+                            else if(element.kecepatan==3)
+                            {
+                                kecepatan = "Amat Segera";
+                            }
 
-                                    var tanggal_surat = tanggal_indo(element.tgl_surat);
-                                    var tanggal_terima = tanggal_indo(element.tgl_terima);
-                                    var tabel = "";
-                                    tabel += "<tr><th>NOMOR SURAT</th><td>"+element.nomor_surat+"</td><th>NOMOR AGENDA</th><td>"+element.nomor_agenda+"</td></tr>";
-                                    tabel += "<tr><th>TANGGAL SURAT</th><td>"+tanggal_surat+"</td><th>TANGGAL TERIMA</th><td>"+tanggal_terima+"</td></tr>";
-                                    tabel += "<tr><th>PENGIRIM</th><td>"+element.nama_pengirim+"<br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th>TUJUAN</th><td>"+element.nama_penerima+"<br>"+element.jabatan_penerima+"</td></tr>";
-                                    tabel += "<tr><th>KECEPATAN/KEAMANAN</th><td>"+kecepatan+"/"+keamanan+"</td><th>TEMBUSAN</th><td>"+element.nama_tembusan+" <br> "+element.jabatan_tembusan+"</td></tr>";
-                                    tabel += "<tr><th>PERIHAL</th><td colspan='3'>"+element.perihal+"</td></tr>";
-                                    tabel += "<tr><th>DI DISPOSISIKAN KEPADA</th><td colspan='3'>"+element_dispo.nama_penerima+"/"+element.jabatan_penerima+"</td></tr>";
-                                    tabel += "<tr><th>INSTRUKSI DISPOSISI</th><td colspan='3'>"+element_dispo.instruksi+"</td></tr>";
-                                    tabel += "<tr><th>ISI DISPOSISI</th><td colspan='3'>"+element_dispo.isi_disposisi+"</td></tr>";
-                                    tabel += "<tr><th>RINGKASAN</th><td colspan='3'>"+element.ringkasan+"</td></tr>";
-                                    $("#tabel").html(tabel).show();
-                                    if(element.lampiran)
-                                    {
-                                        $("#lampiran").html("<a target='_blank' href='"+element.lampiran+"' class='btn btn-warning' style='color:white;width:100%'><i class='md-file'></i>&nbsp;Lampiran</a>").show();
-                                    }
-                                    //showdisposisi();
-                                },
-                                error : function(data)
-                                {
-
-                                }
-                            });
+                            var tanggal_surat = tanggal_indo(element.tgl_surat);
+                            var tanggal_terima = tanggal_indo(element.tgl_terima);
+                            var tabel = "";
+                            tabel += "<tr><th>NOMOR SURAT</th><td>"+element.nomor_surat+"</td></tr>";
+                            tabel += "<tr><th>NOMOR AGENDA</th><td>"+element.nomor_agenda+"</td></tr>";
+                            tabel += "<tr><th>TANGGAL SURAT</th><td>"+tanggal_surat+"</td></tr>";
+                            tabel += "<tr><th>TANGGAL TERIMA</th><td>"+tanggal_terima+"</td></tr>";
+                            tabel += "<tr><th>PENGIRIM</th><td>"+element.nama_pengirim+"<br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td></tr>";
+                            tabel += "<tr><th>TUJUAN</th><td>"+element.nama_penerima+"<br>"+element.jabatan_penerima+"</td></tr>";
+                            tabel += "<tr><th>KECEPATAN/KEAMANAN</th><td>"+kecepatan+"/"+keamanan+"</td></tr>";
+                            tabel += "<tr><th>TEMBUSAN</th><td>"+element.nama_tembusan+" <br> "+element.jabatan_tembusan+"</td></tr>";
+                            tabel += "<tr><th>PERIHAL</th><td>"+element.perihal+"</td></tr>";
+                            tabel += "<tr><th>RINGKASAN</th><td>"+element.ringkasan+"</td></tr>";
+                            tabel += "<tr><th>DI DISPOSISIKAN KEPADA</th><td colspan='3'>"+element_dispo.nama_penerima+"/"+element.jabatan_penerima+"</td></tr>";
+                            tabel += "<tr><th>INSTRUKSI DISPOSISI</th><td colspan='3'>"+element_dispo.instruksi_.nama+"</td></tr>";
+                            tabel += "<tr><th>ISI DISPOSISI</th><td colspan='3'>"+element_dispo.isi_disposisi+"</td></tr>";
+                            tabel += "<tr><th>RINGKASAN</th><td colspan='3'>"+element.ringkasan+"</td></tr>";
+                            $("#tabel").html(tabel).show();
+                            if(element.lampiran)
+                            {
+                                $("#lampiran").html("<a target='_blank' href='"+element.lampiran+"' class='btn btn-warning' style='color:white;width:100%'><i class='md-file'></i>&nbsp;Lampiran</a>").show();
+                            }
+                            //showdisposisi();
+                            showdisposisi(element_dispo.id_surat_masuk);
 
                         },
                         error : function(data)
@@ -227,21 +262,169 @@
             });
         }
 
+        
+        function showcomment()
+        {
+            //alert("ssdsd");
+            $.ajax({ 
+               type: 'GET', 
+               url: '/gettoken', 
+               success: function (data) { 
+                    
+                    $.ajax({ 
+                        type: 'GET', 
+                        headers: {
+                                'Authorization': 'Bearer ' + data.token
+                        },
+                        url: '/api/komentar?id_disposisi={{params.id}}&page=1&limit=10000', 
+                        success: function (data) 
+                        { 
+                            var isi="";
+                            $.each(data.data.data, function(index, element) 
+                            {
+                                //alert(element.pengirim_);
+                                if(element.pengirim_!=null)
+                                {
+                                    var pengi = element.pengirim_.nama;
+                                }
+                                else
+                                {
+                                    var pengi = "";
+                                }
+                                
+                                var foto = "";
+                                if(element.foto)
+                                {
+                                    foto = '<img src="'+element.foto+'">';
+                                }
+                                else
+                                {
+                                    foto = '<img src="/material/base/src/images/user.png">';
+                                }
 
 
+                                var tagg = tanggal_jam_indo(element.tgl);
+                                isi+='<div class="comment media">';
+                                isi+='<div class="pr-20">';
+                                isi+='<a class="avatar avatar-lg" href="javascript:void(0)" style="width:50px">';
+                                isi+=foto;
+                                isi+='</a>';
+                                isi+='</div>';
+                                isi+='<div class="media-body">';
+                                isi+='<div class="comment-body">';
+                                isi+='<a class="comment-author"><b>'+pengi+'</b></a>';
+                                isi+='<div class="comment-meta">';
+                                isi+='<span class="date">'+tagg+'</span>';
+                                isi+='</div>';
+                                isi+='<div class="comment-content">';
+                                isi+='<p>'+element.isi_komentar+'</p>';
+                                isi+='</div>';
+                                isi+='</div>';
+                                isi+='</div>';
+                                isi+='</div>';
+                            });
+                            
+                            isi+='<form class="comments-add mt-35" id="dokomen" method="post">';
+                            isi+='<div class="form-group">';
+                            isi+='<textarea style="width:100%"" class="form-control" id="isi_komentar" name="isi_komentar" rows="5" placeholder="Tuliskan Komentar"></textarea>';
+                            isi+='</div>';
+                            isi+='<div class="form-group">';
+                            isi+='<a class="btn btn-primary" style="float:right;color:white;" onclick="dokomen()">Submit</a>';
+                            isi+='</div>';
+                            isi+='</form>';
+
+                            $(".comments").html(isi).show();
+                        },
+                        error : function(data)
+                        {
+
+                        }
+                    });
+               }
+            });
+        }
 
         function tanggal_indo(tanggal)
-        {
-                var res = tanggal.split("T");
-                var tgl = res[0];
+       {           
+            moment.locale('id'); 
+            return moment(tanggal).format("LL");
+       }
+       function tanggal_jam_indo(tanggal)
+       {           
+            moment.locale('id'); 
+            return moment(tanggal).format("LLL");
+       }
+        
 
-                var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-                var semua = tgl.split("-");
-                var tg = semua[2];
-                var bl = parseInt(semua[1]);
-                var bulan = bulan[bl-1];
-                var th = semua[0];
-                return tg+" "+bulan+" "+th;
+        
+        function showdisposisi(id_surat)
+        {
+            //alert("ssdsd");
+            $.ajax({ 
+               type: 'GET', 
+               url: '/gettoken', 
+               success: function (data) { 
+                    
+                    $.ajax({ 
+                        type: 'GET', 
+                        headers: {
+                                'Authorization': 'Bearer ' + data.token
+                        },
+                        url: '/api/disposisi/surat/'+id_surat, 
+                        success: function (data) 
+                        { 
+                            var isi="";
+                            $.each(data.data, function(index, element) 
+                            {
+                                var tagg = tanggal_indo(element.tgl_disposisi);
+                                isi+='<tr><td>'+element.nama_pengirim+'</td><td>'+element.nama_penerima+'</td><td>'+element.isi_disposisi+'</td><td>'+tagg+'</td></tr>';
+                               
+                            });
+                           //alert(isi);
+                            $("#dispo").html(isi).show();
+                        },
+                        error : function(data)
+                        {
+
+                        }
+                    });
+               }
+            });
+        }
+
+
+        function dokomen()
+        {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/gettoken', 
+                success: function (data) { 
+                        
+                        $.ajax({ 
+                            type: 'POST', 
+                            headers: {
+                                    'Authorization': 'Bearer ' + data.token
+                            },
+                            url: '/api/komentar', 
+                            data: 'isi_komentar='+$("#isi_komentar").val()+"&id_disposisi={{params.id}}",
+                            success: function (data) 
+                            { 
+                                if(data.success==false)
+                                {
+                                    swal("Gagal!", data.message, "error");
+                                }
+                                else if(data.success==true)
+                                {
+                                    window.location.reload();
+                                }
+                            },
+                            error : function(data)
+                            {
+                                swal("Gagal!", data.message, "error");
+                            }
+                        });
+                }
+                });
         }
       </script>
 @endsection

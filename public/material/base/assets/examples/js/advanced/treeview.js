@@ -23,7 +23,7 @@
       var semua = "";
       $.ajax({ 
           type: 'GET', 
-          url: '/admin/gettoken', 
+          url: '/gettoken', 
           async: false,
           success: function (data) 
           { 

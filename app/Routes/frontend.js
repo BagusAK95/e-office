@@ -29,7 +29,7 @@ Route.get('/putsession/:id', ({ params, session, response }) => {
     session.put('level', post);
 })
 
-Route.get('/admin/cek_session', ({ session }) => {
+Route.get('/cek_session', ({ session }) => {
     return session.get('token')
 })
 
@@ -37,13 +37,13 @@ Route.get('/getlevel', ({ session }) => {
 return session.get('level')
 })
 
-Route.get('/admin/logout', ({ session,response }) => {
+Route.get('/logout', ({ session,response }) => {
     session.put('token', '')
     session.clear()
     response.redirect('/login')
 })
 
-Route.get('/admin/gettoken', ({ session }) => {
+Route.get('/gettoken', ({ session }) => {
     return session.all()
 })
 //End Aut Login//
@@ -51,36 +51,36 @@ Route.get('/admin/gettoken', ({ session }) => {
 //------------------------------------ Main System ---------------------------------//
 
 //Home
-Route.on('/admin/home').render('frontend/home')
+Route.on('/home').render('frontend/home')
 
 //Profile
-Route.on('/admin/profile').render('frontend/profile')
+Route.on('/profile').render('frontend/profile')
 
 //User
-Route.on('/admin/user').render('frontend/user')
+Route.on('/user').render('frontend/user')
 
-Route.on('/admin/adduser').render('frontend/adduser')
+Route.on('/user/add').render('frontend/adduser')
 
 //Change Password
-Route.on('/admin/change_password').render('frontend/change_password')
+Route.on('/change-password').render('frontend/change_password')
   
 //Tree
-Route.on('/admin/tree').render('frontend/tree')
+Route.on('/kantor').render('frontend/tree')
 
 //Surat Masuk
-Route.on('/admin/surat_masuk').render('frontend/surat_masuk')
+Route.on('/surat-masuk').render('frontend/surat_masuk')
 
-Route.on('/admin/addsuratmasuk').render('frontend/addsuratmasuk')
+Route.on('/surat-masuk/add').render('frontend/addsuratmasuk')
 
-Route.get('/admin/detail_surat_masuk/:id', async function({ params,view }) {
+Route.get('/surat-masuk/:id', async function({ params,view }) {
     return view.render('frontend/detail_surat_masuk', { params })
 })
 
-Route.get('/admin/cetak-surat-masuk/:id', async function({ params,view }) {
+Route.get('/surat-masuk/cetak/:id', async function({ params,view }) {
     return view.render('frontend/cetak_surat_masuk', { params })
 })
 
-Route.get('/admin/dispo-surat-masuk/:id', async function({ params,view }) {
+Route.get('/dispo-masuk/add/:id', async function({ params,view }) {
     return view.render('frontend/dispo_surat_masuk', { params })
 })
 
@@ -88,22 +88,27 @@ Route.get('/admin/dispo-surat-masuk/:id', async function({ params,view }) {
 
 //Dispo Keluar
 
-Route.on('/admin/disposisi_keluar').render('frontend/disposisi_keluar')
+Route.on('/disposisi-keluar').render('frontend/disposisi_keluar')
 
-Route.get('/admin/detail_dispo_keluar/:id', async function({ params,view }) {
+Route.get('/disposisi-keluar/:id', async function({ params,view }) {
     return view.render('frontend/detail_dispo_keluar', { params })
 })
 
+
+
 //End Dispo Keluar
 
-//Dispo Keluar
+//Dispo Masuk
 
-Route.on('/admin/disposisi_masuk').render('frontend/disposisi_masuk')
+Route.on('/disposisi-masuk').render('frontend/disposisi_masuk')
 
-Route.get('/admin/detail_dispo_masuk/:id', async function({ params,view }) {
+Route.get('/disposisi-masuk/:id', async function({ params,view }) {
     return view.render('frontend/detail_dispo_masuk', { params })
 })
 
-//End Dispo Keluar
+Route.get('/dispo-keluar/:id', async function({ params,view }) {
+    return view.render('frontend/add_dispo', { params })
+})
+//End Dispo Masuk
 
 //------------------------------------ End Main System ---------------------------------//

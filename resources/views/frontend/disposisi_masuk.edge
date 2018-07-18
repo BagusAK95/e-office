@@ -16,6 +16,7 @@
                      </div>
                      <div class="col-sm-6 col-lg-6">
                         <div class="">
+                            <form id="searchform">
                            <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
                               <div class='btn-group' role='group'>
                                  <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal" id='tgawl' type="text">
@@ -24,14 +25,15 @@
                                  <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir" id='tgakh' type="text">
                                  &nbsp;
                                  &nbsp;
-                                 <input style="width:120px;height:45px;" class="form-control" placeholder="Search" id='search' type="text">
+                                 <input style="width:150px;height:45px;" class="form-control" placeholder="Search" id='search' type="text">
                                  &nbsp;
                                  &nbsp;
-                                 <a onclick="cari()" href="#" class='btn btn-icon btn-info'>
+                                 <button type="submit" class='btn btn-icon btn-info'>
                                  <i class='icon md-search' aria-hidden='true'></i>
-                                 </a>
+                                 </button>
                               </div>
                            </div>
+                           </form>
                         </div>
                      </div>
                   </div>
@@ -40,7 +42,7 @@
                   data-tablesaw-mode-switch data-tablesaw-minimap data-tablesaw-mode-exclude="columntoggle">
                   <thead>
                      <tr>
-                        <th width='150px'>Tanggal Surat</th>
+                        <th width='150px'>Tanggal Disposisi</th>
                         <th >Keamanan<br>Kecepatan</th>
                         <th >Pengirim Disposisi</th>                        
                         <th >Tujuan Disposisi</th>
@@ -60,51 +62,68 @@
    </div>
 </div>
 <script>
+    $( document ).ready(function() {
+        /*Main*/
+        $("#loader").fadeIn("slow");
+        cek_session();
+        cek_token();
+        /*End Main*/
+        
+        /*Page*/
+        showbrand(1,'','','');
+        $("#loader").fadeOut("xslow");
+        /*Page*/
+    });
 
+
+    $( "#searchform" ).submit(function( event ) {
+        var search = $("#search").val();
+        var tgawl = $("#tgawl").val();
+        var tgakh = $("#tgakh").val();
+    
+        if($("#search").val())    
+        {
+            if($("#tgawl").val())
+            {
+                if($("#tgakh").val())
+                {
+                    
+                    showbrand(1,search,tgawl,tgakh);
+                }
+                else
+                {
+                    showbrand(1,search,tgawl,'');
+                }
+            }
+            else
+            {
+                showbrand(1,search,'','');
+            }
+        }
+        else
+        {
+            if($("#tgawl").val())
+            {
+                if($("#tgakh").val())
+                {
+                    
+                    showbrand(1,"",tgawl,tgakh);
+                }
+                else
+                {
+                    showbrand(1,"",tgawl,'');
+                }
+            }
+            else
+            {
+                showbrand(1,"",'','');
+            }
+        }
+        return false;
+    });
    function cari()
    {
-       var search = $("#search").val();
-       var tgawl = $("#tgawl").val();
-       var tgakh = $("#tgakh").val();
-   
-       if($("#search").val())    
-       {
-           if($("#tgawl").val())
-           {
-               if($("#tgakh").val())
-               {
-                   
-                   showbrand(1,search,tgawl,tgakh);
-               }
-               else
-               {
-                   showbrand(1,search,tgawl,'null');
-               }
-           }
-           else
-           {
-               showbrand(1,search,'null','null');
-           }
-       }
-       else
-       {
-           if($("#tgawl").val())
-           {
-               if($("#tgakh").val())
-               {
-                   
-                   showbrand(1,"null",tgawl,tgakh);
-               }
-               else
-               {
-                   showbrand(1,"null",tgawl,'null');
-               }
-           }
-           else
-           {
-               showbrand(1,"null",'null','null');
-           }
-       }
+       
    }
    
    function dopagin()
@@ -125,12 +144,12 @@
                }
                else
                {
-                   showbrand(halaman,search,tgawl,'null');
+                   showbrand(halaman,search,tgawl,'');
                }
            }
            else
            {
-               showbrand(halaman,search,'null','null');
+               showbrand(halaman,search,'','');
            }
        }
        else
@@ -140,58 +159,60 @@
                if($("#tgakh").val())
                {
                    
-                   showbrand(halaman,"null",tgawl,tgakh);
+                   showbrand(halaman,"",tgawl,tgakh);
                }
                else
                {
-                   showbrand(halaman,"null",tgawl,'null');
+                   showbrand(halaman,"",tgawl,'');
                }
            }
            else
            {
-               showbrand(halaman,"null",'null','null');
+               showbrand(halaman,"",'','');
            }
        }
    }
    
-       showbrand(1,'null','null','null');
+       
        function showbrand(page,nama,tgawl,tgakh)
        {
            
-           if(nama=='null')
+           var parameter = '';
+           if(nama=='')
            {
-               var naman = "{keyword}";
+               var naman = "";
            }
            else
            {
-               var naman = nama;
+               var naman = "keyword="+nama+"&";
+           }
+
+           if(tgawl=='')
+           {
+               var tgl_awal = "";
+           }
+           else
+           {
+               var tgl_awal = "tgl_awal="+tgawl+"&";
            }
    
-           if(tgawl=='null')
+           if(tgakh=='')
            {
-               var tgl_awal = "{tgl_awal}";
+               var tgl_akhir = "";
            }
            else
            {
-               var tgl_awal = tgawl;
+               var tgl_akhir = "tgl_akhir="+tgakh+"&";
            }
-   
-           if(tgakh=='null')
-           {
-               var tgl_akhir = "{tgl_akhir}";
-           }
-           else
-           {
-               var tgl_akhir = tgakh;
-           }
+           parameter += naman+tgl_awal+tgl_akhir;
    
            $.ajax({ 
                type: 'GET', 
-               url: '/admin/gettoken', 
+               url: '/gettoken', 
                success: function (data) { 
                    $.ajax({ 
                        type: 'GET', 
-                       url: '/api/disposisi/masuk/'+naman+'/'+tgl_awal+'/'+tgl_akhir+'/'+ page + '/10', 
+                       url: '/api/disposisi/masuk?'+parameter+"page="+page+'&limit=10', 
                        headers: {
                            'Authorization': 'Bearer ' + data.token
                        },
@@ -234,7 +255,7 @@
 
                                var tg_disposisi = tanggal_indo(element.tgl_disposisi);
 
-                               var tr_data = "<tr><td>"+tg_disposisi+"</td><td><b>"+keamanan+"</b><br>"+kecepatan+"</td><td><b>"+element.nama_pengirim+"</b> ,"+element.jabatan_pengirim+"</td><td><b>"+element.nama_penerima+"</b> ,"+element.jabatan_penerima+"</td><td>"+element.isi_disposisi+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/admin/detail_dispo_masuk/"+element.id+"'class='btn btn-icon btn-info'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
+                               var tr_data = "<tr><td>"+tg_disposisi+"</td><td><b>"+keamanan+"</b><br>"+kecepatan+"</td><td><b>"+element.nama_pengirim+"</b> ,"+element.jabatan_pengirim+"</td><td><b>"+element.nama_penerima+"</b> ,"+element.jabatan_penerima+"</td><td>"+element.isi_disposisi+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/disposisi-masuk/"+element.id+"'class='btn btn-icon btn-info'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
                                text += tr_data;
                            });
                             
@@ -246,32 +267,13 @@
                                disbalenext='disabled';
                            }
    
-                           if(naman=="{nama}")
+                           if(nama)
                            {
-                               var isi_nama = 'null';
+                               var isi_nama = naman;
                            }
                            else
                            {
-                               var isi_nama = nama;
-                           }
-                           
-   
-                           if(tgawl=='null')
-                           {
-                               var tgl_awal = "{tgl_awal}";
-                           }
-                           else
-                           {
-                               var tgl_awal = tgawl;
-                           }
-   
-                           if(tgakh=='null')
-                           {
-                               var tgl_akhir = "{tgl_awal}";
-                           }
-                           else
-                           {
-                               var tgl_akhir = tgakh;
+                               var isi_nama = "";
                            }
    
    
@@ -309,17 +311,14 @@
    
        
        function tanggal_indo(tanggal)
-       {
-            var res = tanggal.split("T");
-            var tgl = res[0];
-
-            var bulan = ['Januari', 'Februari', 'Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-            var semua = tgl.split("-");
-            var tg = semua[2];
-            var bl = parseInt(semua[1]);
-            var bulan = bulan[bl-1];
-            var th = semua[0];
-            return tg+" "+bulan+" "+th;
+       {           
+            moment.locale('id'); 
+            return moment(tanggal).format("LL");
+       }
+       function tanggal_jam_indo(tanggal)
+       {           
+            moment.locale('id'); 
+            return moment(tanggal).format("LLL");
        }
 </script> 
 @endsection

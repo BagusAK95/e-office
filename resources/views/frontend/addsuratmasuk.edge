@@ -207,7 +207,7 @@
                               </div>
                            </div>
                            <br>
-                           <a class="btn btn-danger waves-classic" href="/admin/surat_masuk" style="color:white">Batal</a>
+                           <a class="btn btn-danger waves-classic" href="/surat-masuk" style="color:white">Batal</a>
                            <div style="float:right" >
                               <div style="overflow:auto;">
                                  <div style="float:right;">
@@ -257,12 +257,25 @@
    </div>
 </div>
 <script>
-   pegawaiall();
+    $( document ).ready(function() {
+        /*Main*/
+        $("#loader").fadeIn();
+        cek_session();
+        cek_token();
+        /*End Main*/
+        
+        /*Page*/
+        pegawaiall();
+        klasifikasi();
+        $("#loader").fadeOut("xslow");
+        /*Page*/
+    });
+   
    function pegawaiall() 
    {
        $.ajax({ 
            type: 'GET', 
-           url: '/admin/gettoken', 
+           url: '/gettoken', 
            success: function (data) 
            { 
                    $.ajax({ 
@@ -275,7 +288,7 @@
                        success: function (data) 
                        {   
                            var isi = "<option value=''>Pilih Pegawai</option>";
-                           $.each(data.data, function(index, element) {
+                           $.each(data.data.data, function(index, element) {
                                var depan = ''
                                var belakang = ''
                                if(element.gelar_depan)
@@ -305,7 +318,7 @@
        var nip = $("#nip_penerima").val();
        $.ajax({ 
            type: 'GET', 
-           url: '/admin/gettoken', 
+           url: '/gettoken', 
            success: function (data) 
            { 
                    $.ajax({ 
@@ -345,7 +358,7 @@
        var nip = $("#nip_tembusan").val();
        $.ajax({ 
            type: 'GET', 
-           url: '/admin/gettoken', 
+           url: '/gettoken', 
            success: function (data) 
            { 
                    $.ajax({ 
@@ -394,7 +407,7 @@
        }
        $.ajax({ 
        type: 'GET', 
-       url: '/admin/gettoken', 
+       url: '/gettoken', 
        success: function (data) { 
           $.ajax({ 
            type: 'POST', 
@@ -413,7 +426,7 @@
                {
                    swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
                    function(){ 
-                       window.location.href="/admin/surat_masuk";
+                       window.location.href="/surat-masuk";
                    }
                    );
                }
@@ -447,7 +460,7 @@
        $.ajax({ 
            
        type: 'GET', 
-       url: '/admin/gettoken', 
+       url: '/gettoken', 
        success: function (data) { 
           $.ajax({ 
            type: 'POST', 
@@ -466,7 +479,7 @@
                {
                    swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
                    function(){ 
-                       window.location.href="/admin/surat_masuk";
+                       window.location.href="/surat-masuk";
                    }
                    );
                }
@@ -506,7 +519,7 @@
    {
        $.ajax({ 
            type: 'GET', 
-           url: '/admin/gettoken', 
+           url: '/gettoken', 
            success: function (data) 
            { 
                    $.ajax({ 
@@ -679,12 +692,12 @@
 
 
 
-       klasifikasi();
+       
         function klasifikasi() 
         {
             $.ajax({ 
                 type: 'GET', 
-                url: '/admin/gettoken', 
+                url: '/gettoken', 
                 success: function (data) 
                 { 
                         $.ajax({ 

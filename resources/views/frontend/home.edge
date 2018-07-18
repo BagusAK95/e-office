@@ -46,5 +46,17 @@
           
         </div>
       </div>
-      
+      <script>
+      $( document ).ready(function() {
+        /*Main*/
+        $("#loader").fadeIn("slow");
+        cek_session();
+        cek_token();
+        /*End Main*/
+        
+        /*Page*/
+        $("#loader").fadeOut("xslow");
+        /*Page*/
+    });
+      </script>
 @endsection
