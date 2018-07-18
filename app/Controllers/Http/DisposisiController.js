@@ -2,6 +2,7 @@
 
 const Disposisi = use('App/Models/Disposisi')
 const Response = use('App/Helpers/ResponseHelper')
+const Notification = use('App/Helpers/NotificationHelper')
 
 class DisposisiController {
     async add({ request, auth }) { //Todo: Kirim Notifikasi ke Pemimpin
@@ -15,6 +16,16 @@ class DisposisiController {
             data.keyword = ''.concat(data.nama_penerima, ' | ', data.isi_disposisi)
 
             const insert = await Disposisi.create(data)
+
+            /* --- Kirim Notifikasi --- */
+            const disposisi = await Disposisi.query().where('id', insert.id).with('surat_').first()
+            if (disposisi) {
+                const json = JSON.parse(JSON.stringify(disposisi))
+
+                Notification.send(user.nip, [data.nip_penerima], user.nama_lengkap + ' Mengirimkan Disposisi Surat Nomor ' + json.surat_.nomor_surat, '')
+            }
+            /* --- Kirim Notifikasi --- */
+
             return Response.format(true, null, insert)
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)

@@ -1,7 +1,11 @@
 'use strict'
 
 const Komentar = use('App/Models/Komentar')
+const SuratMasuk = use('App/Models/SuratMasuk')
+const Disposisi = use('App/Models/Disposisi')
 const Response = use('App/Helpers/ResponseHelper')
+const Array = use('App/Helpers/ArrayHelper')
+const Notification = use('App/Helpers/NotificationHelper')
 
 class KomentarController {
     async add({ request, auth }){
@@ -12,9 +16,41 @@ class KomentarController {
             data.nip_pengirim = user.nip
 
             const insert = await Komentar.create(data)
+
+            /* --- Kirim Notifikasi --- */
+
+            let arr_penerima = []
+            let konten = ''
+            let nomor = ''
+            if (data.id_surat_masuk) {
+                konten = 'Surat Masuk'
+
+                const surat = await SuratMasuk.find(data.id_surat_masuk)
+                if (surat) {
+                    arr_penerima = [surat.nip_tata_usaha, surat.nip_pimpinan, surat.nip_penerima]
+                    nomor = surat.nomor_surat
+                }
+            } else if (data.id_disposisi) {
+                konten = 'Disposisi Surat'
+
+                const disposisi = await Disposisi.query().where('id', data.id_disposisi).with('surat_').first()
+                if (disposisi) {
+                    const json = JSON.parse(JSON.stringify(disposisi))
+                    arr_penerima = [disposisi.nip_penerima, disposisi.nip_pengirim]
+                    nomor = json.surat_.nomor_surat
+                }
+            }
+
+            arr_penerima = Array.remove(arr_penerima, user.nip)
+            if (arr_penerima.length > 0) {
+                Notification.send(user.nip, arr_penerima, user.nama_lengkap + ' Mengomentari ' + konten + ' Nomor ' + nomor, '')
+            }
+
+            /* --- Kirim Notifikasi --- */
+
             return Response.format(true, null, insert)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 
