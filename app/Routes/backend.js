@@ -998,4 +998,49 @@ Route.group(() => {
     *         type: string
     */
     Route.delete('/komentar/:id', 'KomentarController.delete').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /notifikasi:
+    *   get:
+    *     tags:
+    *       - Notifikasi
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: page
+    *         in: query
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Limit
+    *         required: true
+    *         type: string
+    */
+    Route.get('/notifikasi', 'NotifikasiController.list').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /notifikasi/{id}:
+    *   put:
+    *     tags:
+    *       - Notifikasi
+    *     summary: Mark As Read
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    */
+    Route.put('/notifikasi/:id', 'NotifikasiController.markAsRead').middleware('checkToken:umum')
 }).prefix('api')

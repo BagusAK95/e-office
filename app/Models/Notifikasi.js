@@ -18,6 +18,14 @@ class Notifikasi extends Model {
     static get updatedAtColumn () {
         return ''
     }
+
+    static get hidden () {
+        return ['nip_pengirim']
+    }
+
+    pengirim_ () {
+        return this.hasOne('App/Models/MasterPegawai', 'nip_pengirim', 'nip')
+    }
 }
 
 module.exports = Notifikasi
