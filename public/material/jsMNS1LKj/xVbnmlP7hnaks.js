@@ -1,0 +1,86 @@
+$( ".form-signin" ).submit(function( event ) {
+ $(".loader").show();
+ $.ajax({ 
+         type: 'POST', 
+         url: '/api/getToken', 
+         data: $( ".form-signin" ).serialize(),
+         dataType: 'json',
+         success: function (data) 
+         { 
+             if(data.success==true)
+             {
+                 puttoken(data.data.token);    
+             }
+             else if(data.success==false)
+             {
+                 swal({title: "Login Failed!", text: "Invalid Username and Password.", type: "error"},
+                 function(){ 
+                     return false;
+                 }
+                 );
+                 $(".loader").hide();
+             }
+             
+         },
+         error : function(data)
+         {
+            swal({title: "Login Failed!", text: "Invalid Username and Password.", type: "error"},
+                 function(){ 
+                     return false;
+                 }
+                 );
+             $(".loader").hide();
+         }
+  });
+ event.preventDefault();
+ });
+ 
+ function puttoken(token)
+ {
+     $.ajax({ 
+     type: 'GET', 
+     url: '/puttoken/'+token, 
+     success: function (data) 
+     { 
+        $.ajax({ 
+            type: 'GET', 
+            url: '/api/profile', 
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            success: function (data) { 
+                putsession(data.data.level);
+            }
+        });
+     },
+     error : function(data)
+     {
+         swal({title: "Login Failed!", text: "Invalid Username and Password.", type: "error"},
+         function(){ 
+             return false;
+         }
+         );
+     }
+  });
+ }
+ 
+ function putsession(sesi)
+ {
+     $.ajax({ 
+     type: 'GET', 
+     url: '/putsession/'+sesi, 
+     success: function (data) 
+     { 
+         $(".loader").hide();
+         window.location.href='/home'
+     },
+     error : function(data)
+     {
+         swal({title: "Login Failed!", text: "Ulangi login.", type: "error"},
+         function(){ 
+             return false;
+         }
+         );
+     }
+  });
+ }

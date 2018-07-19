@@ -6,10 +6,13 @@
       <div class="col-xxl-4 col-lg-12">
       <div id="cover-spin" style="width:100%"></div>
          <!-- Example Panel With Heading -->
-         <div class="panel panel-bordered">
+         <div class="panel panel-bordered panel-primary">
             <div class="panel-heading">
-               <h3 class="panel-title">Master User</h3>
-               
+               <h3 class="panel-title"><i class="icon md-assignment-account"></i>&nbsp;Master User</h3>
+               <div class="panel-actions">
+                  <a class="panel-action icon md-minus" data-toggle="panel-collapse" aria-expanded="true"
+                    aria-hidden="true"></a>
+                </div>
             </div>
             <div class="panel-body">
                <div class="example example-grid">
@@ -18,7 +21,7 @@
                         <div class="">
                            <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
                               <div class='btn-group' role='group'>
-                                 <a href='/user/add' class='btn btn-icon btn-info'>
+                                 <a href='/user/add' class='btn btn-icon btn-primary'>
                                  <i class='icon md-plus' aria-hidden='true'></i>
                                  </a>
                               </div>
@@ -31,15 +34,15 @@
                   </div>
                </div>
                <div class="table-responsive"> 
-               <table class="table table-striped table-bordered table-hover" data-role="content">
+               <table class="table datatable table-striped table-bordered table-hover" data-role="content">
                   <thead style=''>
                      <tr>
                         <th>NIP</th>
-                        <th>Nama</th>
-                        <th style='width:200px'>Jabatan</th>
-                        <th>Golongan</th>
-                        <th>Level</th>
-                        <th style='width:120px'>Action</th>
+                        <th>NAMA</th>
+                        <th>ESELON</th>
+                        <th>GOLONGAN</th>
+                        <th>LEVEL</th>
+                        <th style='width:120px'>ACTION</th>
                      </tr>
                   </thead>
                   <tbody id="body">
@@ -55,7 +58,7 @@
    </div>
 </div>
 <!--Detail Data-->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editModal" class="modal fade modal-info show" style="display: none;">
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editModal" class="modal fade modal-primary show" style="display: none;">
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
@@ -152,7 +155,7 @@
    </div>
 </div>
 <!--Data Edit-->
-<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editmodaln" class="modal fade modal-info show" style="display: none;">
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editmodaln" class="modal fade modal-primary show" style="display: none;">
    <div class="modal-dialog">
       <div class="modal-content">
          <div class="modal-header">
@@ -318,7 +321,7 @@
                                 level = 'Staff';
                             }
 
-                            var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+element.nama_jabatan+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-info' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-info' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-info'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                            var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+element.kode_eselon+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-primary' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-primary' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
                             text += tr_data;
                         });
 
@@ -345,7 +348,7 @@
                             prev = "disabled";
                         }
 
-                        $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-info btn-pill-left' "+prev+" onclick=showbrand(1,'"+naman+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-info' onclick=showbrand(" + (data.data.page - 1) + ",'"+naman+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-info' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-info' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-info' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+naman+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-info btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+naman+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div>").show();
+                        $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' "+prev+" onclick=showbrand(1,'"+naman+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) + ",'"+naman+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-primary' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-primary' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+naman+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-primary btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+naman+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div><br>Showing "+data.data.page+" to "+data.data.perPage+" of "+data.data.total+" entries").show();
                     }
                 });
 
@@ -428,7 +431,7 @@
                         
                         $("#e_nohp").html(data.data.nohp).show();
                         $("#e_email").html(data.data.email).show();
-                        $("#e_lokasi").html(data.data.kode_lokasi).show();
+                        $("#e_lokasi").html(data.data.lokasi_.nmlokasi).show();
                         $("#e_jabatan").html(data.data.nama_jabatan).show();
                         $("#e_golongan").html(data.data.golongan).show();
                         $("#e_level").html(level).show();
