@@ -15,6 +15,8 @@
 
 const Route = use('Route')
 
+Route.on('/firebase').render('firebaseUI')
+
 //Aut Login//
 Route.on('/login').render('frontend/login')
 
