@@ -67,7 +67,7 @@ class SuratTembusanController {
 
                 return Response.format(true, null, data)
             } else {
-                return Response.format(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Surat tidak ditemukan', null)
             }
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)

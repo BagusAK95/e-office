@@ -31,7 +31,7 @@ class NotifikasiController {
             if (update > 0) {
                 return Response.format(true, null, update)                
             } else {
-                return Response.format(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Notifikasi tidak ditemukan', null)
             }
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)

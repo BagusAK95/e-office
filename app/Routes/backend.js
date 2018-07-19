@@ -606,11 +606,6 @@ Route.group(() => {
     *         description: Jabatan Pelaksana Tugas
     *         required: false
     *         type: string
-    *       - name: daftar_tembusan
-    *         in: formData
-    *         description: Daftar Tembusan
-    *         required: false
-    *         type: string
     *       - name: ringkasan
     *         in: formData
     *         description: Ringkasan Surat
@@ -998,6 +993,26 @@ Route.group(() => {
     *         type: string
     */
     Route.delete('/disposisi/:id', 'DisposisiController.delete').middleware('checkToken:umum,disposisi')
+
+    /**
+    * @swagger
+    * /disposisi/setFinish/{id}:
+    *   get:
+    *     tags:
+    *       - Disposisi
+    *     summary: Set Finish
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    */
+    Route.put('/disposisi/setFinish/:id', 'DisposisiController.setFinish').middleware('checkToken:umum')
 
     /**
     * @swagger

@@ -24,7 +24,7 @@ class ProfileController {
             if (edit > 0) {
                 return Response.format(true, null, edit)                
             } else {
-                return Response.format(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Akun tidak ditemukan', null)
             }
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)            
@@ -45,7 +45,7 @@ class ProfileController {
                 if (edit > 0) {
                     return Response.format(true, null, edit)                
                 } else {
-                    return Response.format(false, 'Data tidak ditemukan', null)
+                    return Response.format(false, 'Akun tidak ditemukan', null)
                 }
             } else {
                 return Response.format(false, 'Kata sandi tidak cocok', null)
