@@ -16,5 +16,6 @@
 const Route = use('Route')
 
 Route.on('/').render('/frontend/login')
+Route.on('/firebase').render('firebaseUI')
 
 use('require-all')(`${use('Helpers').appRoot()}/app/Routes`)
