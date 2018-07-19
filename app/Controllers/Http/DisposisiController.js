@@ -109,7 +109,7 @@ class DisposisiController {
             if (destroy > 0) {
                 return Response.format(true, null, destroy)
             } else {
-                return Response.format(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Disposisi tidak ditemukan', null)
             }
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)
@@ -126,18 +126,47 @@ class DisposisiController {
                                         .with('surat_')
                                         .first()
             if (data) {
-                if (data.status == 0) {
-                    data.status = 1
+                if (data.tgl_baca == null) {
                     data.tgl_baca = new Date()
-                    await data.save()    
+                    await data.save()
                 }
 
                 return Response.format(true, null, data)
             } else {
-                return Response.format(false, 'Data tidak ditemukan', null)
+                return Response.format(false, 'Disposisi tidak ditemukan', null)
             }
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)
+        }
+    }
+
+    async setFinish({ params, auth }) {
+        try {
+            const user = await auth.getUser()
+
+            const disposisi = await Disposisi.query()
+                                             .where({ id: params.id, nip_penerima: user.nip })
+                                             .first()
+            if (disposisi) {
+                const surat = await SuratMasuk.find(disposisi.id_surat_masuk)
+                if (surat) {
+                    disposisi.status = 1
+                    disposisi.tgl_selesai = new Date()
+                    disposisi.save()
+        
+                    /* --- Kirim Notifikasi --- */
+                    
+                    Notification.send(user.nip, [disposisi.nip_pengirim], user.nama_lengkap + ' Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '')
+                    
+                    /* --- Kirim Notifikasi --- */        
+                } else {
+                    return Response.format(false, 'Surat tidak ditemukan', null)
+                }
+            } else {
+                return Response.format(false, 'Disposisi tidak ditemukan', null)
+            }
+        } catch (error) {
+            return Response.format(false, error.sqlMessage, null)            
         }
     }
 }
