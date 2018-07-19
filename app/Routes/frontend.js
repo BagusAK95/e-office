@@ -14,16 +14,22 @@
 */
 
 const Route = use('Route')
+const Helpers = use('Helpers')
 const fs = use('fs')
+const readFile = Helpers.promisify(fs.readFile)
 
 Route.on('/firebase').render('firebaseUI')
-Route.get('/firebase-messaging-sw.js', async ({ response }) => {
-    response.implicitEnd = false
-  
-    fs.readFile('public/firebase/firebase-messaging-sw.js', (error, contents) => {
-        response.send(contents.toString())
-    })
+Route.get('/firebase-messaging-sw.js', async () => {
+    return await readFile('public/firebase/firebase-messaging-sw.js')
 })
+
+// Route.get('/firebase-messaging-sw.js', async ({ response }) => {
+//     response.implicitEnd = false
+  
+//     fs.readFile('public/firebase/firebase-messaging-sw.js', (error, contents) => {
+//         response.send(contents.toString())
+//     })
+// })
 
 //Aut Login//
 Route.on('/login').render('frontend/login')
