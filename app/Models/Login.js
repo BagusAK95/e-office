@@ -22,6 +22,10 @@ class Login extends Model {
     static get updatedAtColumn () {
         return ''
     }
+
+    lokasi_ () {
+        return this.hasOne('App/Models/MasterKantor', 'kode_lokasi', 'kdlokasi')
+    }
 }
 
 module.exports = Login

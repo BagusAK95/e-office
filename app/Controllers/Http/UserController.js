@@ -93,6 +93,7 @@ class UserController {
             const data = await Login.query()
                                     .where('nip', params.nip)
                                     .whereBetween('kode_lokasi', [Number(startLokasi), Number(endLokasi)])
+                                    .with('lokasi_')
                                     .first()
             if (data) {
                 return Response.format(true, null, data)
