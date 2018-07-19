@@ -591,34 +591,24 @@ Route.group(() => {
     *         description: Tingkat Kecepatan (1=Biasa, 2=Segera, 3=Amat Segera)
     *         required: true
     *         type: string
-    *       - name: nip_penerima
+    *       - name: nip_plt
     *         in: formData
-    *         description: NIP Penerima
-    *         required: true
-    *         type: string
-    *       - name: nama_penerima
-    *         in: formData
-    *         description: Nama Penerima
-    *         required: true
-    *         type: string
-    *       - name: jabatan_penerima
-    *         in: formData
-    *         description: Jabatan Penerima
-    *         required: true
-    *         type: string
-    *       - name: nip_tembusan
-    *         in: formData
-    *         description: NIP Tembusan
+    *         description: NIP Pelaksana Tugas
     *         required: false
     *         type: string
-    *       - name: nama_tembusan
+    *       - name: nama_plt
     *         in: formData
-    *         description: Nama Tembusan
+    *         description: Nama Pelaksana Tugas
     *         required: false
     *         type: string
-    *       - name: jabatan_tembusan
+    *       - name: jabatan_plt
     *         in: formData
-    *         description: Jabatan Tembusan
+    *         description: Jabatan Pelaksana Tugas
+    *         required: false
+    *         type: string
+    *       - name: daftar_tembusan
+    *         in: formData
+    *         description: Daftar Tembusan
     *         required: false
     *         type: string
     *       - name: ringkasan
@@ -718,6 +708,101 @@ Route.group(() => {
     *         type: string
     */
     Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkToken:tatausaha,suratmasuk')
+
+    /**
+    * @swagger
+    * /surat-tembusan:
+    *   post:
+    *     tags:
+    *       - Surat Tembusan
+    *     summary: Add
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_surat_masuk
+    *         in: formData
+    *         description: ID Surat Masuk
+    *         required: true
+    *         type: string
+    *       - name: nip_penerima
+    *         in: formData
+    *         description: NIP Penerima
+    *         required: true
+    *         type: string
+    *       - name: nama_penerima
+    *         in: formData
+    *         description: Nama Penerima
+    *         required: true
+    *         type: string
+    *       - name: jabatan_penerima
+    *         in: formData
+    *         description: Jabatan Penerima
+    *         required: true
+    *         type: string
+    */
+    Route.post('/surat-tembusan', 'SuratTembusanController.add').middleware('checkToken:tatausaha')
+
+    /**
+    * @swagger
+    * /surat-tembusan:
+    *   get:
+    *     tags:
+    *       - Surat Tembusan
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_surat_masuk
+    *         in: query
+    *         description: ID Surat Masuk
+    *         required: true
+    *         type: string
+    *       - name: tgl_awal
+    *         in: query
+    *         description: Tanggal Awal
+    *         required: false
+    *         type: string
+    *       - name: tgl_akhir
+    *         in: query
+    *         description: Tanggal Akhir
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: query
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-tembusan', 'SuratTembusanController.list').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /surat-tembusan/{id}:
+    *   get:
+    *     tags:
+    *       - Surat Tembusan
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-tembusan/:id', 'SuratTembusanController.detail').middleware('checkToken:umum')
 
     /**
     * @swagger
