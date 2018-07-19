@@ -26,6 +26,10 @@ class SuratMasuk extends Model {
     klasifikasi_ () {
         return this.hasOne('App/Models/MasterKlasifikasi', 'klasifikasi', 'id')
     }
+
+    tembusan_ () {
+        return this.hasMany('App/Models/SuratTembusan', 'id', 'id_surat_masuk')
+    }
 }
 
 module.exports = SuratMasuk
