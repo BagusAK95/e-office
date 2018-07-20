@@ -257,7 +257,7 @@
             <ul class="site-menu" data-plugin="menu">
             <li class="site-menu-category">Dashboard</li>
               <li class="site-menu-item">
-                <a class="animsition-link" href="/admin/home">
+                <a class="animsition-link" href="/home">
                         <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                         <span class="site-menu-title">Dashboard</span>
                     </a>
@@ -296,7 +296,7 @@
                 </li>
                <li class="site-menu-item" id="disposisi_keluar" style="display: none">
                   <a class="animsition-link" href="/disposisi-keluar">
-                          <i class="site-menu-icon md-cloud-upload" aria-hidden="true"></i>
+                          <i class="site-menu-icon md-mail-send" aria-hidden="true"></i>
                           <span class="site-menu-title">Disposisi Keluar</span>
                       </a>
                 </li>
@@ -461,8 +461,26 @@
                           $(".foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
                         }
                         
-                        $(".jabatan").html(data.data.nama_jabatan).show();
-                        $(".jabatanm").html(data.data.nama_jabatan).show();
+                       
+                        if(data.data.level==1)
+                        {
+                          var lv = "Admin";
+                        }
+                        else if(data.data.level==2)
+                        {
+                          var lv = "Pimpinan";
+                        }
+                        else if(data.data.level==3)
+                        {
+                          var lv = "Tata Usaha";
+                        }
+                        else if(data.data.level==4)
+                        {
+                          var lv = "Staff";
+                        }
+
+                        $(".jabatan").html(lv).show();
+                        $(".jabatanm").html(lv).show();
 
                         if(data.data.level==1)
                         {
