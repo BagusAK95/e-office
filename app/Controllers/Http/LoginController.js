@@ -28,6 +28,27 @@ class LoginController {
             return Response.format(false, error.sqlMessage, null)            
         }
     }
+
+    async setFirebase({ request, auth}){
+        try {
+            const user = await auth.getUser()
+
+            const data = request.only(['firebase_device', 'firebase_token'])
+
+            const update = await Login.query()
+                                      .where('nip', user.nip)
+                                      .update({
+                                          ['firebase_' + data.firebase_device.toLowerCase()]: data.firebase_token 
+                                      })
+            if (update > 0) {
+                return Response.format(true, null, update)                
+            } else {
+                return Response.format(false, 'User tidak ditemukan', null)
+            }
+        } catch (error) {
+            return Response.format(false, error.sqlMessage, null)
+        }
+    }
 }
 
 module.exports = LoginController

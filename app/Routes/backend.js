@@ -74,6 +74,31 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /setFirebase:
+    *   put:
+    *     tags:
+    *       - Login
+    *     summary: Set Firebase
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: firebase_device
+    *         in: formData
+    *         description: Device (Web / App)
+    *         required: true
+    *         type: string
+    *       - name: firebase_token
+    *         in: formData
+    *         description: Token
+    *         required: true
+    *         type: string
+    */
+    Route.put('/setFirebase', 'LoginController.setFirebase').middleware('checkToken:umum')
+
+    /**
+    * @swagger
     * /profile:
     *   get:
     *     tags:
