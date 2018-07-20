@@ -18,25 +18,29 @@ const NotificationHelper = {
                 if (insert) {
                     const user = await Login.query().where('nip', nip).first()
                     if (user) {
-                        
-
                         for (let i = 1; i <= 2; i++) {
-                            let firebase = ((i == 1) ? user.firebase_web : user.firebase_app)
+                            const firebase = ((i == 1) ? user.firebase_web : user.firebase_app)
+                            if (firebase) {
+                                const response = ((i == 1) ? 'response_web' : 'response_app')
 
-                            Request.post({
-                                url: 'https://fcm.googleapis.com/fcm/send',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization': 'key=' + Env.get('FIREBASE_SERVER_KEY')
-                                },
-                                form : {
-                                    notification: {
-                                      title: 'e-office',
-                                      body: isi
+                                Request.post({
+                                    url: 'https://fcm.googleapis.com/fcm/send',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': 'key=' + Env.get('FIREBASE_SERVER_KEY')
                                     },
-                                    to: firebase
-                                }
-                            })
+                                    form : {
+                                        notification: {
+                                        title: 'e-office',
+                                        body: isi
+                                        },
+                                        to: firebase
+                                    }
+                                }, async (err, resp, body) => {
+                                    (err) ? insert[response] = err : insert[response] = body
+                                    await insert.save()
+                                })
+                            }
                         }
 
                         next()
