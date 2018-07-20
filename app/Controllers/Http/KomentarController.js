@@ -22,6 +22,7 @@ class KomentarController {
             let arr_penerima = []
             let konten = ''
             let nomor = ''
+            let url = ''
             if (data.id_surat_masuk) {
                 konten = 'Surat Masuk'
 
@@ -29,6 +30,7 @@ class KomentarController {
                 if (surat) {
                     arr_penerima = [surat.nip_tata_usaha, surat.nip_pimpinan, surat.nip_penerima]
                     nomor = surat.nomor_surat
+                    url = '/surat-masuk/' + data.id_surat_masuk
                 }
             } else if (data.id_disposisi) {
                 konten = 'Disposisi Surat'
@@ -38,12 +40,18 @@ class KomentarController {
                     const json = JSON.parse(JSON.stringify(disposisi))
                     arr_penerima = [disposisi.nip_penerima, disposisi.nip_pengirim]
                     nomor = json.surat_.nomor_surat
+
+                    if (user.nip == disposisi.nip_penerima) {
+                        url = '/disposisi-keluar/' + data.id_disposisi
+                    } else {
+                        url = '/disposisi-masuk/' + data.id_disposisi
+                    }
                 }
             }
 
             arr_penerima = Array.remove(arr_penerima, user.nip)
             if (arr_penerima.length > 0) {
-                Notification.send(user.nip, arr_penerima, user.nama_lengkap + ' Mengomentari ' + konten + ' Nomor ' + nomor, '')
+                Notification.send(user.nip, arr_penerima, user.nama_lengkap + ' Mengomentari ' + konten + ' Nomor ' + nomor, url)
             }
 
             /* --- Kirim Notifikasi --- */
