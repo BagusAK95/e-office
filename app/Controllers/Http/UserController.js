@@ -9,6 +9,7 @@ class UserController {
         try {
             let data = request.all()
             data.password = await Hash.make(data.password)
+            data.keyword = ''.concat(data.nama_lengkap, ' | ', data.nama_jabatan)
 
             const insert = await Login.create(data)
             return Response.format(true, null, insert)
@@ -69,8 +70,8 @@ class UserController {
             const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
 
             let sql = []
-            if (request.get().nama) {
-                sql.push(`nama_lengkap LIKE '%` + request.get().nama + `%'`)
+            if (request.get().keyword) {
+                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
             }
             sql.push('kode_lokasi BETWEEN ' + startLokasi + ' AND ' +  endLokasi)
 

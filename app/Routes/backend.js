@@ -328,9 +328,9 @@ Route.group(() => {
     *     produces:
     *       - application/json
     *     parameters:
-    *       - name: nama
+    *       - name: keyword
     *         in: query
-    *         description: Nama Pegawai
+    *         description: Keyword
     *         required: false
     *         type: string
     *       - name: page
