@@ -21,7 +21,7 @@ class SuratMasukController {
             data.nama_tata_usaha = user.nama_lengkap
             data.jabatan_tata_usaha = user.nama_jabatan
             data.nip_pimpinan = dataPimpinan.nip
-            data.nama_pimpinan = ''.concat(dataPimpinan.gelar_depan.trim(), ' ', dataPimpinan.nama.trim(), ' ', dataPimpinan.gelar_belakang.trim())
+            data.nama_pimpinan = [dataPimpinan.gelar_depan, dataPimpinan.nama, dataPimpinan.gelar_belakang].join(' ').trim()
             data.jabatan_pimpinan = dataPimpinan.nama_jabatan
             data.status_surat = 1
             data.keyword = ''.concat(data.nomor_surat, ' | ', data.nama_instansi, ' | ', data.perihal, ' | ', data.nama_pengirim)
