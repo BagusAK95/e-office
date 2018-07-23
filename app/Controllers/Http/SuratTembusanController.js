@@ -3,6 +3,7 @@
 const Response = use('App/Helpers/ResponseHelper')
 const SuratTembusan = use('App/Models/SuratTembusan')
 const SuratMasuk = use('App/Models/SuratMasuk')
+const Notification = use('App/Helpers/NotificationHelper')
 
 class SuratTembusanController {
     async add({ request, auth }) {
