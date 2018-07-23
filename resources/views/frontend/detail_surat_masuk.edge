@@ -45,11 +45,11 @@
                 <h3 class="panel-title">Detail Surat Masuk</h3>
                 
                 <ul class="panel-actions panel-actions-keep">
-                    <li>
+                    <!--<li>
                         <a href='/surat-masuk/cetak/{{params.id}}' class='btn btn-info' target="_blank"><i class='md-print'></i>&nbsp;Cetak</a>
-                    </li>
+                    </li>-->
                     <li>
-                        <a id="buat_dispo" href='/dispo-masuk/add/{{params.id}}' class='btn btn-success' style='color:white'><i class='md-mail-send'></i>&nbsp;Buat DIsposisi</a>
+                        <a target="_blank" id="buat_dispo" href='/dispo-masuk/add/{{params.id}}' class='btn btn-success' style='color:white'><i class='md-mail-send'></i>&nbsp;Buat DIsposisi</a>
                     </li>
                     <li>
                         <a href='/surat-masuk' class='btn btn-danger' style='color:white'><i class='md-undo'></i>&nbsp;Kembali</a>
@@ -63,6 +63,10 @@
                             <input type='hidden' value='{{params.id}}' id='id_surat'/>
                             <table class="table table-bordered ">
                                 <tbody id='tabel'>
+                                </tbody>
+                            </table>
+                            <table class="table table-bordered ">
+                                <tbody id='tabel3'>
                                 </tbody>
                             </table>
                             <table class="table table-bordered ">
@@ -218,29 +222,57 @@
                                 var kla = "";
                             }
                             
-                            var file = '-';
+                            var file = '';
                             if(element.lampiran)
                             {
-                                file = "<a target='_blank' href='"+element.lampiran+"' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
+                                var cek_lampiran = element.lampiran;
+                                if(cek_lampiran.includes(',') > -1)
+                                {
+                                    var myarr = cek_lampiran.split(",");
+                                    for (var i = 0, len = myarr.length; i < len; i++) 
+                                    {
+                                        file += "<a target='_blank' href='"+myarr[i]+"' >"+myarr[i]+"</a><br>";    
+                                    }
+                                    //ada
+                                }
+                                else
+                                {
+                                    //tiadak ada
+                                    file = "<a target='_blank' href='"+element.lampiran+"' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
+                                }
                             }
 
                             var tanggal_surat = tanggal_indo(element.tgl_surat);
                             var tanggal_terima = tanggal_indo(element.tgl_terima);
                             var tabel = "";
                             var tabel2 = "";
+                            var tabel3 = "";
                             tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
                             tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+element.nomor_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+element.nomor_surat+"</td></tr>";
                             tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>TANGGAL TERIMA</th><td width='25%'>"+tanggal_terima+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
-                            tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'>"+element.nama_pengirim+"<br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'>"+element.nama_penerima+"<br>"+element.jabatan_penerima+"</td></tr>";
-                            
+                            tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+element.nama_pimpinan+"</b><br>"+element.jabatan_pimpinan+"</td></tr>";
+
+                            tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>ISI</th><td width='50%'>"+element.isi_surat+"</td></tr>";    
                             tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KLASIFIKASI</th><td width='50%'>"+kla+"</td></tr>";
                             tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KECEPATAN</th><td width='50%'>"+kecepatan+"</td></tr>";
                             tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KEAMANAN</th><td width='50%'>"+keamanan+"</td></tr>";
                             //tabel += "<tr><th>TEMBUSAN</th><td>"+element.nama_tembusan+" <br> "+element.jabatan_tembusan+"</td></tr>";
                             tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>RINGKASAN</th><td width='50%'>"+element.ringkasan+"</td></tr>";
                             tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>PINDAIAN</th><td width='50%'>"+file+"</td></tr>";
+                            
+                            tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>PELAKSANA HARIAN</th><td width='50%'><b>"+element.nama_plt+"</b><br>"+element.jabatan_plt+"</td></tr>";
+                            tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>TEMBUSAN</th><td width='50%'>";
+                            var nomber = 1;
+                            var isine = "";
+                            $.each(element.tembusan_, function(index, tembusan) 
+                            {
+                                isine+=nomber+". <b>"+tembusan.nama_penerima+"</b><br>";
+                                nomber++;
+                            });
+                            tabel3 += isine+"</td></tr>";
                             $("#tabel").html(tabel).show();
                             $("#tabel2").html(tabel2).show();
+                            $("#tabel3").html(tabel3).show();
 
                             if(element.nip_tembusan==$("#nip_login").val())
                             {
