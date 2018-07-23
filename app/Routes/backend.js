@@ -451,15 +451,21 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /master-pegawai/subEmployes:
+    * /master-pegawai/subEmployes/{id_surat_masuk}:
     *   get:
     *     tags:
     *       - Master Pegawai
     *     summary: List All Sub Employes
     *     produces:
     *       - application/json
+    *     parameters:
+    *       - name: id_surat_masuk
+    *         in: path
+    *         description: Id Surat Masuk
+    *         required: true
+    *         type: string
     */
-    Route.get('/master-pegawai/subEmployes', 'MasterPegawaiController.listAllSubEmployes').middleware('checkToken:umum')
+    Route.get('/master-pegawai/subEmployes/:id_surat_masuk', 'MasterPegawaiController.listAllSubEmployes').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -1021,11 +1027,11 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /disposisi/setFinish/{id}:
-    *   get:
+    * /disposisi/setStatus/{id}:
+    *   put:
     *     tags:
     *       - Disposisi
-    *     summary: Set Finish
+    *     summary: Set Status
     *     consumes:
     *       - application/x-www-form-urlencoded
     *     produces:
@@ -1036,8 +1042,18 @@ Route.group(() => {
     *         description: Id
     *         required: true
     *         type: string
+    *       - name: status
+    *         in: formData
+    *         description: Status (1=Diselesaikan, 2=Ditolak)
+    *         required: true
+    *         type: string
+    *       - name: keterangan
+    *         in: formData
+    *         description: Keterangan
+    *         required: true
+    *         type: string
     */
-    Route.put('/disposisi/setFinish/:id', 'DisposisiController.setFinish').middleware('checkToken:umum')
+    Route.put('/disposisi/setStatus/:id', 'DisposisiController.setStatus').middleware('checkToken:umum')
 
     /**
     * @swagger

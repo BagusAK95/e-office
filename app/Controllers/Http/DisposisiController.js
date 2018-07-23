@@ -140,7 +140,7 @@ class DisposisiController {
         }
     }
 
-    async setFinish({ params, auth }) {
+    async setStatus({ params, request, auth }) {
         try {
             const user = await auth.getUser()
 
@@ -150,15 +150,31 @@ class DisposisiController {
             if (disposisi) {
                 const surat = await SuratMasuk.find(disposisi.id_surat_masuk)
                 if (surat) {
-                    disposisi.status = 1
-                    disposisi.tgl_selesai = new Date()
-                    disposisi.save()
-        
-                    /* --- Kirim Notifikasi --- */
-                    
-                    Notification.send(user.nip, [disposisi.nip_pengirim], user.nama_lengkap + ' Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
-                    
-                    /* --- Kirim Notifikasi --- */        
+                    const data = request.only(['status', 'keterangan'])
+                    if (data.status == 1) {
+                        disposisi.status = 1
+                        disposisi.keterangan = data.keterangan
+                        disposisi.tgl_selesai = new Date()
+                        disposisi.save()
+            
+                        /* --- Kirim Notifikasi --- */
+                        
+                        Notification.send(user.nip, [disposisi.nip_pengirim], user.nama_lengkap + ' Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
+                        
+                        /* --- Kirim Notifikasi --- */   
+                    } else if (data.status == 2) {
+                        disposisi.status = 2
+                        disposisi.keterangan = data.keterangan
+                        disposisi.save()
+            
+                        /* --- Kirim Notifikasi --- */
+                        
+                        Notification.send(user.nip, [disposisi.nip_pengirim], user.nama_lengkap + ' Menolak Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
+                        
+                        /* --- Kirim Notifikasi --- */                       
+                    }
+
+                    return Response.format(true, null, 1)
                 } else {
                     return Response.format(false, 'Surat tidak ditemukan', null)
                 }

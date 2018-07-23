@@ -2,6 +2,7 @@
 
 const MasterPegawai = use('App/Models/MasterPegawai')
 const Response = use('App/Helpers/ResponseHelper')
+const SuratMasuk = use('App/Models/SuratMasuk')
 
 class MasterPegawaiController {
     async list({request, auth}){
@@ -54,24 +55,48 @@ class MasterPegawaiController {
         }
     }
 
-    async listAllSubEmployes({ auth }) {
+    async listAllSubEmployes({ params, auth }) {
         try {
             const user = await auth.getUser()
+            const surat = await SuratMasuk.find(params.id_surat_masuk)
+            if (surat) {
+                if (user.nip == surat.nip_plt) {
+                    const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
+                    const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
 
-            let startLokasi = user.kode_lokasi.toString() 
-            let endLokasi = user.kode_lokasi.toString().replace(/0+$/g, '')
+                    const data = await MasterPegawai.query()
+                                                    .whereBetween('kode_lokasi', [startLokasi, endLokasi])
 
-            const objMatch = user.kode_lokasi.toString().match(/0+$/g)
-            if (objMatch) {
-                for (let i = 0; i < objMatch[0].split('').length; i++) {
-                   endLokasi += '9' 
+                    return Response.format(true, null, data)
+                } else {
+                    const str = user.kode_lokasi.toString().replace(/([1-9])(0+$)/g, '')
+                    const rgx = user.kode_lokasi.toString().match(/([1-9])(0+$)/g)
+                    if (rgx) {
+                        let startLokasi = str
+                        let endLokasi = str
+                        
+                        const arr = rgx[0].split('')
+                        for (let i = 0; i < arr.length; i++) {
+                            if (i == 2) {
+                                startLokasi += '1'
+                                endLokasi += '9'
+                            } else {
+                                startLokasi += arr[i]
+                                endLokasi += arr[i]
+                            }
+                        }
+
+                        const data = await MasterPegawai.query()
+                                                        .whereBetween('kode_lokasi', [startLokasi, endLokasi])
+                                                        
+                        return Response.format(true, null, data)
+                    } else {
+                        return Response.format(true, null, [])
+                    }
                 }
-            }
-    
-            const data = await MasterPegawai.query()
-                                            .whereBetween('kode_lokasi', [startLokasi, endLokasi])
-                                            
-            return Response.format(true, null, data)   
+            } else {
+                return Response.format(false, 'Surat tidak ditemukan', null)
+            }             
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)
         }
