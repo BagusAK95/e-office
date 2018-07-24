@@ -1229,6 +1229,11 @@ Route.group(() => {
     *         description: Nomor Agenda
     *         required: true
     *         type: string
+    *       - name: lampiran
+    *         in: formData
+    *         description: Lampiran
+    *         required: false
+    *         type: string
     *       - name: instansi_penerima
     *         in: formData
     *         description: Instansi Penerima
