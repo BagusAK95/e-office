@@ -451,11 +451,11 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /master-pegawai/subEmployes/{id_surat_masuk}:
+    * /master-pegawai/dispositionReciver/{id_surat_masuk}:
     *   get:
     *     tags:
     *       - Master Pegawai
-    *     summary: List All Sub Employes
+    *     summary: List All Disposition Reciver
     *     produces:
     *       - application/json
     *     parameters:
@@ -465,7 +465,19 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/subEmployes/:id_surat_masuk', 'MasterPegawaiController.listAllSubEmployes').middleware('checkToken:umum')
+    Route.get('/master-pegawai/dispositionReciver/:id_surat_masuk', 'MasterPegawaiController.listAllDispositionReciver').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /master-pegawai/mailChecker:
+    *   get:
+    *     tags:
+    *       - Master Pegawai
+    *     summary: List All Mail Checker
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-pegawai/mailChecker', 'MasterPegawaiController.listAllMailChecker').middleware('checkToken:umum')
 
     /**
     * @swagger

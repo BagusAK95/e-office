@@ -55,7 +55,7 @@ class MasterPegawaiController {
         }
     }
 
-    async listAllSubEmployes({ params, auth }) {
+    async listAllDispositionReciver({ params, auth }) {
         try {
             const user = await auth.getUser()
             const surat = await SuratMasuk.find(params.id_surat_masuk)
@@ -100,6 +100,78 @@ class MasterPegawaiController {
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)
         }
+    }
+
+    async listAllMailChecker({ auth }) {
+        const user = await auth.getUser()
+
+        let arrPegawai = []
+        let arrLokasi = user.kode_lokasi.toString().match(/\d{5}$/g)[0].split('')
+
+        /* Get Atasan 1 */
+        if (arrLokasi[4] != "0") {
+            arrLokasi[4] = "0"
+
+            const atasan = await MasterPegawai.query()
+                                              .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
+                                              .orderBy('kode_eselon', 'desc')
+                                              .orderBy('kode_jabatan', 'desc')
+                                              .first()
+            if (atasan) {
+                arrPegawai.push(atasan)
+            }
+        } else {
+            arrLokasi[2] = "0"
+
+            const atasan = await MasterPegawai.query()
+                                              .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
+                                              .orderBy('kode_eselon', 'desc')
+                                              .orderBy('kode_jabatan', 'desc')
+                                              .first()
+            if (atasan) {
+                arrPegawai.push(atasan)
+            }
+        }
+
+        /* Get Atasan 2 */
+        if (arrLokasi[2] != "0") {
+            arrLokasi[2] = "0"
+
+            const atasan = await MasterPegawai.query()
+                                              .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
+                                              .orderBy('kode_eselon', 'desc')
+                                              .orderBy('kode_jabatan', 'desc')
+                                              .first()
+            if (atasan) {
+                arrPegawai.push(atasan)
+            }
+        }
+
+        /* Get Sekretaris */
+        const sekretaris = await MasterPegawai.query()
+                                              .whereRaw(`nama_jabatan LIKE 'SEKRETARIS%'`)
+                                              .whereBetween('kode_lokasi', [user.kode_lokasi.toString().replace(/\d{5}$/g, '00000'), user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')])
+                                              .first()
+        if (sekretaris) {
+            arrPegawai.push(sekretaris)
+        }
+
+        /* Get Pimpinan */
+        const pimpinan = await MasterPegawai.query()
+                                            .whereRaw('kode_lokasi = ' + user.kode_lokasi.toString().replace(/\d{5}$/g, '00000') + ' AND kode_eselon IS NOT NULL')
+                                            .first()
+        if (pimpinan) {
+            arrPegawai.push(pimpinan)
+        }
+
+        let arrPegawaiFix = []
+        arrPegawai.forEach(pegawai => {
+            if (arrPegawaiFix.map(function(e) { return e.nip; }).indexOf(pegawai.nip) == -1) {
+                arrPegawaiFix.push(pegawai)
+            }
+        });
+
+        return Response.format(true, null, arrPegawaiFix)
     }
 
     async detail({params}){
