@@ -77,6 +77,7 @@ class UserController {
 
             const data = await Login.query()
                                     .whereRaw(sql.join(' AND '))
+                                    .orderBy('kode_eselon', 'asc')
                                     .paginate(Number(request.get().page), Number(request.get().limit))
                                 
             return Response.format(true, null, data)
