@@ -782,11 +782,6 @@ Route.group(() => {
     *     produces:
     *       - application/json
     *     parameters:
-    *       - name: id_surat_masuk
-    *         in: query
-    *         description: ID Surat Masuk
-    *         required: true
-    *         type: string
     *       - name: tgl_awal
     *         in: query
     *         description: Tanggal Awal

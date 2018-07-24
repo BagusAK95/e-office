@@ -39,7 +39,6 @@ class SuratTembusanController {
                 sql.push(`tgl <= '` + request.get().tgl_akhir + ` 23:59:59'`)
             }
             sql.push(`nip_penerima = '` + user.nip + `'`)
-            sql.push('id_surat_masuk = ' + request.get().id_surat_masuk)
 
             const data = await SuratTembusan.query()
                                             .whereRaw(sql.join(' AND '))
