@@ -162,30 +162,29 @@
                                  </select>
                               </div>
                               <div class="form-group" data-plugin="formMaterial">
-                                 <label class="form-control-label" for="inputEmail">Penerima Surat&nbsp;<span style="color:red">*</span></label>
-                                 <select name="nip_penerima" id="nip_penerima" class="form-control pegawai" onchange="penerima_surat()" required='true'>
+                                 <label class="form-control-label" for="inputEmail">Kirim Ke Pelaksana Harian?&nbsp;<span style="color:red"></span></label>
+                                 <div class="checkbox-custom checkbox-primary">
+                                 <input type="checkbox" id="inputUnchecked" value="true" onclick="myFunction()">
+                                 <label for="inputUnchecked">Ya</label>
+                                 </div>
+                              </div>
+                              <div class="form-group" id="tampilkan_plt" data-plugin="formMaterial" style="display: none;">
+                                 <label class="form-control-label" for="inputEmail">Pelaksana Harian&nbsp;</label>
+                                 <select name="nip_penerima" id="nip_penerima" class="form-control pegawai_plt" onchange="penerima_surat()" data-plugin="select2" >
                                  </select>
                               </div>
                               <div class="form-group" data-plugin="formMaterial" style="display: none;">
                                  <label class="form-control-label" for="inputEmail" >Nama Penerima Surat&nbsp;<span style="color:red">*</span></label>
-                                 <input type="text" class="form-control" name="nama_penerima" id="nama_penerima" readonly required='true'>
+                                 <input type="text" class="form-control" name="nama_penerima" id="nama_penerima" readonly >
                               </div>
                               <div class="form-group" data-plugin="formMaterial" style="display: none;">
                                  <label class="form-control-label" for="inputEmail">Jabatan Penerima Surat&nbsp;<span style="color:red">*</span></label>
-                                 <input type="text" class="form-control" name="jabatan_penerima" id="jabatan_penerima" readonly required='true'>
+                                 <input type="text" class="form-control" name="jabatan_penerima" id="jabatan_penerima" readonly >
                               </div>
                               <div class="form-group" data-plugin="formMaterial" >
-                                 <label class="form-control-label" for="inputEmail">Tembusan Surat&nbsp;<span style="color:red">*</span></label>
-                                 <select name="nip_tembusan" id="nip_tembusan" class="form-control pegawai" onchange="tembusan_surat()">
+                                 <label class="form-control-label" for="inputEmail">Tembusan Surat&nbsp;</label>
+                                 <select name="nip_tembusan" id="nip_tembusan" class="form-control pegawai_tembusan"  data-plugin="select2" multiple="">
                                  </select>
-                              </div>
-                              <div class="form-group" data-plugin="formMaterial" style="display: none;">
-                                 <label class="form-control-label" for="inputEmail">Nama Tembusan Surat&nbsp;<span style="color:red">*</span></label>
-                                 <input type="text" class="form-control" name="nama_tembusan" id="nama_tembusan" readonly>
-                              </div>
-                              <div class="form-group" data-plugin="formMaterial" style="display: none;">
-                                 <label class="form-control-label" for="inputEmail">Jabatan Tembusan Surat&nbsp;<span style="color:red">*</span></label>
-                                 <input type="text" class="form-control" name="jabatan_tembusan" id="jabatan_tembusan" readonly>
                               </div>
                            </div>
                            <div class="tab">
@@ -200,7 +199,8 @@
                               <div class="form-group">
                                  <div class="input-group">
                                     <span class="input-group-prepend">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Lampiran</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="md-collection-plus"></i>&nbsp;Lampiran</button>
+                                    <button type="button" class="btn btn-danger" onclick="$('#lampiran').val('')"><i class="md-close"></i>&nbsp;Reset</button>
                                     </span>
                                     <input type="text" id="lampiran" class="form-control" readonly style="width:60%" required>
                                  </div>
@@ -267,6 +267,8 @@
         /*Page*/
         pegawaiall();
         klasifikasi();
+        pegawaitembusan() ;
+        pegawaiplt() ;
         $("#loader").fadeOut("xslow");
         /*Page*/
     });
@@ -312,6 +314,90 @@
            }
        });
    }
+
+   function pegawaitembusan() 
+   {
+       $.ajax({ 
+           type: 'GET', 
+           url: '/gettoken', 
+           success: function (data) 
+           { 
+                   $.ajax({ 
+                       type: 'GET', 
+                       url: '/api/master-pegawai', 
+                       headers: {
+                                   'Authorization': 'Bearer ' + data.token
+                               },
+                       dataType: 'json',
+                       success: function (data) 
+                       {   
+                           var isi = "<option value=''>Pilih Pegawai</option>";
+                           $.each(data.data.data, function(index, element) {
+                               var depan = ''
+                               var belakang = ''
+                               if(element.gelar_depan)
+                               {
+                                   depan += element.gelar_depan+" ";
+                               }
+                               var belakang = "";
+                               if(element.gelar_belakang)
+                               {
+                                   belakang += ", "+element.gelar_belakang;
+                               }
+                               isi += "<option value='"+element.nip+"#"+element.nama+"#"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                           })
+                           $(".pegawai_tembusan").html(isi).show();
+                       },
+                       error: function ()
+                       {
+                           return false;
+                       }
+                   });
+           }
+       });
+   }
+
+   function pegawaiplt() 
+   {
+       $.ajax({ 
+           type: 'GET', 
+           url: '/gettoken', 
+           success: function (data) 
+           { 
+                   $.ajax({ 
+                       type: 'GET', 
+                       url: '/api/master-pegawai', 
+                       headers: {
+                                   'Authorization': 'Bearer ' + data.token
+                               },
+                       dataType: 'json',
+                       success: function (data) 
+                       {   
+                           var isi = "<option value=''>Pilih Pegawai</option>";
+                           $.each(data.data.data, function(index, element) {
+                               var depan = ''
+                               var belakang = ''
+                               if(element.gelar_depan)
+                               {
+                                   depan += element.gelar_depan+" ";
+                               }
+                               var belakang = "";
+                               if(element.gelar_belakang)
+                               {
+                                   belakang += ", "+element.gelar_belakang;
+                               }
+                               isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+" - "+element.nama_jabatan+"</option>";
+                           })
+                           $(".pegawai_plt").html(isi).show();
+                       },
+                       error: function ()
+                       {
+                           return false;
+                       }
+                   });
+           }
+       });
+   }
    
    function penerima_surat()
    {
@@ -334,12 +420,12 @@
                            var depan = "";
                            if(element.gelar_depan)
                            {
-                               depan += element.gelar_depan+" ";
+                               depan += element.gelar_depan+"";
                            }
                            var belakang = "";
                            if(element.gelar_belakang)
                            {
-                               belakang += " "+element.gelar_belakang;
+                               belakang += ""+element.gelar_belakang;
                            }
                            $("#nama_penerima").val(depan+element.nama+belakang);
                            $("#jabatan_penerima").val(element.nama_jabatan);
@@ -395,6 +481,7 @@
    
    function simpen()
    {
+       $("#loader").fadeIn();
        var textareaValue = $('#isisurat').summernote('code');
        var jeniss = "";
        if($("#instansi").val()==2)
@@ -408,27 +495,52 @@
        $.ajax({ 
        type: 'GET', 
        url: '/gettoken', 
-       success: function (data) { 
+       success: function (data_token) { 
           $.ajax({ 
            type: 'POST', 
            url: '/api/surat-masuk', 
            headers: {
-   'Authorization': 'Bearer ' + data.token
-   },
-           data : "tgl_terima="+$("#tanggal_terima").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_surat="+$("#nomor_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&perihal="+$("#perihal").val()+"&jenis_instansi="+$("#instansi").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&nip_penerima="+$("#nip_penerima").val()+"&nama_penerima="+$("#nama_penerima").val()+"&jabatan_penerima="+$("#jabatan_penerima").val()+"&nip_tembusan="+$("#nip_tembusan").val()+"&nama_tembusan="+$("#nama_tembusan").val()+"&jabatan_tembusan="+$("#jabatan_tembusan").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue+"&lampiran="+$("#lampiran").val()+jeniss+"&klasifikasi="+$("#klasifikasi").val(),
-           success: function (data) 
+            'Authorization': 'Bearer ' + data_token.token
+            },
+           data : "tgl_terima="+$("#tanggal_terima").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_surat="+$("#nomor_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&perihal="+$("#perihal").val()+"&jenis_instansi="+$("#instansi").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&nip_plt="+$("#nip_penerima").val()+"&nama_plt="+$("#nama_penerima").val()+"&jabatan_plt="+$("#jabatan_penerima").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue+"&lampiran="+$("#lampiran").val()+jeniss+"&klasifikasi="+$("#klasifikasi").val(),
+           success: function (datanya) 
            { 
-               if(data.success==false)
+               if(datanya.success==false)
                {
-                   swal("Gagal!", data.message, "error");
+                    swal("Gagal!", datanya.message, "error");
                }
-               else if(data.success==true)
+               else if(datanya.success==true)
                {
-                   swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
-                   function(){ 
-                       window.location.href="/surat-masuk";
-                   }
-                   );
+                    var peg = $(".pegawai_tembusan").val();
+                    $.each(peg, function(index, da) {
+                        var all = da.split("#");
+                        var nip_penerima = all[0];
+                        var nama_penerima = all[1];
+                        var jabatan_penerima = all[2];
+                        $.ajax({ 
+                            type: 'POST', 
+                            url: '/api/surat-tembusan/', 
+                            headers: {
+                                        'Authorization': 'Bearer ' + data_token.token
+                                    },
+                            dataType: 'json',
+                            data: 'id_surat_masuk='+datanya.data.id+"&nip_penerima="+nip_penerima+"&nama_penerima="+nama_penerima+"&jabatan_penerima="+jabatan_penerima,
+                            success: function (data) 
+                            {   
+                                return true;
+                            },
+                            error: function ()
+                            {
+                                return false;
+                            }
+                        });
+                    });
+                    
+                    swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
+                    function(){ 
+                        window.location.href="/surat-masuk";
+                    });
+                    $("#loader").hide();
                }
            },
            error: function(data)
@@ -466,22 +578,48 @@
            type: 'POST', 
            url: '/api/surat-masuk', 
            headers: {
-   'Authorization': 'Bearer ' + data.token
-   },
+               'Authorization': 'Bearer ' + data.token
+            },
            data : "tgl_terima="+$("#tanggal_terima").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_surat="+$("#nomor_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&perihal="+$("#perihal").val()+"&jenis_instansi="+$("#instansi").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&nip_penerima="+$("#nip_penerima").val()+"&nama_penerima="+$("#nama_penerima").val()+"&jabatan_penerima="+$("#jabatan_penerima").val()+"&nip_tembusan="+$("#nip_tembusan").val()+"&nama_tembusan="+$("#nama_tembusan").val()+"&jabatan_tembusan="+$("#jabatan_tembusan").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+$("#isisurat").val()+"&lampiran="+$("#lampiran").val()+jeniss,
-           success: function (data) 
+           success: function (kembalian) 
            { 
-               if(data.success==false)
+               if(kembalian.success==false)
                {
                    swal("Gagal!", "Gagal Menyimpan data.", "error");
                }
-               else if(data.success==true)
-               {
-                   swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
-                   function(){ 
-                       window.location.href="/surat-masuk";
-                   }
-                   );
+               else if(kembalian.success==true)
+               {    
+                    var peg = $(".pegawai_tembusan").val();
+                    var id_surat_masuk = kembalian;
+                    /*$.each(peg, function(index, da) {
+                        var all = da.split("-");
+
+                        var nip = all[0];
+                        var nama = all[1];
+                        var jabatan = all[2];
+
+                        $.ajax({ 
+                            type: 'GET', 
+                            url: '/api/master-kantor/listAllParent', 
+                            headers: {
+                                        'Authorization': 'Bearer ' + data.token
+                                    },
+                            dataType: 'json',
+                            success: function (data) 
+                            {   
+                                return true;
+                            },
+                            error: function ()
+                            {
+                                return false;
+                            }
+                        });
+                    });*/
+                    
+                    swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
+                    function(){ 
+                        //window.location.href="/surat-masuk";
+                    });
                }
            },
            error: function(data)
@@ -665,8 +803,16 @@
    
    
            var tanggal = year+""+month+""+day+""+hours+""+minutes+""+seconds;
-           $("#lampiran").val("http://rafiisa.com/googledrive/files/"+tanggal+"."+eks);
-   
+           var datalama = $("#lampiran").val();
+           if(datalama)
+           {
+               $("#lampiran").val(datalama+","+"http://rafiisa.com/googledrive/files/"+tanggal+"."+eks);
+           }
+           else
+           {
+               $("#lampiran").val("http://rafiisa.com/googledrive/files/"+tanggal+"."+eks);
+           }
+           
            e.preventDefault();
            var form = e.target;
            var data = new FormData(form);
@@ -723,6 +869,23 @@
                 }
             });
         }
+
+        function myFunction() {
+        // Get the checkbox
+            var checkBox = document.getElementById("inputUnchecked");
+            // Get the output text
+            var text = document.getElementById("text");
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true)
+            {
+                $("#tampilkan_plt").show();
+            } 
+            else 
+            {
+                $("#tampilkan_plt").hide();
+            }
+        } 
 </script>
 @endsection
 
