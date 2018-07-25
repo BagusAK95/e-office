@@ -648,20 +648,10 @@
           dataElement.style = 'overflow-x:hidden;';
           dataHeaderELement.textContent = 'Received message:';
 
-
-          
-
           var titles = JSON.stringify(payload.notification.title);
           var bodys = JSON.stringify(payload.notification.body);
           var icons = JSON.stringify(payload.notification.icon);
 
-          var title = new String();
-          var body = new String();
-          var icon = new String();
-
-          body = bodys.toString().replace(/"/g, "");
-          title = titles.toString().replace(/"/g, "");
-          icon = icons.toString().replace(/"/g, "");
 
           // Notif //
           //alert(Notification.permission);
@@ -673,12 +663,20 @@
           }
           else if (Notification.permission === "granted") 
           {
+            var titlel = new String();
+            var bodyl = new String();
+            var iconl = new String();
+
+            bodyl = bodys.toString().replace(/"/g, "");
+            titlel = titles.toString().replace(/"/g, "");
+            iconl = icons.toString().replace(/"/g, "");
+
               var options = {
-                      body: body,
-                      icon: icon,
+                      body: bodyl,
+                      icon: iconl,
                       dir : "ltr"
                   };
-              var notification = new Notification(title,options);
+              var notification = new Notification(titlel,options);
           }
           else if (Notification.permission !== 'denied') 
           {
@@ -689,11 +687,11 @@
               }
               if (permission === "granted") {
                   var options = {
-                      body: body,
-                      icon: icon,
+                      body: bodys,
+                      icon: icons,
                       dir : "ltr"
                   };
-                  var notification = new Notification(title,options);
+                  var notification = new Notification(titles,options);
               }
               });
           }   
