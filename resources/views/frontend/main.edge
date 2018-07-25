@@ -9,7 +9,10 @@
     <meta name="author" content="">
     
     <title>e-Office</title>
-   
+    <!-- Firebase -->
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <link rel="manifest" href="/firebase/manifest.json">
+    <!-- End Firebase -->
     <link rel="apple-touch-icon" href="/material/base/assets/images/apple-touch-icon.png">
     <link rel="shortcut icon" href="/material/base/assets/images/favicon.ico">
     
@@ -82,15 +85,11 @@
           data-toggle="collapse">
           <i class="icon md-more" aria-hidden="true"></i>
         </button>
-        <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
-          <img class="navbar-brand-logo" src="/material/base/assets/images/logo.png" title="Remark">
+        <div class="navbar-brand navbar-brand-center">
+          <img class="navbar-brand-logo" src="/material/base/assets/logo.png" title="Remark">
           <span class="navbar-brand-text hidden-xs-down"> e-Office</span>
         </div>
-        <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
-          data-toggle="collapse">
-          <span class="sr-only">Toggle Search</span>
-          <i class="icon md-search" aria-hidden="true"></i>
-        </button>
+       
       </div>
     
       <div class="navbar-container container-fluid">
@@ -113,76 +112,22 @@
           <!-- Navbar Toolbar Right -->
           <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
 
-          <li class="nav-item dropdown">
+           <li class="nav-item dropdown">
               <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
                 aria-expanded="false" data-animation="scale-up" role="button">
                 <i class="icon md-notifications" aria-hidden="true"></i>
-                <span class="badge badge-pill badge-danger up">5</span>
+                <span id="jumlah_notif"></span>
               </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
                 <div class="dropdown-menu-header">
                   <h5>NOTIFICATIONS</h5>
-                  <span class="badge badge-round badge-danger">New 5</span>
+                  <span id='new'>New 0</span>
                 </div>
     
                 <div class="list-group">
                   <div data-role="container">
-                    <div data-role="content">
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                        <div class="media">
-                          <div class="pr-10">
-                            <i class="icon md-receipt bg-red-600 white icon-circle" aria-hidden="true"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="media-heading">A new order has been placed</h6>
-                            <time class="media-meta" datetime="2017-06-12T20:50:48+08:00">5 hours ago</time>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                        <div class="media">
-                          <div class="pr-10">
-                            <i class="icon md-account bg-green-600 white icon-circle" aria-hidden="true"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="media-heading">Completed the task</h6>
-                            <time class="media-meta" datetime="2017-06-11T18:29:20+08:00">2 days ago</time>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                        <div class="media">
-                          <div class="pr-10">
-                            <i class="icon md-settings bg-red-600 white icon-circle" aria-hidden="true"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="media-heading">Settings updated</h6>
-                            <time class="media-meta" datetime="2017-06-11T14:05:00+08:00">2 days ago</time>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                        <div class="media">
-                          <div class="pr-10">
-                            <i class="icon md-calendar bg-blue-600 white icon-circle" aria-hidden="true"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="media-heading">Event started</h6>
-                            <time class="media-meta" datetime="2017-06-10T13:50:18+08:00">3 days ago</time>
-                          </div>
-                        </div>
-                      </a>
-                      <a class="list-group-item dropdown-item" href="javascript:void(0)" role="menuitem">
-                        <div class="media">
-                          <div class="pr-10">
-                            <i class="icon md-comment bg-orange-600 white icon-circle" aria-hidden="true"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="media-heading">Message received</h6>
-                            <time class="media-meta" datetime="2017-06-10T12:34:48+08:00">3 days ago</time>
-                          </div>
-                        </div>
-                      </a>
+                    <div data-role="content" id="notif_content">
+
                     </div>
                   </div>
                 </div>
@@ -245,7 +190,7 @@
                   <img class="foto" alt=""  >
                 </a>
                 <div class="site-menubar-info">
-                  <h4 class="profile-user"><span class='nama_user'></span><br><span style='font-size:9pt' class='jabatan'></span></h4>
+                  <h4 class="profile-user"><span class='nama_user'></span><br><span style='font-size:7.5pt' class='jabatan'></span></h4>
                 </div>
               </div>
           </div>
@@ -301,6 +246,12 @@
                           <span class="site-menu-title">Disposisi Keluar</span>
                       </a>
                 </li>
+                <li class="site-menu-item" id="disposisi_keluar">
+                  <a class="animsition-link" href="/tembusan">
+                          <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
+                          <span class="site-menu-title">Tembusan</span>
+                      </a>
+                </li>
               
               
             </ul>
@@ -312,62 +263,27 @@
       </div>    <div class="site-gridmenu">
       <div>
         <div>
-          <ul>
-            <li>
-              <a href="apps/mailbox/mailbox.html">
-                <i class="icon md-email"></i>
-                <span>Mailbox</span>
-              </a>
-            </li>
-            <li>
-              <a href="apps/calendar/calendar.html">
-                <i class="icon md-calendar"></i>
-                <span>Calendar</span>
-              </a>
-            </li>
-            <li>
-              <a href="apps/contacts/contacts.html">
-                <i class="icon md-account"></i>
-                <span>Contacts</span>
-              </a>
-            </li>
-            <li>
-              <a href="apps/media/overview.html">
-                <i class="icon md-videocam"></i>
-                <span>Media</span>
-              </a>
-            </li>
-            <li>
-              <a href="apps/documents/categories.html">
-                <i class="icon md-receipt"></i>
-                <span>Documents</span>
-              </a>
-            </li>
-            <li>
-              <a href="apps/projects/projects.html">
-                <i class="icon md-image"></i>
-                <span>Project</span>
-              </a>
-            </li>
-            <li>
-              <a href="apps/forum/forum.html">
-                <i class="icon md-comments"></i>
-                <span>Forum</span>
-              </a>
-            </li>
-            <li>
-              <a href="index.html">
-                <i class="icon md-view-dashboard"></i>
-                <span>Dashboard</span>
-              </a>
-            </li>
-          </ul>
+          
         </div>
       </div>
     </div>
     <!--End Menu-->
 
     <!-- Page -->
+    <div style="display:none;">
+    <input id="token_firebases" type="text">
+      <div id="token_div" style="display: none;">
+          <h4>Delete Token</h4>
+          <p id="token" style="word-break: break-all;"></p>
+          <button class="btn btn-danger" onclick="deleteToken()">Delete Token</button>
+      </div>
+      <div id="permission_div" style="display: none;">
+          <h4>Get Token</h4>
+          <p id="token"></p>
+          <button class="btn btn-danger" onclick="requestPermission()">Request Token</button>
+      </div>
+      <div id="messages"></div>
+    </div>
     <div class="page" >
  
       <!-- Page Content -->
@@ -426,40 +342,43 @@
     <script src="/material/global/js/Plugin/asscrollable.js"></script>
     <script src="/material/global/js/Plugin/slidepanel.js"></script>
     <script src="/material/global/js/Plugin/switchery.js"></script>
-        <script src="/material/global/js/Plugin/responsive-tabs.js"></script>
-        <script src="/material/global/js/Plugin/tabs.js"></script>
-        <script src="/material/global/js/Plugin/asprogress.js"></script>
-        <script src="/material/global/js/Plugin/panel.js"></script>
-        <script src="/material/global/js/Plugin/asscrollable.js"></script>
-        <script src="/material/global/js/Plugin/raty.js"></script>
+    <script src="/material/global/js/Plugin/responsive-tabs.js"></script>
+    <script src="/material/global/js/Plugin/tabs.js"></script>
+    <script src="/material/global/js/Plugin/asprogress.js"></script>
+    <script src="/material/global/js/Plugin/panel.js"></script>
+    <script src="/material/global/js/Plugin/asscrollable.js"></script>
+    <script src="/material/global/js/Plugin/raty.js"></script>
+
+    <script src="/material/base/assets/examples/js/uikit/panel-structure.js"></script>
     
-        <script src="/material/base/assets/examples/js/uikit/panel-structure.js"></script>
-        
-        <script src="/material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
-        <script src="/material/global/js/Plugin/bootstrap-sweetalert.js"></script>
-        <script src="/material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
+    <script src="/material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
+    <script src="/material/global/js/Plugin/bootstrap-sweetalert.js"></script>
+    <script src="/material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
+    
 
-        
+    <script src="/material/global/vendor/select2/select2.full.min.js"></script>
+    <script src="/material/global/js/Plugin/select2.js"></script>
+    <script src="/material/global/js/Plugin/multi-select.js"></script>
 
-        <script src="/material/global/vendor/select2/select2.full.min.js"></script>
-        <script src="/material/global/js/Plugin/select2.js"></script>
-        <script src="/material/global/js/Plugin/multi-select.js"></script>
+    <script src="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+    <script src="/material/global/vendor/jstree/jstree.min.js"></script>
+    <script src="/material/global/js/Plugin/bootstrap-treeview.js"></script>
+    <script src="/material/global/js/Plugin/jstree.js"></script>
+    <script src="/material/base/assets/examples/js/advanced/treeview.js"></script>
 
-        <script src="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-        <script src="/material/global/vendor/jstree/jstree.min.js"></script>
-        <script src="/material/global/js/Plugin/bootstrap-treeview.js"></script>
-        <script src="/material/global/js/Plugin/jstree.js"></script>
-        <script src="/material/base/assets/examples/js/advanced/treeview.js"></script>
+    <script src="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="/material/global/js/Plugin/bootstrap-datepicker.js"></script>
 
-        <script src="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-        <script src="/material/global/js/Plugin/bootstrap-datepicker.js"></script>
-
-        <script src="/material/global/vendor/summernote/summernote.min.js"></script>
-        <script src="/material/global/js/Plugin/summernote.js"></script>
-        <script src="/material/base/assets/examples/js/forms/editor-summernote.js"></script>
+    <script src="/material/global/vendor/summernote/summernote.min.js"></script>
+    <script src="/material/global/js/Plugin/summernote.js"></script>
+    <script src="/material/base/assets/examples/js/forms/editor-summernote.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js"></script>
         
     <script>
-    
+    //requestPermission()
+    //alert($("#token_firebases").val());
     function cek_session()
     {
       $.ajax({ 
@@ -502,7 +421,7 @@
                         $(".nama_user").html(data.data.nama_lengkap).show();
                         if(data.data.foto)
                         {
-                          $(".foto").html('<img src="'+data.data.foto+'" style="width:70px">').show();
+                          $(".foto").html('<img src="'+data.data.foto+'" style="width:70px;height:auto">').show();
                         }
                         else
                         {
@@ -527,8 +446,8 @@
                           var lv = "Staff";
                         }
 
-                        $(".jabatan").html(lv).show();
-                        $(".jabatanm").html(lv).show();
+                        $(".jabatan").html(data.data.nama_jabatan).show();
+                        $(".jabatanm").html(data.data.nama_jabatan).show();
 
                         if(data.data.level==1)
                         {
@@ -574,6 +493,277 @@
             }
             });
     }
+    tanggal_sekarang()
+    function tanggal_sekarang()
+       {           
+            var  tanggal_sekarang = new Date();
+            moment.locale('id'); 
+            var ff = moment(tanggal_sekarang).format("YYYY-MM-DD");
+            $(".datepicker").val(ff);
+       }
+
+      //NOTIF//
+       var config = {
+          apiKey: "AIzaSyD8Tdy0YFbhRp1KJxwrJKISEMl772pEE9g",
+          authDomain: "e-office-2018.firebaseapp.com",
+          databaseURL: "https://e-office-2018.firebaseio.com",
+          projectId: "e-office-2018",
+          storageBucket: "e-office-2018.appspot.com",
+          messagingSenderId: "1039512108885"
+        };
+
+        firebase.initializeApp(config); 
+        
+        const messaging = firebase.messaging();
+
+        const tokenDivId = 'token_div';
+        const permissionDivId = 'permission_div';
+
+        messaging.onTokenRefresh(function() {
+          messaging.getToken().then(function(refreshedToken) {
+            console.log('Token refreshed.');
+            setTokenSentToServer(false);
+            sendTokenToServer(refreshedToken);
+            resetUI();
+          }).catch(function(err) {
+            console.log('Unable to retrieve refreshed token ', err);
+            showToken('Unable to retrieve refreshed token ', err);
+          });
+        });
+
+        messaging.onMessage(function(payload) {
+          console.log('Message received. ', payload);
+          appendMessage(payload);
+        });
+
+        function resetUI() {
+          clearMessages();
+          showToken('loading...');
+          messaging.getToken().then(function(currentToken) {
+            
+
+            if (currentToken) {
+              sendTokenToServer(currentToken);
+              updateUIForPushEnabled(currentToken);
+              if(!$("#token_firebases").val())
+              {
+                  $.ajax({ 
+                    type: 'GET', 
+                    url: '/gettoken', 
+                    success: function (data) 
+                        { 
+                          $("#token_firebases").val(currentToken);
+                            $.ajax({ 
+                                type: 'PUT', 
+                                url: '/api/setFirebase', 
+                                data : 'firebase_device=Web&firebase_token='+currentToken,
+                                headers: {
+                                    'Authorization': 'Bearer ' + data.token
+                                },
+                                success: function (data) 
+                                { 
+                                    
+                                }
+                            });
+                        }
+                    });
+              }
+            } else {
+              console.log('No Instance ID token available. Request permission to generate one.');
+              updateUIForPushPermissionRequired();
+              setTokenSentToServer(false);
+            }
+          }).catch(function(err) {
+            console.log('An error occurred while retrieving token. ', err);
+            showToken('Error retrieving Instance ID token. ', err);
+            setTokenSentToServer(false);
+          });
+        }
+
+
+        function showToken(currentToken) {
+          var tokenElement = document.querySelector('#token');
+          tokenElement.textContent = currentToken;
+        }
+
+        function sendTokenToServer(currentToken) {
+          if (!isTokenSentToServer()) {
+            console.log('Sending token to server...');
+            setTokenSentToServer(true);
+          } else {
+            console.log('Token already sent to server so wont send it again unless it changes');
+          }
+
+        }
+
+        function isTokenSentToServer() {
+          return window.localStorage.getItem('sentToServer') === '1';
+        }
+
+        function setTokenSentToServer(sent) {
+          window.localStorage.setItem('sentToServer', sent ? '1' : '0');
+        }
+
+        function showHideDiv(divId, show) {
+          const div = document.querySelector('#' + divId);
+          if (show) {
+            div.style = 'display: visible';
+          } else {
+            div.style = 'display: none';
+          }
+        }
+
+        function requestPermission() {
+          $("#loader").fadeIn("slow");
+          console.log('Requesting permission...');
+          messaging.requestPermission().then(function() {
+            console.log('Notification permission granted.');
+            resetUI();
+          }).catch(function(err) {
+            console.log('Unable to get permission to notify.', err);
+          });
+          $("#loader").fadeOut("xslow");
+        }
+
+        function deleteToken() {
+          messaging.getToken().then(function(currentToken) {
+            messaging.deleteToken(currentToken).then(function() {
+              console.log('Token deleted.');
+              setTokenSentToServer(false);
+              resetUI();
+            }).catch(function(err) {
+              console.log('Unable to delete token. ', err);
+            });
+          }).catch(function(err) {
+            console.log('Error retrieving Instance ID token. ', err);
+            showToken('Error retrieving Instance ID token. ', err);
+          });
+
+        }
+        
+        function appendMessage(payload) {
+          const messagesElement = document.querySelector('#messages');
+          const dataHeaderELement = document.createElement('h5');
+          const dataElement = document.createElement('pre');
+          dataElement.style = 'overflow-x:hidden;';
+          dataHeaderELement.textContent = 'Received message:';
+
+          var titles = JSON.stringify(payload.notification.title);
+          var bodys = JSON.stringify(payload.notification.body);
+          var icons = JSON.stringify(payload.notification.icon);
+
+          // Notif //
+          //alert(Notification.permission);
+          getjumlahnotif();
+
+          if (!("Notification" in window)) 
+          {
+              alert("This browser does not support desktop notification");
+          }
+          else if (Notification.permission === "granted") 
+          {
+              var options = {
+                      body: bodys,
+                      icon: icons,
+                      dir : "ltr"
+                  };
+              var notification = new Notification(titles,options);
+          }
+          else if (Notification.permission !== 'denied') 
+          {
+              Notification.requestPermission(function (permission) {
+              if (!('permission' in Notification)) 
+              {
+                  Notification.permission = permission;
+              }
+              if (permission === "granted") {
+                  var options = {
+                      body: bodys,
+                      icon: icons,
+                      dir : "ltr"
+                  };
+                  var notification = new Notification(titles,options);
+              }
+              });
+          }   
+          // End Notif //
+
+          //alert(JSON.stringify(payload, null, 2));
+          dataElement.textContent = JSON.stringify(payload, null, 2);
+          messagesElement.appendChild(dataHeaderELement);
+          messagesElement.appendChild(dataElement);
+        }
+
+        function clearMessages() {
+          const messagesElement = document.querySelector('#messages');
+          while (messagesElement.hasChildNodes()) {
+            messagesElement.removeChild(messagesElement.lastChild);
+          }
+        }
+
+        function updateUIForPushEnabled(currentToken) {
+          showHideDiv(tokenDivId, true);
+          showHideDiv(permissionDivId, false);
+          showToken(currentToken);
+        }
+
+        function updateUIForPushPermissionRequired() {
+          showHideDiv(tokenDivId, false);
+          showHideDiv(permissionDivId, true);
+        }
+
+        getjumlahnotif()
+        function getjumlahnotif()
+        {
+          $.ajax({ 
+              type: 'GET', 
+              url: '/gettoken', 
+              success: function (data) 
+              { 
+                  $.ajax({ 
+                      type: 'GET', 
+                      url: '/api/notifikasi?page=1&limit=9999', 
+                      headers: {
+                          'Authorization': 'Bearer ' + data.token
+                      },
+                      success: function (de) 
+                      { 
+                           var jumlah_pesan = de.message;
+                           $("#jumlah_notif").html("<span class='badge badge-pill badge-danger up'>"+jumlah_pesan+"</span>").show();
+                           $("#new").html("<span class='badge badge-round badge-danger'>New "+jumlah_pesan+"</span>").show();
+                           
+                           var text="";
+                           $.each(de.data.data, function(index, element){
+                             if(element.status==0)
+                             {
+                              var tanggal = tanggal_keterangan(element.tgl);
+                              text += '<a class="list-group-item dropdown-item" href="/notif/'+element.id+'" role="menuitem">';
+                              text += '<div class="media">';
+                              text += '<div class="pr-10">';
+                              text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
+                              text += '</div>';
+                              text += '<div class="media-body">';
+                              text += '<h6 class="media-heading">'+element.isi+'</h6>';
+                              text += '<time class="media-meta">'+tanggal+'</time>';
+                              text += '</div>';
+                              text += '</div>';
+                              text += '</a>';
+                             }
+                           });
+                          $("#notif_content").html(text).show();
+                           
+                      }
+                  });
+              }
+          });
+        }
+        function tanggal_keterangan(tanggal)
+        {           
+              moment.locale('id'); 
+              return moment(tanggal).calendar();  
+        }
+        //resetUI();
+        //END NOTIF//
   </script>
   <script>
       (function(document, window, $){

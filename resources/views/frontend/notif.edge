@@ -1,0 +1,37 @@
+<script src="/material/global/vendor/jquery/jquery.js"></script>
+<style>
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+}
+</style>
+<img class="centered" src='/material/loader.gif' style='width:130px' id='loader' >
+<script>
+ridirecting();
+function ridirecting()
+{
+  $.ajax({ 
+      type: 'GET', 
+      url: '/gettoken', 
+      success: function (data) 
+      { 
+          $.ajax({ 
+              type: 'PUT', 
+              url: '/api/notifikasi/{{params.id}}', 
+              headers: {
+                  'Authorization': 'Bearer ' + data.token
+              },
+              success: function (de) 
+              { 
+                  var link = de.message;
+                  //alert(link)
+                  window.location.href=link;
+              }
+          });
+      }
+  });
+}
+</script>

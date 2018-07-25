@@ -111,4 +111,23 @@ Route.get('/dispo-keluar/:id', async function({ params,view }) {
 })
 //End Dispo Masuk
 
+//Tembusan
+
+Route.on('/tembusan').render('frontend/tembusan')
+
+Route.get('/tembusan/:id', async function({ params,view }) {
+    return view.render('frontend/detail_tembusan', { params })
+})
+
+//End Tembusan
+
+//Notif
+
+//Route.on('/notif').render('frontend/notif')
+
+Route.get('/notif/:id', async function({ params,view }) {
+    return view.render('frontend/notif', { params })
+})
+
+//End Notif
 //------------------------------------ End Main System ---------------------------------//
