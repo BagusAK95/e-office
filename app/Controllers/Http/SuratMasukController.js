@@ -31,9 +31,7 @@ class SuratMasukController {
             /* --- Kirim Notifikasi --- */
             let arr_penerima = [data.nip_pimpinan]
             if (data.nip_plt) {
-                if (data.nip_plt !== "") {
-                    arr_penerima.push(data.nip_plt)
-                }
+                arr_penerima.push(data.nip_plt)
             }
 
             Notification.send([user.nip, user.nama_lengkap], arr_penerima, 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insert.id)

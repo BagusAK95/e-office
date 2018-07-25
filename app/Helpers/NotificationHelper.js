@@ -6,6 +6,11 @@ const Env = use('Env')
 
 const NotificationHelper = {
     send: function(pengirim, penerima, isi, url) {
+        const locNull = pengirim.indexOf('')
+        if (locNull != -1) {
+            delete pengirim[locNull]    
+        }
+
         AsyncLoop(penerima, async (nip, next) => {
             try {
                 const insert = await Notifikasi.create({
