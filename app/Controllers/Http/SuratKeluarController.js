@@ -33,7 +33,7 @@ class SuratKeluarController {
 
             /* --- Kirim Notifikasi --- */
 
-            Notification.send(user.nip, [arrPemeriksa[0].nip_pemeriksa], user.nama_lengkap + ' Mengirimkan Konsep Surat', '/konsep-surat/' + insertKonsep.id)
+            Notification.send([user.nip, user.nama_lengkap], [arrPemeriksa[0].nip_pemeriksa], 'Mengirimkan Konsep Surat', '/konsep-surat/' + insertKonsep.id)
 
             /* --- Kirim Notifikasi --- */
 

@@ -22,7 +22,7 @@ class DisposisiController {
             
             const surat = await SuratMasuk.find(data.id_surat_masuk)
             if (surat) {
-                Notification.send(user.nip, [data.nip_penerima], user.nama_lengkap + ' Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-masuk/' + insert.id)
+                Notification.send([user.nip, user.nama_lengkap], [data.nip_penerima], 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-masuk/' + insert.id)
             }
 
             /* --- Kirim Notifikasi --- */
@@ -159,7 +159,7 @@ class DisposisiController {
             
                         /* --- Kirim Notifikasi --- */
                         
-                        Notification.send(user.nip, [disposisi.nip_pengirim], user.nama_lengkap + ' Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
+                        Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
                         
                         /* --- Kirim Notifikasi --- */   
                     } else if (data.status == 2) {
@@ -169,7 +169,7 @@ class DisposisiController {
             
                         /* --- Kirim Notifikasi --- */
                         
-                        Notification.send(user.nip, [disposisi.nip_pengirim], user.nama_lengkap + ' Menolak Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
+                        Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menolak Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
                         
                         /* --- Kirim Notifikasi --- */                       
                     }

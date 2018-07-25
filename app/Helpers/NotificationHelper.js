@@ -5,13 +5,13 @@ const Login = use('App/Models/Login')
 const Env = use('Env')
 
 const NotificationHelper = {
-    send: function(nip_pengirim, nip_penerima, isi, url) {
-        AsyncLoop(nip_penerima, async (nip, next) => {
+    send: function(pengirim, penerima, isi, url) {
+        AsyncLoop(penerima, async (nip, next) => {
             try {
                 const insert = await Notifikasi.create({
-                    nip_pengirim: nip_pengirim,
+                    nip_pengirim: pengirim[0].toString(),
                     nip_penerima: nip,
-                    isi: isi,
+                    isi: pengirim[1].toString().trim() + ' ' + isi.trim(),
                     url: url
                 })
 
@@ -31,8 +31,9 @@ const NotificationHelper = {
                                     },
                                     form : {
                                         notification: {
-                                        title: 'e-office',
-                                        body: isi
+                                            title: pengirim[1].toString(),
+                                            body: isi,
+                                            click_action: url
                                         },
                                         to: firebase
                                     }

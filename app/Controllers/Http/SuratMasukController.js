@@ -34,7 +34,7 @@ class SuratMasukController {
                 arr_penerima.push(data.nip_plt)
             }
 
-            Notification.send(user.nip, arr_penerima, user.nama_lengkap + ' Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insert.id)
+            Notification.send([user.nip, user.nama_lengkap], arr_penerima, 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insert.id)
 
             /* --- Kirim Notifikasi --- */
 
