@@ -28,7 +28,7 @@ class KomentarController {
 
                 const surat = await SuratMasuk.find(data.id_surat_masuk)
                 if (surat) {
-                    arr_penerima = [surat.nip_tata_usaha, surat.nip_pimpinan, surat.nip_penerima]
+                    arr_penerima = [surat.nip_tata_usaha, surat.nip_pimpinan, surat.nip_plt]
                     nomor = surat.nomor_surat
                     url = '/surat-masuk/' + data.id_surat_masuk
                 }
