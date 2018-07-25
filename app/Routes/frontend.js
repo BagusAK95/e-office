@@ -125,8 +125,8 @@ Route.get('/tembusan/:id', async function({ params,view }) {
 
 //Route.on('/notif').render('frontend/notif')
 
-Route.get('/notif/:id', async function({ params,view }) {
-    return view.render('frontend/notif', { params })
+Route.get('/notifikasi/:id', async function({ params,view }) {
+    return view.render('frontend/notifikasi', { params })
 })
 
 //End Notif
