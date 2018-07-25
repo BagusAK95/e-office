@@ -38,6 +38,12 @@ const NotificationHelper = {
                                                 body: isi,
                                                 click_action: '/notifikasi/' + insert.id
                                             },
+                                            data: {
+                                                id: insert.id,
+                                                title: pengirim[1].trim(),
+                                                body: isi,
+                                                click_action: '/notifikasi/' + insert.id
+                                            },
                                             to: firebase
                                         })
                                     }, async (err, resp, body) => {
