@@ -27,7 +27,6 @@ Route.group(() => {
                     description: 'This is about documentation of e-office.'
                 },
                 basePath: "/api",
-                schemes : ['https'],
                 securitySchemes: {
                     bearerAuth: {
                         type: 'https',
