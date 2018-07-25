@@ -28,12 +28,15 @@ class NotifikasiController {
         try {
             const user = await auth.getUser()
             
-            const update = await Notifikasi.query()
-                                           .where({id: params.id, nip_penerima: user.nip})
-                                           .update({status: 1})
+            const data = await Notifikasi.query()
+                                         .where({id: params.id, nip_penerima: user.nip})
+                                         .first()
             
-            if (update > 0) {
-                return Response.format(true, null, update)                
+            if (data) {
+                data.status = 1
+                data.save()
+
+                return Response.format(true, data.url, null)                
             } else {
                 return Response.format(false, 'Notifikasi tidak ditemukan', null)
             }

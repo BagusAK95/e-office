@@ -33,7 +33,7 @@ const NotificationHelper = {
                                         notification: {
                                             title: pengirim[1].toString().trim(),
                                             body: isi,
-                                            click_action: url
+                                            click_action: '/notifikasi/' + insert.id
                                         },
                                         to: firebase
                                     }
