@@ -121,7 +121,7 @@
               <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
                 <div class="dropdown-menu-header">
                   <h5>NOTIFICATIONS</h5>
-                  <span id='new'>New 0</span>
+                  <span id='new'></span>
                 </div>
     
                 <div class="list-group">
@@ -648,15 +648,15 @@
           dataElement.style = 'overflow-x:hidden;';
           dataHeaderELement.textContent = 'Received message:';
 
-          var titles = JSON.stringify(payload.notification.title);
+          /*var titles = JSON.stringify(payload.notification.title);
           var bodys = JSON.stringify(payload.notification.body);
-          var icons = JSON.stringify(payload.notification.icon);
+          var icons = JSON.stringify(payload.notification.icon);*/
 
           // Notif //
           //alert(Notification.permission);
           getjumlahnotif();
 
-          if (!("Notification" in window)) 
+          /*if (!("Notification" in window)) 
           {
               alert("This browser does not support desktop notification");
           }
@@ -685,7 +685,7 @@
                   var notification = new Notification(titles,options);
               }
               });
-          }   
+          }   */
           // End Notif //
 
           //alert(JSON.stringify(payload, null, 2));
@@ -729,8 +729,11 @@
                       success: function (de) 
                       { 
                            var jumlah_pesan = de.message;
-                           $("#jumlah_notif").html("<span class='badge badge-pill badge-danger up'>"+jumlah_pesan+"</span>").show();
-                           $("#new").html("<span class='badge badge-round badge-danger'>New "+jumlah_pesan+"</span>").show();
+                           if(jumlah_pesan>0)
+                           {
+                             $("#jumlah_notif").html("<span class='badge badge-pill badge-danger up'>"+jumlah_pesan+"</span>").show();
+                             $("#new").html("<span class='badge badge-round badge-danger'>New "+jumlah_pesan+"</span>").show();
+                           }
                            
                            var text="";
                            $.each(de.data.data, function(index, element){
