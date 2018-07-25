@@ -29,14 +29,14 @@ const NotificationHelper = {
                                         'Content-Type': 'application/json',
                                         'Authorization': 'key=' + Env.get('FIREBASE_SERVER_KEY')
                                     },
-                                    form : {
+                                    body : JSON.stringify({
                                         notification: {
                                             title: pengirim[1].toString().trim(),
                                             body: isi,
                                             click_action: '/notifikasi/' + insert.id
                                         },
                                         to: firebase
-                                    }
+                                    })
                                 }, async (err, resp, body) => {
                                     (err) ? insert[response] = err : insert[response] = body
                                     await insert.save()
