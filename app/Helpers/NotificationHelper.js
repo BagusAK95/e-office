@@ -9,9 +9,9 @@ const NotificationHelper = {
         AsyncLoop(penerima, async (nip, next) => {
             try {
                 const insert = await Notifikasi.create({
-                    nip_pengirim: pengirim[0].toString(),
+                    nip_pengirim: pengirim[0],
                     nip_penerima: nip,
-                    isi: pengirim[1].toString().trim() + ' ' + isi.trim(),
+                    isi: pengirim[1].trim() + ' ' + isi.trim(),
                     url: url
                 })
 
@@ -31,7 +31,7 @@ const NotificationHelper = {
                                     },
                                     body : JSON.stringify({
                                         notification: {
-                                            title: pengirim[1].toString().trim(),
+                                            title: pengirim[1].trim(),
                                             body: isi,
                                             click_action: '/notifikasi/' + insert.id
                                         },
