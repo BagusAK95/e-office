@@ -8,10 +8,6 @@ const NotificationHelper = {
     send: function(pengirim, penerima, isi, url) {
         AsyncLoop(penerima, async (nip, next) => {
             try {
-                if (nip == null || nip == '') {
-                    next()
-                }
-
                 const insert = await Notifikasi.create({
                     nip_pengirim: pengirim[0],
                     nip_penerima: nip,

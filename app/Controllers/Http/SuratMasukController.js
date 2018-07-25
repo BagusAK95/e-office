@@ -30,7 +30,7 @@ class SuratMasukController {
 
             /* --- Kirim Notifikasi --- */
             let arr_penerima = [data.nip_pimpinan]
-            if (data.nip_plt) {
+            if (data.nip_plt != '' || data.nip_plt != null) {
                 arr_penerima.push(data.nip_plt)
             }
 
