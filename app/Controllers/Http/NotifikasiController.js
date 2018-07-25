@@ -14,7 +14,11 @@ class NotifikasiController {
                                          .orderBy('tgl', 'desc')
                                          .paginate(Number(request.get().page), Number(request.get().limit))
 
-            return Response.format(true, null, data)
+            const count = await Notifikasi.query()
+                                          .where({ nip_penerima: user.nip, status: 0 })
+                                          .getCount()
+
+            return Response.format(true, count, data)
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)                
         }
