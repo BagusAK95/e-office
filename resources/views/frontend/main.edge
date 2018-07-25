@@ -43,6 +43,9 @@
     <link rel="stylesheet" href="/material/global/fonts/brand-icons/brand-icons.min.css">
     <link rel='stylesheet' href='/material/font.css'>
     <script src="/material/moment-with-locales.js"></script>
+
+    <link rel="stylesheet" href="/material/global/vendor/toastr/toastr.css">
+    <link rel="stylesheet" href="/material/base/assets/examples/css/advanced/toastr.css">
     
     <!--[if lt IE 9]>
     <script src="material/global/vendor/html5shiv/html5shiv.min.js"></script>
@@ -376,6 +379,12 @@
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js"></script>
         
+    <script src="/material/global/vendor/toastr/toastr.js"></script>
+     <script src="/material/global/js/Plugin/toastr.js"></script>
+
+
+<link rel="stylesheet" href="https://raw.github.com/daneden/animate.css/master/animate.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
     <script>
     //requestPermission()
     //alert($("#token_firebases").val());
@@ -651,10 +660,9 @@
           var titles = JSON.stringify(payload.notification.title);
           var bodys = JSON.stringify(payload.notification.body);
           var icons = JSON.stringify(payload.notification.icon);
-
+          var id_notifikasi = JSON.stringify(payload.data.id);
 
           // Notif //
-          //alert(Notification.permission);
           getjumlahnotif();
 
           if (!("Notification" in window)) 
@@ -664,6 +672,34 @@
           else if (Notification.permission === "granted") 
           {
             var titlel = new String();
+            var bodyl = new String();
+            var iconl = new String();
+            var id_notifikasil = new String();
+
+            bodyl = bodys.toString().replace(/"/g, "");
+            titlel = titles.toString().replace(/"/g, "");
+            iconl = icons.toString().replace(/"/g, "");
+            id_notifikasil = id_notifikasi.toString().replace(/"/g, "");
+
+            toastr.options.onCloseClick = function() { console.log('close button clicked'); }
+            toastr.options = {
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": false,
+              "progressBar": false,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "showDuration": "500",
+              "hideDuration": "1000",
+              "timeOut": "5000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn"
+            }
+            toastr.warning(bodyl, titlel,
+                {onclick: function() { window.location.href="/notifikasi/"+id_notifikasil; }});
+            /*var titlel = new String();
             var bodyl = new String();
             var iconl = new String();
 
@@ -676,7 +712,8 @@
                       icon: iconl,
                       dir : "ltr"
                   };
-              var notification = new Notification(titlel,options);
+              var notification = new Notification(titlel,options);*/
+              //alert("notif tab");
           }
           else if (Notification.permission !== 'denied') 
           {
