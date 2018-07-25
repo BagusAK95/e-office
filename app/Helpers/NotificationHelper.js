@@ -31,7 +31,7 @@ const NotificationHelper = {
                                     },
                                     form : {
                                         notification: {
-                                            title: pengirim[1].toString(),
+                                            title: pengirim[1].toString().trim(),
                                             body: isi,
                                             click_action: url
                                         },
