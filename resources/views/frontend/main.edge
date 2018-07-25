@@ -247,7 +247,7 @@
                       </a>
                 </li>
                 <li class="site-menu-item" id="disposisi_keluar">
-                  <a class="animsition-link" href="/tembusan">
+                  <a class="animsition-link" href="/surat-tembusan">
                           <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
                           <span class="site-menu-title">Tembusan</span>
                       </a>
@@ -648,26 +648,35 @@
           dataElement.style = 'overflow-x:hidden;';
           dataHeaderELement.textContent = 'Received message:';
 
-          /*var titles = JSON.stringify(payload.notification.title);
+          var titles = JSON.stringify(payload.notification.title);
           var bodys = JSON.stringify(payload.notification.body);
-          var icons = JSON.stringify(payload.notification.icon);*/
+          var icons = JSON.stringify(payload.notification.icon);
+
 
           // Notif //
           //alert(Notification.permission);
           getjumlahnotif();
 
-          /*if (!("Notification" in window)) 
+          if (!("Notification" in window)) 
           {
               alert("This browser does not support desktop notification");
           }
           else if (Notification.permission === "granted") 
           {
+            var titlel = new String();
+            var bodyl = new String();
+            var iconl = new String();
+
+            bodyl = bodys.toString().replace(/"/g, "");
+            titlel = titles.toString().replace(/"/g, "");
+            iconl = icons.toString().replace(/"/g, "");
+
               var options = {
-                      body: bodys,
-                      icon: icons,
+                      body: bodyl,
+                      icon: iconl,
                       dir : "ltr"
                   };
-              var notification = new Notification(titles,options);
+              var notification = new Notification(titlel,options);
           }
           else if (Notification.permission !== 'denied') 
           {
@@ -685,7 +694,7 @@
                   var notification = new Notification(titles,options);
               }
               });
-          }   */
+          }   
           // End Notif //
 
           //alert(JSON.stringify(payload, null, 2));
@@ -734,6 +743,8 @@
                              $("#jumlah_notif").html("<span class='badge badge-pill badge-danger up'>"+jumlah_pesan+"</span>").show();
                              $("#new").html("<span class='badge badge-round badge-danger'>New "+jumlah_pesan+"</span>").show();
                            }
+                           
+                           
                            
                            var text="";
                            $.each(de.data.data, function(index, element){
