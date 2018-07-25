@@ -133,10 +133,10 @@
                 </div>
                 <div class="dropdown-menu-footer">
                   <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
-                    <i class="icon md-settings" aria-hidden="true"></i>
+                    
                   </a>
                   <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-                    All notifications
+                    
                   </a>
                 </div>
               </div>
@@ -737,7 +737,7 @@
                              if(element.status==0)
                              {
                               var tanggal = tanggal_keterangan(element.tgl);
-                              text += '<a class="list-group-item dropdown-item" href="/notif/'+element.id+'" role="menuitem">';
+                              text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
                               text += '<div class="media">';
                               text += '<div class="pr-10">';
                               text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
@@ -748,6 +748,21 @@
                               text += '</div>';
                               text += '</div>';
                               text += '</a>';
+                             }
+                             else
+                             {
+                                var tanggal = tanggal_keterangan(element.tgl);
+                                text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                                text += '<div class="media">';
+                                text += '<div class="pr-10">';
+                                text += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
+                                text += '</div>';
+                                text += '<div class="media-body">';
+                                text += '<h6 class="media-heading">'+element.isi+'</h6>';
+                                text += '<time class="media-meta">'+tanggal+'</time>';
+                                text += '</div>';
+                                text += '</div>';
+                                text += '</a>';
                              }
                            });
                           $("#notif_content").html(text).show();

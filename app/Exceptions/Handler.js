@@ -20,7 +20,7 @@ class ExceptionHandler {
    */
   async handle (error, { view, response }) {
     if (error.status == 404) {
-      response.status(error.status).send(view.render('frontend/404'))
+      response.status(error.status).send(view.render('404'))
     } else {
       response.status(error.status).send(error.message)
     }
