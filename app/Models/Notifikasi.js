@@ -20,7 +20,7 @@ class Notifikasi extends Model {
     }
 
     static get hidden () {
-        return ['nip_pengirim']
+        return ['nip_pengirim', 'url']
     }
 
     pengirim_ () {
