@@ -61,8 +61,8 @@ class MasterPegawaiController {
             const surat = await SuratMasuk.find(params.id_surat_masuk)
             if (surat) {
                 if (user.nip == surat.nip_plt) {
-                    const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
-                    const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
+                    const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '10000')
+                    const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '90000')
 
                     const data = await MasterPegawai.query()
                                                     .whereBetween('kode_lokasi', [startLokasi, endLokasi])
