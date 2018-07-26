@@ -1,844 +1,810 @@
+
+
 <!DOCTYPE html>
 <html class="no-js css-menubar" lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <meta name="description" content="bootstrap material admin template">
-    <meta name="author" content="">
-    
-    <title>e-Office</title>
-    <!-- Firebase -->
-    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    <link rel="manifest" href="/firebase/manifest.json">
-    <!-- End Firebase -->
-    <link rel="apple-touch-icon" href="/material/base/assets/images/apple-touch-icon.png">
-    <link rel="shortcut icon" href="/material/base/assets/images/favicon.ico">
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="/material/global/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/material/global/css/bootstrap-extend.min.css">
-    <link rel="stylesheet" href="/material/base/assets/css/site.min.css">
-    <link rel="stylesheet" href="/material/global/fonts/font-awesome/font-awesome.css">
-    <link rel="stylesheet" href="/material/global/vendor/bootstrap-sweetalert/sweetalert.css">
-    <link rel="stylesheet" href="/material/global/vendor/summernote/summernote.css">
-    
-    <!-- Plugins -->
-    <link rel="stylesheet" href="/material/global/vendor/animsition/animsition.css">
-    <link rel="stylesheet" href="/material/global/vendor/asscrollable/asScrollable.css">
-    <link rel="stylesheet" href="/material/global/vendor/switchery/switchery.css">
-    <link rel="stylesheet" href="/material/global/vendor/intro-js/introjs.css">
-    <link rel="stylesheet" href="/material/global/vendor/slidepanel/slidePanel.css">
-    <link rel="stylesheet" href="/material/global/vendor/flag-icon-css/flag-icon.css">
-    <link rel="stylesheet" href="/material/global/vendor/waves/waves.css">
-    <link rel="stylesheet" href="/material/global/vendor/asscrollable/asScrollable.css">
-   
-    <link rel="stylesheet" href="/material/global/vendor/select2/select2.css">
-    <link rel="stylesheet" href="/material/global/vendor/bootstrap-select/bootstrap-select.css">
-    <link rel="stylesheet" href="/material/global/vendor/multi-select/multi-select.css">
-
-    <!-- Fonts -->
-    <link rel="stylesheet" href="/material/global/fonts/material-design/material-design.min.css">
-    <link rel="stylesheet" href="/material/global/fonts/brand-icons/brand-icons.min.css">
-    <link rel='stylesheet' href='/material/font.css'>
-    <script src="/material/moment-with-locales.js"></script>
-
-    <link rel="stylesheet" href="/material/global/vendor/toastr/toastr.css">
-    <link rel="stylesheet" href="/material/base/assets/examples/css/advanced/toastr.css">
-    
-    <!--[if lt IE 9]>
-    <script src="material/global/vendor/html5shiv/html5shiv.min.js"></script>
-    <![endif]-->
-    
-    <!--[if lt IE 10]>
-    <script src="material/global/vendor/media-match/media.match.min.js"></script>
-    <script src="material/global/vendor/respond/respond.min.js"></script>
-    <![endif]-->
-    
-    <!-- Scripts -->
-    <script src="/material/global/vendor/breakpoints/breakpoints.js"></script>
-    <script>
-      Breakpoints();
-    </script>
-
-    <script src="/material/global/vendor/jquery/jquery.js"></script>
-
-    <link rel="stylesheet" href="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.css">
-    <link rel="stylesheet" href="/material/global/vendor/jstree/jstree.min.css">
-
-    <link rel="stylesheet" href="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css">
-
-  </head>
-  <body class="animsition">
-  <input type="hidden" name='level' class='level' id='level_main'>
-    <!--[if lt IE 8]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
-    
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
-          data-toggle="menubar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="hamburger-bar"></span>
-        </button>
-        <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse"
-          data-toggle="collapse">
-          <i class="icon md-more" aria-hidden="true"></i>
-        </button>
-        <div class="navbar-brand navbar-brand-center">
-          <img class="navbar-brand-logo" src="/material/base/assets/logo.png" title="Remark">
-          <span class="navbar-brand-text hidden-xs-down"> e-Office</span>
-        </div>
-       
-      </div>
-    
-      <div class="navbar-container container-fluid">
-        <!-- Navbar Collapse -->
-        <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
-          <!-- Navbar Toolbar -->
-          
-          <ul class="nav navbar-toolbar">
-            <li class="nav-item hidden-float" id="toggleMenubar">
-             <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
-                data-animation="scale-up" role="button">
-                <img src='/material/loader.gif' style='width:35px' id='loader' style='display:none' >
-                  <i></i>
-                </span>
-              </a>
-            </li>
-          </ul>
-          <!-- End Navbar Toolbar -->
-    
-          <!-- Navbar Toolbar Right -->
-          <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
-
-           <li class="nav-item dropdown">
-              <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
-                aria-expanded="false" data-animation="scale-up" role="button">
-                <i class="icon md-notifications" aria-hidden="true"></i>
-                <span id="jumlah_notif"></span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
-                <div class="dropdown-menu-header">
-                  <h5>NOTIFICATIONS</h5>
-                  <span id='new'></span>
-                </div>
-    
-                <div class="list-group">
-                  <div data-role="container">
-                    <div data-role="content" id="notif_content">
-
-                    </div>
-                  </div>
-                </div>
-                <div class="dropdown-menu-footer">
-                  <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
-                    
-                  </a>
-                  <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-                    
-                  </a>
-                </div>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
-                data-animation="scale-up" role="button">
-                <span class="avatar avatar-online">
-                  <span class='foto'></span>
-                  <i></i>
-                </span>
-              </a>
-              <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" href="/profile" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
-                <a class="dropdown-item" href="/change-password" role="menuitem"><i class="icon md-key" aria-hidden="true"></i> Change Password</a>
-                <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
-              </div>
-            </li>
-            
-          </ul>
-          <!-- End Navbar Toolbar Right -->
-        </div>
-        <!-- End Navbar Collapse -->
-    
-        <!-- Site Navbar Seach -->
-        <div class="collapse navbar-search-overlap" id="site-navbar-search">
-          <form role="search">
-            <div class="form-group">
-              <div class="input-search">
-                <i class="input-search-icon md-search" aria-hidden="true"></i>
-                <input type="text" class="form-control" name="site-search" placeholder="Search...">
-                <button type="button" class="input-search-close icon md-close" data-target="#site-navbar-search"
-                  data-toggle="collapse" aria-label="Close"></button>
-              </div>
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+      <meta name="description" content="bootstrap material admin template">
+      <meta name="author" content="">
+      <title>e-Office</title>
+      <!-- Firebase -->
+      <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+      <link rel="manifest" href="/firebase/manifest.json">
+      <!-- End Firebase -->
+      <link rel="apple-touch-icon" href="/material/base/assets/images/apple-touch-icon.png">
+      <link rel="shortcut icon" href="/material/base/assets/images/favicon.ico">
+      <!-- Stylesheets -->
+      <link rel="stylesheet" href="/material/global/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/material/global/css/bootstrap-extend.min.css">
+      <link rel="stylesheet" href="/material/base/assets/css/site.min.css">
+      <link rel="stylesheet" href="/material/global/fonts/font-awesome/font-awesome.css">
+      <link rel="stylesheet" href="/material/global/vendor/bootstrap-sweetalert/sweetalert.css">
+      <link rel="stylesheet" href="/material/global/vendor/summernote/summernote.css">
+      <!-- Plugins -->
+      <link rel="stylesheet" href="/material/global/vendor/animsition/animsition.css">
+      <link rel="stylesheet" href="/material/global/vendor/asscrollable/asScrollable.css">
+      <link rel="stylesheet" href="/material/global/vendor/switchery/switchery.css">
+      <link rel="stylesheet" href="/material/global/vendor/intro-js/introjs.css">
+      <link rel="stylesheet" href="/material/global/vendor/slidepanel/slidePanel.css">
+      <link rel="stylesheet" href="/material/global/vendor/flag-icon-css/flag-icon.css">
+      <link rel="stylesheet" href="/material/global/vendor/waves/waves.css">
+      <link rel="stylesheet" href="/material/global/vendor/asscrollable/asScrollable.css">
+      <link rel="stylesheet" href="/material/global/vendor/select2/select2.css">
+      <link rel="stylesheet" href="/material/global/vendor/bootstrap-select/bootstrap-select.css">
+      <link rel="stylesheet" href="/material/global/vendor/multi-select/multi-select.css">
+      <!-- Fonts -->
+      <link rel="stylesheet" href="/material/global/fonts/material-design/material-design.min.css">
+      <link rel="stylesheet" href="/material/global/fonts/brand-icons/brand-icons.min.css">
+      <link rel='stylesheet' href='/material/font.css'>
+      <script src="/material/moment-with-locales.js"></script>
+      <!--[if lt IE 9]>
+      <script src="material/global/vendor/html5shiv/html5shiv.min.js"></script>
+      <![endif]-->
+      <!--[if lt IE 10]>
+      <script src="material/global/vendor/media-match/media.match.min.js"></script>
+      <script src="material/global/vendor/respond/respond.min.js"></script>
+      <![endif]-->
+      <!-- Scripts -->
+      <script src="/material/global/vendor/breakpoints/breakpoints.js"></script>
+      <script>
+         Breakpoints();
+      </script>
+      <script src="/material/global/vendor/jquery/jquery.js"></script>
+      <link rel="stylesheet" href="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.css">
+      <link rel="stylesheet" href="/material/global/vendor/jstree/jstree.min.css">
+      <link rel="stylesheet" href="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css">
+   </head>
+   <body class="animsition">
+      <input type="hidden" name='level' class='level' id='level_main'>
+      <!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+      <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
+         <div class="navbar-header">
+            <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided"
+               data-toggle="menubar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="hamburger-bar"></span>
+            </button>
+            <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse"
+               data-toggle="collapse">
+            <i class="icon md-more" aria-hidden="true"></i>
+            </button>
+            <div class="navbar-brand navbar-brand-center">
+               <img class="navbar-brand-logo" src="/material/base/assets/logo.png" title="Remark">
+               <span class="navbar-brand-text hidden-xs-down"> e-Office</span>
             </div>
-          </form>
-        </div>
-        <!-- End Site Navbar Seach -->
-      </div>
-    </nav>    
-
-    <!--Menu-->
-    <div class="site-menubar">
-      <div class="site-menubar-header">
-        <center>
-        <div class="cover overlay">
-          <img class="cover-image" src="/material/base/assets/examples/images/dashboard-header.jpg" alt="..." style='height:200px'>
-            <div class="overlay-panel vertical-align overlay-background">
-              <div class="vertical-align-middle">
-                <a class="avatar avatar-lg" href="javascript:void(0)">
-                  <img class="foto" alt=""  >
-                </a>
-                <div class="site-menubar-info">
-                  <h4 class="profile-user"><span class='nama_user'></span><br><span style='font-size:7.5pt' class='jabatan'></span></h4>
-                </div>
-              </div>
-          </div>
-        </div>
-        </center>
-      </div>
-      <div class="site-menubar-body">
-        <div>
-          <div>
-            <ul class="site-menu" data-plugin="menu">
-            <li class="site-menu-category">Dashboard</li>
-              <li class="site-menu-item">
-                <a class="animsition-link" href="/home">
+         </div>
+         <div class="navbar-container container-fluid">
+            <!-- Navbar Collapse -->
+            <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
+               <!-- Navbar Toolbar -->
+               <ul class="nav navbar-toolbar">
+                  <li class="nav-item hidden-float" id="toggleMenubar">
+                     <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
+                        data-animation="scale-up" role="button">
+                     <img src='/material/loader.gif' style='width:35px' id='loader' style='display:none' >
+                     <i></i>
+                     </span>
+                     </a>
+                  </li>
+               </ul>
+               <!-- End Navbar Toolbar -->
+               <!-- Navbar Toolbar Right -->
+               <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+                  <li class="nav-item dropdown">
+                     <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
+                        aria-expanded="false" data-animation="scale-up" role="button">
+                     <i class="icon md-notifications" aria-hidden="true"></i>
+                     <span id="jumlah_notif"></span>
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+                        <div class="dropdown-menu-header">
+                           <h5>NOTIFICATIONS</h5>
+                           <span id='new'></span>
+                        </div>
+                        <div class="list-group">
+                           <div data-role="container">
+                              <div data-role="content" id="notif_content">
+                              </div>
+                           </div>
+                        </div>
+                        <div class="dropdown-menu-footer">
+                           <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
+                           </a>
+                           <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
+                           </a>
+                        </div>
+                     </div>
+                  </li>
+                  <li class="nav-item dropdown">
+                     <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
+                        data-animation="scale-up" role="button">
+                     <span class="avatar avatar-online">
+                     <span class='foto'></span>
+                     <i></i>
+                     </span>
+                     </a>
+                     <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" href="/profile" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
+                        <a class="dropdown-item" href="/change-password" role="menuitem"><i class="icon md-key" aria-hidden="true"></i> Change Password</a>
+                        <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+                     </div>
+                  </li>
+               </ul>
+               <!-- End Navbar Toolbar Right -->
+            </div>
+            <!-- End Navbar Collapse -->
+            <!-- Site Navbar Seach -->
+            <div class="collapse navbar-search-overlap" id="site-navbar-search">
+               <form role="search">
+                  <div class="form-group">
+                     <div class="input-search">
+                        <i class="input-search-icon md-search" aria-hidden="true"></i>
+                        <input type="text" class="form-control" name="site-search" placeholder="Search...">
+                        <button type="button" class="input-search-close icon md-close" data-target="#site-navbar-search"
+                           data-toggle="collapse" aria-label="Close"></button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <!-- End Site Navbar Seach -->
+         </div>
+      </nav>
+      <!--Menu-->
+      <div class="site-menubar">
+         <div class="site-menubar-body">
+            <div>
+               <div>
+                  <ul class="site-menu" data-plugin="menu">
+                     <li class="site-menu-category">Dashboard</li>
+                     <li class="site-menu-item">
+                        <a class="animsition-link" href="/home">
                         <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
                         <span class="site-menu-title">Dashboard</span>
-                    </a>
-              </li>
-              <li class="site-menu-category konsol">Administrator</li>
-              <li class="site-menu-item konsol">
-                <a class="animsition-link" href="/user">
+                        </a>
+                     </li>
+                     <li class="site-menu-category konsol">Administrator</li>
+                     <li class="site-menu-item konsol">
+                        <a class="animsition-link" href="/user">
                         <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
                         <span class="site-menu-title">Master User</span>
-                    </a>
-              </li>
-              <li class="site-menu-item konsol">
-                  <a class="animsition-link" href="/kantor">
-                          <i class="site-menu-icon md-account-box-o" aria-hidden="true"></i>
-                          <span class="site-menu-title">Master Kantor</span>
-                      </a>
-              </li>
-              <li class="site-menu-category surat">Surat</li>
-              <li class="site-menu-item" id="surat_masuk" style="display: none">
-                <a class="animsition-link" href="/surat-masuk">
+                        </a>
+                     </li>
+                     <li class="site-menu-item konsol">
+                        <a class="animsition-link" href="/kantor">
+                        <i class="site-menu-icon md-account-box-o" aria-hidden="true"></i>
+                        <span class="site-menu-title">Master Kantor</span>
+                        </a>
+                     </li>
+                     <li class="site-menu-category surat">Surat Masuk</li>
+                     <li class="site-menu-item" id="surat_masuk" >
+                        <a class="animsition-link" href="/surat-masuk">
                         <i class="site-menu-icon md-email-open" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Masuk</span>
-                    </a>
-              </li>
-              <li class="site-menu-item" id="surat-keluar" style="display: none">
-                <a class="animsition-link" href="#">
+                        </a>
+                     </li>
+                     <li class="site-menu-item" id="disposisi_keluar">
+                        <a class="animsition-link" href="/surat-tembusan">
+                        <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
+                        <span class="site-menu-title">Tembusan</span>
+                        </a>
+                     </li>
+                     <li class="site-menu-category surat">Disposisi</li>
+                     <li class="site-menu-item" id="disposisi">
+                        <a class="animsition-link" href="/disposisi-masuk">
+                        <i class="site-menu-icon md-inbox" aria-hidden="true"></i>
+                        <span class="site-menu-title">Disposisi Masuk</span>
+                        </a>
+                     </li>
+                     <li class="site-menu-item" id="disposisi_keluar">
+                        <a class="animsition-link" href="/disposisi-keluar">
+                        <i class="site-menu-icon md-mail-send" aria-hidden="true"></i>
+                        <span class="site-menu-title">Disposisi Keluar</span>
+                        </a>
+                     </li>
+                     <li class="site-menu-category surat" id="surat-keluar" >Surat Keluar</li>
+                     <li class="site-menu-item" id="surat-keluar" >
+                        <a class="animsition-link" href="#">
                         <i class="site-menu-icon md-email" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Keluar</span>
-                    </a>
-              </li>
-              <li class="site-menu-item" id="disposisi" style="display: none">
-                  <a class="animsition-link" href="/disposisi-masuk">
-                          <i class="site-menu-icon md-inbox" aria-hidden="true"></i>
-                          <span class="site-menu-title">Disposisi Masuk</span>
-                      </a>
-                </li>
-               <li class="site-menu-item" id="disposisi_keluar" style="display: none">
-                  <a class="animsition-link" href="/disposisi-keluar">
-                          <i class="site-menu-icon md-mail-send" aria-hidden="true"></i>
-                          <span class="site-menu-title">Disposisi Keluar</span>
-                      </a>
-                </li>
-                <li class="site-menu-item" id="disposisi_keluar">
-                  <a class="animsition-link" href="/surat-tembusan">
-                          <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
-                          <span class="site-menu-title">Tembusan</span>
-                      </a>
-                </li>
-              
-              
-            </ul>
-            <div class="site-menubar-section">
-             
-            </div>      </div>
-        </div>
+                        </a>
+                     </li>
+                     <li class="site-menu-item" id="surat-keluar" >
+                        <a class="animsition-link" href="#">
+                        <i class="site-menu-icon md-email" aria-hidden="true"></i>
+                        <span class="site-menu-title">Konsep Surat</span>
+                        </a>
+                     </li>
+                     <li class="site-menu-category surat" id="surat-keluar" >Agenda</li>
+                     <li class="site-menu-item" id="surat-keluar" >
+                        <a class="animsition-link" href="#">
+                        <i class="site-menu-icon md-email" aria-hidden="true"></i>
+                        <span class="site-menu-title">Agenda Masuk</span>
+                        </a>
+                     </li>
+                     <li class="site-menu-item" id="surat-keluar" >
+                        <a class="animsition-link" href="#">
+                        <i class="site-menu-icon md-email" aria-hidden="true"></i>
+                        <span class="site-menu-title">Agenda Keluar</span>
+                        </a>
+                     </li>
+                  </ul>
+                  <div class="site-menubar-section">
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
-      </div>    <div class="site-gridmenu">
-      <div>
-        <div>
-          
-        </div>
+       <div class="site-menubar-footer">
+        <a href="/profile" class="fold-show" data-placement="top" data-toggle="tooltip" data-original-title="Profile">
+          <span class="icon md-account" aria-hidden="true"></span>
+        </a>
+        <a href="/change-password" data-placement="top" data-toggle="tooltip" data-original-title="Change Password">
+          <span class="icon md-key" aria-hidden="true"></span>
+        </a>
+        <a href="/logout" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
+          <span class="icon md-power" aria-hidden="true"></span>
+        </a>
       </div>
-    </div>
-    <!--End Menu-->
-
-    <!-- Page -->
-    <div style="display:none;">
-    <input id="token_firebases" type="text">
-      <div id="token_div" style="display: none;">
-          <h4>Delete Token</h4>
-          <p id="token" style="word-break: break-all;"></p>
-          <button class="btn btn-danger" onclick="deleteToken()">Delete Token</button>
+      <div class="site-gridmenu">
+         <div>
+            <div>
+            </div>
+         </div>
       </div>
-      <div id="permission_div" style="display: none;">
-          <h4>Get Token</h4>
-          <p id="token"></p>
-          <button class="btn btn-danger" onclick="requestPermission()">Request Token</button>
+      <!--End Menu-->
+      <!-- Page -->
+      <div style="display:none;">
+         <input id="token_firebases" type="text">
+         <div id="token_div" style="display: none;">
+            <h4>Delete Token</h4>
+            <p id="token" style="word-break: break-all;"></p>
+            <button class="btn btn-danger" onclick="deleteToken()">Delete Token</button>
+         </div>
+         <div id="permission_div" style="display: none;">
+            <h4>Get Token</h4>
+            <p id="token"></p>
+            <button class="btn btn-danger" onclick="requestPermission()">Request Token</button>
+         </div>
+         <div id="messages"></div>
       </div>
-      <div id="messages"></div>
-    </div>
-    <div class="page" >
- 
-      <!-- Page Content -->
-      @!section('content')
-      <!-- End Page Content -->
-    </div>
-    <!-- End Page -->
-
-     <!-- Footer -->
-    <footer class="site-footer">
-      <div class="site-footer-legal"></div>
-      <div class="site-footer-right">
-        © 2018 e-Office
+      <div class="page" >
+         <!-- Page Content -->
+         @!section('content')
+         <!-- End Page Content -->
       </div>
-    </footer>
-
-    <input type="hidden" id="nip_login" id="nip_login">
-    <script src="/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
-    
-    <script src="/material/global/vendor/popper-js/umd/popper.min.js"></script>
-    <script src="/material/global/vendor/bootstrap/bootstrap.js"></script>
-    <script src="/material/global/vendor/animsition/animsition.js"></script>
-    <script src="/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
-    <script src="/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
-    <script src="/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
-    <script src="/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
-    <script src="/material/global/vendor/waves/waves.js"></script>
-    
-    <!-- Plugins -->
-    <script src="/material/global/vendor/switchery/switchery.js"></script>
-    <script src="/material/global/vendor/intro-js/intro.js"></script>
-    <script src="/material/global/vendor/screenfull/screenfull.js"></script>
-    <script src="/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
-        <script src="/material/global/vendor/asprogress/jquery-asProgress.js"></script>
-        <script src="/material/global/vendor/draggabilly/draggabilly.pkgd.js"></script>
-        <script src="/material/global/vendor/raty/jquery.raty.js"></script>
-    
-    <!-- Scripts -->
-    <script src="/material/global/js/Component.js"></script>
-    <script src="/material/global/js/Plugin.js"></script>
-    <script src="/material/global/js/Base.js"></script>
-    <script src="/material/global/js/Config.js"></script>
-    
-    <script src="/material/base/assets/js/Section/Menubar.js"></script>
-    <script src="/material/base/assets/js/Section/GridMenu.js"></script>
-    <script src="/material/base/assets/js/Section/Sidebar.js"></script>
-    <script src="/material/base/assets/js/Section/PageAside.js"></script>
-    <script src="/material/base/assets/js/Plugin/menu.js"></script>
-    
-    <script src="/material/global/js/config/colors.js"></script>
-    <script src="/material/base/assets/js/config/tour.js"></script>
-    <script>Config.set('assets', '/material/base/assets');</script>
-    
-    <!-- Page -->
-    <script src="/material/base/assets/js/Site.js"></script>
-    <script src="/material/global/js/Plugin/asscrollable.js"></script>
-    <script src="/material/global/js/Plugin/slidepanel.js"></script>
-    <script src="/material/global/js/Plugin/switchery.js"></script>
-    <script src="/material/global/js/Plugin/responsive-tabs.js"></script>
-    <script src="/material/global/js/Plugin/tabs.js"></script>
-    <script src="/material/global/js/Plugin/asprogress.js"></script>
-    <script src="/material/global/js/Plugin/panel.js"></script>
-    <script src="/material/global/js/Plugin/asscrollable.js"></script>
-    <script src="/material/global/js/Plugin/raty.js"></script>
-
-    <script src="/material/base/assets/examples/js/uikit/panel-structure.js"></script>
-    
-    <script src="/material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
-    <script src="/material/global/js/Plugin/bootstrap-sweetalert.js"></script>
-    <script src="/material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
-    
-
-    <script src="/material/global/vendor/select2/select2.full.min.js"></script>
-    <script src="/material/global/js/Plugin/select2.js"></script>
-    <script src="/material/global/js/Plugin/multi-select.js"></script>
-
-    <script src="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.min.js"></script>
-    <script src="/material/global/vendor/jstree/jstree.min.js"></script>
-    <script src="/material/global/js/Plugin/bootstrap-treeview.js"></script>
-    <script src="/material/global/js/Plugin/jstree.js"></script>
-    <script src="/material/base/assets/examples/js/advanced/treeview.js"></script>
-
-    <script src="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-    <script src="/material/global/js/Plugin/bootstrap-datepicker.js"></script>
-
-    <script src="/material/global/vendor/summernote/summernote.min.js"></script>
-    <script src="/material/global/js/Plugin/summernote.js"></script>
-    <script src="/material/base/assets/examples/js/forms/editor-summernote.js"></script>
-    
-    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js"></script>
-        
-    <script src="/material/global/vendor/toastr/toastr.js"></script>
-     <script src="/material/global/js/Plugin/toastr.js"></script>
-
-
-<link rel="stylesheet" href="https://raw.github.com/daneden/animate.css/master/animate.css">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
-    <script>
-    //requestPermission()
-    //alert($("#token_firebases").val());
-    function cek_session()
-    {
-      $.ajax({ 
-          type: 'GET', 
-          url: '/cek_session', 
-          success: function (data) { 
-              if(data)
-              {
-                return false;
-              }
-              else
-              {
-                swal({title: "Session Time Out", text: "Silahkan login kembali.", type: "error"},
-                function(){ 
-                    window.location.href='/login';
-                }
-                );
-              }
-          }
-      });
-    }
-
-    function cek_token()
-    {
-        $.ajax({ 
-            type: 'GET', 
-            url: '/gettoken', 
-            success: function (data) { 
-                $.ajax({ 
-                    type: 'GET', 
-                    url: '/api/profile', 
-                    headers: {
-                        'Authorization': 'Bearer ' + data.token
-                    },
-                    success: function (data) { 
-                        //alert(data.data.level);
-                        $("#level_main").val(data.data.level);
-                        $("#nip_login").val(data.data.nip);
-                        //putlevel(data.data.level)
-                        $(".nama_user").html(data.data.nama_lengkap).show();
-                        if(data.data.foto)
-                        {
-                          $(".foto").html('<img src="'+data.data.foto+'" style="width:70px;height:auto">').show();
-                        }
-                        else
-                        {
-                          $(".foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
-                        }
-                        
-                       
-                        if(data.data.level==1)
-                        {
-                          var lv = "Admin";
-                        }
-                        else if(data.data.level==2)
-                        {
-                          var lv = "Pimpinan";
-                        }
-                        else if(data.data.level==3)
-                        {
-                          var lv = "Tata Usaha";
-                        }
-                        else if(data.data.level==4)
-                        {
-                          var lv = "Staff";
-                        }
-
-                        $(".jabatan").html(data.data.nama_jabatan).show();
-                        $(".jabatanm").html(data.data.nama_jabatan).show();
-
-                        if(data.data.level==1)
-                        {
-                          $(".konsol").show();
-                          $(".surat").hide();
-                        }
-                        else
-                        {
-                          $(".konsol").hide();
-                          $(".surat").show();
-                        }
-
-
-                        var akses = data.data.akses;
-                        var smu = "";
-                        if(akses)
-                        {
-                            var max = akses.split(",").length;
-                            var data_akses = akses.split(",");
-                            for (var index = 0; index < max; index++) 
-                            {
-                                if(data_akses[index]=="suratmasuk")
-                                {
-                                  $("#surat_masuk").show();
-                                }
-                                if(data_akses[index]=="suratkeluar")
-                                {
-                                  $("#surat_keluar").show();
-                                }
-                                if(data_akses[index]=="disposisi")
-                                {
-                                  $("#disposisi").show();
-                                  $("#disposisi_keluar").show();
-                                }
-                            }
-                        }
-                    }
-                });
-            },
-            error: function ()
-            {
-                return false;
-            }
-            });
-    }
-    tanggal_sekarang()
-    function tanggal_sekarang()
-       {           
-            var  tanggal_sekarang = new Date();
-            moment.locale('id'); 
-            var ff = moment(tanggal_sekarang).format("YYYY-MM-DD");
-            $(".datepicker").val(ff);
-       }
-
-      //NOTIF//
-       var config = {
-          apiKey: "AIzaSyD8Tdy0YFbhRp1KJxwrJKISEMl772pEE9g",
-          authDomain: "e-office-2018.firebaseapp.com",
-          databaseURL: "https://e-office-2018.firebaseio.com",
-          projectId: "e-office-2018",
-          storageBucket: "e-office-2018.appspot.com",
-          messagingSenderId: "1039512108885"
-        };
-
-        firebase.initializeApp(config); 
-        
-        const messaging = firebase.messaging();
-
-        const tokenDivId = 'token_div';
-        const permissionDivId = 'permission_div';
-
-        messaging.onTokenRefresh(function() {
-          messaging.getToken().then(function(refreshedToken) {
-            console.log('Token refreshed.');
-            setTokenSentToServer(false);
-            sendTokenToServer(refreshedToken);
-            resetUI();
-          }).catch(function(err) {
-            console.log('Unable to retrieve refreshed token ', err);
-            showToken('Unable to retrieve refreshed token ', err);
-          });
-        });
-
-        messaging.onMessage(function(payload) {
-          console.log('Message received. ', payload);
-          appendMessage(payload);
-        });
-
-        function resetUI() {
-          clearMessages();
-          showToken('loading...');
-          messaging.getToken().then(function(currentToken) {
-            
-
-            if (currentToken) {
-              sendTokenToServer(currentToken);
-              updateUIForPushEnabled(currentToken);
-              if(!$("#token_firebases").val())
-              {
-                  $.ajax({ 
-                    type: 'GET', 
-                    url: '/gettoken', 
-                    success: function (data) 
-                        { 
-                          $("#token_firebases").val(currentToken);
-                            $.ajax({ 
-                                type: 'PUT', 
-                                url: '/api/setFirebase', 
-                                data : 'firebase_device=Web&firebase_token='+currentToken,
-                                headers: {
-                                    'Authorization': 'Bearer ' + data.token
-                                },
-                                success: function (data) 
-                                { 
-                                    
-                                }
-                            });
-                        }
-                    });
-              }
-            } else {
-              console.log('No Instance ID token available. Request permission to generate one.');
-              updateUIForPushPermissionRequired();
-              setTokenSentToServer(false);
-            }
-          }).catch(function(err) {
-            console.log('An error occurred while retrieving token. ', err);
-            showToken('Error retrieving Instance ID token. ', err);
-            setTokenSentToServer(false);
-          });
-        }
-
-
-        function showToken(currentToken) {
-          var tokenElement = document.querySelector('#token');
-          tokenElement.textContent = currentToken;
-        }
-
-        function sendTokenToServer(currentToken) {
-          if (!isTokenSentToServer()) {
-            console.log('Sending token to server...');
-            setTokenSentToServer(true);
-          } else {
-            console.log('Token already sent to server so wont send it again unless it changes');
-          }
-
-        }
-
-        function isTokenSentToServer() {
-          return window.localStorage.getItem('sentToServer') === '1';
-        }
-
-        function setTokenSentToServer(sent) {
-          window.localStorage.setItem('sentToServer', sent ? '1' : '0');
-        }
-
-        function showHideDiv(divId, show) {
-          const div = document.querySelector('#' + divId);
-          if (show) {
-            div.style = 'display: visible';
-          } else {
-            div.style = 'display: none';
-          }
-        }
-
-        function requestPermission() {
-          $("#loader").fadeIn("slow");
-          console.log('Requesting permission...');
-          messaging.requestPermission().then(function() {
-            console.log('Notification permission granted.');
-            resetUI();
-          }).catch(function(err) {
-            console.log('Unable to get permission to notify.', err);
-          });
-          $("#loader").fadeOut("xslow");
-        }
-
-        function deleteToken() {
-          messaging.getToken().then(function(currentToken) {
-            messaging.deleteToken(currentToken).then(function() {
-              console.log('Token deleted.');
-              setTokenSentToServer(false);
-              resetUI();
-            }).catch(function(err) {
-              console.log('Unable to delete token. ', err);
-            });
-          }).catch(function(err) {
-            console.log('Error retrieving Instance ID token. ', err);
-            showToken('Error retrieving Instance ID token. ', err);
-          });
-
-        }
-        
-        function appendMessage(payload) {
-          const messagesElement = document.querySelector('#messages');
-          const dataHeaderELement = document.createElement('h5');
-          const dataElement = document.createElement('pre');
-          dataElement.style = 'overflow-x:hidden;';
-          dataHeaderELement.textContent = 'Received message:';
-
-          var titles = JSON.stringify(payload.notification.title);
-          var bodys = JSON.stringify(payload.notification.body);
-          
-          var id_notifikasi = JSON.stringify(payload.data.id);
-
-          // Notif //
-          getjumlahnotif();
-
-          if (!("Notification" in window)) 
-          {
-              alert("This browser does not support desktop notification");
-          }
-          else if (Notification.permission === "granted") 
-          {
-            var titlel = new String();
-            var bodyl = new String();
-            
-            var id_notifikasil = new String();
-
-            bodyl = bodys.toString().replace(/"/g, "");
-            titlel = titles.toString().replace(/"/g, "");
-           
-            id_notifikasil = id_notifikasi.toString().replace(/"/g, "");
-
-            toastr.options.onCloseClick = function() { console.log('close button clicked'); }
-            toastr.options = {
-              "closeButton": true,
-              "debug": false,
-              "newestOnTop": false,
-              "progressBar": false,
-              "positionClass": "toast-top-right",
-              "preventDuplicates": false,
-              "showDuration": "500",
-              "hideDuration": "1000",
-              "timeOut": "5000",
-              "extendedTimeOut": "1000",
-              "showEasing": "swing",
-              "hideEasing": "linear",
-              "showMethod": "fadeIn"
-            }
-            toastr.warning(bodyl, titlel,
-                {onclick: function() { window.location.href="/notifikasi/"+id_notifikasil; }});
-            /*var titlel = new String();
-            var bodyl = new String();
-            var iconl = new String();
-
-            bodyl = bodys.toString().replace(/"/g, "");
-            titlel = titles.toString().replace(/"/g, "");
-            iconl = icons.toString().replace(/"/g, "");
-
-              var options = {
-                      body: bodyl,
-                      icon: iconl,
-                      dir : "ltr"
-                  };
-              var notification = new Notification(titlel,options);*/
-              //alert("notif tab");
-          }
-          else if (Notification.permission !== 'denied') 
-          {
-              Notification.requestPermission(function (permission) {
-              if (!('permission' in Notification)) 
-              {
-                  Notification.permission = permission;
-              }
-              if (permission === "granted") {
-                  var options = {
-                      body: bodys,
-                      icon: "",
-                      dir : "ltr"
-                  };
-                  var notification = new Notification(titles,options);
-              }
-              });
-          }   
-          // End Notif //
-
-          //alert(JSON.stringify(payload, null, 2));
-          dataElement.textContent = JSON.stringify(payload, null, 2);
-          messagesElement.appendChild(dataHeaderELement);
-          messagesElement.appendChild(dataElement);
-        }
-
-        function clearMessages() {
-          const messagesElement = document.querySelector('#messages');
-          while (messagesElement.hasChildNodes()) {
-            messagesElement.removeChild(messagesElement.lastChild);
-          }
-        }
-
-        function updateUIForPushEnabled(currentToken) {
-          showHideDiv(tokenDivId, true);
-          showHideDiv(permissionDivId, false);
-          showToken(currentToken);
-        }
-
-        function updateUIForPushPermissionRequired() {
-          showHideDiv(tokenDivId, false);
-          showHideDiv(permissionDivId, true);
-        }
-
-        getjumlahnotif()
-        function getjumlahnotif()
-        {
-          $.ajax({ 
-              type: 'GET', 
-              url: '/gettoken', 
-              success: function (data) 
-              { 
-                  $.ajax({ 
-                      type: 'GET', 
-                      url: '/api/notifikasi?page=1&limit=9999', 
-                      headers: {
-                          'Authorization': 'Bearer ' + data.token
-                      },
-                      success: function (de) 
-                      { 
-                           var jumlah_pesan = de.message;
-                           if(jumlah_pesan>0)
-                           {
-                             $("#jumlah_notif").html("<span class='badge badge-pill badge-danger up'>"+jumlah_pesan+"</span>").show();
-                             $("#new").html("<span class='badge badge-round badge-danger'>New "+jumlah_pesan+"</span>").show();
-                           }
-                           
-                           
-                           
-                           var text="";
-                           $.each(de.data.data, function(index, element){
-                             if(element.status==0)
+      <!-- End Page -->
+      <!-- Footer -->
+      <footer class="site-footer">
+         <div class="site-footer-legal"></div>
+         <div class="site-footer-right">
+            © 2018 e-Office
+         </div>
+      </footer>
+      <input type="hidden" id="nip_login" id="nip_login">
+      <script src="/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+      <script src="/material/global/vendor/popper-js/umd/popper.min.js"></script>
+      <script src="/material/global/vendor/bootstrap/bootstrap.js"></script>
+      <script src="/material/global/vendor/animsition/animsition.js"></script>
+      <script src="/material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+      <script src="/material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+      <script src="/material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+      <script src="/material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+      <script src="/material/global/vendor/waves/waves.js"></script>
+      <!-- Plugins -->
+      <script src="/material/global/vendor/switchery/switchery.js"></script>
+      <script src="/material/global/vendor/intro-js/intro.js"></script>
+      <script src="/material/global/vendor/screenfull/screenfull.js"></script>
+      <script src="/material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+      <script src="/material/global/vendor/asprogress/jquery-asProgress.js"></script>
+      <script src="/material/global/vendor/draggabilly/draggabilly.pkgd.js"></script>
+      <script src="/material/global/vendor/raty/jquery.raty.js"></script>
+      <!-- Scripts -->
+      <script src="/material/global/js/Component.js"></script>
+      <script src="/material/global/js/Plugin.js"></script>
+      <script src="/material/global/js/Base.js"></script>
+      <script src="/material/global/js/Config.js"></script>
+      <script src="/material/base/assets/js/Section/Menubar.js"></script>
+      <script src="/material/base/assets/js/Section/GridMenu.js"></script>
+      <script src="/material/base/assets/js/Section/Sidebar.js"></script>
+      <script src="/material/base/assets/js/Section/PageAside.js"></script>
+      <script src="/material/base/assets/js/Plugin/menu.js"></script>
+      <script src="/material/global/js/config/colors.js"></script>
+      <script src="/material/base/assets/js/config/tour.js"></script>
+      <script>Config.set('assets', '/material/base/assets');</script>
+      <!-- Page -->
+      <script src="/material/base/assets/js/Site.js"></script>
+      <script src="/material/global/js/Plugin/asscrollable.js"></script>
+      <script src="/material/global/js/Plugin/slidepanel.js"></script>
+      <script src="/material/global/js/Plugin/switchery.js"></script>
+      <script src="/material/global/js/Plugin/responsive-tabs.js"></script>
+      <script src="/material/global/js/Plugin/tabs.js"></script>
+      <script src="/material/global/js/Plugin/asprogress.js"></script>
+      <script src="/material/global/js/Plugin/panel.js"></script>
+      <script src="/material/global/js/Plugin/asscrollable.js"></script>
+      <script src="/material/global/js/Plugin/raty.js"></script>
+      <script src="/material/base/assets/examples/js/uikit/panel-structure.js"></script>
+      <script src="/material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
+      <script src="/material/global/js/Plugin/bootstrap-sweetalert.js"></script>
+      <script src="/material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
+      <script src="/material/global/vendor/select2/select2.full.min.js"></script>
+      <script src="/material/global/js/Plugin/select2.js"></script>
+      <script src="/material/global/js/Plugin/multi-select.js"></script>
+      <script src="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+      <script src="/material/global/vendor/jstree/jstree.min.js"></script>
+      <script src="/material/global/js/Plugin/bootstrap-treeview.js"></script>
+      <script src="/material/global/js/Plugin/jstree.js"></script>
+      <script src="/material/base/assets/examples/js/advanced/treeview.js"></script>
+      <script src="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+      <script src="/material/global/js/Plugin/bootstrap-datepicker.js"></script>
+      <script src="/material/global/vendor/summernote/summernote.min.js"></script>
+      <script src="/material/global/js/Plugin/summernote.js"></script>
+      <script src="/material/base/assets/examples/js/forms/editor-summernote.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js"></script>
+      <script src="/material/global/vendor/toastr/toastr.js"></script>
+      <script src="/material/global/js/Plugin/toastr.js"></script>
+      <link rel="stylesheet" href="/material/animate.css">
+      <link rel="stylesheet" href="/material/toastr.css">
+      <script>
+         //requestPermission()
+         
+         function cek_session()
+         {
+           $.ajax({ 
+               type: 'GET', 
+               url: '/cek_session', 
+               success: function (data) { 
+                   if(data)
+                   {
+                     return false;
+                   }
+                   else
+                   {
+                     swal({title: "Session Time Out", text: "Silahkan login kembali.", type: "error"},
+                     function(){ 
+                         window.location.href='/login';
+                     }
+                     );
+                   }
+               }
+           });
+         }
+         
+         function cek_token()
+         {
+             $.ajax({ 
+                 type: 'GET', 
+                 url: '/gettoken', 
+                 success: function (data) { 
+                     $.ajax({ 
+                         type: 'GET', 
+                         url: '/api/profile', 
+                         headers: {
+                             'Authorization': 'Bearer ' + data.token
+                         },
+                         success: function (data) { 
+                             //alert(data.data.level);
+                             $("#level_main").val(data.data.level);
+                             $("#nip_login").val(data.data.nip);
+                             //putlevel(data.data.level)
+                             $(".nama_user").html(data.data.nama_lengkap).show();
+                             if(data.data.foto)
                              {
-                              var tanggal = tanggal_keterangan(element.tgl);
-                              text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
-                              text += '<div class="media">';
-                              text += '<div class="pr-10">';
-                              text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
-                              text += '</div>';
-                              text += '<div class="media-body">';
-                              text += '<h6 class="media-heading">'+element.isi+'</h6>';
-                              text += '<time class="media-meta">'+tanggal+'</time>';
-                              text += '</div>';
-                              text += '</div>';
-                              text += '</a>';
+                               $(".foto").html('<img src="'+data.data.foto+'" style="width:70px;height:auto">').show();
                              }
                              else
                              {
-                                var tanggal = tanggal_keterangan(element.tgl);
-                                text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
-                                text += '<div class="media">';
-                                text += '<div class="pr-10">';
-                                text += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
-                                text += '</div>';
-                                text += '<div class="media-body">';
-                                text += '<h6 class="media-heading">'+element.isi+'</h6>';
-                                text += '<time class="media-meta">'+tanggal+'</time>';
-                                text += '</div>';
-                                text += '</div>';
-                                text += '</a>';
+                               $(".foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
                              }
-                           });
-                          $("#notif_content").html(text).show();
-                           
-                      }
-                  });
-              }
-          });
-        }
-        function tanggal_keterangan(tanggal)
-        {           
-              moment.locale('id'); 
-              return moment(tanggal).calendar();  
-        }
-        //resetUI();
-        //END NOTIF//
-  </script>
-  <script>
-      (function(document, window, $){
-        'use strict';
-    
-        var Site = window.Site;
-        $(document).ready(function(){
-          Site.run();
-        });
-      })(document, window, jQuery);
-    </script>
-  </body>
+                             
+                            
+                             if(data.data.level==1)
+                             {
+                               var lv = "Admin";
+                             }
+                             else if(data.data.level==2)
+                             {
+                               var lv = "Pimpinan";
+                             }
+                             else if(data.data.level==3)
+                             {
+                               var lv = "Tata Usaha";
+                             }
+                             else if(data.data.level==4)
+                             {
+                               var lv = "Staff";
+                             }
+         
+                             $(".jabatan").html(data.data.nama_jabatan).show();
+                             $(".jabatanm").html(data.data.nama_jabatan).show();
+         
+                             if(data.data.level==1)
+                             {
+                               $(".konsol").show();
+                               $(".surat").hide();
+                             }
+                             else
+                             {
+                               $(".konsol").hide();
+                               $(".surat").show();
+                             }
+         
+         
+                             var akses = data.data.akses;
+                             var smu = "";
+                             if(akses)
+                             {
+                                 var max = akses.split(",").length;
+                                 var data_akses = akses.split(",");
+                                 for (var index = 0; index < max; index++) 
+                                 {
+                                     /*if(data_akses[index]=="suratmasuk")
+                                     {
+                                       $("#surat_masuk").show();
+                                     }
+                                     if(data_akses[index]=="suratkeluar")
+                                     {
+                                       $("#surat_keluar").show();
+                                     }
+                                     if(data_akses[index]=="disposisi")
+                                     {
+                                       $("#disposisi").show();
+                                       $("#disposisi_keluar").show();
+                                     }*/
+                                 }
+                             }
+                         }
+                     });
+                 },
+                 error: function ()
+                 {
+                     return false;
+                 }
+                 });
+         }
+         tanggal_sekarang()
+         function tanggal_sekarang()
+            {           
+                 var  tanggal_sekarang = new Date();
+                 moment.locale('id'); 
+                 var ff = moment(tanggal_sekarang).format("YYYY-MM-DD");
+                 $(".datepicker").val(ff);
+            }
+         
+           //NOTIF//
+            var config = {
+               apiKey: "AIzaSyD8Tdy0YFbhRp1KJxwrJKISEMl772pEE9g",
+               authDomain: "e-office-2018.firebaseapp.com",
+               databaseURL: "https://e-office-2018.firebaseio.com",
+               projectId: "e-office-2018",
+               storageBucket: "e-office-2018.appspot.com",
+               messagingSenderId: "1039512108885"
+             };
+         
+             firebase.initializeApp(config); 
+             
+             const messaging = firebase.messaging();
+         
+             const tokenDivId = 'token_div';
+             const permissionDivId = 'permission_div';
+         
+             messaging.onTokenRefresh(function() {
+               messaging.getToken().then(function(refreshedToken) {
+                 console.log('Token refreshed.');
+                 setTokenSentToServer(false);
+                 sendTokenToServer(refreshedToken);
+                 resetUI();
+               }).catch(function(err) {
+                 console.log('Unable to retrieve refreshed token ', err);
+                 showToken('Unable to retrieve refreshed token ', err);
+               });
+             });
+         
+             messaging.onMessage(function(payload) {
+               console.log('Message received. ', payload);
+               appendMessage(payload);
+             });
+         
+             function resetUI() {
+               clearMessages();
+               showToken('loading...');
+               messaging.getToken().then(function(currentToken) {
+                 
+         
+                 if (currentToken) {
+                   sendTokenToServer(currentToken);
+                   updateUIForPushEnabled(currentToken);
+                   if(!$("#token_firebases").val())
+                   {
+                       $.ajax({ 
+                         type: 'GET', 
+                         url: '/gettoken', 
+                         success: function (data) 
+                             { 
+                               $("#token_firebases").val(currentToken);
+                                 $.ajax({ 
+                                     type: 'PUT', 
+                                     url: '/api/setFirebase', 
+                                     data : 'firebase_device=Web&firebase_token='+currentToken,
+                                     headers: {
+                                         'Authorization': 'Bearer ' + data.token
+                                     },
+                                     success: function (data) 
+                                     { 
+                                         
+                                     }
+                                 });
+                             }
+                         });
+                   }
+                 } else {
+                   console.log('No Instance ID token available. Request permission to generate one.');
+                   updateUIForPushPermissionRequired();
+                   setTokenSentToServer(false);
+                 }
+               }).catch(function(err) {
+                 console.log('An error occurred while retrieving token. ', err);
+                 showToken('Error retrieving Instance ID token. ', err);
+                 setTokenSentToServer(false);
+               });
+             }
+         
+         
+             function showToken(currentToken) {
+               var tokenElement = document.querySelector('#token');
+               tokenElement.textContent = currentToken;
+             }
+         
+             function sendTokenToServer(currentToken) {
+               if (!isTokenSentToServer()) {
+                 console.log('Sending token to server...');
+                 setTokenSentToServer(true);
+               } else {
+                 console.log('Token already sent to server so wont send it again unless it changes');
+               }
+         
+             }
+         
+             function isTokenSentToServer() {
+               return window.localStorage.getItem('sentToServer') === '1';
+             }
+         
+             function setTokenSentToServer(sent) {
+               window.localStorage.setItem('sentToServer', sent ? '1' : '0');
+             }
+         
+             function showHideDiv(divId, show) {
+               const div = document.querySelector('#' + divId);
+               if (show) {
+                 div.style = 'display: visible';
+               } else {
+                 div.style = 'display: none';
+               }
+             }
+         
+             function requestPermission() {
+               $("#loader").fadeIn("slow");
+               console.log('Requesting permission...');
+               messaging.requestPermission().then(function() {
+                 console.log('Notification permission granted.');
+                 resetUI();
+               }).catch(function(err) {
+                 console.log('Unable to get permission to notify.', err);
+               });
+               $("#loader").fadeOut("xslow");
+             }
+         
+             function deleteToken() {
+               messaging.getToken().then(function(currentToken) {
+                 messaging.deleteToken(currentToken).then(function() {
+                   console.log('Token deleted.');
+                   setTokenSentToServer(false);
+                   resetUI();
+                 }).catch(function(err) {
+                   console.log('Unable to delete token. ', err);
+                 });
+               }).catch(function(err) {
+                 console.log('Error retrieving Instance ID token. ', err);
+                 showToken('Error retrieving Instance ID token. ', err);
+               });
+         
+             }
+             
+             function appendMessage(payload) {
+               const messagesElement = document.querySelector('#messages');
+               const dataHeaderELement = document.createElement('h5');
+               const dataElement = document.createElement('pre');
+               dataElement.style = 'overflow-x:hidden;';
+               dataHeaderELement.textContent = 'Received message:';
+         
+               var titles = JSON.stringify(payload.notification.title);
+               var bodys = JSON.stringify(payload.notification.body);
+               
+               var id_notifikasi = JSON.stringify(payload.data.id);
+         
+               // Notif //
+               getjumlahnotif();
+         
+               if (!("Notification" in window)) 
+               {
+                   alert("This browser does not support desktop notification");
+               }
+               else if (Notification.permission === "granted") 
+               {
+                 var titlel = new String();
+                 var bodyl = new String();
+                 
+                 var id_notifikasil = new String();
+         
+                 bodyl = bodys.toString().replace(/"/g, "");
+                 titlel = titles.toString().replace(/"/g, "");
+                
+                 id_notifikasil = id_notifikasi.toString().replace(/"/g, "");
+         
+                 toastr.options.onCloseClick = function() { console.log('close button clicked'); }
+                 toastr.options = {
+                   "closeButton": true,
+                   "debug": false,
+                   "newestOnTop": false,
+                   "progressBar": false,
+                   "positionClass": "toast-top-right",
+                   "preventDuplicates": false,
+                   "showDuration": "500",
+                   "hideDuration": "1000",
+                   "timeOut": "5000",
+                   "extendedTimeOut": "1000",
+                   "showEasing": "swing",
+                   "hideEasing": "linear",
+                   "showMethod": "fadeIn"
+                 }
+                 toastr.warning(bodyl, titlel,
+                     {onclick: function() { window.location.href="/notifikasi/"+id_notifikasil; }});
+                 /*var titlel = new String();
+                 var bodyl = new String();
+                 var iconl = new String();
+         
+                 bodyl = bodys.toString().replace(/"/g, "");
+                 titlel = titles.toString().replace(/"/g, "");
+                 iconl = icons.toString().replace(/"/g, "");
+         
+                   var options = {
+                           body: bodyl,
+                           icon: iconl,
+                           dir : "ltr"
+                       };
+                   var notification = new Notification(titlel,options);*/
+                   //alert("notif tab");
+               }
+               else if (Notification.permission !== 'denied') 
+               {
+                   Notification.requestPermission(function (permission) {
+                   if (!('permission' in Notification)) 
+                   {
+                       Notification.permission = permission;
+                   }
+                   if (permission === "granted") {
+                       var options = {
+                           body: bodys,
+                           icon: "",
+                           dir : "ltr"
+                       };
+                       var notification = new Notification(titles,options);
+                   }
+                   });
+               }   
+               // End Notif //
+         
+               //alert(JSON.stringify(payload, null, 2));
+               dataElement.textContent = JSON.stringify(payload, null, 2);
+               messagesElement.appendChild(dataHeaderELement);
+               messagesElement.appendChild(dataElement);
+             }
+         
+             function clearMessages() {
+               const messagesElement = document.querySelector('#messages');
+               while (messagesElement.hasChildNodes()) {
+                 messagesElement.removeChild(messagesElement.lastChild);
+               }
+             }
+         
+             function updateUIForPushEnabled(currentToken) {
+               showHideDiv(tokenDivId, true);
+               showHideDiv(permissionDivId, false);
+               showToken(currentToken);
+             }
+         
+             function updateUIForPushPermissionRequired() {
+               showHideDiv(tokenDivId, false);
+               showHideDiv(permissionDivId, true);
+             }
+         
+             getjumlahnotif()
+             function getjumlahnotif()
+             {
+               $.ajax({ 
+                   type: 'GET', 
+                   url: '/gettoken', 
+                   success: function (data) 
+                   { 
+                       $.ajax({ 
+                           type: 'GET', 
+                           url: '/api/notifikasi?page=1&limit=9999', 
+                           headers: {
+                               'Authorization': 'Bearer ' + data.token
+                           },
+                           success: function (de) 
+                           { 
+                                var jumlah_pesan = de.message;
+                                if(jumlah_pesan>0)
+                                {
+                                  $("#jumlah_notif").html("<span class='badge badge-pill badge-danger up'>"+jumlah_pesan+"</span>").show();
+                                  $("#new").html("<span class='badge badge-round badge-danger'>New "+jumlah_pesan+"</span>").show();
+                                }
+                                
+                                
+                                
+                                var text="";
+                                $.each(de.data.data, function(index, element){
+                                  if(element.status==0)
+                                  {
+                                   var tanggal = tanggal_keterangan(element.tgl);
+                                   text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                                   text += '<div class="media">';
+                                   text += '<div class="pr-10">';
+                                   text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
+                                   text += '</div>';
+                                   text += '<div class="media-body">';
+                                   text += '<h6 class="media-heading">'+element.isi+'</h6>';
+                                   text += '<time class="media-meta">'+tanggal+'</time>';
+                                   text += '</div>';
+                                   text += '</div>';
+                                   text += '</a>';
+                                  }
+                                  else
+                                  {
+                                     var tanggal = tanggal_keterangan(element.tgl);
+                                     text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                                     text += '<div class="media">';
+                                     text += '<div class="pr-10">';
+                                     text += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
+                                     text += '</div>';
+                                     text += '<div class="media-body">';
+                                     text += '<h6 class="media-heading">'+element.isi+'</h6>';
+                                     text += '<time class="media-meta">'+tanggal+'</time>';
+                                     text += '</div>';
+                                     text += '</div>';
+                                     text += '</a>';
+                                  }
+                                });
+                               $("#notif_content").html(text).show();
+                                
+                           }
+                       });
+                   }
+               });
+             }
+             function tanggal_keterangan(tanggal)
+             {           
+                   moment.locale('id'); 
+                   return moment(tanggal).calendar();  
+             }
+             //resetUI();
+             //END NOTIF//
+      </script>
+      <script>
+         (function(document, window, $){
+           'use strict';
+         
+           var Site = window.Site;
+           $(document).ready(function(){
+             Site.run();
+           });
+         })(document, window, jQuery);
+      </script>
+   </body>
 </html>
+
