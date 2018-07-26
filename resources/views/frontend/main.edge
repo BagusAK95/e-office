@@ -55,6 +55,12 @@
       <link rel="stylesheet" href="/material/global/vendor/bootstrap-treeview/bootstrap-treeview.css">
       <link rel="stylesheet" href="/material/global/vendor/jstree/jstree.min.css">
       <link rel="stylesheet" href="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css">
+
+      <style>
+      .badge-pill{
+        font-size: 1rem;
+      }
+      </style>
    </head>
    <body class="animsition">
       <input type="hidden" name='level' class='level' id='level_main'>
@@ -107,15 +113,17 @@
                         </div>
                         <div class="list-group">
                            <div data-role="container">
-                              <div data-role="content" id="notif_content">
+                              <div data-role="content" id="notif_content" >
                               </div>
                            </div>
                         </div>
                         <div class="dropdown-menu-footer">
-                           <a class="dropdown-menu-footer-btn" href="javascript:void(0)" role="button">
-                           </a>
-                           <a class="dropdown-item" href="javascript:void(0)" role="menuitem">
-                           </a>
+                          <a class="dropdown-menu-footer-btn" href="/notifikasi/all" role="button">
+                            <i class="icon md-settings" aria-hidden="true"></i>
+                          </a>
+                          <a class="dropdown-item" href="/notifikasi-all" role="menuitem">
+                            All notifications
+                          </a>
                         </div>
                      </div>
                   </li>
@@ -184,6 +192,9 @@
                         <a class="animsition-link" href="/surat-masuk">
                         <i class="site-menu-icon md-email-open" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Masuk</span>
+                        <span class="site-menu-badge">
+                          <span class="badge badge-pill badge-danger">3</span>
+                        </span>
                         </a>
                      </li>
                      <li class="site-menu-item" id="disposisi_keluar">
@@ -725,6 +736,7 @@
              getjumlahnotif()
              function getjumlahnotif()
              {
+               //Notification Top Menu//
                $.ajax({ 
                    type: 'GET', 
                    url: '/gettoken', 
@@ -732,7 +744,7 @@
                    { 
                        $.ajax({ 
                            type: 'GET', 
-                           url: '/api/notifikasi?page=1&limit=9999', 
+                           url: '/api/notifikasi?page=1&limit=20', 
                            headers: {
                                'Authorization': 'Bearer ' + data.token
                            },
@@ -741,7 +753,7 @@
                                 var jumlah_pesan = de.message;
                                 if(jumlah_pesan>0)
                                 {
-                                  $("#jumlah_notif").html("<span class='badge badge-pill badge-danger up'>"+jumlah_pesan+"</span>").show();
+                                  $("#jumlah_notif").html("<span class='badge badge-danger up'>"+jumlah_pesan+"</span>").show();
                                   $("#new").html("<span class='badge badge-round badge-danger'>New "+jumlah_pesan+"</span>").show();
                                 }
                                 
@@ -758,8 +770,8 @@
                                    text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
                                    text += '</div>';
                                    text += '<div class="media-body">';
-                                   text += '<h6 class="media-heading">'+element.isi+'</h6>';
-                                   text += '<time class="media-meta">'+tanggal+'</time>';
+                                   text += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'</h6>';
+                                   text += '<time class="media-meta" style="font-size:9pt">'+tanggal+'</time>';
                                    text += '</div>';
                                    text += '</div>';
                                    text += '</a>';
@@ -773,19 +785,22 @@
                                      text += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
                                      text += '</div>';
                                      text += '<div class="media-body">';
-                                     text += '<h6 class="media-heading">'+element.isi+'</h6>';
-                                     text += '<time class="media-meta">'+tanggal+'</time>';
+                                     text += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'</h6>';
+                                     text += '<time class="media-meta" style="font-size:9pt">'+tanggal+'</time>';
                                      text += '</div>';
                                      text += '</div>';
                                      text += '</a>';
                                   }
                                 });
                                $("#notif_content").html(text).show();
-                                
+                               $("#home_notif").html(text).show();
                            }
                        });
                    }
                });
+
+
+              
              }
              function tanggal_keterangan(tanggal)
              {           

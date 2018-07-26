@@ -129,5 +129,9 @@ Route.get('/notifikasi/:id', async function({ params,view }) {
     return view.render('frontend/notifikasi', { params })
 })
 
+Route.get('/notifikasi-all', async function({ params,view }) {
+    return view.render('frontend/notifikasi_all', { params })
+})
+
 //End Notif
 //------------------------------------ End Main System ---------------------------------//

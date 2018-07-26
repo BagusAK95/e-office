@@ -1,0 +1,98 @@
+@layout('frontend/main')
+@section('content')
+ <div class="page-content container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+<div class="panel panel-bordered panel-primary">
+<div class="panel-heading">
+    <h3 class="panel-title"><i class="icon md-notifications"></i>&nbsp;Notification</h3>
+    <div class="panel-actions">
+        <a class="panel-action icon md-minus" data-toggle="panel-collapse" aria-expanded="true" aria-hidden="true"></a>
+    </div>
+</div>
+<div class="panel-body">
+    <div class="col-xxl-7 col-lg-12">
+        <!-- Panel Projects Status -->
+        <div class="panel" id="projects-status">
+        <div class="panel-heading">
+        </div>
+        <div id="notif_all">
+            
+        </div>
+        </div>
+        <!-- End Panel Projects Stats -->
+    </div>
+</div>
+</div>
+    </div>
+</div>
+</div>
+
+<script>
+   $( document ).ready(function() {
+     /*Main*/
+     $("#loader").fadeIn("slow");
+    cek_session();
+     cek_token();
+    getjumlahnotif()
+        function getjumlahnotif()
+        {
+        //Notification Top Menu//
+        $.ajax({ 
+            type: 'GET', 
+            url: '/gettoken', 
+            success: function (data) 
+            { 
+                $.ajax({ 
+                    type: 'GET', 
+                    url: '/api/notifikasi?page=1&limit=9999999999', 
+                    headers: {
+                        'Authorization': 'Bearer ' + data.token
+                    },
+                    success: function (de) 
+                    {   
+                        var text="";
+                        $.each(de.data.data, function(index, element){
+                            if(element.status==0)
+                            {
+                            var tanggal = tanggal_keterangan(element.tgl);
+                            text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                            text += '<div class="media">';
+                            text += '<div class="pr-10">';
+                            text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
+                            text += '</div>';
+                            text += '<div class="media-body">';
+                            text += '<h6 class="media-heading" style="font-size:10pt">'+element.isi+'</h6>';
+                            text += '<time class="media-meta" style="font-size:10pt">'+tanggal+'</time>';
+                            text += '</div>';
+                            text += '</div>';
+                            text += '</a>';
+                            }
+                            else
+                            {
+                                var tanggal = tanggal_keterangan(element.tgl);
+                                text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                                text += '<div class="media">';
+                                text += '<div class="pr-10">';
+                                text += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
+                                text += '</div>';
+                                text += '<div class="media-body">';
+                                text += '<h6 class="media-heading" style="font-size:10pt">'+element.isi+'</h6>';
+                                text += '<time class="media-meta" style="font-size:10pt">'+tanggal+'</time>';
+                                text += '</div>';
+                                text += '</div>';
+                                text += '</a>';
+                            }
+                        });
+                        $("#notif_all").html(text).show();
+                    }
+                });
+            }
+        });
+        }
+     $("#loader").fadeOut("xslow");
+     /*Page*/
+   });
+</script>
+@endsection
+
