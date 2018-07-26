@@ -133,5 +133,8 @@ Route.get('/notifikasi-all', async function({ params,view }) {
     return view.render('frontend/notifikasi_all', { params })
 })
 
+Route.on('/error-404').render('404')
+
+
 //End Notif
 //------------------------------------ End Main System ---------------------------------//
