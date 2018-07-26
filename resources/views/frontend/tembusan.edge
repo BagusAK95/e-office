@@ -266,7 +266,7 @@
                                var tgl_surat = tanggal_indo(element.tgl_surat);
                                var tgl_terima = tanggal_indo(element.tgl_terima);
                                var status = '';
-                               var tr_data = "<tr><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td>"+element.nomor_agenda+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td>"+status_baca_pimpinan+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/surat-tembusan/"+id_surat_masuk_e+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
+                               var tr_data = "<tr><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td>"+element.nomor_agenda+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td>"+status_baca_pimpinan+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/tembusan/"+id_surat_masuk_e+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
                                text += tr_data;
                            });
                            $("#body").html(text).show();
