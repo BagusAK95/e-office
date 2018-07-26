@@ -113,9 +113,9 @@ Route.get('/dispo-keluar/:id', async function({ params,view }) {
 
 //Tembusan
 
-Route.on('/surat-tembusan').render('frontend/tembusan')
+Route.on('/tembusan').render('frontend/tembusan')
 
-Route.get('/surat-tembusan/:id', async function({ params,view }) {
+Route.get('/tembusan/:id', async function({ params,view }) {
     return view.render('frontend/detail_tembusan', { params })
 })
 
