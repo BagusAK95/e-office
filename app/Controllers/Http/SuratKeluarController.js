@@ -25,6 +25,10 @@ class SuratKeluarController {
 
             for (let i = 0; i < arrPemeriksa.length; i++) {
                 arrPemeriksa[i].id_surat_keluar = insertKonsep.id
+
+                if (i == 0) {
+                    arrPemeriksa[i].status = 0
+                }
             }
 
             await SuratPemeriksa.createMany(arrPemeriksa)

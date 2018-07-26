@@ -16,7 +16,7 @@ class SuratTembusanController {
 
             const surat = await SuratMasuk.find(data.id_surat_masuk)
             if (surat) {
-                Notification.send([user.nip, user.nama_lengkap], [data.nip_penerima], 'Mengirimkan Surat Nomor ' + surat.nomor_surat + ' Sebagai Tembusan', '/surat-tembusan/' + insert.id)                
+                Notification.send([user.nip, user.nama_lengkap], [data.nip_penerima], 'Mengirimkan Surat Nomor ' + surat.nomor_surat + ' Sebagai Tembusan', '/tembusan/' + insert.id)                
             }
 
             /* --- Kirim Notifikasi --- */
