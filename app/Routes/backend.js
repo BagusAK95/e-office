@@ -18,7 +18,7 @@ const Route = use('Route')
 Route.group(() => {
     Route.get('/docs.json', () => {
         const swaggerJSDoc = require('swagger-jsdoc')
-    
+
         const options = {
             swaggerDefinition: {
                 info: {
@@ -40,7 +40,7 @@ Route.group(() => {
         
         return swaggerJSDoc(options)
     }).as('swaggerSpec')
-    
+
     Route.get('/docs', ({ view }) => {
         return view.render('swaggerUI')
     }).as('swaggerUI')
@@ -990,7 +990,7 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/disposisi/surat/:id_surat_masuk', 'DisposisiController.listAllByMail').middleware('checkToken:umum')
-    
+
     /**
     * @swagger
     * /disposisi/{id}:
@@ -1148,51 +1148,6 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /notifikasi:
-    *   get:
-    *     tags:
-    *       - Notifikasi
-    *     summary: List
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: page
-    *         in: query
-    *         description: Halaman
-    *         required: true
-    *         type: string
-    *       - name: limit
-    *         in: query
-    *         description: Limit
-    *         required: true
-    *         type: string
-    */
-    Route.get('/notifikasi', 'NotifikasiController.list').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /notifikasi/{id}:
-    *   put:
-    *     tags:
-    *       - Notifikasi
-    *     summary: Mark As Read
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: id
-    *         in: path
-    *         description: Id
-    *         required: true
-    *         type: string
-    */
-    Route.put('/notifikasi/:id', 'NotifikasiController.markAsRead').middleware('checkToken:umum')
-
-    /**
-    * @swagger
     * /konsep-surat:
     *   post:
     *     tags:
@@ -1273,9 +1228,9 @@ Route.group(() => {
     *         description: Tingkat Kecepatan (1=Biasa, 2=Segera, 3=Amat Segera)
     *         required: true
     *         type: string
-    *       - name: instruksi
+    *       - name: klasifikasi
     *         in: formData
-    *         description: Instruksi
+    *         description: Klasifikasi
     *         required: true
     *         type: string
     *       - name: ringkasan
@@ -1290,6 +1245,126 @@ Route.group(() => {
     *         type: string
     */
     Route.post('/konsep-surat', 'SuratKeluarController.add').middleware('checkToken:umum,suratkeluar')
+
+    /**
+    * @swagger
+    * /konsep-surat/{id}:
+    *   put:
+    *     tags:
+    *       - Konsep Surat
+    *     summary: Update
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    *       - name: nip_penandatangan
+    *         in: formData
+    *         description: NIP Penandatangan
+    *         required: true
+    *         type: string
+    *       - name: nama_penandatangan
+    *         in: formData
+    *         description: Nama Penandatangan
+    *         required: true
+    *         type: string
+    *       - name: jabatan_penandatangan
+    *         in: formData
+    *         description: Jabatan Penandatangan
+    *         required: true
+    *         type: string
+    *       - name: tgl_surat
+    *         in: formData
+    *         description: Tanggal Surat
+    *         required: true
+    *         type: string
+    *       - name: nomor_agenda
+    *         in: formData
+    *         description: Nomor Agenda
+    *         required: true
+    *         type: string
+    *       - name: lampiran
+    *         in: formData
+    *         description: Lampiran
+    *         required: false
+    *         type: string
+    *       - name: instansi_penerima
+    *         in: formData
+    *         description: Instansi Penerima
+    *         required: true
+    *         type: string
+    *       - name: arr_penerima
+    *         in: formData
+    *         description: Daftar Penerima
+    *         required: true
+    *         type: string
+    *       - name: arr_tembusan
+    *         in: formData
+    *         description: Daftar Tembusan
+    *         required: false
+    *         type: string
+    *       - name: perihal
+    *         in: formData
+    *         description: Perihal
+    *         required: true
+    *         type: string
+    *       - name: dari_surat_masuk
+    *         in: formData
+    *         description: ID Surat Masuk
+    *         required: false
+    *         type: string
+    *       - name: keamanan
+    *         in: formData
+    *         description: Tingkat Keamanan (1=Biasa, 2=Rahasia Terbatas, 3=Rahasia, 4=Sangat Rahasia)
+    *         required: true
+    *         type: string
+    *       - name: kecepatan
+    *         in: formData
+    *         description: Tingkat Kecepatan (1=Biasa, 2=Segera, 3=Amat Segera)
+    *         required: true
+    *         type: string
+    *       - name: klasifikasi
+    *         in: formData
+    *         description: Klasifikasi
+    *         required: true
+    *         type: string
+    *       - name: ringkasan
+    *         in: formData
+    *         description: Ringkasan
+    *         required: true
+    *         type: string
+    *       - name: isi_surat
+    *         in: formData
+    *         description: Isi Surat
+    *         required: true
+    *         type: string
+    */
+    Route.put('/konsep-surat/:id', 'SuratKeluarController.updateConcept')
+
+    /**
+    * @swagger
+    * /konsep-surat/{id}:
+    *   get:
+    *     tags:
+    *       - Konsep Surat
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.get('/konsep-surat/:id', 'SuratKeluarController.detailConcept').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -1329,7 +1404,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/konsep-surat/listChecked', 'SuratKeluarController.ListConceptChecked').middleware('checkToken:umum')
+    Route.get('/konsep-surat/listChecked', 'SuratKeluarController.listConceptChecked').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -1369,5 +1444,160 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/konsep-surat/listMaked', 'SuratKeluarController.ListConceptMaked').middleware('checkToken:umum')
+    Route.get('/konsep-surat/listMaked', 'SuratKeluarController.listConceptMaked').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /konsep-surat/checkingConcept/{id_surat_keluar}:
+    *   put:
+    *     tags:
+    *       - Konsep Surat
+    *     summary: Checking Concept
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_surat_keluar
+    *         in: path
+    *         description: Id Surat Keluar
+    *         required: true
+    *         type: string
+    *       - name: status
+    *         in: formData
+    *         description: Status (2=Revisi, 3=Disetujui)
+    *         required: true
+    *         type: string
+    */
+    Route.put('/konsep-surat/checkingConcept/:id_surat_keluar', 'SuratPemeriksaController.updateStatus').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /konsep-surat/updateChecker/{id_surat_keluar}:
+    *   put:
+    *     tags:
+    *       - Konsep Surat
+    *     summary: Update Checker
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_surat_keluar
+    *         in: path
+    *         description: Id Surat Keluar
+    *         required: true
+    *         type: string
+    *       - name: arr_pemeriksa
+    *         in: formData
+    *         description: Daftar Pemeriksa Konsep
+    *         required: true
+    *         type: string
+    */
+    Route.put('/konsep-surat/updateChecker/:id_surat_keluar', 'SuratPemeriksaController.UpdateList').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /surat-keluar/{id}:
+    *   get:
+    *     tags:
+    *       - Surat Keluar
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-keluar/:id', 'SuratKeluarController.detailMail').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /surat-keluar:
+    *   get:
+    *     tags:
+    *       - Surat Keluar
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: keyword
+    *         in: query
+    *         description: Kata Kunci
+    *         required: false
+    *         type: string
+    *       - name: tgl_awal
+    *         in: query
+    *         description: Tanggal Awal
+    *         required: false
+    *         type: string
+    *       - name: tgl_akhir
+    *         in: query
+    *         description: Tanggal Akhir
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: query
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-keluar', 'SuratKeluarController.ListMail').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /notifikasi:
+    *   get:
+    *     tags:
+    *       - Notifikasi
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: page
+    *         in: query
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Limit
+    *         required: true
+    *         type: string
+    */
+    Route.get('/notifikasi', 'NotifikasiController.list').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /notifikasi/{id}:
+    *   put:
+    *     tags:
+    *       - Notifikasi
+    *     summary: Mark As Read
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    */
+    Route.put('/notifikasi/:id', 'NotifikasiController.markAsRead').middleware('checkToken:umum')
 }).prefix('api')
