@@ -48,6 +48,7 @@ class SuratKeluarController {
     async listConceptChecked({ request, auth }) {
         try {
             const user = await auth.getUser()
+            const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
             let sql = []
             if (request.get().tgl_awal) {
@@ -59,6 +60,7 @@ class SuratKeluarController {
             if (request.get().keyword) {
                 sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
             }
+            sql.push(`instansi_pengirim = '` + instansi + `'`)
             sql.push('status_surat BETWEEN 1 AND 2')
 
             const data = await SuratKeluar.query()
@@ -80,6 +82,7 @@ class SuratKeluarController {
     async listConceptMaked({ request, auth }) {
         try {
             const user = await auth.getUser()
+            const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
 
             let sql = []
             if (request.get().tgl_awal) {
@@ -91,6 +94,7 @@ class SuratKeluarController {
             if (request.get().keyword) {
                 sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
             }
+            sql.push(`instansi_pengirim = '` + instansi + `'`)
             sql.push(`nip_pembuat = '` + user.nip + `'`)
             sql.push('status_surat BETWEEN 1 AND 2')
 
@@ -108,21 +112,23 @@ class SuratKeluarController {
     async updateConcept({ params, request, auth }) {
         try {
             const user = await auth.getUser()
+            const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
+
             const data = request.all()
             data.status_surat = 1
             data.keyword = ''.concat(data.nama_pembuat, ' | ', data.nama_penandatangan, ' | ', data.perihal)
 
             const updateSurat = await SuratKeluar.query()
-                                                 .where({ nip_pembuat: user.nip, id: params.id })
+                                                 .where({ instansi_pengirim: instansi, nip_pembuat: user.nip, id: params.id })
                                                  .update(data)
             if (updateSurat > 0) {
-                await SuratPemeriksa.query()
-                                    .where('id_surat_keluar', params.id)
-                                    .update({status : 0})
+                const updatePemeriksa = await SuratPemeriksa.query()
+                                                            .where('id_surat_keluar', params.id)
+                                                            .update({status : 0})
                 
                 const dataPemeriksa = await SuratPemeriksa.query()
-                                                        .where({id_surat_keluar: params.id, urutan: 1})
-                                                        .first()
+                                                          .where({id_surat_keluar: params.id, urutan: 1})
+                                                          .first()
                 if (dataPemeriksa) {
                     dataPemeriksa.status = 1
                     dataPemeriksa.save()
@@ -130,7 +136,7 @@ class SuratKeluarController {
                     Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/' + params.id)
                 }
 
-                return Response.format(true, 'Update konsep surat berhasil', updateSurat)
+                return Response.format(true, null, updateSurat)
             } else {
                 return Response.format(false, 'Konsep Surat tidak ditemukan', null)
             }    
