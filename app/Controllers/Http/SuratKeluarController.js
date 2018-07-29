@@ -5,6 +5,8 @@ const SuratMasuk = use('App/Models/SuratMasuk')
 const SuratPemeriksa = use('App/Models/SuratPemeriksa')
 const Response = use('App/Helpers/ResponseHelper')
 const Notification = use('App/Helpers/NotificationHelper')
+const MasterKantor = use('App/Models/MasterKantor')
+const Login = use('App/Models/Login')
 
 class SuratKeluarController {
     async add({ request, auth }) {
@@ -128,7 +130,7 @@ class SuratKeluarController {
                     Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/' + params.id)
                 }
 
-                return Response.format(true, 'Update konsep surat berhasil', null)
+                return Response.format(true, 'Update konsep surat berhasil', updateSurat)
             } else {
                 return Response.format(false, 'Konsep Surat tidak ditemukan', null)
             }    
@@ -227,27 +229,59 @@ class SuratKeluarController {
         }
     }
 
-    // async sendMail({ params, request, auth }) {
-    //     const user = await auth.getUser()
-    //     const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
-    //     const data = request.only(['nomor_surat'])
+    async sendMail({ params, request, auth }) {
+        const user = await auth.getUser()
+        const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
+        const data = request.only(['nomor_surat'])
 
-    //     const dataSurat = await SuratKeluar.query()
-    //                                        .where({ instansi_pengirim: instansi, id: params.id })
-    //                                        .first()
-    //     if (dataSurat) {
-    //         const insertSurat = await SuratMasuk.create({
-    //             instansi_penerima: dataSurat.instansi_penerima,
-    //             tgl_surat: dataSurat.tgl_surat,
-    //             nomor_surat: request.nomor_surat,
-    //             nomor_agenda: dataSurat.nomor_agenda,
-    //             perihal: dataSurat.perihal,
-    //             jenis_instansi: 1
-    //         })
-    //     } else {
-    //         return Response.format(false, 'Surat tidak ditemukan', null)
-    //     }                        
-    // }
+        const dataSurat = await SuratKeluar.query()
+                                           .where({ instansi_pengirim: instansi, id: params.id })
+                                           .first()
+        if (dataSurat) {
+            const dataInstansi = await MasterKantor.find(dataSurat.instansi_pengirim)
+
+            const startLokasi = dataSurat.instansi_penerima.toString().replace(/\d{5}$/g, '00000')
+            const endLokasi = dataSurat.instansi_penerima.toString().replace(/\d{5}$/g, '99999')
+            const dataTataUsaha = await Login.query()
+                                             .where('level', 3)
+                                             .whereBetween('kode_lokasi', [Number(startLokasi), Number(endLokasi)])
+                                             .first()
+
+            const insertSurat = await SuratMasuk.create({
+                instansi_penerima: dataSurat.instansi_penerima,
+                tgl_surat: dataSurat.tgl_surat,
+                nomor_surat: data.nomor_surat,
+                nomor_agenda: dataSurat.nomor_agenda,
+                perihal: dataSurat.perihal,
+                jenis_instansi: 1,
+                nama_instansi: dataInstansi.nmlokasi,
+                nama_pengirim: dataSurat.nama_penandatangan,
+                jabatan_pengirim :dataSurat.jabatan_penandatangan,
+                klasifikasi: dataSurat.klasifikasi,
+                keamanan: dataSurat.keamanan,
+                kecepatan: dataSurat.kecepatan,
+                ringkasan: dataSurat.ringkasan,
+                isi_surat: dataSurat.isi_surat,
+                status_surat: 0
+            })
+
+            if (insertSurat) {
+                dataSurat.nip_tata_usaha = user.nip
+                dataSurat.nama_tata_usaha = user.nama_lengkap
+                dataSurat.jabatan_tata_usaha = user.nama_jabatan
+                dataSurat.status_surat = 4
+                dataSurat.save()
+
+                Notification.send([user.nip, dataInstansi.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)                
+            
+                return Response.format(true, null, insertSurat)            
+            } else {
+                return Response.format(false, 'Surat gagal dikirim', null)
+            }
+        } else {
+            return Response.format(false, 'Surat tidak ditemukan', null)
+        }                        
+    }
 }
 
 module.exports = SuratKeluarController

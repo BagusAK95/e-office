@@ -873,16 +873,6 @@ Route.group(() => {
     *         description: Instruksi
     *         required: true
     *         type: string
-    *       - name: keamanan
-    *         in: formData
-    *         description: Tingkat Keamanan (1=Biasa, 2=Rahasia Terbatas, 3=Rahasia, 4=Sangat Rahasia)
-    *         required: true
-    *         type: string
-    *       - name: kecepatan
-    *         in: formData
-    *         description: Tingkat Kecepatan (1=Biasa, 2=Segera, 3=Amat Segera)
-    *         required: true
-    *         type: string
     *       - name: isi_disposisi
     *         in: formData
     *         description: Isi Disposisi
@@ -1555,6 +1545,31 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/surat-keluar', 'SuratKeluarController.ListMail').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /surat-keluar/{id}:
+    *   post:
+    *     tags:
+    *       - Surat Keluar
+    *     summary: Send
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    *       - name: nomor_surat
+    *         in: formData
+    *         description: Nomor Surat
+    *         required: true
+    *         type: string
+    */
+    Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail')
 
     /**
     * @swagger
