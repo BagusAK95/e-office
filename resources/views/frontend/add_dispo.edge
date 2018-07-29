@@ -257,11 +257,11 @@
                         { 
                             if(data.success==false)
                             {
-                                swal("Gagal!", "Gagal Menyimpan data.", "error");
+                                swal("Gagal!", "Disposisi Gagal.", "error");
                             }
                             else if(data.success==true)
                             {
-                                swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
+                                swal({title: "Berhasil", text: "Disposisi Berhasil.", type: "success"},
                                 function(){ 
                                     window.location.href="/disposisi-keluar";
                                 }
@@ -270,7 +270,7 @@
                         },
                         error: function(data)
                         {
-                            swal("Gagal!", "Gagal Menyimpan data.", "error");
+                            swal("Gagal!", "Disposisi Gagal.", "error");
                         }
                         });
                     },
