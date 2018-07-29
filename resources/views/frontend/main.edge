@@ -58,7 +58,7 @@
 
       <style>
       .badge-pill{
-        font-size: 1rem;
+        font-size: 9pt;
       }
       </style>
    </head>
@@ -791,7 +791,41 @@
                                   }
                                 });
                                $("#notif_content").html(text).show();
-                               $("#home_notif").html(text).show();
+
+                               var text2="";
+                                $.each(de.data.data, function(index, element){
+                                  if(element.status==0)
+                                  {
+                                   var tanggal = tanggal_keterangan(element.tgl);
+                                   text2 += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                                   text2 += '<div class="media">';
+                                   text2 += '<div class="pr-10">';
+                                   text2 += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
+                                   text2 += '</div>';
+                                   text2 += '<div class="media-body">';
+                                   text2 += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'<time class="media-meta" style="font-size:9pt;float:right">'+tanggal+'</time></h6>';
+                                   text2 += '';
+                                   text2 += '</div>';
+                                   text2 += '</div>';
+                                   text2 += '</a>';
+                                  }
+                                  else
+                                  {
+                                     var tanggal = tanggal_keterangan(element.tgl);
+                                     text2 += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                                     text2 += '<div class="media">';
+                                     text2 += '<div class="pr-10">';
+                                     text2 += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
+                                     text2 += '</div>';
+                                     text2 += '<div class="media-body">';
+                                     text2 += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'<time class="media-meta" style="font-size:9pt;float:right">'+tanggal+'</time></h6>';
+                                     text2 += '';
+                                     text2 += '</div>';
+                                     text2 += '</div>';
+                                     text2 += '</a>';
+                                  }
+                                });
+                               $("#home_notif").html(text2).show();
                            }
                        });
                    }
