@@ -1569,7 +1569,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail')
+    Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail').middleware('checkToken:tatausaha')
 
     /**
     * @swagger
