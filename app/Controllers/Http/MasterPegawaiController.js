@@ -1,6 +1,7 @@
 'use strict'
 
 const MasterPegawai = use('App/Models/MasterPegawai')
+const Login = use('App/Models/Login')
 const Response = use('App/Helpers/ResponseHelper')
 const SuratMasuk = use('App/Models/SuratMasuk')
 
@@ -150,7 +151,7 @@ class MasterPegawaiController {
 
             /* Get Sekretaris */
             const sekretaris = await MasterPegawai.query()
-                                                .whereRaw(`nama_jabatan LIKE 'SEKRETARIS%'`)
+                                                .where('level', 5)
                                                 .whereBetween('kode_lokasi', [user.kode_lokasi.toString().replace(/\d{5}$/g, '00000'), user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')])
                                                 .first()
             if (sekretaris) {
@@ -158,9 +159,10 @@ class MasterPegawaiController {
             }
 
             /* Get Pimpinan */
-            const pimpinan = await MasterPegawai.query()
-                                                .whereRaw('kode_lokasi = ' + user.kode_lokasi.toString().replace(/\d{5}$/g, '00000') + ' AND kode_eselon IS NOT NULL')
-                                                .first()
+            const pimpinan = await Login.query()
+                                        .where('level', 2)
+                                        .whereBetween('kode_lokasi', [user.kode_lokasi.toString().replace(/\d{5}$/g, '00000'), user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')])
+                                        .first()
             if (pimpinan) {
                 arrPegawai.push(pimpinan)
             }

@@ -1,7 +1,7 @@
 'use strict'
 
 const SuratMasuk = use('App/Models/SuratMasuk')
-const MasterPegawai = use('App/Models/MasterPegawai')
+const Login = use('App/Models/Login')
 const Response = use('App/Helpers/ResponseHelper')
 const Notification = use('App/Helpers/NotificationHelper')
 
@@ -10,7 +10,10 @@ class SuratMasukController {
         try {
             const user = await auth.getUser()
             const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
-            const dataPimpinan = await MasterPegawai.query().whereRaw('kode_lokasi = ' + instansi + ' AND kode_eselon IS NOT NULL').first()
+            const dataPimpinan = await Login.query()
+                                            .where('level', 2)
+                                            .whereBetween('kode_lokasi', [user.kode_lokasi.toString().replace(/\d{5}$/g, '00000'), user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')])
+                                            .first()
             if (dataPimpinan == null) {
                 return Response.format(false, 'Pimpinan tidak ditemukan.', null)
             }
