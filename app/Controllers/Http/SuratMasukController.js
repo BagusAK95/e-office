@@ -66,9 +66,11 @@ class SuratMasukController {
                     break;
                 case 2: //Pimpinan
                     sql.push('instansi_penerima = ' + instansi)
+                    sql.push('status_surat = 1')
                     break;
                 default: //Staff
                     sql.push(`nip_plt = '` + user.nip + `'`)
+                    sql.push('status_surat = 1')
                     break;
             }
 
