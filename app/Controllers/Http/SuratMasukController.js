@@ -4,6 +4,7 @@ const SuratMasuk = use('App/Models/SuratMasuk')
 const Login = use('App/Models/Login')
 const Response = use('App/Helpers/ResponseHelper')
 const Notification = use('App/Helpers/NotificationHelper')
+const SuratTembusan = use('App/Models/SuratTembusan')
 
 class SuratMasukController {
     async add({ request, auth }) { //Todo: Kirim Notifikasi ke Pemimpin
@@ -138,6 +139,60 @@ class SuratMasukController {
             }
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)
+        }
+    }
+
+    async send({ params, request, auth }) {
+        const user = await auth.getUser()
+        const data = request.only(['tgl_terima', 'nip_plt', 'nama_plt', 'jabatan_plt', 'lampiran'])
+        const instansi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
+
+        const dataSurat = await SuratMasuk.query()
+                                        .where({ instansi_penerima: instansi, id: params.id })
+                                        .first()
+        if (dataSurat) {
+            const dataPimpinan = await Login.query()
+                                            .where('level', 2)
+                                            .whereBetween('kode_lokasi', [user.kode_lokasi.toString().replace(/\d{5}$/g, '00000'), user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')])
+                                            .first()
+            if (dataPimpinan) {
+                dataSurat.nip_tata_usaha = user.nip
+                dataSurat.nama_tata_usaha = user.nama_lengkap
+                dataSurat.jabatan_tata_usaha = user.nama_jabatan
+                dataSurat.nip_pimpinan = dataPimpinan.nip
+                dataSurat.nama_pimpinan = dataPimpinan.nama_lengkap
+                dataSurat.jabatan_pimpinan = dataPimpinan.nama_jabatan
+                dataSurat.nip_plt = data.nip_plt
+                dataSurat.nama_plt = data.nama_plt
+                dataSurat.jabatan_plt = data.jabatan_plt
+                dataSurat.tgl_terima = data.tgl_terima
+                dataSurat.lampiran = data.lampiran
+                dataSurat.status_surat = 1
+                dataSurat.keyword = ''.concat(dataSurat.nomor_surat, ' | ', dataSurat.nama_instansi, ' | ', dataSurat.perihal, ' | ', dataSurat.nama_pengirim)
+                dataSurat.save()
+
+                let arr_penerima = [dataPimpinan.nip]
+                if (data.nip_plt) {
+                    arr_penerima.push(data.nip_plt)
+                }
+
+                Notification.send([user.nip, user.nama_lengkap], arr_penerima, 'Mengirimkan Surat Nomor ' + dataSurat.nip_tata_usaha, '/surat-masuk/' + params.id)
+            
+                const dataTembusan = JSON.parse(dataSurat.arr_tembusan)
+                dataTembusan.forEach(async (tembusan) => {
+                    tembusan.id_surat_masuk = params.id
+
+                    const insertTembusan = await SuratTembusan.create(tembusan)
+
+                    Notification.send([user.nip, user.nama_lengkap], [tembusan.nip_penerima], 'Mengirimkan Surat Nomor ' + dataSurat.nomor_surat + ' Sebagai Tembusan', '/tembusan/' + params.id)
+                });
+
+                return Response.format(true, null, 1)
+            } else {
+                return Response.format(false, 'Pimpinan tidak ditemukan.', null)
+            }
+        } else {
+            return Response.format(false, 'Surat tidak ditemukan', null)
         }
     }
 }

@@ -150,10 +150,10 @@ class MasterPegawaiController {
             }
 
             /* Get Sekretaris */
-            const sekretaris = await MasterPegawai.query()
-                                                .where('level', 5)
-                                                .whereBetween('kode_lokasi', [user.kode_lokasi.toString().replace(/\d{5}$/g, '00000'), user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')])
-                                                .first()
+            const sekretaris = await Login.query()
+                                        .where('level', 5)
+                                        .whereBetween('kode_lokasi', [user.kode_lokasi.toString().replace(/\d{5}$/g, '00000'), user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')])
+                                        .first()
             if (sekretaris) {
                 arrPegawai.push(sekretaris)
             }

@@ -137,7 +137,7 @@ Route.group(() => {
     *         type: string
     *       - name: level
     *         in: formData
-    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf
+    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf, 5=Sekretaris
     *         required: false
     *         type: string
     *       - name: akses
@@ -250,7 +250,7 @@ Route.group(() => {
     *         format: password
     *       - name: level
     *         in: formData
-    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf
+    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf, 5=Sekretaris
     *         required: true
     *         type: string
     *       - name: akses
@@ -306,7 +306,7 @@ Route.group(() => {
     *         format: password
     *       - name: level
     *         in: formData
-    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf
+    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf, 5=Sekretaris
     *         required: false
     *         type: string
     *       - name: akses
@@ -665,6 +665,51 @@ Route.group(() => {
     *         type: string
     */
     Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkToken:tatausaha,suratmasuk')
+
+    /**
+    * @swagger
+    * /surat-masuk/{id}:
+    *   put:
+    *     tags:
+    *       - Surat Masuk
+    *     summary: Send
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    *       - name: tgl_terima
+    *         in: formData
+    *         description: Tanggal Terima
+    *         required: true
+    *         type: string
+    *       - name: nip_plt
+    *         in: formData
+    *         description: NIP Pelaksana Tugas
+    *         required: false
+    *         type: string
+    *       - name: nama_plt
+    *         in: formData
+    *         description: Nama Pelaksana Tugas
+    *         required: false
+    *         type: string
+    *       - name: jabatan_plt
+    *         in: formData
+    *         description: Jabatan Pelaksana Tugas
+    *         required: false
+    *         type: string
+    *       - name: lampiran
+    *         in: formData
+    *         description: File Lampiran
+    *         required: true
+    *         type: string
+    */
+    Route.put('/surat-masuk/:id', 'SuratMasukController.send')
 
     /**
     * @swagger
@@ -1569,7 +1614,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail').middleware('checkToken:tatausaha')
+    Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail').middleware('checkToken:tatausaha,suratkeluar')
 
     /**
     * @swagger
