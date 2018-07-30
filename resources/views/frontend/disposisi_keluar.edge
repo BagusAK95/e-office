@@ -221,7 +221,7 @@
                            var text="";
                            $.each(data.data.data, function(index, element) 
                            {
-                              var keamanan = "";
+                            /*  var keamanan = "";
                             if(element.keamanan==1)
                             {
                                 keamanan = "<span style='color:white;width:150px' class='badge badge-pill badge-lg badge-success'>Keamanan : Biasa</span>";
@@ -251,26 +251,26 @@
                             else if(element.kecepatan==3)
                             {
                                 kecepatan = "<span style='color:white;width:150px' class='badge badge-pill badge-lg badge-danger'>Kecepatan : Amat Segera</span>";
-                            }
+                            }*/
 
                             var sts = "";
                             if(element.status==1)
                             {
-                                sts = "<span style='color:white;width:150px' class='badge badge-pill badge-lg badge-success'>Status : Selesai</span>";
+                                sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Selesai</span>";
                             }
                             else if(element.status==2)
                             {
-                                sts = "<span style='color:white;width:150px' class='badge badge-pill badge-lg badge-danger'>Status : Ditolak</span>";
+                                sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Ditolak</span>";
                             }
                             else
                             {
-                                sts = "<span style='color:white;width:150px' class='badge badge-pill badge-lg badge-warning'>Status : Terkirim</span>";
+                                sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Terkirim</span>";
                             }
 
 
                                var tg_disposisi = tanggal_indo(element.tgl_disposisi);
 
-                               var tr_data = "<tr><td>"+tg_disposisi+"</td><td><b>"+element.nama_pengirim+"</b><br>"+element.jabatan_pengirim+"</td><td><b>"+element.nama_penerima+"</b><br>"+element.jabatan_penerima+"</td><td>"+sts+"<br>"+keamanan+"<br>"+kecepatan+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/disposisi-keluar/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><button onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                               var tr_data = "<tr><td>"+tg_disposisi+"</td><td><b>"+element.nama_pengirim+"</b><br>"+element.jabatan_pengirim+"</td><td><b>"+element.nama_penerima+"</b><br>"+element.jabatan_penerima+"</td><td align='center'>"+sts+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/disposisi-keluar/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><button onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
                                text += tr_data;
                            });
    

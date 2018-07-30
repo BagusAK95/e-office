@@ -25,25 +25,6 @@
                             </select>
                         </div>
 
-                        <div class="form-group " data-plugin="formMaterial">
-                            <label class="form-control-label" for="inputEmail">Keamanan</label>
-                            <select name="keamanan" id="keamanan" class="form-control" required='true' >
-                                    <option value="1">Biasa</option>
-                                    <option value="2">Rahasia Terbatas</option>
-                                    <option value="3">Rahasia</option>
-                                    <option value="4">Sangat Rahasia</option>
-                                 </select>
-                        </div>
-
-                        <div class="form-group " data-plugin="formMaterial">
-                            <label class="form-control-label" for="inputEmail">Kecepatan</label>
-                            <select name="kecepatan" id="kecepatan" class="form-control" required='true'>
-                                <option value="1">Biasa</option>
-                                <option value="2">Segera</option>
-                                <option value="3">Amat Segera</option>
-                            </select>
-                        </div>
-
 
                         <div class="form-group " data-plugin="formMaterial">
                             <label class="form-control-label" for="inputEmail">Isi Disposisi</label>
@@ -233,7 +214,7 @@
                         headers: {
                         'Authorization': 'Bearer ' + data.token
                         },
-                        data : "id_surat_masuk="+$("#id_surat_masuk").val()+"&instruksi="+$("#instruksi").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&isi_disposisi="+$("#isi_disposisi").val()+"&nip_penerima="+nip+"&nama_penerima="+nama+"&jabatan_penerima="+jabatan,
+                        data : "id_surat_masuk="+$("#id_surat_masuk").val()+"&instruksi="+$("#instruksi").val()+"&isi_disposisi="+$("#isi_disposisi").val()+"&nip_penerima="+nip+"&nama_penerima="+nama+"&jabatan_penerima="+jabatan,
                         success: function (data) 
                         { 
                             if(data.success==false)
