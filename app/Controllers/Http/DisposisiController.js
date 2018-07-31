@@ -26,7 +26,7 @@ class DisposisiController {
                 Notification.send([user.nip, user.nama_lengkap], [data.nip_penerima], 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-masuk/' + insert.id)
 
                 //Tambah Log
-                Log.add(user, 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat + ' Untuk ' + data.nama_penerima, 'Disposisi', insert.id)
+                Log.add(user, 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat + ' Untuk ' + data.nama_penerima)
 
                 return Response.format(true, null, insert)
             } else {
@@ -61,7 +61,7 @@ class DisposisiController {
                                         .paginate(Number(request.get().page), Number(request.get().limit))
             
             //Tambah Log
-            Log.add(user, 'Melihat Daftar Disposisi Masuk Pada Halaman ' + request.get().page, 'Disposisi', null)
+            Log.add(user, 'Melihat Daftar Disposisi Masuk Pada Halaman ' + request.get().page)
 
             return Response.format(true, null, data)
         } catch (error) {
@@ -93,7 +93,7 @@ class DisposisiController {
                                         .paginate(Number(request.get().page), Number(request.get().limit))
 
             //Tambah log
-            Log.add(user, 'Melihat Daftar Disposisi Keluar Pada Halaman ' + request.get().page, 'Disposisi', null)
+            Log.add(user, 'Melihat Daftar Disposisi Keluar Pada Halaman ' + request.get().page)
 
             return Response.format(true, null, data)
         } catch (error) {
