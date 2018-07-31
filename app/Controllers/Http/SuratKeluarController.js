@@ -249,44 +249,48 @@ class SuratKeluarController {
                                            .where({ instansi_pengirim: user.instansi, id: params.id })
                                            .first()
         if (dataSurat) {
-            const dataInstansi = await MasterKantor.find(dataSurat.instansi_pengirim)
+            if (dataSurat.instansi_penerima) {
+                const dataInstansi = await MasterKantor.find(dataSurat.instansi_pengirim)
 
-            const dataTataUsaha = await Login.query()
-                                             .where({ level: 3, instansi: user.instansi })
-                                             .first()
+                const dataTataUsaha = await Login.query()
+                                                 .where({ level: 3, instansi: dataSurat.instansi_penerima })
+                                                 .first()
 
-            const insertSurat = await SuratMasuk.create({
-                instansi_penerima: dataSurat.instansi_penerima,
-                tgl_surat: dataSurat.tgl_surat,
-                nomor_surat: data.nomor_surat,
-                nomor_agenda: dataSurat.nomor_agenda,
-                perihal: dataSurat.perihal,
-                jenis_instansi: 1,
-                nama_instansi: dataInstansi.nmlokasi,
-                nama_pengirim: dataSurat.nama_penandatangan,
-                jabatan_pengirim :dataSurat.jabatan_penandatangan,
-                klasifikasi: dataSurat.klasifikasi,
-                keamanan: dataSurat.keamanan,
-                kecepatan: dataSurat.kecepatan,
-                ringkasan: dataSurat.ringkasan,
-                isi_surat: dataSurat.isi_surat,
-                status_surat: 0
-            })
+                const insertSurat = await SuratMasuk.create({
+                    instansi_penerima: dataSurat.instansi_penerima,
+                    tgl_surat: dataSurat.tgl_surat,
+                    nomor_surat: data.nomor_surat,
+                    nomor_agenda: dataSurat.nomor_agenda,
+                    perihal: dataSurat.perihal,
+                    jenis_instansi: 1,
+                    nama_instansi: dataInstansi.nmlokasi,
+                    nama_pengirim: dataSurat.nama_penandatangan,
+                    jabatan_pengirim :dataSurat.jabatan_penandatangan,
+                    klasifikasi: dataSurat.klasifikasi,
+                    keamanan: dataSurat.keamanan,
+                    kecepatan: dataSurat.kecepatan,
+                    ringkasan: dataSurat.ringkasan,
+                    isi_surat: dataSurat.isi_surat,
+                    status_surat: 0
+                })
 
-            if (insertSurat) {
-                dataSurat.nip_tata_usaha = user.nip
-                dataSurat.nama_tata_usaha = user.nama_lengkap
-                dataSurat.jabatan_tata_usaha = user.nama_jabatan
-                dataSurat.status_surat = 4
-                dataSurat.save()
+                if (insertSurat) {
+                    dataSurat.nip_tata_usaha = user.nip
+                    dataSurat.nama_tata_usaha = user.nama_lengkap
+                    dataSurat.jabatan_tata_usaha = user.nama_jabatan
+                    dataSurat.status_surat = 4
+                    dataSurat.save()
 
-                Notification.send([user.nip, dataInstansi.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)                
+                    Notification.send([user.nip, dataInstansi.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)                
 
-                Log.add(user, 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Ke ' + data.nama_instansi, insertSurat)
-            
-                return Response.format(true, null, insertSurat)
+                    Log.add(user, 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Ke ' + data.nama_instansi, insertSurat)
+                
+                    return Response.format(true, null, insertSurat)
+                } else {
+                    return Response.format(false, 'Surat gagal dikirim', null)
+                }
             } else {
-                return Response.format(false, 'Surat gagal dikirim', null)
+                return Response.format(true, 'Surat Manual', null)
             }
         } else {
             return Response.format(false, 'Surat tidak ditemukan', null)
