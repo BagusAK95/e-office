@@ -166,7 +166,7 @@ class MasterPegawaiController {
                                         .where({ level: 5, instansi: user.instansi })
                                         .first()
             if (sekretaris) {
-                arrPegawai.push(sekretaris)
+                arrPegawai.push(await MasterPegawai.find(sekretaris.nip))
             }
 
             /* Get Pimpinan */
@@ -174,7 +174,7 @@ class MasterPegawaiController {
                                         .where({ level: 2, instansi: user.instansi })
                                         .first()
             if (pimpinan) {
-                arrPegawai.push(pimpinan)
+                arrPegawai.push(await MasterPegawai.find(pimpinan.nip))
             }
 
             let arrPegawaiFix = []
@@ -186,6 +186,7 @@ class MasterPegawaiController {
 
             return Response.format(true, null, arrPegawaiFix)
         } catch (error) {
+            console.log(error)
             return Response.format(false, error.sqlMessage, null)
         }
     }
