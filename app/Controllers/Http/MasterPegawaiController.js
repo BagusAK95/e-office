@@ -62,33 +62,38 @@ class MasterPegawaiController {
             const surat = await SuratMasuk.find(params.id_surat_masuk)
             if (surat) {
                 if (user.nip == surat.nip_plt) {
-                    const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '10000')
-                    const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '90000')
+                    const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '')
+                    let filterLokasi = []
+                    for (let i = 1; i <= 9; i++) {
+                        filterLokasi.push(Number(startLokasi + i + '0000'))
+                    }
 
                     const data = await MasterPegawai.query()
-                                                    .whereBetween('kode_lokasi', [startLokasi, endLokasi])
+                                                    .whereIn('kode_lokasi', filterLokasi)
 
                     return Response.format(true, null, data)
                 } else {
                     const str = user.kode_lokasi.toString().replace(/([1-9])(0+$)/g, '')
                     const rgx = user.kode_lokasi.toString().match(/([1-9])(0+$)/g)
                     if (rgx) {
-                        let startLokasi = str
-                        let endLokasi = str
                         
                         const arr = rgx[0].split('')
-                        for (let i = 0; i < arr.length; i++) {
-                            if (i == 2) {
-                                startLokasi += '1'
-                                endLokasi += '9'
-                            } else {
-                                startLokasi += arr[i]
-                                endLokasi += arr[i]
+                        let filterLokasi = []
+                        for (let i = 1; i <= 9; i++) {
+                            let startLokasi = str
+                            for (let j = 0; j < arr.length; j++) {
+                                if (j == 2) {
+                                    startLokasi += i + ''
+                                } else {
+                                    startLokasi += arr[j]
+                                }
                             }
+
+                            filterLokasi.push(startLokasi)
                         }
 
                         const data = await MasterPegawai.query()
-                                                        .whereBetween('kode_lokasi', [startLokasi, endLokasi])
+                                                        .whereIn('kode_lokasi', filterLokasi)
                                                         
                         return Response.format(true, null, data)
                     } else {
