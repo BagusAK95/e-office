@@ -1228,6 +1228,11 @@ Route.group(() => {
     *         description: Instansi Penerima
     *         required: true
     *         type: string
+    *       - name: nama_instansi
+    *         in: formData
+    *         description: Nama Instansi
+    *         required: true
+    *         type: string
     *       - name: arr_penerima
     *         in: formData
     *         description: Daftar Penerima
@@ -1331,6 +1336,11 @@ Route.group(() => {
     *       - name: instansi_penerima
     *         in: formData
     *         description: Instansi Penerima
+    *         required: true
+    *         type: string
+    *       - name: nama_instansi
+    *         in: formData
+    *         description: Nama Instansi
     *         required: true
     *         type: string
     *       - name: arr_penerima

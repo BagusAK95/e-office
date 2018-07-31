@@ -5,6 +5,7 @@ const SuratKeluar = use('App/Models/SuratKeluar')
 const Login = use('App/Models/Login')
 const Response = use('App/Helpers/ResponseHelper')
 const Notification = use('App/Helpers/NotificationHelper')
+const Log = use('App/Helpers/LogHelper')
 
 class SuratPemeriksaController {
     async updateStatus({ params, request, auth }) {
@@ -29,6 +30,8 @@ class SuratPemeriksaController {
 
                             Notification.send([user.nip, user.nama_lengkap], [dataSurat.nip_pembuat], 'Merekomendasikan Untuk Merevisi Konsep Surat', '/konsep-surat/' + params.id_surat_keluar)
 
+                            Log.add(user, 'Mengajukan Untuk Merevisi Konsep Surat Atas Nama ' + dataSurat.nama_penandatangan)
+
                             return Response.format(true, 'Konsep surat diajukan untuk revisi', null)
                             
                             break;
@@ -44,21 +47,21 @@ class SuratPemeriksaController {
                                 dataPemeriksa.save()
             
                                 Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/' + params.id_surat_keluar)    
+
+                                Log.add(user, 'Menyetujui Konsep Surat Atas Nama ' + dataSurat.nama_penandatangan)
                                 
                                 return Response.format(true, 'Konsep surat diajukan ke atasan', null)
                             } else {
                                 dataSurat.status_surat = 3
                                 dataSurat.save()
 
-                                const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
-                                const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
-
                                 const dataTataUsaha = await Login.query()
-                                                                .where('level', 3)
-                                                                .whereBetween('kode_lokasi', [startLokasi, endLokasi])
-                                                                .first()
+                                                                 .where({ level: 3, instansi: user.instansi })
+                                                                 .first()
                                 if (dataTataUsaha) {
                                     Notification.send([user.nip, user.nama_lengkap], [dataTataUsaha.nip], 'Menambahkan Surat Keluar', '/surat-keluar/' + params.id_surat_keluar)
+
+                                    Log.add(user, 'Menyetujui Konsep Surat Atas Nama ' + dataSurat.nama_penandatangan)
 
                                     return Response.format(true, 'Konsep surat disetujui', null)
                                 } else {
@@ -80,6 +83,7 @@ class SuratPemeriksaController {
     async UpdateList({ params, request }) {
         try {
             const data = request.all()
+            let arr = []
 
             const arr_pemeriksa = JSON.parse(data.arr_pemeriksa)
             for (let i = 0; i < arr_pemeriksa.length; i++) {
@@ -94,8 +98,12 @@ class SuratPemeriksaController {
                     arr_pemeriksa[i].urutan = i + 1
 
                     await SuratPemeriksa.create(arr_pemeriksa[i])
+
+                    arr.push(arr_pemeriksa[i].nama_pemeriksa)
                 }
             }
+
+            Log.add(user, 'Menambahkan ' + arr.join(', ') + ' Sebagai Pemeriksan Konsep Surat', arr_pemeriksa)
 
             return Response.format(true, 'Update daftar pemeriksa berhasil', null)
         } catch (error) {            

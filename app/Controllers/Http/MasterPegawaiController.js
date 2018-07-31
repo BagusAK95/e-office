@@ -8,20 +8,23 @@ const SuratMasuk = use('App/Models/SuratMasuk')
 class MasterPegawaiController {
     async list({request, auth}){
         try {
-            const user = await auth.getUser()
-            const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
-            const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
+            const user = await auth.getUser() //Get data user yang login
+            
+            //Varibale filter instansi
+            const startLokasi = user.instansi
+            const endLokasi = user.instansi.toString().replace(/\d{5}$/g, '99999')
 
-            let sql = []
+            let sql = [] //Siapkan sql filter
             if (request.get().nama) {
                 sql.push(`nama LIKE '%` + request.get().nama + `%'`)
             }
             sql.push('kode_lokasi BETWEEN ' + startLokasi + ' AND ' +  endLokasi)
 
+            //Ambil data dari database
             const data = await MasterPegawai.query()
                                             .whereRaw(sql.join(' AND '))
                                             .paginate(Number(request.get().page), Number(request.get().limit))
-                                    
+
             return Response.format(true, null, data)
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)                
@@ -30,6 +33,7 @@ class MasterPegawaiController {
 
     async listByLocation({ params }) {
         try {
+            //Get data dari database
             const data = await MasterPegawai.query()
                                             .where('kode_lokasi', params.kode_lokasi)
                                             .orderBy('kode_eselon', 'desc')
@@ -43,10 +47,13 @@ class MasterPegawaiController {
 
     async listAll({auth}){
         try {
-            const user = await auth.getUser()
-            const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
-            const endLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')
+            const user = await auth.getUser() //Ambil data user yang login
+            
+            //Variable filter instansi
+            const startLokasi = user.instansi
+            const endLokasi = user.instansi.toString().replace(/\d{5}$/g, '99999')
 
+            //Ambil data dari database
             const data = await MasterPegawai.query()
                                             .whereBetween('kode_lokasi', [startLokasi, endLokasi])
                                             
@@ -156,8 +163,7 @@ class MasterPegawaiController {
 
             /* Get Sekretaris */
             const sekretaris = await Login.query()
-                                        .where('level', 5)
-                                        .whereBetween('kode_lokasi', [user.kode_lokasi.toString().replace(/\d{5}$/g, '00000'), user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')])
+                                        .where({ level: 5, instansi: user.instansi })
                                         .first()
             if (sekretaris) {
                 arrPegawai.push(sekretaris)
@@ -165,8 +171,7 @@ class MasterPegawaiController {
 
             /* Get Pimpinan */
             const pimpinan = await Login.query()
-                                        .where('level', 2)
-                                        .whereBetween('kode_lokasi', [user.kode_lokasi.toString().replace(/\d{5}$/g, '00000'), user.kode_lokasi.toString().replace(/\d{5}$/g, '99999')])
+                                        .where({ level: 2, instansi: user.instansi })
                                         .first()
             if (pimpinan) {
                 arrPegawai.push(pimpinan)
@@ -187,6 +192,7 @@ class MasterPegawaiController {
 
     async detail({params}){
         try {
+            //Ambil data dari database
             const data = await MasterPegawai.query()
                                             .where('nip', params.nip)
                                             .first()

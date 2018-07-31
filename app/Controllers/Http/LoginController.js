@@ -3,17 +3,22 @@
 const Hash = use('Hash')
 const Login = use('App/Models/Login')
 const Response = use('App/Helpers/ResponseHelper')
+const Log = use('App/Helpers/LogHelper')
 
 class LoginController {
     async getToken ({ request, auth }) {
         try {
             const { nip, password } = request.all()
-            const data = await Login.query().where({'nip': nip}).first()
+            const data = await Login.query().where({'nip': nip}).first() //Get berdasarakn NIP
             if (data) {
-                const isSame = await Hash.verify(password, data.password)
+                const isSame = await Hash.verify(password, data.password) //Pencocokan password
                 if (isSame) {
                     if (data.status == 1) {
-                        const token = await auth.generate(data)
+                        const token = await auth.generate(data) //Generate token
+
+                        //Tambah Log
+                        Log.add(data, 'Login Dari IP ' + request.ip(), token)
+                        
                         return Response.format(true, null, token)
                     } else {
                         return Response.format(false, 'User tidak aktif', null)
@@ -25,16 +30,19 @@ class LoginController {
                 return Response.format(false, 'NIP tidak ditemukan', null)
             }    
         } catch (error) {
+            console.log(error)
             return Response.format(false, error.sqlMessage, null)            
         }
     }
 
     async setFirebase({ request, auth}){
         try {
-            const user = await auth.getUser()
+            const user = await auth.getUser() //Get data user yang login
 
+            //Prepare data
             const data = request.only(['firebase_device', 'firebase_token'])
 
+            //Update ke database
             const update = await Login.query()
                                       .where('nip', user.nip)
                                       .update({

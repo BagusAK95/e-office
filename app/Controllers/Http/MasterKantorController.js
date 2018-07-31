@@ -2,20 +2,21 @@
 
 const MasterKantor = use('App/Models/MasterKantor')
 const Response = use('App/Helpers/ResponseHelper')
+const Log = use('App/Helpers/LogHelper')
 
 class MasterKantorController {
     async tree({ auth }) {
         try {
-            const user = await auth.getUser()
-            const parentLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
+            const user = await auth.getUser() //Get data user yang login
 
+            //Siapkan object
             let data = {
                 id: null,
                 text: null,
                 nodes: []
             }
 
-            const lokasi1 = await MasterKantor.query().where('kdlokasi', Number(parentLokasi)).first()
+            const lokasi1 = await MasterKantor.query().where('kdlokasi', user.instansi).first()
             if (lokasi1) {
                 data.id = lokasi1.kdlokasi
                 data.text = lokasi1.nmlokasi
@@ -47,6 +48,8 @@ class MasterKantorController {
                     }
                 }
 
+                Log.add(user, 'Melihat Daftar Struktur Organisasi')
+
                 return Response.format(true, null, data)
             } else {
                 return Response.format(false, 'Instansi tidak ditemukan', null)
@@ -58,16 +61,16 @@ class MasterKantorController {
 
     async treeHtml({ auth }) {
         try {
-            const user = await auth.getUser()
-            const parentLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '00000')
+            const user = await auth.getUser() //Get data user yang login
 
+            //Siapkan object
             let data = {
                 id: null,
                 text: null,
                 nodes: []
             }
 
-            const lokasi1 = await MasterKantor.query().where('kdlokasi', Number(parentLokasi)).first()
+            const lokasi1 = await MasterKantor.query().where('kdlokasi', user.instansi).first()
             if (lokasi1) {
                 data.id = lokasi1.kdlokasi
                 data.text = "<a onclick='detail_pegawai(" + lokasi1.kdlokasi + ")'>" + lokasi1.nmlokasi + "</a>"
@@ -111,6 +114,8 @@ class MasterKantorController {
                     data.nodes = 0
                 }
                 
+                Log.add(user, 'Melihat Daftar Struktur Organisasi')
+
                 return Response.format(true, null, data)
             } else {
                 return Response.format(false, 'Instansi tidak ditemukan', null)
@@ -122,6 +127,7 @@ class MasterKantorController {
 
     async listAllParent() {
         try {
+            //Get data dari database
             const data = await MasterKantor.query()
                                            .where('kdparent', null)
                                            

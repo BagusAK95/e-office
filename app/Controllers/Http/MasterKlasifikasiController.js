@@ -6,6 +6,7 @@ const Response = use('App/Helpers/ResponseHelper')
 class MasterKlasifikasiController {
     async listAll(){
         try {
+            //Get data dari database
             const data = await MasterKlasifikasi.query()
             return Response.format(true, null, data)
         } catch (error) {

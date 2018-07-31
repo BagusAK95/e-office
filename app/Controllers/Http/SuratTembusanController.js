@@ -4,22 +4,23 @@ const Response = use('App/Helpers/ResponseHelper')
 const SuratTembusan = use('App/Models/SuratTembusan')
 const SuratMasuk = use('App/Models/SuratMasuk')
 const Notification = use('App/Helpers/NotificationHelper')
+const Log = use('App/Helpers/LogHelper')
 
 class SuratTembusanController {
     async add({ request, auth }) {
         try {
             const user = await auth.getUser()
             const data = request.all()
-            const insert = await SuratTembusan.create(data)
+            data.instansi = user.instansi
 
-            /* --- Kirim Notifikasi --- */
+            const insert = await SuratTembusan.create(data)
 
             const surat = await SuratMasuk.find(data.id_surat_masuk)
             if (surat) {
                 Notification.send([user.nip, user.nama_lengkap], [data.nip_penerima], 'Mengirimkan Surat Nomor ' + surat.nomor_surat + ' Sebagai Tembusan', '/tembusan/' + insert.id)                
             }
 
-            /* --- Kirim Notifikasi --- */
+            Log.add(user, 'Menambahkan ' + data.nama_penerima + ' Sebagai Tembusan Surat Nomor ' + surat.nomor_surat, insert)
 
             return Response.format(true, null, insert)
         } catch (error) {
@@ -39,6 +40,7 @@ class SuratTembusanController {
                 sql.push(`tgl <= '` + request.get().tgl_akhir + ` 23:59:59'`)
             }
             sql.push(`nip_penerima = '` + user.nip + `'`)
+            sql.push(`instansi = ` + user.instansi)
 
             const data = await SuratTembusan.query()
                                             .whereRaw(sql.join(' AND '))
@@ -46,6 +48,8 @@ class SuratTembusanController {
                                             .orderBy('tgl', 'desc')
                                             .paginate(Number(request.get().page), Number(request.get().limit))
             
+            Log.add(user, 'Melihat Daftar Tembusan Surat Pada Halaman ' + request.get().page)
+
             return Response.format(true, null, data)            
         } catch (error) {
             return Response.format(false, error.sqlMessage, null)
@@ -56,7 +60,7 @@ class SuratTembusanController {
         try {
             const user = await auth.getUser()
             const data = await SuratTembusan.query()
-                                            .where({id: params.id, nip_penerima: user.nip})
+                                            .where({id: params.id, nip_penerima: user.nip, instansi: user.instansi})
                                             .with('surat_')
                                             .first()
             if (data) {
@@ -64,6 +68,9 @@ class SuratTembusanController {
                     data.tgl_baca = new Date()
                     data.save()
                 }
+
+                const dataJson = JSON.parse(JSON.stringify(data))
+                Log.add(user, 'Melihat Detail Tembusan Surat Nomor ' + dataJson.surat_.nomor_surat)
 
                 return Response.format(true, null, data)
             } else {

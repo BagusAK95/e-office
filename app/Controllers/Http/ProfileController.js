@@ -3,6 +3,7 @@
 const Hash = use('Hash')
 const Login = use('App/Models/Login')
 const Response = use('App/Helpers/ResponseHelper')
+const Log = use('App/Helpers/LogHelper')
 
 class ProfileController {
     async detail({auth}){
@@ -22,6 +23,8 @@ class ProfileController {
     
             const edit = await Login.query().where('nip', user.nip).update(data)
             if (edit > 0) {
+                Log.add(user, 'Mengubah Data Profile', data)
+
                 return Response.format(true, null, edit)                
             } else {
                 return Response.format(false, 'Akun tidak ditemukan', null)
@@ -43,6 +46,8 @@ class ProfileController {
             if (isSame) {
                 const edit = await Login.query().where('nip', user.nip).update({ password: dataRequest.password_new })
                 if (edit > 0) {
+                    Log.add(user, 'Mengubah Password')
+
                     return Response.format(true, null, edit)                
                 } else {
                     return Response.format(false, 'Akun tidak ditemukan', null)
