@@ -26,7 +26,7 @@ class DisposisiController {
                 Notification.send([user.nip, user.nama_lengkap], [data.nip_penerima], 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-masuk/' + insert.id)
 
                 //Tambah Log
-                Log.add(user, 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat + ' Untuk ' + data.nama_penerima)
+                Log.add(user, 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat + ' Untuk ' + data.nama_penerima, insert)
 
                 return Response.format(true, null, insert)
             } else {
@@ -130,7 +130,7 @@ class DisposisiController {
 
                 //Tambah log
                 const dataJson = JSON.parse(JSON.stringify(data))
-                Log.add(user, 'Menghapus Disposisi Surat Nomor ' + dataJson.surat_.nomor_surat + ' Untuk ' + data.nama_penerima)
+                Log.add(user, 'Menghapus Disposisi Surat Nomor ' + dataJson.surat_.nomor_surat + ' Untuk ' + data.nama_penerima, data)
 
                 return Response.format(true, null, 1)
             } else {
