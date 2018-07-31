@@ -192,7 +192,7 @@ class DisposisiController {
                         Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
 
                         //Tambah log
-                        Log.add(user, 'Menyelesaikan Disposisi Dengan Keterangan "' + data.keterangan + '"')
+                        Log.add(user, 'Menyelesaikan Disposisi Dari ' + disposisi.nama_pengirim)
                     } else if (data.status == 2) {
                         //Lengkapi data yang kurang
                         disposisi.status = 2
@@ -203,7 +203,7 @@ class DisposisiController {
                         Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menolak Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
                         
                         //Tambah log
-                        Log.add(user, 'Menolak Disposisi Dengan Alasan "' + data.keterangan + '"')
+                        Log.add(user, 'Menolak Disposisi Dari ' + disposisi.nama_pengirim)
                     }
 
                     return Response.format(true, null, 1)
