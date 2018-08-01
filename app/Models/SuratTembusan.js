@@ -18,10 +18,6 @@ class SuratTembusan extends Model {
     static get updatedAtColumn () {
         return ''
     }
-
-    surat_ () {
-        return this.hasOne('App/Models/SuratMasuk', 'id_surat_masuk', 'id')
-    }
 }
 
 module.exports = SuratTembusan

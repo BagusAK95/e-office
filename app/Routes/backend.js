@@ -714,7 +714,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/surat-masuk/:id', 'SuratMasukController.send')
+    Route.put('/surat-masuk/:id', 'SuratMasukController.send').middleware('checkToken:tatausaha,suratmasuk')
 
     /**
     * @swagger
@@ -799,41 +799,6 @@ Route.group(() => {
     /**
     * @swagger
     * /surat-tembusan:
-    *   post:
-    *     tags:
-    *       - Surat Tembusan
-    *     summary: Add
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: id_surat_masuk
-    *         in: formData
-    *         description: ID Surat Masuk
-    *         required: true
-    *         type: string
-    *       - name: nip_penerima
-    *         in: formData
-    *         description: NIP Penerima
-    *         required: true
-    *         type: string
-    *       - name: nama_penerima
-    *         in: formData
-    *         description: Nama Penerima
-    *         required: true
-    *         type: string
-    *       - name: jabatan_penerima
-    *         in: formData
-    *         description: Jabatan Penerima
-    *         required: true
-    *         type: string
-    */
-    Route.post('/surat-tembusan', 'SuratTembusanController.add').middleware('checkToken:tatausaha')
-
-    /**
-    * @swagger
-    * /surat-tembusan:
     *   get:
     *     tags:
     *       - Surat Tembusan
@@ -843,6 +808,11 @@ Route.group(() => {
     *     produces:
     *       - application/json
     *     parameters:
+    *       - name: keyword
+    *         in: query
+    *         description: Kata Kunci
+    *         required: false
+    *         type: string
     *       - name: tgl_awal
     *         in: query
     *         description: Tanggal Awal
@@ -885,6 +855,36 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/surat-tembusan/:id', 'SuratTembusanController.detail').middleware('checkToken:umum')
+   
+    /**
+    * @swagger
+    * /surat-tembusan/{id}:
+    *   put:
+    *     tags:
+    *       - Surat Tembusan
+    *     summary: Send
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    *       - name: tgl_terima
+    *         in: formData
+    *         description: Tanggal Terima
+    *         required: true
+    *         type: string
+    *       - name: lampiran
+    *         in: formData
+    *         description: File Lampiran
+    *         required: true
+    *         type: string
+    */
+    Route.put('/surat-tembusan/:id', 'SuratTembusanController.send').middleware('checkToken:tatausaha')
 
     /**
     * @swagger
@@ -1228,16 +1228,6 @@ Route.group(() => {
     *         description: Lampiran
     *         required: false
     *         type: string
-    *       - name: instansi_penerima
-    *         in: formData
-    *         description: Instansi Penerima
-    *         required: true
-    *         type: string
-    *       - name: nama_instansi
-    *         in: formData
-    *         description: Nama Instansi
-    *         required: true
-    *         type: string
     *       - name: arr_penerima
     *         in: formData
     *         description: Daftar Penerima
@@ -1394,7 +1384,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/konsep-surat/:id', 'SuratKeluarController.updateConcept')
+    Route.put('/konsep-surat/:id', 'SuratKeluarController.updateConcept').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -1675,4 +1665,44 @@ Route.group(() => {
     *         type: string
     */
     Route.put('/notifikasi/:id', 'NotifikasiController.markAsRead').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /log:
+    *   get:
+    *     tags:
+    *       - Log Aktifitas
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: nip
+    *         in: query
+    *         description: Nomor Induk Pegawai
+    *         required: false
+    *         type: string
+    *       - name: tgl_awal
+    *         in: query
+    *         description: Tanggal Awal
+    *         required: false
+    *         type: string
+    *       - name: tgl_akhir
+    *         in: query
+    *         description: Tanggal Akhir
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: query
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.get('/log', 'LogController.list').middleware('checkToken:umum')
 }).prefix('api')

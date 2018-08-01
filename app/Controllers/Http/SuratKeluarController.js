@@ -249,49 +249,82 @@ class SuratKeluarController {
                                            .where({ instansi_pengirim: user.instansi, id: params.id })
                                            .first()
         if (dataSurat) {
-            if (dataSurat.instansi_penerima) {
-                const dataInstansi = await MasterKantor.find(dataSurat.instansi_pengirim)
+            dataSurat.nip_tata_usaha = user.nip
+            dataSurat.nama_tata_usaha = user.nama_lengkap
+            dataSurat.jabatan_tata_usaha = user.nama_jabatan
+            dataSurat.status_surat = 4
+            dataSurat.save()
 
-                const dataTataUsaha = await Login.query()
-                                                 .where({ level: 3, instansi: dataSurat.instansi_penerima })
-                                                 .first()
+            const dataPengirim = await MasterKantor.find(dataSurat.instansi_pengirim)
+            const arrPenerima = JSON.parse(dataSurat.arr_penerima)
+            const arrTembusan = JSON.parse(dataSurat.arr_tembusan)
+            const listTembusan = arrTembusan.map(function(elem){
+                return elem.nama_instansi;
+            }).join(',');
 
-                const insertSurat = await SuratMasuk.create({
-                    instansi_penerima: dataSurat.instansi_penerima,
-                    tgl_surat: dataSurat.tgl_surat,
-                    nomor_surat: data.nomor_surat,
-                    nomor_agenda: dataSurat.nomor_agenda,
-                    perihal: dataSurat.perihal,
-                    jenis_instansi: 1,
-                    nama_instansi: dataInstansi.nmlokasi,
-                    nama_pengirim: dataSurat.nama_penandatangan,
-                    jabatan_pengirim :dataSurat.jabatan_penandatangan,
-                    klasifikasi: dataSurat.klasifikasi,
-                    keamanan: dataSurat.keamanan,
-                    kecepatan: dataSurat.kecepatan,
-                    ringkasan: dataSurat.ringkasan,
-                    isi_surat: dataSurat.isi_surat,
-                    status_surat: 0
-                })
+            arrPenerima.forEach(penerima => {
+                if (penerima.nip_instansi) {
+                    const dataTataUsaha = await Login.query()
+                                                     .where({ level: 3, instansi: penerima.nip_instansi })
+                                                     .first()
 
-                if (insertSurat) {
-                    dataSurat.nip_tata_usaha = user.nip
-                    dataSurat.nama_tata_usaha = user.nama_lengkap
-                    dataSurat.jabatan_tata_usaha = user.nama_jabatan
-                    dataSurat.status_surat = 4
-                    dataSurat.save()
+                    const insertSurat = await SuratMasuk.create({
+                        instansi_penerima: penerima.nip_instansi,
+                        tgl_surat: dataSurat.tgl_surat,
+                        nomor_surat: data.nomor_surat,
+                        nomor_agenda: dataSurat.nomor_agenda,
+                        perihal: dataSurat.perihal,
+                        jenis_instansi: 1,
+                        nama_instansi: dataPengirim.nmlokasi,
+                        nama_pengirim: dataSurat.nama_penandatangan,
+                        jabatan_pengirim: dataSurat.jabatan_penandatangan,
+                        arr_tembusan: listTembusan,
+                        klasifikasi: dataSurat.klasifikasi,
+                        keamanan: dataSurat.keamanan,
+                        kecepatan: dataSurat.kecepatan,
+                        ringkasan: dataSurat.ringkasan,
+                        isi_surat: dataSurat.isi_surat,
+                        status_surat: 0
+                    })
 
-                    Notification.send([user.nip, dataInstansi.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)                
-
-                    Log.add(user, 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Ke ' + data.nama_instansi, insertSurat)
-                
-                    return Response.format(true, null, insertSurat)
-                } else {
-                    return Response.format(false, 'Surat gagal dikirim', null)
+                    if (insertSurat) {
+                        Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)                
+                    }
                 }
-            } else {
-                return Response.format(true, 'Surat Manual', null)
-            }
+            })
+
+            arrTembusan.forEach(tembusan => {
+                if (tembusan.nip_instansi) {
+                    const dataTataUsaha = await Login.query()
+                                                     .where({ level: 3, instansi: tembusan.nip_instansi })
+                                                     .first()
+
+                    const insertTembusan = await SuratMasuk.create({
+                        instansi_penerima: tembusan.nip_instansi,
+                        tgl_surat: dataSurat.tgl_surat,
+                        nomor_surat: data.nomor_surat,
+                        nomor_agenda: dataSurat.nomor_agenda,
+                        perihal: dataSurat.perihal,
+                        jenis_instansi: 1,
+                        nama_instansi: dataPengirim.nmlokasi,
+                        nama_pengirim: dataSurat.nama_penandatangan,
+                        jabatan_pengirim: dataSurat.jabatan_penandatangan,
+                        arr_tembusan: listTembusan,
+                        klasifikasi: dataSurat.klasifikasi,
+                        keamanan: dataSurat.keamanan,
+                        kecepatan: dataSurat.kecepatan,
+                        ringkasan: dataSurat.ringkasan,
+                        isi_surat: dataSurat.isi_surat,
+                        status_surat: 0
+                    })
+
+                    if (insertTembusan) {
+                        Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Sebagai Tembusan', '/surat-tembusan/' + insertTembusan.id)                
+                    }
+                }
+            })
+
+            return Response.format(true, null, 1)
         } else {
             return Response.format(false, 'Surat tidak ditemukan', null)
         }                        

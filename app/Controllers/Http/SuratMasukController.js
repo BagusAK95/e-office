@@ -4,7 +4,6 @@ const SuratMasuk = use('App/Models/SuratMasuk')
 const Login = use('App/Models/Login')
 const Response = use('App/Helpers/ResponseHelper')
 const Notification = use('App/Helpers/NotificationHelper')
-const SuratTembusan = use('App/Models/SuratTembusan')
 const Log = use('App/Helpers/LogHelper')
 
 class SuratMasukController {
@@ -117,7 +116,6 @@ class SuratMasukController {
             const data = await SuratMasuk.query()
                                          .where({ id: Number(params.id), instansi_penerima: user.instansi })
                                          .with('klasifikasi_')
-                                         .with('tembusan_')
                                          .first()
             if (data) {
                 if (data.nip_pimpinan == user.nip) {
@@ -177,17 +175,6 @@ class SuratMasukController {
 
                 Notification.send([user.nip, user.nama_lengkap], arr_penerima, 'Mengirimkan Surat Nomor ' + dataSurat.nip_tata_usaha, '/surat-masuk/' + params.id)
             
-                const dataTembusan = JSON.parse(dataSurat.arr_tembusan)
-                dataTembusan.forEach(async (tembusan) => {
-                    tembusan.id_surat_masuk = params.id
-
-                    const insertTembusan = await SuratTembusan.create(tembusan)
-
-                    Notification.send([user.nip, user.nama_lengkap], [tembusan.nip_penerima], 'Mengirimkan Surat Nomor ' + dataSurat.nomor_surat + ' Sebagai Tembusan', '/tembusan/' + params.id)
-        
-                    Log.add(user, 'Menambahkan ' + tembusan.nama_penerima + ' Sebagai Tembusan Surat Nomor ' + dataSurat.nomor_surat, insert)
-                });
-
                 Log.add(user, 'Mengirimkan Surat Masuk Nomor ' + dataSurat.nomor_surat + ' Ke Pimpinan', dataSurat)
 
                 return Response.format(true, null, 1)
