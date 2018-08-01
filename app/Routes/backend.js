@@ -633,6 +633,11 @@ Route.group(() => {
     *         description: Tingkat Kecepatan (1=Biasa, 2=Segera, 3=Amat Segera)
     *         required: true
     *         type: string
+    *       - name: arr_tembusan
+    *         in: formData
+    *         description: Daftar Tembusan
+    *         required: false
+    *         type: string
     *       - name: nip_plt
     *         in: formData
     *         description: NIP Pelaksana Tugas
