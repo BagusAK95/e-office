@@ -12,7 +12,7 @@ class SuratMasukController {
         try {
             const user = await auth.getUser()
             const dataPimpinan = await Login.query()
-                                            .where({ level: 2, instansi_penerima: user.instansi })
+                                            .where({ level: 2, instansi: user.instansi })
                                             .first()
             if (dataPimpinan == null) {
                 return Response.format(false, 'Pimpinan tidak ditemukan.', null)
