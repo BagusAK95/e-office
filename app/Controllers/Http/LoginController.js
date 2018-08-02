@@ -30,7 +30,6 @@ class LoginController {
                 return Response.format(false, 'NIP tidak ditemukan', null)
             }    
         } catch (error) {
-            console.log(error)
             return Response.format(false, error.sqlMessage, null)            
         }
     }

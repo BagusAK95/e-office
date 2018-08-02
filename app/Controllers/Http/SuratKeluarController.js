@@ -82,6 +82,25 @@ class SuratKeluarController {
         }
     }
 
+    async unreadAmountConcept({ auth }) {
+        try {
+            const user = await auth.getUser()
+
+            const count = await SuratKeluar.query()
+                                           .where('instansi_pengirim', user.instansi)
+                                           .whereBetween('status_surat', [1, 2])
+                                           .whereHas('pemeriksa_', (pemeriksa) => {
+                                              pemeriksa.where({ nip_pemeriksa: user.nip, tgl_baca: null})
+                                                       .whereNot('status', 0)
+                                           })
+                                           .getCount()
+            
+            return Response.format(true, null, count)
+        } catch (error) {
+            return Response.format(false, error.sqlMessage, null)
+        }
+    }
+
     async listConceptMaked({ request, auth }) {
         try {
             const user = await auth.getUser()
@@ -127,7 +146,7 @@ class SuratKeluarController {
             if (updateSurat > 0) {
                 const updatePemeriksa = await SuratPemeriksa.query()
                                                             .where('id_surat_keluar', params.id)
-                                                            .update({status : 0})
+                                                            .update({status : 0, tgl_baca: null})
                 
                 const dataPemeriksa = await SuratPemeriksa.query()
                                                           .where({id_surat_keluar: params.id, urutan: 1})
@@ -163,7 +182,11 @@ class SuratKeluarController {
                                           .with('klasifikasi_')
                                           .with('surat_masuk_')
                                           .first()
-            if (data) {        
+            if (data) {    
+                const update = await SuratPemeriksa.query()
+                                                   .where({ id_surat_keluar: params.id, nip_pemeriksa: user.id })
+                                                   .update({ tgl_baca: new Date() })
+
                 Log.add(user, 'Melihat Detail Konsep Surat Atas Nama ' + data.nama_penandatangan)
 
                 return Response.format(true, null, data)                
@@ -216,6 +239,21 @@ class SuratKeluarController {
         }
     }
 
+    async unreadAmountMail({ auth }) {
+        try {
+            const user = await auth.getUser()
+
+            const count = await SuratKeluar.query()
+                                           .where({ instansi_pengirim: user.instansi, nip_tata_usaha: user.nip, tgl_baca_tata_usaha: null })
+                                           .whereBetween('status_surat', [3, 4])
+                                           .getCount()
+            
+            return Response.format(true, null, count)
+        } catch (error) {
+            return Response.format(false, error.sqlMessage, null)
+        }
+    }
+
     async detailMail({ params, auth }) {
         try {
             const user = await auth.getUser()
@@ -230,6 +268,13 @@ class SuratKeluarController {
                                           .with('surat_masuk_')
                                           .first()
             if (data) {
+                if (data.nip_tata_usaha == user.nip) {
+                    if (data.tgl_baca_tata_usaha == null) {
+                        data.tgl_baca_tata_usaha = new Date()
+                        await data.save()
+                    }
+                }
+                
                 Log.add(user, 'Melihat Detail Surat Keluar Atas Nama ' + data.nama_penandatangan)
 
                 return Response.format(true, null, data)                
@@ -258,11 +303,11 @@ class SuratKeluarController {
             const dataPengirim = await MasterKantor.find(dataSurat.instansi_pengirim)
             const arrPenerima = JSON.parse(dataSurat.arr_penerima)
             const arrTembusan = JSON.parse(dataSurat.arr_tembusan)
-            const listTembusan = arrTembusan.map(function(elem){
+            const listTembusan = arrTembusan.map((elem) => {
                 return elem.nama_instansi;
             }).join(',');
 
-            arrPenerima.forEach(penerima => {
+            arrPenerima.forEach(async (penerima) => {
                 if (penerima.nip_instansi) {
                     const dataTataUsaha = await Login.query()
                                                      .where({ level: 3, instansi: penerima.nip_instansi })
@@ -296,7 +341,7 @@ class SuratKeluarController {
                 }
             })
 
-            arrTembusan.forEach(tembusan => {
+            arrTembusan.forEach(async (tembusan) => {
                 if (tembusan.nip_instansi) {
                     const dataTataUsaha = await Login.query()
                                                      .where({ level: 3, instansi: tembusan.nip_instansi })

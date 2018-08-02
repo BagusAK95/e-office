@@ -53,12 +53,17 @@ class SuratPemeriksaController {
                                 return Response.format(true, 'Konsep surat diajukan ke atasan', null)
                             } else {
                                 dataSurat.status_surat = 3
-                                dataSurat.save()
+                                await dataSurat.save()
 
                                 const dataTataUsaha = await Login.query()
                                                                  .where({ level: 3, instansi: user.instansi })
                                                                  .first()
                                 if (dataTataUsaha) {
+                                    dataSurat.nip_tata_usaha = dataTataUsaha.nip
+                                    dataSurat.nama_tata_usaha = dataTataUsaha.nama_lengkap
+                                    dataSurat.jabatan_tata_usaha = dataTataUsaha.nama_jabatan
+                                    await dataSurat.save()
+
                                     Notification.send([user.nip, user.nama_lengkap], [dataTataUsaha.nip], 'Menambahkan Surat Keluar', '/surat-keluar/' + params.id_surat_keluar)
 
                                     Log.add(user, 'Menyetujui Konsep Surat Atas Nama ' + dataSurat.nama_penandatangan)

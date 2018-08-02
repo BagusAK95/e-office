@@ -186,7 +186,6 @@ class MasterPegawaiController {
 
             return Response.format(true, null, arrPegawaiFix)
         } catch (error) {
-            console.log(error)
             return Response.format(false, error.sqlMessage, null)
         }
     }

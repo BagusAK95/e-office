@@ -217,6 +217,19 @@ class DisposisiController {
             return Response.format(false, error.sqlMessage, null)            
         }
     }
+
+    async unreadAmount({ auth }) {
+        try {
+            const user = await auth.getUser()
+            const count = await Disposisi.query()
+                                         .where({ instansi: user.instansi, nip_penerima: user.nip, tgl_baca: null })
+                                         .getCount()
+                
+            return Response.format(true, null, count)
+        } catch (error) {
+            return Response.format(false, error.sqlMessage, null)
+        }
+    }
 }
 
 module.exports = DisposisiController

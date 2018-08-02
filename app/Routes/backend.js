@@ -1825,4 +1825,74 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/log', 'LogController.list').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /unread-amount/disposisi:
+    *   get:
+    *     tags:
+    *       - Unread Amount
+    *     summary: Disposisi
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/unread-amount/disposisi', 'DisposisiController.unreadAmount').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /unread-amount/konsep-surat:
+    *   get:
+    *     tags:
+    *       - Unread Amount
+    *     summary: Konsep Surat
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/unread-amount/konsep-surat', 'SuratKeluarController.unreadAmountConcept').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /unread-amount/surat-keluar:
+    *   get:
+    *     tags:
+    *       - Unread Amount
+    *     summary: Surat Keluar
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/unread-amount/surat-keluar', 'SuratKeluarController.unreadAmountMail').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /unread-amount/surat-masuk:
+    *   get:
+    *     tags:
+    *       - Unread Amount
+    *     summary: Surat Masuk
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/unread-amount/surat-masuk', 'SuratMasukController.unreadAmount').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /unread-amount/surat-tembusan:
+    *   get:
+    *     tags:
+    *       - Unread Amount
+    *     summary: Surat Tembusan
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/unread-amount/surat-tembusan', 'SuratTembusanController.unreadAmount').middleware('checkToken:umum')
 }).prefix('api')

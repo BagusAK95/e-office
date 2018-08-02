@@ -22,6 +22,7 @@ class SuratMasukController {
             data.nip_tata_usaha = user.nip
             data.nama_tata_usaha = user.nama_lengkap
             data.jabatan_tata_usaha = user.nama_jabatan
+            data.tgl_baca_tata_usaha = new Date()
             data.nip_pimpinan = dataPimpinan.nip
             data.nama_pimpinan = dataPimpinan.nama_lengkap
             data.jabatan_pimpinan = dataPimpinan.nama_jabatan
@@ -185,6 +186,39 @@ class SuratMasukController {
             }
         } else {
             return Response.format(false, 'Surat tidak ditemukan', null)
+        }
+    }
+
+    async unreadAmount({ auth }) {
+        try {
+            const user = await auth.getUser()
+
+            let sql = []
+            switch (user.level) {
+                case 3: //Tata Usaha
+                    sql.push(`nip_tata_usaha = '` + user.nip + `'`)
+                    sql.push('tgl_baca_tata_usaha IS NULL')
+                    break;
+                case 2: //Pimpinan
+                    sql.push(`nip_pimpinan = '` + user.nip + `'`)
+                    sql.push('status_surat = 1')
+                    sql.push('tgl_baca_pimpinan IS NULL')
+                    break;
+                default: //Staff
+                    sql.push(`nip_plt = '` + user.nip + `'`)
+                    sql.push('status_surat = 1')
+                    sql.push('tgl_baca_plt IS NULL')
+                    break;
+            }
+            sql.push('instansi_penerima = ' + user.instansi)
+
+            const count = await SuratMasuk.query()
+                                          .whereRaw(sql.join(' AND '))
+                                          .getCount()
+            
+            return Response.format(true, null, count)
+        } catch (error) {
+            return Response.format(false, error.sqlMessage, null)
         }
     }
 }
