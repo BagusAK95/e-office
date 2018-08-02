@@ -150,8 +150,7 @@
             
             /*Page*/
             showtable();
-            showcomment();
-            showdisposisi();
+            
             $("#loader").fadeOut("xslow");
             /*Page*/
         });
@@ -168,10 +167,10 @@
                         headers: {
                                 'Authorization': 'Bearer ' + data.token
                         },
-                        url: '/api/surat-masuk/{{params.id}}', 
+                        url: '/api/surat-tembusan/{{params.id}}', 
                         success: function (data) 
                         { 
-                            var element = data.data;
+                            var element = data.data.surat_;
 
                             var keamanan = "";
                             if(element.keamanan==1)
@@ -276,7 +275,8 @@
                                 $("#buat_dispo").show();
                                 $("#histor").show();
                             }
-                            
+                            showcomment(element.id);
+                            showdisposisi(element.id);
                             //showdisposisi();
                         },
                         error : function(data)
@@ -290,7 +290,7 @@
 
 
         
-        function showcomment()
+        function showcomment(id)
         {
             //alert("ssdsd");
             $.ajax({ 
@@ -303,7 +303,7 @@
                         headers: {
                                 'Authorization': 'Bearer ' + data.token
                         },
-                        url: '/api/komentar?id_surat_masuk={{params.id}}&page=1&limit=10000', 
+                        url: '/api/komentar?id_surat_masuk='+id+'&page=1&limit=10000', 
                         success: function (data) 
                         { 
                             var isi="";
@@ -372,7 +372,7 @@
         }
         
         
-        function showdisposisi()
+        function showdisposisi(id)
         {
             //alert("ssdsd");
             $.ajax({ 
@@ -385,7 +385,7 @@
                         headers: {
                                 'Authorization': 'Bearer ' + data.token
                         },
-                        url: '/api/disposisi/surat/{{params.id}}', 
+                        url: '/api/disposisi/surat/'+id, 
                         success: function (data) 
                         { 
                             var isi="";

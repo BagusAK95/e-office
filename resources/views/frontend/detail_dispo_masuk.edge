@@ -52,7 +52,7 @@
               <div class="panel-body">
                 <div class="col-lg-12" id="tombol_semua">
                 <center>
-                    <a id="dispos" class='btn btn-primary' style='color:white;width:200px'><i class='md-mail-send'></i>&nbsp;Buat Disposisi</a>
+                    <button data-target="#exampleNiftyFlipHorizontal" data-toggle="modal" type="button" class="btn btn-info" style='width:200px'><i class='md-mail-send'></i>&nbsp;Buat Disposisi</button>
                     <a data-target="#exampleFillIn" data-toggle="modal" class='btn btn-success' style='color:white;width:200px'><i class='md-shield-check'></i>&nbsp;Selesaikan</a>
                     <a data-target="#exampleFillIn2" data-toggle="modal" id="" class='btn btn-danger' style='color:white;width:200px'><i class='md-close'></i>&nbsp;Tolak</a>
                 </center>
@@ -208,6 +208,51 @@
         </div>
 
 
+        <!-- Modal -->
+      <div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontal" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+      <div class="modal-dialog modal-simple">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Buat Disposisi</h4>
+          </div>
+          <form id="simpan">
+          <div class="modal-body">
+                <div class="row">
+                    <div class="col-xxl-4 col-lg-12">
+                        <!-- Example Panel With Heading -->
+                        <div class="panel-body">
+                            <div class="col-lg-12">
+                                <div class="form-group " data-plugin="formMaterial">
+                                    <label class="form-control-label">Tujuan Disposisi</label>
+                                    <select class="form-control pegawai" name="nip_penerima" title="Data Pegawai" data-plugin="select2" multiple="">
+                                    </select>
+                                    <input type="hidden" name="id_surat_masuk" id="id_surat_masuk">
+                                </div>
+                                <div class="form-group " data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">Instruksi Disposisi</label>
+                                    <select class="form-control instruksi" name="instruksi" id="instruksi">
+                                    </select>
+                                </div>
+                                <div class="form-group " data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">Isi Disposisi</label>
+                                    <textarea name="isi_disposisi" id="isi_disposisi" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Example Panel With Heading -->
+                    </div>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success" style='float:right'><i class='icon md-plus'></i>&nbsp;Simpan</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
+
       <!-- Trigger the modal with a button -->
 
       <script>
@@ -225,6 +270,7 @@
             /*Page*/
             showtable();
             showcomment();
+            instruksi();
             $("#loader").fadeOut("xslow");
             /*Page*/
         });
@@ -395,6 +441,8 @@
                             }
 
                             showdisposisi(element_dispo.id_surat_masuk);
+                            pegawaiall(id_surat_masuk);
+                            $("#id_surat_masuk").val(id_surat_masuk);
                         },
                         error : function(data)
                         {
@@ -641,6 +689,142 @@
                 }
             });
         }
+
+
+        function pegawaiall(id) 
+        {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/gettoken', 
+                success: function (data) 
+                { 
+                        $.ajax({ 
+                            type: 'GET', 
+                            url: '/api/master-pegawai/dispositionReciver/'+id, 
+                            headers: {
+                                        'Authorization': 'Bearer ' + data.token
+                                    },
+                            dataType: 'json',
+                            success: function (data) 
+                            {   
+                                var isi = "";
+                                $.each(data.data, function(index, element) {
+                                    var depan = ''
+                                    var belakang = ''
+                                    if(element.gelar_depan)
+                                    {
+                                        depan += element.gelar_depan+" ";
+                                    }
+                                    var belakang = "";
+                                    if(element.gelar_belakang)
+                                    {
+                                        belakang += ", "+element.gelar_belakang;
+                                    }
+                                    isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                                })
+                                $(".pegawai").html(isi).show();
+                            },
+                            error: function ()
+                            {
+                                return false;
+                            }
+                        });
+                }
+            });
+        }
+
+
+        
+        function instruksi() 
+        {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/gettoken', 
+                success: function (data) 
+                { 
+                        $.ajax({ 
+                            type: 'GET', 
+                            url: '/api/master-instruksi', 
+                            headers: {
+                                        'Authorization': 'Bearer ' + data.token
+                                    },
+                            dataType: 'json',
+                            success: function (data) 
+                            {   
+                                var isi = "";
+                                $.each(data.data, function(index, element) {
+                                    isi += "<option value='"+element.id+"'>"+element.nama+"</option>";
+                                })
+                                $(".instruksi").html(isi).show();
+                            },
+                            error: function ()
+                            {
+                                return false;
+                            }
+                        });
+                }
+            });
+        }
+        $("#simpan").submit(function() {
+            var id_surat_masuk = $("#id_surat_masuk").val();
+            var instruksi =  $("#instruksi").val();
+            var keamanan = $("#keamanan").val();
+            var kecepatan = $("#kecepatan").val();
+            var isi_disposisi = $("#isi_disposisi").val();
+            
+
+            var data = $(".pegawai").val();
+            $.each(data, function(index, da) {
+                var all = da.split("-");
+
+                var nip = all[0];
+                var nama = all[1];
+                var jabatan = all[2];
+
+                //Data
+                $.ajax({ 
+                        
+                    type: 'GET', 
+                    url: '/gettoken', 
+                    success: function (data) { 
+                        $.ajax({ 
+                        type: 'POST', 
+                        url: '/api/disposisi', 
+                        headers: {
+                        'Authorization': 'Bearer ' + data.token
+                        },
+                        data : "id_surat_masuk="+$("#id_surat_masuk").val()+"&instruksi="+$("#instruksi").val()+"&isi_disposisi="+$("#isi_disposisi").val()+"&nip_penerima="+nip+"&nama_penerima="+nama+"&jabatan_penerima="+jabatan,
+                        success: function (data) 
+                        { 
+                            if(data.success==false)
+                            {
+                                swal("Gagal!", "Disposisi Gagal.", "error");
+                            }
+                            else if(data.success==true)
+                            {
+                                swal({title: "Berhasil", text: "Disposisi Berhasil.", type: "success"},
+                                function(){ 
+                                    window.location.href="/disposisi-keluar";
+                                }
+                                );
+                            }
+                        },
+                        error: function(data)
+                        {
+                            swal("Gagal!", "Disposisi Gagal.", "error");
+                        }
+                        });
+                    },
+                    error: function ()
+                    {
+                        return false;
+                    }
+                    });
+
+
+            });
+            return false;    
+        });
       </script>
 @endsection
 

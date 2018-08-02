@@ -257,14 +257,26 @@
                             if(element.status==1)
                             {
                                 sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Selesai</span>";
+                                sts += "<br><span style='font-size: 9pt;'>"+tanggal_keterangan(element.tgl_selesai)+"</span>";
                             }
                             else if(element.status==2)
                             {
                                 sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Ditolak</span>";
+                                sts += "<br><span style='font-size: 9pt;'>-</span>";
                             }
                             else
                             {
-                                sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Terkirim</span>";
+                                if(element.tgl_baca)
+                                {
+                                    sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Sudah Dibaca</span>";
+                                    sts += "<br><span style='font-size: 9pt;'>"+tanggal_keterangan(element.tgl_baca)+"</span>";
+                                }
+                                else
+                                {
+                                    sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Belum Dibaca</span>";
+                                    sts += "<br><span style='font-size: 9pt;'>-</span>";
+                                }
+                                
                             }
 
 

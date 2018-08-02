@@ -1,13 +1,24 @@
 @layout('frontend/main')
 @section('content')
+<style>
+.img-circular{
+ width: 150px;
+ height: 150px;
+ background-size: cover;
+ display: block;
+ border-radius: 100px;
+ -webkit-border-radius: 100px;
+ -moz-border-radius: 100px;
+}
+</style>
       <div class="page-content container-fluid">
         <div class="row">
           <div class="col-lg-3">
             <!-- Page Widget -->
             <div class="card card-shadow text-center">
               <div class="card-block">
-                <a class="avatar avatar-lg" href="javascript:void(0)">
-                  <span class='foto'></span>
+                <a>
+                  <center><span id='foto'></span></center>
                 </a>
                 <h4 class="profile-user"><span class='nama_user'></span></h4>
                 <p class="profile-job"><span id='jabatan'></span></p>
@@ -50,6 +61,16 @@
                                       <input type="text" disabled class="form-control" id="no_hp" name="nohp" placeholder=""
                                       />
                                     </div>
+                                    <div class="form-group" data-plugin="formMaterial">
+                                        <label class="form-control-label" for="inputEmail"><b></b></label>
+                                      <div class="input-group">
+                                          <span class="input-group-prepend">
+                                          <button type="button" disabled id="file_foto" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="md-collection-plus"></i>&nbsp;Foto</button>
+                                          <button type="button" class="btn btn-danger" onclick="$('#lampiran').val('')"><i class="md-close"></i>&nbsp;Reset</button>
+                                          </span>
+                                          <input type="text" id="lampiran" name="foto" class="form-control" readonly style="width:60%" required>
+                                      </div>
+                                    </div>
                                     
                                     <div class='form-group form-material col-xl-12 text-right padding-top-m'>
                                     <a href='#' onclick='edt()' class='btn btn-success waves-effect waves-classic' id='btnedit' style="color:white"><i class="icon md-edit"></i>Edit</a>
@@ -71,6 +92,34 @@
           </div>
         </div>
       </div>
+
+
+      <div id="myModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+             <!-- Modal content-->
+             <div class="modal-content">
+                <div class="modal-header">
+                   <button type="button" class="close" data-dismiss="modal">&times;</button>
+                   <h4 class="modal-title">Profile Picture</h4>
+                </div>
+                <form method="post" enctype='multipart/form-data' id="upload_lampiran">
+                   <div class="modal-body">
+                      <input type="file" name="file" id="file">
+                      <br>
+                      <center>
+                         <div class="loader vertical-align-middle loader-ellipsis" style="display: none;"></div>
+                      </center>
+                      <br>
+                      <span style="color:red">*Note : Tipe file jpg,png</span>
+                      
+                   </div>
+                   <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Upload</button>
+                   </div>
+                </form>
+             </div>
+          </div>
+      </div>
       <script>
       $( document ).ready(function() {
           /*Main*/
@@ -88,6 +137,7 @@
       {
         $('#email').prop('disabled', false);
         $('#no_hp').prop('disabled', false);
+        $('#file_foto').prop('disabled', false);
         $("#btnsimpan").show();
         $("#btnbatal").show();
         $("#btnedit").hide();
@@ -96,6 +146,7 @@
       {
         $('#email').prop('disabled', true);
         $('#no_hp').prop('disabled', true);
+        $('#file_foto').prop('disabled', true);
         $("#btnsimpan").hide();
         $("#btnbatal").hide();
         $("#btnedit").show();
@@ -173,5 +224,54 @@
                 }
             });
         }
+      $('#upload_lampiran').on('submit', function(e){
+       $(".loader").show();
+           var date = new Date();
+   
+           var year = date.getFullYear();
+           var month = date.getMonth() + 1;
+           var day = date.getDate();
+           var hours = date.getHours();
+           var minutes = date.getMinutes();
+           var seconds = date.getSeconds();
+   
+   
+           var all = $("#file").val();
+           var neww = all.split(".");
+           var eks = neww[1];
+
+           if((eks=="jpg")||(eks=="JPG")||(eks=="png"))
+           {    
+                e.preventDefault();
+                var form = e.target;
+                var data = new FormData(form);
+                $.ajax({
+                url: "/upload_file",
+                method: form.method,
+                processData: false,
+                contentType: false,
+                data: data,
+                processData: false,
+                success: function(msg){
+                    $("#lampiran").val("/uploads/"+msg);
+                    $(".loader").hide();
+                    $('.modal').modal('hide');
+                },
+                error:function()
+                {
+                    $(".loader").hide();
+                    $('.modal').modal('hide');
+                }
+                });
+           }
+           else
+           {
+              alert("Tipe file tidak sesuai!");
+              $(".loader").hide();
+           }
+           return false;
+       });
+
+
       </script>
 @endsection

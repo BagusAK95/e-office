@@ -1,13 +1,24 @@
 @layout('frontend/main')
 @section('content')
+<style>
+    .img-circular{
+     width: 150px;
+     height: 150px;
+     background-size: cover;
+     display: block;
+     border-radius: 100px;
+     -webkit-border-radius: 100px;
+     -moz-border-radius: 100px;
+    }
+    </style>
  <div class="page-content container-fluid">
         <div class="row">
           <div class="col-lg-3">
             <!-- Page Widget -->
             <div class="card card-shadow text-center">
               <div class="card-block">
-                <a class="avatar avatar-lg" href="javascript:void(0)">
-                  <span class="foto"></span>
+                <a class="" href="javascript:void(0)">
+                 <center> <span id="foto"></span></center>
                 </a>
                 <h4 class="profile-user nama_user"></h4>
                 <p class="profile-job jabatanm"></p>
