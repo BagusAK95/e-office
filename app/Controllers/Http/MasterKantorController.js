@@ -55,7 +55,7 @@ class MasterKantorController {
                 return Response.format(false, 'Instansi tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }
     }
 
@@ -121,7 +121,7 @@ class MasterKantorController {
                 return Response.format(false, 'Instansi tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }
     }
 
@@ -133,7 +133,7 @@ class MasterKantorController {
                                            
             return Response.format(data, null, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 }

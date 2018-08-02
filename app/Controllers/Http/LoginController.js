@@ -30,7 +30,7 @@ class LoginController {
                 return Response.format(false, 'NIP tidak ditemukan', null)
             }    
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }
     }
 
@@ -53,7 +53,7 @@ class LoginController {
                 return Response.format(false, 'User tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -76,7 +76,7 @@ class LoginController {
                 return Response.format(false, 'User tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 }

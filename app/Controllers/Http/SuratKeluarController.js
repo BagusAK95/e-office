@@ -43,7 +43,7 @@ class SuratKeluarController {
 
             return Response.format(true, null, insertKonsep)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }
     }
 
@@ -78,7 +78,7 @@ class SuratKeluarController {
             
             return Response.format(true, null, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -97,7 +97,7 @@ class SuratKeluarController {
             
             return Response.format(true, null, count)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -128,7 +128,7 @@ class SuratKeluarController {
 
             return Response.format(true, null, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -165,7 +165,7 @@ class SuratKeluarController {
                 return Response.format(false, 'Konsep Surat tidak ditemukan', null)
             }    
         } catch (error) {            
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -194,7 +194,7 @@ class SuratKeluarController {
                 return Response.format(false, 'Konsep tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -235,7 +235,7 @@ class SuratKeluarController {
 
             return Response.format(true, null, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -250,7 +250,7 @@ class SuratKeluarController {
             
             return Response.format(true, null, count)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -282,7 +282,7 @@ class SuratKeluarController {
                 return Response.format(false, 'Surat tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 

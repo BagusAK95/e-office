@@ -30,7 +30,7 @@ class ProfileController {
                 return Response.format(false, 'Akun tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }
     }
 

@@ -81,7 +81,7 @@ class SuratPemeriksaController {
                 }
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }
     }
 
@@ -112,7 +112,7 @@ class SuratPemeriksaController {
 
             return Response.format(true, 'Update daftar pemeriksa berhasil', null)
         } catch (error) {            
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 }

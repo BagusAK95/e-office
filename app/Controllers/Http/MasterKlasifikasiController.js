@@ -10,7 +10,7 @@ class MasterKlasifikasiController {
             const data = await MasterKlasifikasi.query()
             return Response.format(true, null, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)                
+            return Response.format(false, error, null)                
         }
     }
 }

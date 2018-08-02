@@ -20,7 +20,7 @@ class NotifikasiController {
 
             return Response.format(true, count, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)                
+            return Response.format(false, error, null)                
         }
     }
 
@@ -41,7 +41,7 @@ class NotifikasiController {
                 return Response.format(false, 'Notifikasi tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 }

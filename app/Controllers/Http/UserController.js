@@ -40,7 +40,7 @@ class UserController {
 
             return Response.format(true, null, insert)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -62,7 +62,7 @@ class UserController {
                 return Response.format(false, 'User tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -83,7 +83,7 @@ class UserController {
                 return Response.format(false, 'User tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -106,7 +106,7 @@ class UserController {
                                     
             return Response.format(true, null, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }
     }
 
@@ -126,7 +126,7 @@ class UserController {
                 return Response.format(false, 'User tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }
     }
 }

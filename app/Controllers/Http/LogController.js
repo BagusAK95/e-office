@@ -26,7 +26,7 @@ class LogController {
             
             return Response.format(true, null, data)            
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }
     }
 }

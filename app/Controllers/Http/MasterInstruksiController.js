@@ -8,9 +8,9 @@ class MasterInstruksiController {
         try {
             //Get data dari database
             const data = await MasterInstruksi.query()
-            return Response.format(true, null, data)
+            return Response.format(true, null, data)            
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)                
+            return Response.format(false, error, null)
         }
     }
 }

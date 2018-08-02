@@ -27,7 +27,7 @@ class MasterPegawaiController {
 
             return Response.format(true, null, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)                
+            return Response.format(false, error, null)                
         }
     }
 
@@ -41,7 +41,7 @@ class MasterPegawaiController {
             
             return Response.format(true, null, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)                
+            return Response.format(false, error, null)                
         }
     }
 
@@ -59,7 +59,7 @@ class MasterPegawaiController {
                                             
             return Response.format(true, null, data)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)                
+            return Response.format(false, error, null)                
         }
     }
 
@@ -111,7 +111,7 @@ class MasterPegawaiController {
                 return Response.format(false, 'Surat tidak ditemukan', null)
             }             
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -186,7 +186,7 @@ class MasterPegawaiController {
 
             return Response.format(true, null, arrPegawaiFix)
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)
+            return Response.format(false, error, null)
         }
     }
 
@@ -202,7 +202,7 @@ class MasterPegawaiController {
                 return Response.format(false, 'Pegawai tidak ditemukan', null)
             }
         } catch (error) {
-            return Response.format(false, error.sqlMessage, null)            
+            return Response.format(false, error, null)            
         }   
     }
 }
