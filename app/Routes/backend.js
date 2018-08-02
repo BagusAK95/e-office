@@ -694,6 +694,26 @@ Route.group(() => {
     /**
     * @swagger
     * /surat-masuk/{id}:
+    *   delete:
+    *     tags:
+    *       - Surat Masuk
+    *     summary: Delete
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkToken:tatausaha,suratmasuk')
+
+    /**
+    * @swagger
+    * /surat-masuk/{id}:
     *   put:
     *     tags:
     *       - Surat Masuk
@@ -778,6 +798,20 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /surat-masuk/unreadAmount:
+    *   get:
+    *     tags:
+    *       - Surat Masuk
+    *     summary: Unread Amount
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/surat-masuk/unreadAmount', 'SuratMasukController.unreadAmount').middleware('checkToken:umum')
+
+    /**
+    * @swagger
     * /surat-masuk/{id}:
     *   get:
     *     tags:
@@ -795,26 +829,6 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/surat-masuk/:id', 'SuratMasukController.detail').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /surat-masuk/{id}:
-    *   delete:
-    *     tags:
-    *       - Surat Masuk
-    *     summary: Delete
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: id
-    *         in: path
-    *         description: ID
-    *         required: true
-    *         type: string
-    */
-    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkToken:tatausaha,suratmasuk')
 
     /**
     * @swagger
@@ -859,26 +873,6 @@ Route.group(() => {
     /**
     * @swagger
     * /surat-tembusan/{id}:
-    *   get:
-    *     tags:
-    *       - Surat Tembusan
-    *     summary: Detail
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: id
-    *         in: path
-    *         description: ID
-    *         required: true
-    *         type: string
-    */
-    Route.get('/surat-tembusan/:id', 'SuratTembusanController.detail').middleware('checkToken:umum')
-   
-    /**
-    * @swagger
-    * /surat-tembusan/{id}:
     *   put:
     *     tags:
     *       - Surat Tembusan
@@ -905,6 +899,40 @@ Route.group(() => {
     *         type: string
     */
     Route.put('/surat-tembusan/:id', 'SuratTembusanController.send').middleware('checkToken:tatausaha')
+
+    /**
+    * @swagger
+    * /surat-tembusan/unreadAmount:
+    *   get:
+    *     tags:
+    *       - Surat Tembusan
+    *     summary: Unread Amount
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/surat-tembusan/unreadAmount', 'SuratTembusanController.unreadAmount').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /surat-tembusan/{id}:
+    *   get:
+    *     tags:
+    *       - Surat Tembusan
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-tembusan/:id', 'SuratTembusanController.detail').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -950,6 +978,56 @@ Route.group(() => {
     *         type: string
     */
     Route.post('/disposisi', 'DisposisiController.add').middleware('checkToken:umum,disposisi')
+
+    /**
+    * @swagger
+    * /disposisi/setStatus/{id}:
+    *   put:
+    *     tags:
+    *       - Disposisi
+    *     summary: Set Status
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    *       - name: status
+    *         in: formData
+    *         description: Status (1=Diselesaikan, 2=Ditolak)
+    *         required: true
+    *         type: string
+    *       - name: keterangan
+    *         in: formData
+    *         description: Keterangan
+    *         required: true
+    *         type: string
+    */
+    Route.put('/disposisi/setStatus/:id', 'DisposisiController.setStatus').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /disposisi/{id}:
+    *   delete:
+    *     tags:
+    *       - Disposisi
+    *     summary: Delete
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.delete('/disposisi/:id', 'DisposisiController.delete').middleware('checkToken:umum,disposisi')
 
     /**
     * @swagger
@@ -1053,6 +1131,20 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /disposisi/unreadAmount:
+    *   get:
+    *     tags:
+    *       - Disposisi
+    *     summary: Unread Amount
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/disposisi/unreadAmount', 'DisposisiController.unreadAmount').middleware('checkToken:umum')
+
+    /**
+    * @swagger
     * /disposisi/{id}:
     *   get:
     *     tags:
@@ -1070,56 +1162,6 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/disposisi/:id', 'DisposisiController.detail').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /disposisi/{id}:
-    *   delete:
-    *     tags:
-    *       - Disposisi
-    *     summary: Delete
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: id
-    *         in: path
-    *         description: ID
-    *         required: true
-    *         type: string
-    */
-    Route.delete('/disposisi/:id', 'DisposisiController.delete').middleware('checkToken:umum,disposisi')
-
-    /**
-    * @swagger
-    * /disposisi/setStatus/{id}:
-    *   put:
-    *     tags:
-    *       - Disposisi
-    *     summary: Set Status
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: id
-    *         in: path
-    *         description: Id
-    *         required: true
-    *         type: string
-    *       - name: status
-    *         in: formData
-    *         description: Status (1=Diselesaikan, 2=Ditolak)
-    *         required: true
-    *         type: string
-    *       - name: keterangan
-    *         in: formData
-    *         description: Keterangan
-    *         required: true
-    *         type: string
-    */
-    Route.put('/disposisi/setStatus/:id', 'DisposisiController.setStatus').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -1408,23 +1450,53 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /konsep-surat/{id}:
-    *   get:
+    * /konsep-surat/checkingConcept/{id_surat_keluar}:
+    *   put:
     *     tags:
     *       - Konsep Surat
-    *     summary: Detail
+    *     summary: Checking Concept
     *     consumes:
     *       - application/x-www-form-urlencoded
     *     produces:
     *       - application/json
     *     parameters:
-    *       - name: id
+    *       - name: id_surat_keluar
     *         in: path
-    *         description: ID
+    *         description: Id Surat Keluar
+    *         required: true
+    *         type: string
+    *       - name: status
+    *         in: formData
+    *         description: Status (2=Revisi, 3=Disetujui)
     *         required: true
     *         type: string
     */
-    Route.get('/konsep-surat/:id', 'SuratKeluarController.detailConcept').middleware('checkToken:umum')
+    Route.put('/konsep-surat/checkingConcept/:id_surat_keluar', 'SuratPemeriksaController.updateStatus').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /konsep-surat/updateChecker/{id_surat_keluar}:
+    *   put:
+    *     tags:
+    *        - Konsep Surat
+    *     summary: Update Checker
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_surat_keluar
+    *         in: path
+    *         description: Id Surat Keluar
+    *         required: true
+    *         type: string
+    *       - name: arr_pemeriksa
+    *         in: formData
+    *         description: Daftar Pemeriksa Konsep
+    *         required: true
+    *         type: string
+    */
+    Route.put('/konsep-surat/updateChecker/:id_surat_keluar', 'SuratPemeriksaController.UpdateList').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -1508,60 +1580,24 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /konsep-surat/checkingConcept/{id_surat_keluar}:
-    *   put:
-    *     tags:
-    *       - Konsep Surat
-    *     summary: Checking Concept
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: id_surat_keluar
-    *         in: path
-    *         description: Id Surat Keluar
-    *         required: true
-    *         type: string
-    *       - name: status
-    *         in: formData
-    *         description: Status (2=Revisi, 3=Disetujui)
-    *         required: true
-    *         type: string
-    */
-    Route.put('/konsep-surat/checkingConcept/:id_surat_keluar', 'SuratPemeriksaController.updateStatus').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /konsep-surat/updateChecker/{id_surat_keluar}:
-    *   put:
-    *     tags:
-    *       - Konsep Surat
-    *     summary: Update Checker
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: id_surat_keluar
-    *         in: path
-    *         description: Id Surat Keluar
-    *         required: true
-    *         type: string
-    *       - name: arr_pemeriksa
-    *         in: formData
-    *         description: Daftar Pemeriksa Konsep
-    *         required: true
-    *         type: string
-    */
-    Route.put('/konsep-surat/updateChecker/:id_surat_keluar', 'SuratPemeriksaController.UpdateList').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /surat-keluar/{id}:
+    * /konsep-surat/unreadAmount:
     *   get:
     *     tags:
-    *       - Surat Keluar
+    *       - Konsep Surat
+    *     summary: Unread Amount
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/konsep-surat/unreadAmount', 'SuratKeluarController.unreadAmountConcept').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /konsep-surat/{id}:
+    *   get:
+    *     tags:
+    *       - Konsep Surat
     *     summary: Detail
     *     consumes:
     *       - application/x-www-form-urlencoded
@@ -1574,7 +1610,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-keluar/:id', 'SuratKeluarController.detailMail').middleware('checkToken:umum')
+    Route.get('/konsep-surat/:id', 'SuratKeluarController.detailConcept').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -1734,7 +1770,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-keluar', 'SuratKeluarController.ListMail').middleware('checkToken:umum')
+    Route.get('/surat-keluar', 'SuratKeluarController.listMail').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -1760,6 +1796,40 @@ Route.group(() => {
     *         type: string
     */
     Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail').middleware('checkToken:tatausaha,suratkeluar')
+
+    /**
+    * @swagger
+    * /surat-keluar/unreadAmount:
+    *   get:
+    *     tags:
+    *       - Surat Keluar
+    *     summary: Unread Amount
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/surat-keluar/unreadAmount', 'SuratKeluarController.unreadAmountMail').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /surat-keluar/{id}:
+    *   get:
+    *     tags:
+    *       - Surat Keluar
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: ID
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-keluar/:id', 'SuratKeluarController.detailMail').middleware('checkToken:umum')
 
     /**
     * @swagger
@@ -1845,74 +1915,4 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/log', 'LogController.list').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /unread-amount/disposisi:
-    *   get:
-    *     tags:
-    *       - Unread Amount
-    *     summary: Disposisi
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    */
-    Route.get('/unread-amount/disposisi', 'DisposisiController.unreadAmount').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /unread-amount/konsep-surat:
-    *   get:
-    *     tags:
-    *       - Unread Amount
-    *     summary: Konsep Surat
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    */
-    Route.get('/unread-amount/konsep-surat', 'SuratKeluarController.unreadAmountConcept').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /unread-amount/surat-keluar:
-    *   get:
-    *     tags:
-    *       - Unread Amount
-    *     summary: Surat Keluar
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    */
-    Route.get('/unread-amount/surat-keluar', 'SuratKeluarController.unreadAmountMail').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /unread-amount/surat-masuk:
-    *   get:
-    *     tags:
-    *       - Unread Amount
-    *     summary: Surat Masuk
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    */
-    Route.get('/unread-amount/surat-masuk', 'SuratMasukController.unreadAmount').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /unread-amount/surat-tembusan:
-    *   get:
-    *     tags:
-    *       - Unread Amount
-    *     summary: Surat Tembusan
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    */
-    Route.get('/unread-amount/surat-tembusan', 'SuratTembusanController.unreadAmount').middleware('checkToken:umum')
 }).prefix('api')

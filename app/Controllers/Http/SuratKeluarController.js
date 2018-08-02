@@ -184,7 +184,7 @@ class SuratKeluarController {
                                           .first()
             if (data) {    
                 const update = await SuratPemeriksa.query()
-                                                   .where({ id_surat_keluar: params.id, nip_pemeriksa: user.id })
+                                                   .where({ id_surat_keluar: params.id, nip_pemeriksa: user.nip })
                                                    .update({ tgl_baca: new Date() })
 
                 Log.add(user, 'Melihat Detail Konsep Surat Atas Nama ' + data.nama_penandatangan)
@@ -198,7 +198,7 @@ class SuratKeluarController {
         }
     }
 
-    async ListMail({ request, auth }) {
+    async listMail({ request, auth }) {
         try {
             const user = await auth.getUser()
 
