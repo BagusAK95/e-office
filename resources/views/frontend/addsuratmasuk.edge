@@ -90,7 +90,7 @@
                                  <label class="form-control-label" for="inputEmail">Instansi Pengirim&nbsp;<span style="color:red">*</span></label>
                                  <select class="form-control" id="instansi" name="jenis_instansi" onchange="instansipen()" required='true' >
                                     <option value="">Pilih Instansi Pengirim</option>
-                                    <option value="1">PNS</option>
+                                    <option value="1">OPD</option>
                                     <option value="2">Swasta</option>
                                  </select>
                               </div>
@@ -166,6 +166,7 @@
                                  <div class="checkbox-custom checkbox-primary">
                                  <input type="checkbox" id="inputUnchecked" value="true" onclick="myFunction()">
                                  <label for="inputUnchecked">Ya</label>
+                                 </input>
                                  </div>
                               </div>
                               <div class="form-group" id="tampilkan_plt" data-plugin="formMaterial" style="display: none;">
@@ -181,31 +182,56 @@
                                  <label class="form-control-label" for="inputEmail">Jabatan Penerima Surat&nbsp;<span style="color:red">*</span></label>
                                  <input type="text" class="form-control" name="jabatan_penerima" id="jabatan_penerima" readonly >
                               </div>
-                              <div class="form-group" data-plugin="formMaterial" >
-                                 <label class="form-control-label" for="inputEmail">Tembusan Surat&nbsp;</label>
-                                 <select name="nip_tembusan" id="nip_tembusan" class="form-control pegawai_tembusan"  data-plugin="select2" multiple="">
-                                 </select>
-                              </div>
-                           </div>
-                           <div class="tab">
-                              <div class="form-group" data-plugin="formMaterial">
-                                 <label class="form-control-label" for="inputEmail">Ringkasan</label>
-                                 <textarea class="form-control" name="ringkasan" id="ringkasan"></textarea>
-                              </div>
-                              <div class="form-group" data-plugin="formMaterial">
-                                 <label class="form-control-label" for="inputEmail">Isi Surat</label>
-                                 <textarea class="form-control" name="isisurat" id="isisurat" data-plugin="summernote" data-plugin-options='{"toolbar":[["style", ["bold", "italic", "underline", "clear"]],["color", ["color"]],["para", ["ul", "ol", "paragraph"]]]}'></textarea>
-                              </div>
-                              <div class="form-group">
-                                 <div class="input-group">
-                                    <span class="input-group-prepend">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="md-collection-plus"></i>&nbsp;Lampiran</button>
-                                    <button type="button" class="btn btn-danger" onclick="$('#lampiran').val('')"><i class="md-close"></i>&nbsp;Reset</button>
-                                    </span>
-                                    <input type="text" id="lampiran" class="form-control" readonly style="width:60%" required>
-                                 </div>
-                              </div>
-                           </div>
+                                <div class="form-group" data-plugin="formMaterial" >
+                                    <label class="form-control-label" for="inputEmail">Jenis Tembusan&nbsp;</label>
+                                        <div class="checkbox-custom checkbox-primary">
+                                        <input type="checkbox" id="inputUnchecked2" value="true" onclick="manual()">
+                                        <label for="inputUnchecked">Manual</label>
+                                        </input>
+                                        <input type="hidden" name="nip_tembusan" id="nip_tembusan"/>
+                                        </div>
+                                </div>
+                                <div class="form-group" data-plugin="formMaterial">
+                                    <div id="manual" style="display:none;"  >
+                                        <label class="form-control-label" for="inputEmail">Tembusan Surat&nbsp;</label>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <input type="text" id="tembusan_manual" class="form-control" name="" placeholder="Masukan Nama Instansi">
+                                                <span class="input-group-append">
+                                                <a onclick="do_manual()" class="btn btn-primary" style="color:white"><i class="icon md-plus" aria-hidden="true"></i></a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div id="ins_temb">
+                                        </div>
+                                    </div>
+                                    <div id="otomatis">
+                                        <label class="form-control-label" for="inputEmail">Tembusan Surat&nbsp;</label>
+                                        <select name="tembusan_otomatis" id="tembusan_otomatis" class="form-control pegawai_tembusan" onchange="do_otomatis()"  data-plugin="select2" multiple="">
+                                        </select>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab">
+                                <div class="form-group" data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">Ringkasan</label>
+                                    <textarea class="form-control" name="ringkasan" id="ringkasan"></textarea>
+                                </div>
+                                <div class="form-group" data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">Isi Surat</label>
+                                    <textarea class="form-control" name="isisurat" id="isisurat" data-plugin="summernote" data-plugin-options='{"toolbar":[["style", ["bold", "italic", "underline", "clear"]],["color", ["color"]],["para", ["ul", "ol", "paragraph"]]]}'></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-prepend">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="md-collection-plus"></i>&nbsp;Lampiran</button>
+                                        <button type="button" class="btn btn-danger" onclick="$('#lampiran').val('')"><i class="md-close"></i>&nbsp;Reset</button>
+                                        </span>
+                                        <input type="text" id="lampiran" class="form-control" readonly style="width:60%" required>
+                                    </div>
+                                </div>
+                            </div>
                            <br>
                            <a class="btn btn-danger waves-classic" href="/surat-masuk" style="color:white">Batal</a>
                            <div style="float:right" >
@@ -272,6 +298,63 @@
         $("#loader").fadeOut("xslow");
         /*Page*/
     });
+   function manual()
+   {
+        var checkBox = document.getElementById("inputUnchecked2");
+        // Get the output text
+        var text = document.getElementById("text");
+
+        // If the checkbox is checked, display the output text
+        if (checkBox.checked == true)
+        {
+            $("#manual").show();
+            $("#otomatis").hide();
+            $("#nip_tembusan").val('');
+            $("#ins_temb").html('').show();
+        } 
+        else 
+        {
+            $("#otomatis").show();
+            $("#manual").hide();
+            pegawaitembusan() ;
+            $("#ins_temb").html('').show();
+        }
+   }
+   function do_manual()
+   {
+        var isi_tembusan = $("#tembusan_manual").val();
+        var nip_tembusan = $("#nip_tembusan").val();
+        var tabel = nip_tembusan;
+        if(nip_tembusan)
+        {
+            tabel += ", "+isi_tembusan;
+            nip_tembusan += ","+isi_tembusan;
+        }
+        else
+        {
+            tabel += isi_tembusan;
+            nip_tembusan = isi_tembusan;
+        }
+        $("#nip_tembusan").val(nip_tembusan);
+        $("#tembusan_manual").val('');
+        $("#ins_temb").html(tabel).show();
+   }
+   function do_otomatis()
+   {
+        var isi_tembusan = $("#tembusan_otomatis").val();
+        var nip_tembusan = "";
+        $.each(isi_tembusan, function(index, da) {
+            if(nip_tembusan)
+            {
+                nip_tembusan += ","+da;
+            }
+            else
+            {
+                nip_tembusan = da;
+            }
+        });
+        $("#nip_tembusan").val(nip_tembusan);
+   }
    
    function pegawaiall() 
    {
@@ -324,27 +407,16 @@
            { 
                    $.ajax({ 
                        type: 'GET', 
-                       url: '/api/master-pegawai', 
+                       url: '/api/master-kantor/listAllParent', 
                        headers: {
                                    'Authorization': 'Bearer ' + data.token
                                },
                        dataType: 'json',
                        success: function (data) 
                        {   
-                           var isi = "<option value=''>Pilih Pegawai</option>";
-                           $.each(data.data.data, function(index, element) {
-                               var depan = ''
-                               var belakang = ''
-                               if(element.gelar_depan)
-                               {
-                                   depan += element.gelar_depan+" ";
-                               }
-                               var belakang = "";
-                               if(element.gelar_belakang)
-                               {
-                                   belakang += ", "+element.gelar_belakang;
-                               }
-                               isi += "<option value='"+element.nip+"#"+element.nama+"#"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                           var isi = "";
+                           $.each(data.data, function(index, element) {
+                               isi += "<option value='"+element.nmlokasi+"'>"+element.nmlokasi+"</option>";
                            })
                            $(".pegawai_tembusan").html(isi).show();
                        },
@@ -439,45 +511,6 @@
        });
    }
    
-   function tembusan_surat()
-   {
-       var nip = $("#nip_tembusan").val();
-       $.ajax({ 
-           type: 'GET', 
-           url: '/gettoken', 
-           success: function (data) 
-           { 
-                   $.ajax({ 
-                       type: 'GET', 
-                       url: '/api/master-pegawai/'+nip, 
-                       headers: {
-                                   'Authorization': 'Bearer ' + data.token
-                               },
-                       dataType: 'json',
-                       success: function (data) 
-                       {   
-                           var element = data.data;
-                           var depan = "";
-                           if(element.gelar_depan)
-                           {
-                               depan += element.gelar_depan+" ";
-                           }
-                           var belakang = "";
-                           if(element.gelar_belakang)
-                           {
-                               belakang += " "+element.gelar_belakang;
-                           }
-                           $("#nama_tembusan").val(depan+element.nama+belakang);
-                           $("#jabatan_tembusan").val(element.nama_jabatan);
-                       },
-                       error: function ()
-                       {
-                           return false;
-                       }
-                   });
-           }
-       });
-   }
    
    function simpen()
    {
@@ -502,7 +535,7 @@
            headers: {
             'Authorization': 'Bearer ' + data_token.token
             },
-           data : "tgl_terima="+$("#tanggal_terima").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_surat="+$("#nomor_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&perihal="+$("#perihal").val()+"&jenis_instansi="+$("#instansi").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&nip_plt="+$("#nip_penerima").val()+"&nama_plt="+$("#nama_penerima").val()+"&jabatan_plt="+$("#jabatan_penerima").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue+"&lampiran="+$("#lampiran").val()+jeniss+"&klasifikasi="+$("#klasifikasi").val(),
+           data : "tgl_terima="+$("#tanggal_terima").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_surat="+$("#nomor_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&perihal="+$("#perihal").val()+"&jenis_instansi="+$("#instansi").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&nip_plt="+$("#nip_penerima").val()+"&nama_plt="+$("#nama_penerima").val()+"&jabatan_plt="+$("#jabatan_penerima").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue+"&lampiran="+$("#lampiran").val()+jeniss+"&klasifikasi="+$("#klasifikasi").val()+"&arr_tembusan="+$("#nip_tembusan").val(),
            success: function (datanya) 
            { 
                if(datanya.success==false)
@@ -511,30 +544,6 @@
                }
                else if(datanya.success==true)
                {
-                    var peg = $(".pegawai_tembusan").val();
-                    $.each(peg, function(index, da) {
-                        var all = da.split("#");
-                        var nip_penerima = all[0];
-                        var nama_penerima = all[1];
-                        var jabatan_penerima = all[2];
-                        $.ajax({ 
-                            type: 'POST', 
-                            url: '/api/surat-tembusan/', 
-                            headers: {
-                                        'Authorization': 'Bearer ' + data_token.token
-                                    },
-                            dataType: 'json',
-                            data: 'id_surat_masuk='+datanya.data.id+"&nip_penerima="+nip_penerima+"&nama_penerima="+nama_penerima+"&jabatan_penerima="+jabatan_penerima,
-                            success: function (data) 
-                            {   
-                                return true;
-                            },
-                            error: function ()
-                            {
-                                return false;
-                            }
-                        });
-                    });
                     
                     swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
                     function(){ 
@@ -556,85 +565,6 @@
        });
        return false;
    }
-   
-   $( "#simpan" ).submit(function( event ) 
-   {
-   
-       var jeniss = "";
-       if($("#instansi").val()==2)
-       {
-           jeniss = "&nama_instansi="+$("#nama_instansi_s").val()+"&nama_pengirim="+$("#nama_pengirim_s").val()+"&jabatan_pengirim="+$("#jabatan_pengirim_s").val()+"&alamat_pengirim="+$("#alamat_pengirim_s").val();
-       }
-       else if($("#instansi").val()==1)
-       {
-           jeniss = "&nama_instansi="+$("#nama_instansi_p").val()+"&nama_pengirim="+$("#nama_pengirim_p").val()+"&jabatan_pengirim="+$("#jabatan_pengirim_p").val()+"&alamat_pengirim="+$("#alamat_pengirim_p").val();
-       }
-       $.ajax({ 
-           
-       type: 'GET', 
-       url: '/gettoken', 
-       success: function (data) { 
-          $.ajax({ 
-           type: 'POST', 
-           url: '/api/surat-masuk', 
-           headers: {
-               'Authorization': 'Bearer ' + data.token
-            },
-           data : "tgl_terima="+$("#tanggal_terima").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_surat="+$("#nomor_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&perihal="+$("#perihal").val()+"&jenis_instansi="+$("#instansi").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&nip_penerima="+$("#nip_penerima").val()+"&nama_penerima="+$("#nama_penerima").val()+"&jabatan_penerima="+$("#jabatan_penerima").val()+"&nip_tembusan="+$("#nip_tembusan").val()+"&nama_tembusan="+$("#nama_tembusan").val()+"&jabatan_tembusan="+$("#jabatan_tembusan").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+$("#isisurat").val()+"&lampiran="+$("#lampiran").val()+jeniss,
-           success: function (kembalian) 
-           { 
-               if(kembalian.success==false)
-               {
-                   swal("Gagal!", "Gagal Menyimpan data.", "error");
-               }
-               else if(kembalian.success==true)
-               {    
-                    var peg = $(".pegawai_tembusan").val();
-                    var id_surat_masuk = kembalian;
-                    /*$.each(peg, function(index, da) {
-                        var all = da.split("-");
-
-                        var nip = all[0];
-                        var nama = all[1];
-                        var jabatan = all[2];
-
-                        $.ajax({ 
-                            type: 'GET', 
-                            url: '/api/master-kantor/listAllParent', 
-                            headers: {
-                                        'Authorization': 'Bearer ' + data.token
-                                    },
-                            dataType: 'json',
-                            success: function (data) 
-                            {   
-                                return true;
-                            },
-                            error: function ()
-                            {
-                                return false;
-                            }
-                        });
-                    });*/
-                    
-                    swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
-                    function(){ 
-                        //window.location.href="/surat-masuk";
-                    });
-               }
-           },
-           error: function(data)
-           {
-               swal("Gagal!", "Gagal Menyimpan data.", "error");
-           }
-           });
-       },
-       error: function ()
-       {
-           return false;
-       }
-       });
-       return false;
-   });
    
    function instansipen()
    {
@@ -796,34 +726,30 @@
            var minutes = date.getMinutes();
            var seconds = date.getSeconds();
    
-   
            var all = $("#file").val();
            var neww = all.split(".");
            var eks = neww[1];
-   
-   
-           var tanggal = year+""+month+""+day+""+hours+""+minutes+""+seconds;
-           var datalama = $("#lampiran").val();
-           if(datalama)
-           {
-               $("#lampiran").val(datalama+","+"http://rafiisa.com/googledrive/files/"+tanggal+"."+eks);
-           }
-           else
-           {
-               $("#lampiran").val("http://rafiisa.com/googledrive/files/"+tanggal+"."+eks);
-           }
            
            e.preventDefault();
            var form = e.target;
            var data = new FormData(form);
            $.ajax({
-           url: "http://rafiisa.com/googledrive/upload.php?file="+tanggal,
+           url: "/upload_file",
            method: form.method,
            processData: false,
            contentType: false,
            data: data,
            processData: false,
            success: function(msg){
+                var datalama = $("#lampiran").val();
+                if(datalama)
+                {
+                    $("#lampiran").val(datalama+","+"/uploads/"+msg);
+                }
+                else
+                {
+                    $("#lampiran").val("/uploads/"+msg);
+                }
                $(".loader").hide();
                $('.modal').modal('hide');
            },

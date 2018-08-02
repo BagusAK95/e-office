@@ -14,6 +14,7 @@
 */
 
 const Route = use('Route')
+const Helpers = use('Helpers')
 
 //Aut Login//
 Route.on('/login').render('frontend/login')
@@ -137,4 +138,20 @@ Route.on('/error-404').render('404')
 
 
 //End Notif
+
+//Surat Keluar//
+Route.on('/surat-keluar/add').render('frontend/add_surat_keluar')
+//End Surat Keluar//
+
+
+Route.on('/coba').render('frontend/coba')
+Route.post('/upload_file', async ({ params,request }) => {
+  const profilePic = request.file('file')
+  const a = profilePic.subtype
+  const namabaru = `${new Date().getTime()}.${a}`
+  await profilePic.move(Helpers.publicPath('uploads'), {
+    name: namabaru
+  })
+  return namabaru
+})
 //------------------------------------ End Main System ---------------------------------//

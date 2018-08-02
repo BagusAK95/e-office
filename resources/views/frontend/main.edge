@@ -61,6 +61,17 @@
         font-size: 9pt;
       }
       </style>
+      <style>
+          .img-circular-pp{
+           width: 30px;
+           height: 30px;
+           background-size: cover;
+           display: block;
+           border-radius: 100px;
+           -webkit-border-radius: 100px;
+           -moz-border-radius: 100px;
+          }
+          </style>
    </head>
    <body class="animsition">
       <input type="hidden" name='level' class='level' id='level_main'>
@@ -130,7 +141,7 @@
                   <li class="nav-item dropdown">
                      <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false"
                         data-animation="scale-up" role="button">
-                     <span class="avatar avatar-online">
+                     <span class=" avatar-online">
                      <span class='foto'></span>
                      <i></i>
                      </span>
@@ -138,7 +149,7 @@
                      <div class="dropdown-menu" role="menu">
                         <a class="dropdown-item" href="/profile" role="menuitem"><i class="icon md-account" aria-hidden="true"></i> Profile</a>
                         <a class="dropdown-item" href="/change-password" role="menuitem"><i class="icon md-key" aria-hidden="true"></i> Change Password</a>
-                        <a class="dropdown-item" href="/logout" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+                        <a class="dropdown-item" onclick="logout()" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
                      </div>
                   </li>
                </ul>
@@ -195,8 +206,8 @@
                        
                         </a>
                      </li>
-                     <li class="site-menu-item" id="disposisi_keluar">
-                        <a class="animsition-link" href="tembusan">
+                     <li class="site-menu-item">
+                        <a class="animsition-link" href="#">
                         <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
                         <span class="site-menu-title">Tembusan</span>
                         </a>
@@ -227,19 +238,6 @@
                         <span class="site-menu-title">Konsep Surat</span>
                         </a>
                      </li>
-                     <li class="site-menu-category surat" id="surat-keluar" >Agenda</li>
-                     <li class="site-menu-item" id="surat-keluar" >
-                        <a class="animsition-link" href="#">
-                        <i class="site-menu-icon md-email" aria-hidden="true"></i>
-                        <span class="site-menu-title">Agenda Masuk</span>
-                        </a>
-                     </li>
-                     <li class="site-menu-item" id="surat-keluar" >
-                        <a class="animsition-link" href="#">
-                        <i class="site-menu-icon md-email" aria-hidden="true"></i>
-                        <span class="site-menu-title">Agenda Keluar</span>
-                        </a>
-                     </li>
                   </ul>
                   <div class="site-menubar-section">
                   </div>
@@ -254,7 +252,7 @@
         <a href="/change-password" data-placement="top" data-toggle="tooltip" data-original-title="Change Password">
           <span class="icon md-key" aria-hidden="true"></span>
         </a>
-        <a href="/logout" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
+        <a onclick="logout()" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
           <span class="icon md-power" aria-hidden="true"></span>
         </a>
       </div>
@@ -403,11 +401,13 @@
                              $(".nama_user").html(data.data.nama_lengkap).show();
                              if(data.data.foto)
                              {
-                               $(".foto").html('<img src="'+data.data.foto+'" style="width:70px;height:auto">').show();
+                               $(".foto").html('<img src="'+data.data.foto+'" class="img-circular-pp">').show();
+                               $("#foto").html('<img src="'+data.data.foto+'" class="img-circular">').show();
                              }
                              else
                              {
-                               $(".foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
+                               $(".foto").html('<img src="/material/base/src/images/user.png" class="img-circular-pp">').show();
+                               $("#foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
                              }
                              
                             
@@ -434,12 +434,12 @@
                              if(data.data.level==1)
                              {
                                $(".konsol").show();
-                               $(".surat").hide();
+                               //$(".surat").hide();
                              }
                              else
                              {
                                $(".konsol").hide();
-                               $(".surat").show();
+                               //$(".surat").show();
                              }
          
          
@@ -841,6 +841,27 @@
              }
              //resetUI();
              //END NOTIF//
+            function logout()
+            {
+              $.ajax({ 
+                   type: 'GET', 
+                   url: '/gettoken', 
+                   success: function (data) 
+                   { 
+                        $.ajax({ 
+                            type: 'PUT', 
+                            url: '/api/unsetFirebase', 
+                            data : 'firebase_device=Web',
+                            headers: {
+                               'Authorization': 'Bearer ' + data.token
+                            },
+                            success: function (data) { 
+                              window.location.href='/logout';
+                            }
+                        });
+                    }
+                  });
+            }
       </script>
       <script>
          (function(document, window, $){

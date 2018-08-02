@@ -1,13 +1,24 @@
 @layout('frontend/main')
 @section('content')
+<style>
+    .img-circular{
+     width: 150px;
+     height: 150px;
+     background-size: cover;
+     display: block;
+     border-radius: 100px;
+     -webkit-border-radius: 100px;
+     -moz-border-radius: 100px;
+    }
+    </style>
  <div class="page-content container-fluid">
         <div class="row">
           <div class="col-lg-3">
             <!-- Page Widget -->
             <div class="card card-shadow text-center">
               <div class="card-block">
-                <a class="avatar avatar-lg" href="javascript:void(0)">
-                  <span class="foto"></span>
+                <a class="" href="javascript:void(0)">
+                 <center> <span id="foto"></span></center>
                 </a>
                 <h4 class="profile-user nama_user"></h4>
                 <p class="profile-job jabatanm"></p>
@@ -20,7 +31,7 @@
             <!-- End Page Widget -->
          <!-- Example Panel With Heading -->
               <div class="panel panel-bordered panel-primary">
-                  <div class="panel-heading">
+                  <!--<div class="panel-heading">
                     <h3 class="panel-title"><i class="icon md-view-web"></i>&nbsp;Kalender</h3>
                     <div class="panel-actions">
                         <a class="panel-action icon md-minus" data-toggle="panel-collapse" aria-expanded="true"
@@ -29,7 +40,7 @@
                   </div>
                   <div class="panel-body">
                   
-                  </div>
+                  </div>-->
               </div>
               <!-- End Example Panel With Heading -->
             
