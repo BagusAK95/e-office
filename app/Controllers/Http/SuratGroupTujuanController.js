@@ -66,6 +66,22 @@ class SuratGroupTujuanController {
             return Response.format(false, error, null)
         }
     }
+
+    async detail({ params, auth }) {
+        try {
+            const user = await auth.getUser()
+            const data = await SuratGroupTujuan.query()
+                                               .where({nip: user.nip, id: params.id})
+                                               .first()
+            if (data) {
+                return Response.format(true, null, data)
+            } else {
+                return Response.format(false, 'Group tujuan tidak ditemukan', null)
+            }
+        } catch (error) {
+            return Response.format(false, error, null)
+        }
+    }
 }
 
 module.exports = SuratGroupTujuanController

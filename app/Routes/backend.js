@@ -1678,6 +1678,26 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /tujuan-surat/{id}:
+    *   get:
+    *     tags:
+    *       - Tujuan Surat
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    */
+    Route.get('/tujuan-surat/:id', 'SuratGroupTujuanController.detail').middleware('checkToken:umum')
+
+    /**
+    * @swagger
     * /surat-keluar:
     *   get:
     *     tags:
