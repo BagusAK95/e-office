@@ -98,6 +98,26 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /unsetFirebase:
+    *   put:
+    *     tags:
+    *       - Login
+    *     summary: Unset Firebase
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: firebase_device
+    *         in: formData
+    *         description: Device (Web / App)
+    *         required: true
+    *         type: string
+    */
+    Route.put('/unsetFirebase', 'LoginController.unsetFirebase').middleware('checkToken:umum')
+
+    /**
+    * @swagger
     * /profile:
     *   get:
     *     tags:
@@ -1555,6 +1575,106 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/surat-keluar/:id', 'SuratKeluarController.detailMail').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /tujuan-surat:
+    *   post:
+    *     tags:
+    *       - Tujuan Surat
+    *     summary: Add
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: nama
+    *         in: formData
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: data
+    *         in: formData
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.post('/tujuan-surat', 'SuratGroupTujuanController.add').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /tujuan-surat/{id}:
+    *   put:
+    *     tags:
+    *       - Tujuan Surat
+    *     summary: Edit
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    *       - name: nama
+    *         in: formData
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: data
+    *         in: formData
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.put('/tujuan-surat/:id', 'SuratGroupTujuanController.edit').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /tujuan-surat/{id}:
+    *   delete:
+    *     tags:
+    *       - Tujuan Surat
+    *     summary: Delete
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    */
+    Route.delete('/tujuan-surat/:id', 'SuratGroupTujuanController.delete').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /tujuan-surat:
+    *   get:
+    *     tags:
+    *       - Tujuan Surat
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: page
+    *         in: query
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.get('/tujuan-surat', 'SuratGroupTujuanController.list').middleware('checkToken:umum')
 
     /**
     * @swagger
