@@ -141,6 +141,8 @@ Route.on('/error-404').render('404')
 
 //Surat Keluar//
 Route.on('/surat-keluar/add').render('frontend/add_surat_keluar')
+Route.on('/tujuan-surat').render('frontend/tujuan_surat')
+Route.on('/tujuan-surat/add').render('frontend/tujuan_surat_add')
 //End Surat Keluar//
 
 

@@ -89,76 +89,28 @@
                            </div>
                            <div class="tab">
                                 <div class="form-group" data-plugin="formMaterial">
-                                    <label class="form-control-label" for="inputEmail">Jenis Instansi&nbsp;<span style="color:red">*</span> </label>
-                                        <select name="jenis" class="form-control" id="jenis" onchange="do_jenis()">
-                                            <option value="1">PNS</option>
-                                            <option value="2">Swasta</option>
-                                        </select>
+                                    <label class="form-control-label" for="inputEmail">Penerima&nbsp;<span style="color:red">*</span> </label>
+                                    <br>
+                                    <button class="btn btn-primary" data-target="#exampleNiftyJustMePenerima" data-toggle="modal"type="button"><i class="md-navigation"></i>&nbsp;Cari Penerima</button>
+                                    <br>
+                                    <br>
+                                    <table class="table table-striped table-bordered">
+                                        <tbody id="penerima">
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" name="arr_penerima" id="arr_penerima" class="form-control">
                                 </div>
-                                <div id="pns">
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Nama Instansi&nbsp;<span style="color:red">*</span> </label>
-                                            <select name="instansi_penerima" class="form-control" id="instansi_penerima" onchange="getPegawaiByInstansi()">
-                                            </select>
-                                    </div>
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Penerima&nbsp;<span style="color:red">*</span> </label>
-                                            <select name="arr_penerima" class="form-control" id="arr_penerima" data-plugin="select2" multiple="">
-                                            </select>
-                                    </div>
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Tembusan&nbsp;<span style="color:red">*</span> </label>
-                                            <select name="arr_tembusan" class="form-control" id="arr_tembusan" data-plugin="select2" multiple="">
-                                            </select>
-                                    </div>
-                                </div>
-                                <div id="swasta" style="display:none;">
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Nama Instansi&nbsp;<span style="color:red">*</span> </label>
-                                        <input type="text" class="form-control" name="nama_instansi" id="nama_instansi">
-                                    </div>
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Nama Penerima</label>
-                                        <input type="text" class="form-control" name="nama_penerima_manual" id="nama_penerima_manual">
-                                    </div>
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Jabatan Penerima</label>
-                                        <input type="text" class="form-control" name="jabatan_penerima_manual" id="jabatan_penerima_manual">
-                                    </div>
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Daftar Penerima</label>
-                                        <table class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>Nama Penerima</th>
-                                                <th>Jabatan Penerima</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="daftar_penerima_tabel">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Nama Tembusan&nbsp;<span style="color:red">*</span> </label>
-                                        <input type="text" class="form-control" name="nama_tembusan_manual" id="nama_tembusan_manual">
-                                    </div>
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Jabatan Tembusan&nbsp;<span style="color:red">*</span> </label>
-                                        <input type="text" class="form-control" name="jabatan_tembusan_manual" id="jabatan_tembusan_manual">
-                                    </div>
-                                    <div class="form-group" data-plugin="formMaterial">
-                                        <label class="form-control-label" for="inputEmail">Daftar Tembusan</label>
-                                        <table class="table table-striped table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>Nama Tembusan</th>
-                                                <th>Jabatan Tembusan</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="daftar_tembusan_tabel">
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <div class="form-group" data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">Tembusan&nbsp;<span style="color:red">*</span> </label>
+                                    <br>
+                                    <button class="btn btn-primary" data-target="#exampleNiftyJustMeTembusan" data-toggle="modal"type="button"><i class="md-sign-in"></i>&nbsp;Cari Tembusan</button>
+                                    <br>
+                                    <br>
+                                    <table class="table table-striped table-bordered">
+                                        <tbody id="tembusan">
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" name="arr_tembusan" id="arr_tembusan" class="form-control">
                                 </div>
                                 <div class="form-group" data-plugin="formMaterial">
                                     <label class="form-control-label" for="inputEmail">Perihal&nbsp;<span style="color:red">*</span></label>
@@ -184,12 +136,15 @@
                                 <div class="form-group" data-plugin="formMaterial">
                                     <label class="form-control-label" for="inputEmail">Kaitkan Surat&nbsp;<span style="color:red">*</span></label>
                                     <br>
-                                    <butto class="btn btn-primary" data-target="#exampleNiftyJustMe" data-toggle="modal"type="button"><i class="md-collection-plus"></i>&nbsp;Cari Surat</button>
+                                    <button class="btn btn-primary" data-target="#exampleNiftyJustMe" data-toggle="modal"type="button"><i class="md-collection-plus"></i>&nbsp;Cari Surat</button>
+                                    <br>
+                                    <br>
+                                    <input type="hidden" id="dari_surat_masuk">
+                                    <div id="kait">
+                                        <table class="table table-striped table-bordered"><tr align="center"><td colspan="5">Tidak Ada Surat Terkait</td></tr></table>
+                                    </div>
                                 </div>
-                                <input type="hidden" id="dari_surat_masuk">
-                                <div id="kait">
-                                    <table class="table table-striped table-bordered"><tr align="center"><td colspan="5">Tidak Ada Surat Terkait</td></tr></table>
-                                </div>
+                                
                            </div>
 
                             <div class="tab">
@@ -224,7 +179,6 @@
                            <div style="float:right" >
                               <div style="overflow:auto;">
                                  <div style="float:right;">
-                                    <a onclick="coba()">Coba</a>
                                     <button type="button" style="color:white" class="btn btn-warning waves-classic" id="prevBtn" onclick="nextPrev(-1)">Kembali</button>
                                     <button type="button" class="btn btn-success waves-classic" id="nextBtn" onclick="nextPrev(1)">Selanjutanya</button>
                                     <span id="submit"></span>
@@ -312,6 +266,64 @@
 </div>
 <!-- End Modal -->
 
+
+<!-- Modal Penerima -->
+<div class="modal fade modal-just-me" id="exampleNiftyJustMePenerima" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1" style="z-index: 9000;">
+<div class="modal-dialog modal-simple" >
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Pilih Penerima Surat</h4>
+    </div>
+    <div class="modal-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Instansi</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody class="tujuan_surat">
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+    </div>
+    </div>
+</div>
+</div>
+<!-- End Modal Penerima -->
+
+<!-- Modal Tembusan -->
+<div class="modal fade modal-just-me" id="exampleNiftyJustMeTembusan" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1" style="z-index: 9000;">
+<div class="modal-dialog modal-simple" >
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Pilih Tembusan Surat</h4>
+    </div>
+    <div class="modal-body">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Instansi</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody class="tujuan_surat_tembusan">
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+    </div>
+    </div>
+</div>
+</div>
+<!-- End Modal Penerima -->
+
+
 <script>
    $( document ).ready(function() {
        /*Main*/
@@ -326,6 +338,8 @@
        klasifikasi();
        listparentall(); 
        mailChecker();
+       showbrand();
+       showbrand2();
        $("#loader").fadeOut("xslow");
        /*Page*/
    });
@@ -381,7 +395,7 @@
                                var nip = element.nip;
                                var nama = element.nama;
                                var nama_jabatan = element.nama_jabatan;
-                               isi += '{nip_pemeriksa:"'+nip+'",nama_pemeriksa:"'+nama+'",jabatan_pemeriksa:"'+nama_jabatan+'"}';
+                               isi += '{"nip_pemeriksa":"'+nip+'","nama_pemeriksa":"'+nama+'","jabatan_pemeriksa":"'+nama_jabatan+'"}';
                                tabel += '<tr><td>'+depan+nama+belakang+'</td></tr>';
                                 if(nomor<panjang)
                                 {
@@ -719,62 +733,7 @@
    }
    function simpen()
    {
-        $("#loader").fadeIn();
-        //Penerima//
-        var arr_penerima = $("#arr_penerima").val();
-        var isi_arr_penerima = "[";
-        var nomor = 1;
-        var panjang = arr_penerima.length;
-        $.each(arr_penerima, function(index, da) {
-            var all = da.split("-");
-            var nip_penerima = all[0];
-            var nama_penerima = all[1];
-            var jabatan_penerima = all[2];
-            
-            isi_arr_penerima += "{";
-
-            isi_arr_penerima += '"nip_penerima": "'+nip_penerima+'","nama_penerima": "'+nama_penerima+'","jabatan_penerima": "'+jabatan_penerima+'"';
-
-            isi_arr_penerima += "}";
-            
-            if(nomor<panjang)
-            {
-                isi_arr_penerima += ",";
-            }
-
-            nomor++;
-        });
-        isi_arr_penerima += "]";
-        isi_arr_penerima = JSON.stringify(isi_arr_penerima);
-        //End Penerima//
-        //Tembusan//
-        var arr_tembusan = $("#arr_tembusan").val();
-
-        var isi_arr_tembusan = "[";
-        var nomor = 1;
-        var panjang = arr_tembusan.length;
-        $.each(arr_tembusan, function(index, da) {
-            var all = da.split("-");
-            var nip_tembusan = all[0];
-            var nama_tembusan = all[1];
-            var jabatan_tembusan = all[2];
-            
-            isi_arr_tembusan += "{";
-
-            isi_arr_tembusan += '"nip_penerima": "'+nip_tembusan+'","nama_penerima": "'+nama_tembusan+'","jabatan_penerima": "'+jabatan_tembusan+'"';
-
-            isi_arr_tembusan += "}";
-            
-            if(nomor<panjang)
-            {
-                isi_arr_tembusan += ",";
-            }
-
-            nomor++;
-        });
-        isi_arr_tembusan += "]";
-        isi_arr_tembusan = JSON.stringify(isi_arr_tembusan);
-        //End Tembusan//
+        $("#loader").fadeIn();        
         //Pemeriksa//
         var arr_pemeriksa = $("#arr_pemeriksa").val();
         var pemeriksa_master = $("#pemeriksa_master").val();
@@ -791,19 +750,11 @@
             isi_arr_pemeriksa += "}";
             isi_arr_pemeriksa += ",";
         });
-        var gabung = JSON.stringify("["+isi_arr_pemeriksa+semua[1]);
-        //End Pemeriksa//
-
+        var gabung = "["+isi_arr_pemeriksa+semua[1];
+        //End Pemeriksa//;
       var textareaValue = $('#isisurat').summernote('code');
-      var jeniss = "";
-      if($("#jenis").val()==2)
-      {
-          jeniss = "&nama_instansi="+$("#nama_instansi").val();
-      }
-      else if($("#jenis").val()==1)
-      {
-          jeniss = "&instansi_penerima="+$("#instansi_penerima").val()+"&arr_penerima="+isi_arr_penerima+"&arr_tembusan="+isi_arr_tembusan;
-      }
+
+      var jeniss = "&arr_penerima="+$("#arr_penerima").val()+"&arr_tembusan="+$("#arr_tembusan").val();
       $.ajax({ 
       type: 'GET', 
       url: '/gettoken', 
@@ -822,32 +773,7 @@
                    swal("Gagal!", datanya.message, "error");
               }
               else if(datanya.success==true)
-              {
-                   var peg = $(".pegawai_tembusan").val();
-                   $.each(peg, function(index, da) {
-                       var all = da.split("#");
-                       var nip_penerima = all[0];
-                       var nama_penerima = all[1];
-                       var jabatan_penerima = all[2];
-                       $.ajax({ 
-                           type: 'POST', 
-                           url: '/api/surat-tembusan/', 
-                           headers: {
-                                       'Authorization': 'Bearer ' + data_token.token
-                                   },
-                           dataType: 'json',
-                           data: 'id_surat_masuk='+datanya.data.id+"&nip_penerima="+nip_penerima+"&nama_penerima="+nama_penerima+"&jabatan_penerima="+jabatan_penerima,
-                           success: function (data) 
-                           {   
-                               return true;
-                           },
-                           error: function ()
-                           {
-                               return false;
-                           }
-                       });
-                   });
-                   
+              {    
                    swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
                    function(){ 
                        //window.location.href="/surat-masuk";
@@ -1093,47 +1019,46 @@
            var neww = all.split(".");
            var eks = neww[1];
 
-           var file = "<br><br><table class='table table-striped table-bordered'><tr><th>File</th></tr>";
-   
-           var tanggal = year+""+month+""+day+""+hours+""+minutes+""+seconds;
-           var datalama = $("#lampiran").val();
-            if(datalama)
-            {
-            $("#lampiran").val(datalama+","+"http://rafiisa.com/googledrive/files/"+tanggal+"."+eks);
-                var cek_lampiran = $("#lampiran").val();
-                if(cek_lampiran.includes(',') > -1)
-                {
-                    var myarr = cek_lampiran.split(",");
-                    for (var i = 0, len = myarr.length; i < len; i++) 
-                    {
-                        file += "<tr><td><a target='_blank' href='"+myarr[i]+"' >"+myarr[i]+"</a></td></tr>";    
-                    }
-                    //ada
-                }
-                else
-                {
-                    //tiadak ada
-                    file += "<tr><td><a target='_blank' href='"+cek_lampiran+"'>"+cek_lampiran+"</a></td></tr>";
-                }
-            }
-            else
-            {
-                $("#lampiran").val("http://rafiisa.com/googledrive/files/"+tanggal+"."+eks);
-                var cek_lampiran = $("#lampiran").val();
-                file += "<tr><td><a target='_blank' href='"+cek_lampiran+"'>"+cek_lampiran+"</a></td></tr>";
-            }
-            $("#detail_file").html(file+"</table>").show();
+           
            e.preventDefault();
            var form = e.target;
            var data = new FormData(form);
            $.ajax({
-           url: "http://rafiisa.com/googledrive/upload.php?file="+tanggal,
+           url: "/upload_file",
            method: form.method,
            processData: false,
            contentType: false,
            data: data,
            processData: false,
            success: function(msg){
+                var file = "<br><br><table class='table table-striped table-bordered'><tr><th>File</th></tr>";
+                var datalama = $("#lampiran").val();
+                    if(datalama)
+                    {
+                    $("#lampiran").val(datalama+","+"/uploads/"+msg);
+                        var cek_lampiran = $("#lampiran").val();
+                        if(cek_lampiran.includes(',') > -1)
+                        {
+                            var myarr = cek_lampiran.split(",");
+                            for (var i = 0, len = myarr.length; i < len; i++) 
+                            {
+                                file += "<tr><td><a target='_blank' href='"+myarr[i]+"' >"+myarr[i]+"</a></td></tr>";    
+                            }
+                            //ada
+                        }
+                        else
+                        {
+                            //tiadak ada
+                            file += "<tr><td><a target='_blank' href='"+cek_lampiran+"'>"+cek_lampiran+"</a></td></tr>";
+                        }
+                    }
+                    else
+                    {
+                        $("#lampiran").val("/uploads/"+msg);
+                        var cek_lampiran = $("#lampiran").val();
+                        file += "<tr><td><a target='_blank' href='"+cek_lampiran+"'>"+cek_lampiran+"</a></td></tr>";
+                    }
+                    $("#detail_file").html(file+"</table>").show();
                 $(".loader").hide();
                 $('.modal').modal('hide');
                 
@@ -1163,6 +1088,163 @@
                     $(".loader").hide();
                 }
             });
+        }
+
+        function showbrand()
+        {
+           $.ajax({ 
+               type: 'GET', 
+               url: '/gettoken', 
+               success: function (data) { 
+                   $.ajax({ 
+                       type: 'GET', 
+                       url: '/api/tujuan-surat?page=1&limit=99999999', 
+                       headers: {
+                           'Authorization': 'Bearer ' + data.token
+                       },
+                       dataType: 'json',
+                       success: function (data) { 
+                           var text="";
+                           $.each(data.data.data, function(index, element) 
+                           {
+                               var all = JSON.parse(element.data);
+                               var nama_instansis = "";
+                               var no = 1;
+                               $.each(all, function(index, element) {    
+                                    nama_instansis+=no+". "+element.nama_instansi+"<br>";
+                                    no++;
+                               });
+                               var tr_data = "<tr><td>"+element.nama+"</td><td>"+nama_instansis+"</td><td><button id='pilih' onclick=pilih_penerima('"+element.id+"') type='button' class='btn btn-icon btn-primary'>Pilih</button></td></tr>";
+                               text += tr_data;
+                           });
+   
+                            $(".tujuan_surat").html(text).show();
+                            $("#loader").fadeOut("xslow");
+                       }
+                   });
+   
+   
+               },
+               error: function ()
+               {
+                   return false;
+               }
+           });
+        }
+        function showbrand2()
+        {
+           $.ajax({ 
+               type: 'GET', 
+               url: '/gettoken', 
+               success: function (data) { 
+                   $.ajax({ 
+                       type: 'GET', 
+                       url: '/api/tujuan-surat?page=1&limit=99999999', 
+                       headers: {
+                           'Authorization': 'Bearer ' + data.token
+                       },
+                       dataType: 'json',
+                       success: function (data) { 
+                           var text="";
+                           $.each(data.data.data, function(index, element) 
+                           {
+                               var all = JSON.parse(element.data);
+                               var nama_instansis = "";
+                               var no = 1;
+                               $.each(all, function(index, element) {    
+                                    nama_instansis+=no+". "+element.nama_instansi+"<br>";
+                                    no++;
+                               });
+                               var tr_data = "<tr><td>"+element.nama+"</td><td>"+nama_instansis+"</td><td><button id='pilih' onclick=pilih_tembusan('"+element.id+"') type='button' class='btn btn-icon btn-primary'>Pilih</button></td></tr>";
+                               text += tr_data;
+                           });
+   
+                            $(".tujuan_surat_tembusan").html(text).show();
+                            $("#loader").fadeOut("xslow");
+                       }
+                   });
+   
+   
+               },
+               error: function ()
+               {
+                   return false;
+               }
+           });
+        }
+
+        function pilih_penerima(id)
+        {
+            $(".loader").show();
+            $.ajax({ 
+               type: 'GET', 
+               url: '/gettoken', 
+               success: function (data) { 
+                   $.ajax({ 
+                       type: 'GET', 
+                       url: '/api/tujuan-surat/'+id, 
+                       headers: {
+                           'Authorization': 'Bearer ' + data.token
+                       },
+                       dataType: 'json',
+                       success: function (data) { 
+
+                            var all = JSON.parse(data.data.data);
+                            var nama_instansis = "";
+                            var no = 1;
+                            $.each(all, function(index, element) {    
+                                nama_instansis+=no+". "+element.nama_instansi+"<br>";
+                                no++;
+                            });
+
+                            $("#penerima").html("<tr><th>Nama Tujuan</th><th>Instansi</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td></tr>").show();
+                            $("#arr_penerima").val(data.data.data);
+                            $('.modal').modal('hide');
+                            $("#loader").fadeOut("xslow");
+                       }
+                   });
+               },
+               error: function ()
+               {
+                   return false;
+               }
+           });
+        }
+        function pilih_tembusan(id)
+        {
+            $(".loader").show();
+            $.ajax({ 
+               type: 'GET', 
+               url: '/gettoken', 
+               success: function (data) { 
+                   $.ajax({ 
+                       type: 'GET', 
+                       url: '/api/tujuan-surat/'+id, 
+                       headers: {
+                           'Authorization': 'Bearer ' + data.token
+                       },
+                       dataType: 'json',
+                       success: function (data) { 
+
+                            var all = JSON.parse(data.data.data);
+                            var nama_instansis = "";
+                            var no = 1;
+                            $.each(all, function(index, element) {    
+                                nama_instansis+=no+". "+element.nama_instansi+"<br>";
+                                no++;
+                            });
+                            $("#tembusan").html("<tr><th>Nama Tujuan</th><th>Instansi</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td></tr>").show();
+                            $("#arr_tembusan").val(data.data.data);
+                            $('.modal').modal('hide');
+                            $("#loader").fadeOut("xslow");
+                       }
+                   });
+               },
+               error: function ()
+               {
+                   return false;
+               }
+           });
         }
 </script>
 @endsection
