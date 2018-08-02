@@ -128,6 +128,11 @@ class SuratMasukController {
                         data.tgl_baca_plt = new Date()
                         await data.save()                    
                     }
+                } else if (data.nip_tata_usaha == user.nip) {
+                    if (data.tgl_baca_tata_usaha == null) {
+                        data.tgl_baca_tata_usaha = new Date()
+                        await data.save()
+                    }
                 }
                 
                 Log.add(user, 'Melihat Detail Surat Masuk Nomor ' + data.nomor_surat)
@@ -153,9 +158,6 @@ class SuratMasukController {
                                             .where({ level: 2, instansi: user.instansi })
                                             .first()
             if (dataPimpinan) {
-                dataSurat.nip_tata_usaha = user.nip
-                dataSurat.nama_tata_usaha = user.nama_lengkap
-                dataSurat.jabatan_tata_usaha = user.nama_jabatan
                 dataSurat.nip_pimpinan = dataPimpinan.nip
                 dataSurat.nama_pimpinan = dataPimpinan.nama_lengkap
                 dataSurat.jabatan_pimpinan = dataPimpinan.nama_jabatan

@@ -270,6 +270,9 @@ class SuratKeluarController {
 
                     const insertSurat = await SuratMasuk.create({
                         instansi_penerima: penerima.nip_instansi,
+                        nip_tata_usaha: dataTataUsaha.nip,
+                        nama_tata_usaha: dataTataUsaha.nama_lengkap,
+                        jabatan_tata_usaha: dataTataUsaha.nama_jabatan,
                         tgl_surat: dataSurat.tgl_surat,
                         nomor_surat: data.nomor_surat,
                         nomor_agenda: dataSurat.nomor_agenda,
@@ -301,6 +304,9 @@ class SuratKeluarController {
 
                     const insertTembusan = await SuratMasuk.create({
                         instansi_penerima: tembusan.nip_instansi,
+                        nip_tata_usaha: dataTataUsaha.nip,
+                        nama_tata_usaha: dataTataUsaha.nama_lengkap,
+                        jabatan_tata_usaha: dataTataUsaha.nama_jabatan,
                         tgl_surat: dataSurat.tgl_surat,
                         nomor_surat: data.nomor_surat,
                         nomor_agenda: dataSurat.nomor_agenda,
