@@ -193,6 +193,26 @@
       </div>
     </div>
     <!-- End Modal -->
+    <!-- Modal -->
+    <div class="modal fade modal-3d-flip-horizontal" id="lampiransurat"
+        aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog"
+        tabindex="-1">
+        <div class="modal-dialog modal-simple">
+        <div class="modal-content" id="file_preview">
+            <div class="modal-header">
+            <h4 class="modal-title">Lampiran Surat</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12" >
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- End Modal -->
 
       <!-- Trigger the modal with a button -->
 
@@ -281,14 +301,14 @@
                                     var myarr = cek_lampiran.split(",");
                                     for (var i = 0, len = myarr.length; i < len; i++) 
                                     {
-                                        file += "<a target='_blank' href='"+myarr[i]+"' >"+myarr[i]+"</a><br>";    
+                                        file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+myarr[i]+"</a><br>";    
                                     }
                                     //ada
                                 }
                                 else
                                 {
                                     //tiadak ada
-                                    file = "<a target='_blank' href='"+element.lampiran+"' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
+                                    file = "<a onclick=preview('"+myarr[i]+"') href='#' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
                                 }
                             }
 
@@ -339,7 +359,20 @@
             });
         }
 
-
+        function preview(file)
+        {
+            var all = file.split(".");
+            var ekstensi = all[1];
+            if(ekstensi=='pdf')
+            {
+                $('#file_preview').html('<embed src="'+file+'" type="application/pdf" width="100%" height="560px"/>');
+            }
+            else
+            {
+                $('#file_preview').html('<img src="'+file+'" width="100%">');
+            }
+            $('#lampiransurat').modal("show"); 
+        }
         
         function showcomment()
         {
