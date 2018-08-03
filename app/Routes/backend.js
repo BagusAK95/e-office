@@ -1466,7 +1466,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/konsep-surat/:id', 'SuratKeluarController.delete').middleware('checkToken:umum')
+    Route.delete('/konsep-surat/:id', 'SuratKeluarController.delete').middleware('checkToken:umum')
 
     /**
     * @swagger
