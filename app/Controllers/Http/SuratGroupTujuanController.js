@@ -13,6 +13,8 @@ class SuratGroupTujuanController {
 
             const insert = await SuratGroupTujuan.create(data)
             
+            Log.add(user, 'Menambah Tujuan Surat Dengan Nama ' + data.nama, data)
+
             return Response.format(true, null, insert)
         } catch (error) {
             return Response.format(false, error, null)
@@ -24,10 +26,16 @@ class SuratGroupTujuanController {
             const user = await auth.getUser()
             const data = request.all()
 
-            const update = await SuratGroupTujuan.query()
-                                                 .where({ nip: user.nip, id: params.id })
-                                                 .update(data)
+            let update = await SuratGroupTujuan.query()
+                                               .where({ nip: user.nip, id: params.id })
+                                               .first()
             if (update > 0) {
+                update.nama = data.nama
+                update.data = data.data
+                await update.save()
+
+                Log.add(user, 'Mengubah Tujuan Surat Dengan Nama ' + update.nama, update)
+
                 return Response.format(true, null, update)
             } else {
                 return Response.format(false, 'Group tujuan tidak ditemukan', null)
@@ -41,10 +49,14 @@ class SuratGroupTujuanController {
         try {
             const user = await auth.getUser()
 
-            const destroy = await SuratGroupTujuan.query()
-                                                  .where({ nip: user.nip, id: params.id })
-                                                  .delete()
-            if (destroy > 0) {
+            const data = await SuratGroupTujuan.query()
+                                               .where({ nip: user.nip, id: params.id })
+                                               .first()
+            if (data) {
+                await data.delete()
+
+                Log.add(user, 'Menghapus Tujuan Surat Dengan Nama ' + data.nama, data)
+
                 return Response.format(true, null, destroy)
             } else {
                 return Response.format(false, 'Group tujuan tidak ditemukan', null)
@@ -61,6 +73,8 @@ class SuratGroupTujuanController {
                                                .where('nip', user.nip)
                                                .paginate(Number(request.get().page), Number(request.get().limit))
 
+            Log.add(user, 'Melihat Daftar Tujuan Surat Pada Halaman ' + request.get().page)
+
             return Response.format(true, null, data)
         } catch (error) {
             return Response.format(false, error, null)
@@ -74,6 +88,8 @@ class SuratGroupTujuanController {
                                                .where({nip: user.nip, id: params.id})
                                                .first()
             if (data) {
+                Log.add(user, 'Melihat Detail Tujuan Surat Dengan Nama ' + data.nama)
+
                 return Response.format(true, null, data)
             } else {
                 return Response.format(false, 'Group tujuan tidak ditemukan', null)
