@@ -31,7 +31,7 @@ class SuratKeluarController {
                 arrPemeriksa[i].urutan = i + 1
 
                 if (i == 0) {
-                    arrPemeriksa[i].status = 0
+                    arrPemeriksa[i].status = 1
                 }
             }
 
