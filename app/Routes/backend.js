@@ -1450,6 +1450,26 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /konsep-surat/{id}:
+    *   delete:
+    *     tags:
+    *       - Konsep Surat
+    *     summary: Delete
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    */
+    Route.put('/konsep-surat/:id', 'SuratKeluarController.delete').middleware('checkToken:umum')
+
+    /**
+    * @swagger
     * /konsep-surat/checkingConcept/{id_surat_keluar}:
     *   put:
     *     tags:
