@@ -13,7 +13,7 @@ class SuratPemeriksaController {
             const user = await auth.getUser()
             const data = request.all()
             const dataSurat = await SuratKeluar.query()
-                                               .where('id_surat_keluar', params.id_surat_keluar)
+                                               .where('id', params.id_surat_keluar)
                                                .whereBetween('status_surat', [1, 2])
                                                .first()
             if (dataSurat == null) {
