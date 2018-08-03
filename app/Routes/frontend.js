@@ -140,7 +140,16 @@ Route.on('/error-404').render('404')
 //End Notif
 
 //Surat Keluar//
-Route.on('/surat-keluar/add').render('frontend/add_surat_keluar')
+Route.on('/konsep-surat/add').render('frontend/add_surat_keluar')
+Route.on('/konsep-surat/maked').render('frontend/konsep_surat_maked')
+Route.on('/konsep-surat/checked').render('frontend/konsep_surat_checked')
+Route.get('/konsep-surat/maked/:id', async function({ params,view }) {
+    return view.render('frontend/detail_konsep_surat', { params })
+})
+Route.get('/konsep-surat/checked/:id', async function({ params,view }) {
+    return view.render('frontend/detail_konsep_surat_checked', { params })
+})
+
 Route.on('/tujuan-surat').render('frontend/tujuan_surat')
 Route.on('/tujuan-surat/add').render('frontend/tujuan_surat_add')
 //End Surat Keluar//
