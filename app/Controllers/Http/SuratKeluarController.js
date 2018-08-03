@@ -37,7 +37,7 @@ class SuratKeluarController {
 
             await SuratPemeriksa.createMany(arrPemeriksa)
 
-            Notification.send([user.nip, user.nama_lengkap], [arrPemeriksa[0].nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/' + insertKonsep.id)
+            Notification.send([user.nip, user.nama_lengkap], [arrPemeriksa[0].nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/checked/' + insertKonsep.id)
             
             Log.add(user, 'Menambah Konsep Surat Atas Nama ' + data.nama_penandatangan, insertKonsep)
 
@@ -155,7 +155,7 @@ class SuratKeluarController {
                     dataPemeriksa.status = 1
                     dataPemeriksa.save()
 
-                    Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/' + params.id)
+                    Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/checked/' + params.id)
                 }
 
                 Log.add(user, 'Merevisi Konsep Surat Atas Nama ' + data.nama_penandatangan, data)

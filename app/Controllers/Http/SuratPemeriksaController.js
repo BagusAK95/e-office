@@ -28,7 +28,7 @@ class SuratPemeriksaController {
                             dataSurat.status_surat = 2
                             dataSurat.save()
 
-                            Notification.send([user.nip, user.nama_lengkap], [dataSurat.nip_pembuat], 'Merekomendasikan Untuk Merevisi Konsep Surat', '/konsep-surat/' + params.id_surat_keluar)
+                            Notification.send([user.nip, user.nama_lengkap], [dataSurat.nip_pembuat], 'Merekomendasikan Untuk Merevisi Konsep Surat', '/konsep-surat/maked/' + params.id_surat_keluar)
 
                             Log.add(user, 'Mengajukan Untuk Merevisi Konsep Surat Atas Nama ' + dataSurat.nama_penandatangan)
 
@@ -36,7 +36,7 @@ class SuratPemeriksaController {
                             
                             break;
                         case 3: //Disetuju
-                            Notification.send([user.nip, user.nama_lengkap], [dataSurat.nip_pembuat], 'Menyetujui Konsep Surat', '/konsep-surat/' + params.id_surat_keluar)
+                            Notification.send([user.nip, user.nama_lengkap], [dataSurat.nip_pembuat], 'Menyetujui Konsep Surat', '/konsep-surat/maked/' + params.id_surat_keluar)
 
                             const dataPemeriksa = await SuratPemeriksa.query()
                                                                       .where({ id_surat_keluar: params.id_surat_keluar, status: 0 })
@@ -46,7 +46,7 @@ class SuratPemeriksaController {
                                 dataPemeriksa.status = 1
                                 dataPemeriksa.save()
             
-                                Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/' + params.id_surat_keluar)    
+                                Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/checked/' + params.id_surat_keluar)    
 
                                 Log.add(user, 'Menyetujui Konsep Surat Atas Nama ' + dataSurat.nama_penandatangan)
                                 
