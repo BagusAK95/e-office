@@ -149,10 +149,13 @@ Route.get('/konsep-surat/maked/:id', async function({ params,view }) {
 Route.get('/konsep-surat/checked/:id', async function({ params,view }) {
     return view.render('frontend/detail_konsep_surat_checked', { params })
 })
-
+Route.get('/konsep-surat/edit/:id', async function({ params,view }) {
+    return view.render('frontend/edit_konsep_surat', { params })
+})
 Route.on('/tujuan-surat').render('frontend/tujuan_surat')
 Route.on('/tujuan-surat/add').render('frontend/tujuan_surat_add')
 //End Surat Keluar//
+
 
 
 Route.on('/coba').render('frontend/coba')
