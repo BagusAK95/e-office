@@ -18,7 +18,7 @@
                             <div class="addsurat">
                                 <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
                                 <div class='btn-group' role='group' >
-                                    <a href='/tujuan-surat/add' class='btn btn-icon btn-primary add' >
+                                    <a href='/tujuan-surat/add' class='btn btn-icon btn-primary' >
                                     <i class='icon md-plus' aria-hidden='true'></i>
                                     </a>
                                 </div>
@@ -159,7 +159,7 @@
                                     nama_instansis+=no+". "+element.nama_instansi+"<br>";
                                     no++;
                                });
-                               var tr_data = "<tr><td>"+element.nama+"</td><td>"+nama_instansis+"</td><td>"+tanggal_indo(element.tgl)+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button id='deletesurat' onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                               var tr_data = "<tr><td>"+element.nama+"</td><td>"+nama_instansis+"</td><td>"+tanggal_indo(element.tgl)+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
                                text += tr_data;
                            });
    

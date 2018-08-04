@@ -1,0 +1,434 @@
+
+
+@layout('frontend/main')
+@section('content')
+
+<div class="page-content container-fluid">
+   <div class="row">
+      <div class="col-xxl-4 col-lg-12">
+         <!-- Example Panel With Heading -->
+         <div class="panel panel-bordered panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title"><i class="icon md-assignment"></i>&nbsp;Surat Tembusan</h3>
+            </div>
+            <div class="panel-body">
+               <div class="example example-grid">
+                  <div class="row">
+                     <div class="col-sm-12 col-lg-6">
+                        <div class="addsurat">
+                           <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                              
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-sm-6 col-lg-6">
+                        <div class="">
+                            <form id="searchform">
+                            <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                                <div class='btn-group' role='group'>
+                                    <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal" id='tgawl' type="text">
+                                    &nbsp;
+                                    &nbsp;
+                                    <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir" id='tgakh' type="text">
+                                    &nbsp;
+                                    &nbsp;
+                                    <input style="width:150px;height:45px;" class="form-control" placeholder="Search" id='search' type="text">
+                                    &nbsp;
+                                    &nbsp;
+                                    <button type="submit" class='btn btn-icon btn-primary'><i class='icon md-search' aria-hidden='true'></i></button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <table class="table datatable table-striped table-bordered table-hover" data-role="content">
+                  <thead>
+                     <tr>
+                        <th style='width:120px'>TANGGAL</th>
+                        <th style='width:150px'>NOMOR SURAT</th>
+                        <th>PENGIRIM</th>
+                        <th style='width:230px'>PERIHAL</th>
+                        <th style='width:140px'>PIMPINAN</th>
+                        <th>ACTION</th>
+                     </tr>
+                  </thead>
+                  <tbody id="body">
+                  </tbody>
+               </table>
+               <div id="pagination"></div>
+               <span id="showing"></span>
+            </div>
+         </div>
+         <!-- End Example Panel With Heading -->
+      </div>
+   </div>
+</div>
+<script>
+    $( document ).ready(function() {
+        /*Main*/
+        $("#loader").fadeIn("slow");
+        cek_session();
+        cek_token();
+        /*End Main*/
+        
+        /*Page*/
+        showbrand(1,'','','');
+        
+        
+        $("#loader").fadeOut("xslow");
+        /*Page*/
+    });
+
+    function getsession()
+    {
+        $.ajax({ 
+        type: 'GET', 
+        url: '/getlevel', 
+        success: function (data) 
+        { 
+            //alert(data)
+            if(data==3)
+            {
+                $(".add").css('display','block');
+                $(".delete").css('display','block');   
+            }
+            else if(data==2)
+            {
+                $(".add").css("display", "none");
+                $(".delete").css("display", "none");
+            }
+            else if(data==1)
+            {
+                $(".add").css("display", "none");
+                $(".delete").css("display", "none");
+            }
+            else if(data==4)
+            {
+                $(".add").css("display", "none");
+                $(".delete").css("display", "none");
+            }
+        },
+        error : function(data)
+        {
+
+        }
+    });
+    }
+    $( "#searchform" ).submit(function( event ) {
+        var search = $("#search").val();
+        var tgawl = $("#tgawl").val();
+        var tgakh = $("#tgakh").val();
+        $("#loader").fadeIn("slow");
+        if($("#search").val())    
+        {
+            if($("#tgawl").val())
+            {
+                if($("#tgakh").val())
+                {
+                    
+                    showbrand(1,search,tgawl,tgakh);
+                }
+                else
+                {
+                    showbrand(1,search,tgawl,'');
+                }
+            }
+            else
+            {
+                showbrand(1,search,'','');
+            }
+        }
+        else
+        {
+            if($("#tgawl").val())
+            {
+                if($("#tgakh").val())
+                {
+                    
+                    showbrand(1,"",tgawl,tgakh);
+                }
+                else
+                {
+                    showbrand(1,"",tgawl,'');
+                }
+            }
+            else
+            {
+                showbrand(1,"",'','');
+            }
+        }
+        return false;
+    });
+
+   function cari()
+   {
+       
+   }
+   
+   function dopagin()
+   {
+       var halaman = $("#pagin").val();
+       var search = $("#search").val();
+       var tgawl = $("#tgawl").val();
+       var tgakh = $("#tgakh").val();
+        $("#loader").fadeIn("slow");
+       if($("#search").val())    
+       {
+           if($("#tgawl").val())
+           {
+               if($("#tgakh").val())
+               {
+                   
+                   showbrand(halaman,search,tgawl,tgakh);
+               }
+               else
+               {
+                   showbrand(halaman,search,tgawl,'');
+               }
+           }
+           else
+           {
+               showbrand(halaman,search,'','');
+           }
+       }
+       else
+       {
+           if($("#tgawl").val())
+           {
+               if($("#tgakh").val())
+               {
+                   
+                   showbrand(halaman,"",tgawl,tgakh);
+               }
+               else
+               {
+                   showbrand(halaman,"",tgawl,'');
+               }
+           }
+           else
+           {
+               showbrand(halaman,"",'','');
+           }
+       }
+   }
+   
+       
+       function showbrand(page,nama,tgawl,tgakh)
+       {
+           var parameter = '';
+           if(nama=='')
+           {
+               var naman = "";
+           }
+           else
+           {
+               var naman = "keyword="+nama+"&";
+           }
+
+           if(tgawl=='')
+           {
+               var tgl_awal = "";
+           }
+           else
+           {
+               var tgl_awal = "tgl_awal="+tgawl+"&";
+           }
+   
+           if(tgakh=='')
+           {
+               var tgl_akhir = "";
+           }
+           else
+           {
+               var tgl_akhir = "tgl_akhir="+tgakh+"&";
+           }
+           parameter += naman+tgl_awal+tgl_akhir;
+           
+           $.ajax({ 
+               type: 'GET', 
+               url: '/gettoken', 
+               success: function (data) { 
+                   $.ajax({ 
+                       type: 'GET', 
+                       url: '/api/surat-masuk?'+parameter+'page='+ page + '&limit=10', 
+                       headers: {
+                           'Authorization': 'Bearer ' + data.token
+                       },
+                       dataType: 'json',
+                       success: function (data) { 
+                           var text="";
+                           $.each(data.data.data, function(index, element) 
+                           {
+                               var keamanan = "";
+                               if(element.keamanan==1)
+                               {
+                                   keamanan = "Biasa";
+                               }
+                               else if(element.keamanan==2)
+                               {
+                                   keamanan = "Rahasia Terbatas";
+                               }
+                               else if(element.keamanan==3)
+                               {
+                                   keamanan = "Rahasia";
+                               }
+                               else if(element.keamanan==4)
+                               {
+                                   keamanan = "Sangat Rahasia";
+                               }
+
+                               var kecepatan = "";
+                               if(element.kecepatan==1)
+                               {
+                                   kecepatan = "Biasa";
+                               }
+                               else if(element.kecepatan==2)
+                               {
+                                   kecepatan = "Segera";
+                               }
+                               else if(element.kecepatan==3)
+                               {
+                                   kecepatan = "Amat Segera";
+                               }
+
+                                var status_baca_pimpinan="<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Belum Dibaca</span><br><b>-</b>";
+                                if(element.tgl_baca_pimpinan)
+                                {
+                                    var tglbc = tanggal_jam_indo(element.tgl_baca_pimpinan);
+                                    status_baca_pimpinan = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Sudah Dibaca</span><br><span style='font-size:8pt'><b>"+tglbc+"</b></span>";
+                                }
+
+                                
+                                
+
+
+                                /*else if(element.kecepatan==3)
+                                {
+                                    kecepatan = "<span style='color:white' class='badge badge-pill badge-lg badge-danger'>Amat Segera</span>";
+                                }*/
+
+
+                               var tgl_surat = tanggal_indo(element.tgl_surat);
+                               var tgl_terima = tanggal_indo(element.tgl_terima);
+                               var status = '';
+                               var tr_data = "<tr><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td align='center'>"+status_baca_pimpinan+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/surat-masuk/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><button id='deletesurat' onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                               text += tr_data;
+                           });
+   
+                           $("#body").html(text).show();
+   
+                           var disbalenext = '';
+                           if(data.data.lastPage==data.data.page)
+                           {
+                               disbalenext='disabled';
+                           }
+   
+                           if(nama)
+                           {
+                               var isi_nama = naman;
+                           }
+                           else
+                           {
+                               var isi_nama = "";
+                           }
+                           
+   
+   
+                           var prev="";
+                           if(page==1)
+                           {
+                               prev = "disabled";
+                           }
+   
+                            $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' "+prev+" onclick=showbrand(1,'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-primary' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-primary' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-primary btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div><br>Showing "+data.data.page+" to "+data.data.perPage+" of "+data.data.total+" entries").show();
+                            getsession();
+                            $("#loader").fadeOut("xslow");
+                       }
+                   });
+   
+   
+               },
+               error: function ()
+               {
+                   return false;
+               }
+           });
+       }
+   
+       
+   
+       function isNumber(evt) {
+           evt = (evt) ? evt : window.event;
+           var charCode = (evt.which) ? evt.which : evt.keyCode;
+           if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+               return false;
+           }
+           return true;
+       }
+   
+   
+   
+       function delete_data(nip)
+       {
+           if(confirm('Yakin menghapus data ini?'))
+           {
+               $.ajax({ 
+                   type: 'GET', 
+                   url: '/gettoken', 
+                   success: function (data) {
+                       $.ajax({ 
+                           type: 'DELETE', 
+                           url: '/api/surat-masuk/'+nip, 
+                           headers: {
+                               'Authorization': 'Bearer ' + data.token
+                           },
+                           dataType: 'json',
+                           success: function (data) 
+                           { 
+                               if(data.success==false)
+                               {
+                                   swal("Gagal!", "Hapus data gagal.", "error");
+                               }
+                               else if(data.success==true)
+                               {
+                                   swal({title: "Berhasil", text: "Berhasil hapus data.", type: "success"},
+                                   function(){ 
+                                       location.reload();
+                                   }
+                                   );
+                               }
+                           },
+                           error: function ()
+                           {
+                               return false;
+                           }
+                       });
+                   },
+                   error: function ()
+                   {
+                       return false;
+                   }
+               });
+           }
+           else
+           {
+               return false;
+           }
+       }
+       
+       function tanggal_indo(tanggal)
+       {           
+            moment.locale('id'); 
+            return moment(tanggal).format("LL");
+       }
+       function tanggal_jam_indo(tanggal)
+       {           
+            moment.locale('id'); 
+            return moment(tanggal).format("LLL");
+       }
+       
+</script> 
+@endsection
+

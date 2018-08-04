@@ -114,11 +114,11 @@ Route.get('/dispo-keluar/:id', async function({ params,view }) {
 
 //Tembusan
 
-Route.on('/tembusan').render('frontend/tembusan')
+/*Route.on('/tembusan').render('frontend/tembusan')
 
 Route.get('/tembusan/:id', async function({ params,view }) {
     return view.render('frontend/detail_tembusan', { params })
-})
+})*/
 
 //End Tembusan
 
@@ -154,9 +154,19 @@ Route.get('/konsep-surat/edit/:id', async function({ params,view }) {
 })
 Route.on('/tujuan-surat').render('frontend/tujuan_surat')
 Route.on('/tujuan-surat/add').render('frontend/tujuan_surat_add')
+
+Route.on('/surat-keluar').render('frontend/surat_keluar')
+Route.get('/surat-keluar/:id', async function({ params,view }) {
+    return view.render('frontend/detail_surat_keluar', { params })
+})
 //End Surat Keluar//
 
-
+//Tembusan//
+Route.on('/surat-tembusan').render('frontend/surat_tembusan')
+Route.get('/surat-tembusan/:id', async function({ params,view }) {
+    return view.render('frontend/detail_surat_tembusan', { params })
+})
+//End Tembusan//
 
 Route.on('/coba').render('frontend/coba')
 Route.post('/upload_file', async ({ params,request }) => {

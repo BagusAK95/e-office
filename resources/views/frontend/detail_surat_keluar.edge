@@ -42,14 +42,12 @@
             <!-- Example Panel With Heading -->
             <div class="panel panel-bordered panel-primary">
               <div class="panel-heading">
-                <h3 class="panel-title">Detail Konsep Surat</h3>
+                <h3 class="panel-title">Detail Surat Keluar</h3>
                 
                 <ul class="panel-actions panel-actions-keep">
-                    
                     <li>
-                        <button data-target="#exampleNiftyFlipHorizontal3" data-toggle="modal" type="button" class="btn btn-info"><i class='md-shield-check'></i>&nbsp;Tambah Pemeriksa</button>
-                        <button data-target="#exampleNiftyFlipHorizontal" data-toggle="modal" type="button" class="btn btn-success"><i class='md-edit'></i>&nbsp;Ubah Status</button>
-                        <a href='/konsep-surat/checked' class='btn btn-danger' style='color:white'><i class='md-undo'></i>&nbsp;Kembali</a>
+                        <button id="stat_kirim" data-target="#exampleNiftyFlipHorizontal" data-toggle="modal" type="button" class="btn btn-success"><i class='md-mail-send'></i>&nbsp;Kirim</button>
+                        <a href='/surat-keluar' class='btn btn-danger' style='color:white'><i class='md-undo'></i>&nbsp;Kembali</a>
                     </li>
                 </ul>
               </div>
@@ -62,14 +60,13 @@
                                 </tbody>
                             </table>
                             <table class="table table-bordered ">
-                                    <tbody id='tabel3'>
-                                    </tbody>
-                                </table>
-                                <table class="table table-bordered ">
-                                    <tbody id='tabel2'>
-                                    </tbody>
-                                </table>
-                            
+                                <tbody id='tabel3'>
+                                </tbody>
+                            </table>
+                            <table class="table table-bordered ">
+                                <tbody id='tabel2'>
+                                </tbody>
+                            </table>
                             <span id='lampiran' style='float:right'></span>
                     </div>
                 </div>
@@ -88,13 +85,11 @@
 
 
       <!-- Modal -->
-      <div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontal"
-      aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog"
-      tabindex="-1">
+      <div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontal" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog"       tabindex="-1">
       <div class="modal-dialog modal-simple">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Ubah Status</h4>
+            <h4 class="modal-title">Kirim Surat Keluar</h4>
           </div>
           <form id="simpan">
           <div class="modal-body">
@@ -104,11 +99,8 @@
                         <div class="panel-body">
                             <div class="col-lg-12">
                                 <div class="form-group " data-plugin="formMaterial">
-                                    <label class="form-control-label" for="inputEmail">Status</label>
-                                    <select class="form-control" name="status" id="status">
-                                        <option value="2">Revisi</option>
-                                        <option value="3">Disetujui</option>
-                                    </select>
+                                   <label class="form-control-label" for="inputEmail">Nomor Surat</label>
+                                   <input type="text" class="form-control" name="nomor_surat"/>
                                 </div>
                             </div>
                         </div>
@@ -118,7 +110,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success" style='float:right'><i class='icon md-plus'></i>&nbsp;Simpan</button>
+            <button type="submit" class="btn btn-success" style='float:right'><i class='icon md-mail-send'></i>&nbsp;Kirim</button>
           </div>
           </form>
         </div>
@@ -145,39 +137,6 @@
         </div>
     </div>
     <!-- End Modal -->
-     <!-- Modal -->
-    <div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontal3" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
-     <div class="modal-dialog modal-simple">
-       <div class="modal-content">
-         <div class="modal-header">
-           <h4 class="modal-title">Tambahkan Pemeriksa</h4>
-         </div>
-         <form id="simpan">
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xxl-4 col-lg-12">
-                        <!-- Example Panel With Heading -->
-                        <div class="form-group" data-plugin="formMaterial">
-                            <label class="form-control-label" for="inputEmail">Pemeriksa&nbsp;<span style="color:red">*</span> </label>
-                                <input type="hidden" id="pemeriksa_master" name="pemeriksa_master" >
-                                <select name="arr_pemeriksa" class="form-control" id="arr_pemeriksa" data-plugin="select2" multiple="" placeholder="Tambahkan Pemeriksa">
-                                </select>      
-                        </div>
-                        <!-- End Example Panel With Heading -->
-                    </div>
-                </div>
-            </div>
-         <div class="modal-footer">
-           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-           <a class="btn btn-success" style='float:right;color:white' onclick="simpen_pemeriksa()"><i class='icon md-plus'></i>&nbsp;Simpan</a>
-         </div>
-         </form>
-       </div>
-     </div>
-   </div>
-   <!-- End Modal -->
-      <!-- Trigger the modal with a button -->
-
       <script>
         $( document ).ready(function() {
             /*Main*/
@@ -188,51 +147,10 @@
             
             /*Page*/
             showtable();
-            pegawaiall2(); 
+            ceklevel();
             $("#loader").fadeOut("xslow");
             /*Page*/
         });
-        function pegawaiall2() 
-        {
-            $.ajax({ 
-                type: 'GET', 
-                url: '/gettoken', 
-                success: function (data) 
-                { 
-                        $.ajax({ 
-                            type: 'GET', 
-                            url: '/api/master-pegawai', 
-                            headers: {
-                                        'Authorization': 'Bearer ' + data.token
-                                    },
-                            dataType: 'json',
-                            success: function (data) 
-                            {   
-                                var isi = "";
-                                $.each(data.data.data, function(index, element) {
-                                    var depan = ''
-                                    var belakang = ''
-                                    if(element.gelar_depan)
-                                    {
-                                        depan += element.gelar_depan+" ";
-                                    }
-                                    var belakang = "";
-                                    if(element.gelar_belakang)
-                                    {
-                                        belakang += ", "+element.gelar_belakang;
-                                    }
-                                    isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
-                                })
-                                $("#arr_pemeriksa").html(isi).show();
-                            },
-                            error: function ()
-                            {
-                                return false;
-                            }
-                        });
-                }
-            });
-        }
 
         function simpen_pemeriksa()
         {
@@ -297,6 +215,44 @@
             });
             return false;
         }
+
+        
+
+        function ceklevel()
+        {
+            $("#loader").fadeIn();        
+            $.ajax({ 
+            type: 'GET', 
+            url: '/gettoken', 
+            success: function (data_token) { 
+                $.ajax({ 
+                type: 'GET', 
+                url: '/getlevel', 
+                headers: {
+                'Authorization': 'Bearer ' + data_token.token
+                },
+                success: function (datanya) 
+                { 
+                    if(datanya!=3)
+                    {
+                        $("#stat_kirim").hide();
+                    }
+                    $("#loader").fadeOut();        
+                },
+                error: function(data)
+                {
+                    swal("Gagal!", data.message, "error");
+                    $("#loader").fadeOut();        
+                }
+                });
+            },
+            error: function ()
+            {
+                return false;
+            }
+            });
+            return false;
+        }
    
         function showtable()
         {
@@ -311,7 +267,7 @@
                         headers: {
                                 'Authorization': 'Bearer ' + data.token
                         },
-                        url: '/api/konsep-surat/{{params.id}}', 
+                        url: '/api/surat-keluar/{{params.id}}', 
                         success: function (data) 
                         { 
                             var element = data.data;
@@ -428,6 +384,7 @@
                             else if(element.status_surat==4)
                             {
                                 sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Terkirim</span>";
+                                $("#stat_kirim").hide();
                             }
 
                             var tanggal_surat = tanggal_indo(element.tgl_surat);
@@ -535,44 +492,45 @@
        }
 
        $("#simpan").submit(function() {
-                $.ajax({ 
-                        
-                    type: 'GET', 
-                    url: '/gettoken', 
-                    success: function (data) { 
-                        $.ajax({ 
-                        type: 'PUT', 
-                        url: '/api/konsep-surat/checkingConcept/{{params.id}}', 
-                        headers: {
-                        'Authorization': 'Bearer ' + data.token
-                        },
-                        data : "id_surat_keluar={{params.id}}"+"&status="+$("#status").val(),
-                        success: function (data) 
-                        { 
-                            if(data.success==false)
-                            {
-                                swal("Gagal!", "Perubahan Status Gagal.", "error");
-                            }
-                            else if(data.success==true)
-                            {
-                                swal({title: "Berhasil", text: "Perubahan Status Berhasil.", type: "success"},
-                                function(){ 
-                                    window.location.href="/konsep-surat/checked";
-                                }
-                                );
-                            }
-                        },
-                        error: function(data)
-                        {
-                            swal("Gagal!", "Perubahan Status Gagal.", "error");
-                        }
-                        });
+            $.ajax({ 
+                    
+                type: 'GET', 
+                url: '/gettoken', 
+                success: function (data) { 
+                    $.ajax({ 
+                    type: 'POST', 
+                    url: '/api/surat-keluar/{{params.id}}', 
+                    headers: {
+                    'Authorization': 'Bearer ' + data.token
                     },
-                    error: function ()
+                    data : "id={{params.id}}"+"&nomor_surat="+$("#nomor_surat").val(),
+                    success: function (data) 
+                    { 
+                        if(data.success==false)
+                        {
+                            swal("Gagal!", "Surat Gagal terkirim.", "error");
+                        }
+                        else if(data.success==true)
+                        {
+                            swal({title: "Berhasil", text: "Surat berhasil terkirim.", type: "success"},
+                            function(){ 
+                                //window.location.href="/konsep-surat/checked";
+                                window.location.reload();
+                            }
+                            );
+                        }
+                    },
+                    error: function(data)
                     {
-                        return false;
+                        swal("Gagal!", "Surat Gagal terkirim.", "error");
                     }
                     });
+                },
+                error: function ()
+                {
+                    return false;
+                }
+                });
             return false;    
         });
        
