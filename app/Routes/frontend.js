@@ -114,11 +114,11 @@ Route.get('/dispo-keluar/:id', async function({ params,view }) {
 
 //Tembusan
 
-Route.on('/tembusan').render('frontend/tembusan')
+/*Route.on('/tembusan').render('frontend/tembusan')
 
 Route.get('/tembusan/:id', async function({ params,view }) {
     return view.render('frontend/detail_tembusan', { params })
-})
+})*/
 
 //End Tembusan
 
@@ -140,11 +140,33 @@ Route.on('/error-404').render('404')
 //End Notif
 
 //Surat Keluar//
-Route.on('/surat-keluar/add').render('frontend/add_surat_keluar')
+Route.on('/konsep-surat/add').render('frontend/add_surat_keluar')
+Route.on('/konsep-surat/maked').render('frontend/konsep_surat_maked')
+Route.on('/konsep-surat/checked').render('frontend/konsep_surat_checked')
+Route.get('/konsep-surat/maked/:id', async function({ params,view }) {
+    return view.render('frontend/detail_konsep_surat', { params })
+})
+Route.get('/konsep-surat/checked/:id', async function({ params,view }) {
+    return view.render('frontend/detail_konsep_surat_checked', { params })
+})
+Route.get('/konsep-surat/edit/:id', async function({ params,view }) {
+    return view.render('frontend/edit_konsep_surat', { params })
+})
 Route.on('/tujuan-surat').render('frontend/tujuan_surat')
 Route.on('/tujuan-surat/add').render('frontend/tujuan_surat_add')
+
+Route.on('/surat-keluar').render('frontend/surat_keluar')
+Route.get('/surat-keluar/:id', async function({ params,view }) {
+    return view.render('frontend/detail_surat_keluar', { params })
+})
 //End Surat Keluar//
 
+//Tembusan//
+Route.on('/surat-tembusan').render('frontend/surat_tembusan')
+Route.get('/surat-tembusan/:id', async function({ params,view }) {
+    return view.render('frontend/detail_surat_tembusan', { params })
+})
+//End Tembusan//
 
 Route.on('/coba').render('frontend/coba')
 Route.post('/upload_file', async ({ params,request }) => {

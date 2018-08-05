@@ -214,6 +214,7 @@
                         success: function (data) { 
                             swal("Berhasil!", "Data telah disimpan.", "success");
                             batal();
+                            window.location.reload();
                             $("#loader").fadeOut("xslow");
                         }
                     });
