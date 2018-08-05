@@ -211,40 +211,33 @@
         function pegawaiall() {
             $.ajax({ 
                 type: 'GET', 
-                url: '/gettoken', 
+                url: '/api/master-pegawai', 
+                headers: {
+                            'Authorization': 'Bearer {{sesi}}'
+                        },
+                dataType: 'json',
                 success: function (data) 
-                { 
-                        $.ajax({ 
-                            type: 'GET', 
-                            url: '/api/master-pegawai', 
-                            headers: {
-                                        'Authorization': 'Bearer ' + data.token
-                                    },
-                            dataType: 'json',
-                            success: function (data) 
-                            {   
-                                var isi = "<option value=''>Pilih Pegawai</option>";
-                                $.each(data.data.data, function(index, element) {
-                                    var depan = ''
-                                    var belakang = ''
-                                    if(element.gelar_depan)
-                                    {
-                                        depan += element.gelar_depan+" ";
-                                    }
-                                    var belakang = "";
-                                    if(element.gelar_belakang)
-                                    {
-                                        belakang += ", "+element.gelar_belakang;
-                                    }
-                                    isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
-                                })
-                                $("#pegawai").html(isi).show();
-                            },
-                            error: function ()
-                            {
-                                return false;
-                            }
-                        });
+                {   
+                    var isi = "<option value=''>Pilih Pegawai</option>";
+                    $.each(data.data.data, function(index, element) {
+                        var depan = ''
+                        var belakang = ''
+                        if(element.gelar_depan)
+                        {
+                            depan += element.gelar_depan+" ";
+                        }
+                        var belakang = "";
+                        if(element.gelar_belakang)
+                        {
+                            belakang += ", "+element.gelar_belakang;
+                        }
+                        isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
+                    })
+                    $("#pegawai").html(isi).show();
+                },
+                error: function ()
+                {
+                    return false;
                 }
             });
         }
@@ -254,45 +247,38 @@
             var nip = $("#pegawai").val();
             $.ajax({ 
                 type: 'GET', 
-                url: '/gettoken', 
+                url: '/api/master-pegawai/'+nip, 
+                headers: {
+                            'Authorization': 'Bearer {{sesi}}'
+                        },
+                dataType: 'json',
                 success: function (data) 
-                { 
-                        $.ajax({ 
-                            type: 'GET', 
-                            url: '/api/master-pegawai/'+nip, 
-                            headers: {
-                                        'Authorization': 'Bearer ' + data.token
-                                    },
-                            dataType: 'json',
-                            success: function (data) 
-                            {   
-                                var element = data.data;
-                                var depan = "";
-                                if(element.gelar_depan)
-                                {
-                                    depan += element.gelar_depan+" ";
-                                }
-                                var belakang = "";
-                                if(element.gelar_belakang)
-                                {
-                                    belakang += " "+element.gelar_belakang;
-                                }
-                                $("#nama_lengkap").val(depan+element.nama+belakang);
-                                $("#kode_lokasi").val(element.kode_lokasi);
-                                $("#kode_jabatan").val(element.kode_jabatan);
-                                $("#nama_jabatan").val(element.nama_jabatan);
-                                $("#kode_eselon").val(element.kode_eselon);
-                                $("#golongan").val(element.golongan);
+                {   
+                    var element = data.data;
+                    var depan = "";
+                    if(element.gelar_depan)
+                    {
+                        depan += element.gelar_depan+" ";
+                    }
+                    var belakang = "";
+                    if(element.gelar_belakang)
+                    {
+                        belakang += " "+element.gelar_belakang;
+                    }
+                    $("#nama_lengkap").val(depan+element.nama+belakang);
+                    $("#kode_lokasi").val(element.kode_lokasi);
+                    $("#kode_jabatan").val(element.kode_jabatan);
+                    $("#nama_jabatan").val(element.nama_jabatan);
+                    $("#kode_eselon").val(element.kode_eselon);
+                    $("#golongan").val(element.golongan);
 
-                                 $("#tampil_nip").val(nip);
-                                 $("#tampil_jabatan").val(element.nama_jabatan);
-                                 $("#tampil_golongan").val(element.golongan);
-                            },
-                            error: function ()
-                            {
-                                return false;
-                            }
-                        });
+                        $("#tampil_nip").val(nip);
+                        $("#tampil_jabatan").val(element.nama_jabatan);
+                        $("#tampil_golongan").val(element.golongan);
+                },
+                error: function ()
+                {
+                    return false;
                 }
             });
         }
@@ -313,23 +299,18 @@
             {
                 akses += ","+$("#di").val();
             }
-
             $.ajax({ 
-            type: 'GET', 
-            url: '/gettoken', 
-            success: function (data) { 
-               $.ajax({ 
                 type: 'POST', 
                 url: '/api/user', 
                 headers: {
-					'Authorization': 'Bearer ' + data.token
+					'Authorization': 'Bearer {{sesi}}'
 				},
                 data : "nip="+$("#pegawai").val()+"&nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&password="+$("#password").val()+"&level="+$("#level").val()+"&status="+$("#status").val()+"&kode_eselon="+$("#kode_eselon").val()+"&akses="+akses,
                 success: function (data) 
                 { 
                     if(data.success==false)
                     {
-                        swal("Gagal!", "Gagal Menyimpan data.", "error");
+                        swal("Gagal!", data.message, "error");
                     }
                     else if(data.success==true)
                     {
@@ -342,14 +323,8 @@
                 },
                 error: function(data)
                 {
-                    swal("Gagal!", "Gagal Menyimpan data.", "error");
+                    swal("Gagal!", data.message, "error");
                 }
-                });
-            },
-            error: function ()
-            {
-                return false;
-            }
             });
             return false;
         }

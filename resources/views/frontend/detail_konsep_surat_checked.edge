@@ -196,40 +196,33 @@
         {
             $.ajax({ 
                 type: 'GET', 
-                url: '/gettoken', 
+                url: '/api/master-pegawai', 
+                headers: {
+                            'Authorization': 'Bearer {{sesi}}'
+                        },
+                dataType: 'json',
                 success: function (data) 
-                { 
-                        $.ajax({ 
-                            type: 'GET', 
-                            url: '/api/master-pegawai', 
-                            headers: {
-                                        'Authorization': 'Bearer ' + data.token
-                                    },
-                            dataType: 'json',
-                            success: function (data) 
-                            {   
-                                var isi = "";
-                                $.each(data.data.data, function(index, element) {
-                                    var depan = ''
-                                    var belakang = ''
-                                    if(element.gelar_depan)
-                                    {
-                                        depan += element.gelar_depan+" ";
-                                    }
-                                    var belakang = "";
-                                    if(element.gelar_belakang)
-                                    {
-                                        belakang += ", "+element.gelar_belakang;
-                                    }
-                                    isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
-                                })
-                                $("#arr_pemeriksa").html(isi).show();
-                            },
-                            error: function ()
-                            {
-                                return false;
-                            }
-                        });
+                {   
+                    var isi = "";
+                    $.each(data.data.data, function(index, element) {
+                        var depan = ''
+                        var belakang = ''
+                        if(element.gelar_depan)
+                        {
+                            depan += element.gelar_depan+" ";
+                        }
+                        var belakang = "";
+                        if(element.gelar_belakang)
+                        {
+                            belakang += ", "+element.gelar_belakang;
+                        }
+                        isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                    })
+                    $("#arr_pemeriksa").html(isi).show();
+                },
+                error: function ()
+                {
+                    return false;
                 }
             });
         }
@@ -255,15 +248,11 @@
             });
             var gabung = "["+isi_arr_pemeriksa+semua[1];
             //End Pemeriksa//
-            $.ajax({ 
-            type: 'GET', 
-            url: '/gettoken', 
-            success: function (data_token) { 
                 $.ajax({ 
                 type: 'PUT', 
                 url: '/api/konsep-surat/updateChecker/{{params.id}}', 
                 headers: {
-                'Authorization': 'Bearer ' + data_token.token
+                'Authorization': 'Bearer {{sesi}}'
                 },
                 data : "id_surat_keluar={{params.id}}&arr_pemeriksa="+gabung,
                 success: function (datanya) 
@@ -289,221 +278,209 @@
                     $("#loader").fadeOut();        
                 }
                 });
-            },
-            error: function ()
-            {
-                return false;
-            }
-            });
+
+           
             return false;
         }
    
         function showtable()
         {
-            //alert("ssdsd");
             $.ajax({ 
-               type: 'GET', 
-               url: '/gettoken', 
-               success: function (data) { 
+                type: 'GET', 
+                headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                },
+                url: '/api/konsep-surat/{{params.id}}', 
+                success: function (data) 
+                { 
+                    var element = data.data;
+
+                    var keamanan = "";
+                    if(element.keamanan==1)
+                    {
+                        keamanan = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
+                    }
+                    else if(element.keamanan==2)
+                    {
+                        keamanan = "<span style='color:white' class='badge badge-pill badge-lg badge-info'>Rahasia Terbatas</span>";
+                    }
+                    else if(element.keamanan==3)
+                    {
+                        keamanan = "<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Rahasia</span>";
+                    }
+                    else if(element.keamanan==4)
+                    {
+                        keamanan = "<span style='color:white' class='badge badge-pill badge-lg badge-danger'>Sangat Rahasia</span>";
+                    }
+
+                    var kecepatan = "";
+                    if(element.kecepatan==1)
+                    {
+                        kecepatan = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
+                    }
+                    else if(element.kecepatan==2)
+                    {
+                        kecepatan = "<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Segera</span>";
+                    }
+                    else if(element.kecepatan==3)
+                    {
+                        kecepatan = "<span style='color:white' class='badge badge-pill badge-lg badge-danger'>Amat Segera</span>";
+                    }
+
+                    if(element.klasifikasi_!=null)
+                    {
+                        var kla = element.klasifikasi_.nama;
+                    }
+                    else
+                    {
+                        var kla = "";
+                    }
                     
-                    $.ajax({ 
-                        type: 'GET', 
-                        headers: {
-                                'Authorization': 'Bearer ' + data.token
-                        },
-                        url: '/api/konsep-surat/{{params.id}}', 
-                        success: function (data) 
-                        { 
-                            var element = data.data;
-
-                            var keamanan = "";
-                            if(element.keamanan==1)
-                            {
-                                keamanan = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
-                            }
-                            else if(element.keamanan==2)
-                            {
-                                keamanan = "<span style='color:white' class='badge badge-pill badge-lg badge-info'>Rahasia Terbatas</span>";
-                            }
-                            else if(element.keamanan==3)
-                            {
-                                keamanan = "<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Rahasia</span>";
-                            }
-                            else if(element.keamanan==4)
-                            {
-                                keamanan = "<span style='color:white' class='badge badge-pill badge-lg badge-danger'>Sangat Rahasia</span>";
-                            }
-
-                            var kecepatan = "";
-                            if(element.kecepatan==1)
-                            {
-                                kecepatan = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
-                            }
-                            else if(element.kecepatan==2)
-                            {
-                                kecepatan = "<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Segera</span>";
-                            }
-                            else if(element.kecepatan==3)
-                            {
-                                kecepatan = "<span style='color:white' class='badge badge-pill badge-lg badge-danger'>Amat Segera</span>";
-                            }
-
-                            if(element.klasifikasi_!=null)
-                            {
-                                var kla = element.klasifikasi_.nama;
-                            }
-                            else
-                            {
-                                var kla = "";
-                            }
-                            
-                            var file = '';
-                            if(element.lampiran)
-                            {
-                                var cek_lampiran = element.lampiran;
-                                if(cek_lampiran.includes(',') > -1)
-                                {
-                                    var myarr = cek_lampiran.split(",");
-                                    for (var i = 0, len = myarr.length; i < len; i++) 
-                                    {
-                                        file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+myarr[i]+"</a><br>";    
-                                    }
-                                    //ada
-                                }
-                                else
-                                {
-                                    //tiadak ada
-                                    file = "<a onclick=preview('"+myarr[i]+"') href='#' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
-                                }
-                            }
-                            
-                            var all = JSON.parse(element.arr_penerima);
-                            //console.log(all);
-                            var nama_instansis = "";
-                            var no = 1;
-                            $.each(all, function(index, element) {    
-                                nama_instansis+=no+". "+element.nama_instansi+"<br>";
-                                no++;
-                            });
-
-                            var allt = JSON.parse(element.arr_tembusan);
-                            //console.log(all);
-                            var nama_instansist = "";
-                            var no = 1;
-                            $.each(allt, function(index, element) {    
-                                nama_instansist+=no+". "+element.nama_instansi+"<br>";
-                                no++;
-                            });
-
-                            var pemeriksa_surat = "";
-                            var no = 1;
-                            $.each(element.pemeriksa_, function(index, element) {    
-                                pemeriksa_surat+=no+". "+element.nama_pemeriksa+"<br>";
-                                no++;
-                            });
-                            
-                            var sm = "";
-                            if(element.dari_surat_masuk)
-                            {
-                                 sm += "<b>"+element.surat_masuk_.nomor_surat+"</b><br>";
-                                 sm += "Pengirim : "+element.surat_masuk_.nama_pengirim+"<br> "+element.surat_masuk_.jabatan_pengirim+"<br>";
-                                 sm += tanggal_indo(element.surat_masuk_.tgl_surat);
-                            }
-                            
-
-
-                            var sts = "";
-                            if(element.status_surat==1)
-                            {
-                                sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Proses Pemeriksaan</span>";
-                            }
-                            else if(element.status_surat==2)
-                            {
-                                sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Revisi</span>";
-                            }
-                            else if(element.status_surat==3)
-                            {
-                                sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-primary'>Disetujui</span>";
-                            }
-                            else if(element.status_surat==4)
-                            {
-                                sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Terkirim</span>";
-                            }
-
-                            var tanggal_surat = tanggal_indo(element.tgl_surat);
-
-                            if(element.nomor_surat==null)
-                            {
-                               var nsrt = "-"; 
-                            }
-                            else
-                            {
-                                var nsrt = element.nomor_surat; 
-                            }
-                            //var tanggal_terima = tanggal_indo(element.tgl_terima);
-                            var tabel = "";
-                            var tabel2 = "";
-                            var tabel3 = "";
-                            tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
-                            tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+element.nomor_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+nsrt+"</td></tr>";
-                            tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>STATUS</th><td width='25%'>"+sts+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
-                            tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pembuat+"</b><br>"+element.jabatan_pembuat+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'>"+nama_instansis+"</td></tr>";
-
-                            tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>ISI</th><td width='50%'>"+element.isi_surat+"</td></tr>";    
-                            tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KLASIFIKASI</th><td width='50%'>"+kla+"</td></tr>";
-                            tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KECEPATAN</th><td width='50%'>"+kecepatan+"</td></tr>";
-                            tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KEAMANAN</th><td width='50%'>"+keamanan+"</td></tr>";
-                            //tabel += "<tr><th>TEMBUSAN</th><td>"+element.nama_tembusan+" <br> "+element.jabatan_tembusan+"</td></tr>";
-                            tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>RINGKASAN</th><td width='50%'>"+element.ringkasan+"</td></tr>";
-                            tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>PINDAIAN</th><td width='50%'>"+file+"</td></tr>";
-                            
-                            tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>TEMBUSAN</th><td width='50%'>"+nama_instansist+"</td>";
-                            tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>PEMERIKSA</th><td width='50%'>"+pemeriksa_surat+"</td>";
-                            tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>KAITAN SURAT MASUK</th><td width='50%'>"+sm+"</td>";
-                            
-                            $("#tabel").html(tabel).show();
-                            $("#tabel2").html(tabel2).show();
-                            $("#tabel3").html(tabel3).show();
-
-                            if(element.nip_tembusan==$("#nip_login").val())
-                            {
-                                $("#buat_dispo").hide();
-                                $("#histor").hide();
-                            }
-                            else
-                            {
-                                $("#buat_dispo").show();
-                                $("#histor").show();
-                            }
-                            
-                            //$("#pemeriksa_master").val(JSON.stringify(element.pemeriksa_));
-                            var isi = "[";
-                            var jsondata = element.pemeriksa_;
-                            var nomor = 1;
-                            if(jsondata)
-                            {
-                                for (var i = 0; i < jsondata.length; i++) {
-                                    var nip = jsondata[i]['nip_pemeriksa'];
-                                    var nama = jsondata[i]['nama_pemeriksa'];
-                                    var jabatan = jsondata[i]['jabatan_pemeriksa'];
-                                    isi += '{"nip_pemeriksa":"'+nip+'","nama_pemeriksa":"'+nama+'","jabatan_pemeriksa":"'+jabatan+'"}';
-                                    if(nomor<jsondata.length)
-                                    {
-                                        isi += ",";
-                                    }
-                                    nomor++;
-                                }
-
-                            }
-                            $("#pemeriksa_master").val(isi+"]");
-                            //showdisposisi();
-                        },
-                        error : function(data)
+                    var file = '';
+                    if(element.lampiran)
+                    {
+                        var cek_lampiran = element.lampiran;
+                        if(cek_lampiran.includes(',') > -1)
                         {
-
+                            var myarr = cek_lampiran.split(",");
+                            for (var i = 0, len = myarr.length; i < len; i++) 
+                            {
+                                file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+myarr[i]+"</a><br>";    
+                            }
+                            //ada
                         }
+                        else
+                        {
+                            //tiadak ada
+                            file = "<a onclick=preview('"+myarr[i]+"') href='#' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
+                        }
+                    }
+                    
+                    var all = JSON.parse(element.arr_penerima);
+                    //console.log(all);
+                    var nama_instansis = "";
+                    var no = 1;
+                    $.each(all, function(index, element) {    
+                        nama_instansis+=no+". "+element.nama_instansi+"<br>";
+                        no++;
                     });
-               }
+
+                    var allt = JSON.parse(element.arr_tembusan);
+                    //console.log(all);
+                    var nama_instansist = "";
+                    var no = 1;
+                    $.each(allt, function(index, element) {    
+                        nama_instansist+=no+". "+element.nama_instansi+"<br>";
+                        no++;
+                    });
+
+                    var pemeriksa_surat = "";
+                    var no = 1;
+                    $.each(element.pemeriksa_, function(index, element) {    
+                        pemeriksa_surat+=no+". "+element.nama_pemeriksa+"<br>";
+                        no++;
+                    });
+                    
+                    var sm = "";
+                    if(element.dari_surat_masuk)
+                    {
+                            sm += "<b>"+element.surat_masuk_.nomor_surat+"</b><br>";
+                            sm += "Pengirim : "+element.surat_masuk_.nama_pengirim+"<br> "+element.surat_masuk_.jabatan_pengirim+"<br>";
+                            sm += tanggal_indo(element.surat_masuk_.tgl_surat);
+                    }
+                    
+
+
+                    var sts = "";
+                    if(element.status_surat==1)
+                    {
+                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Proses Pemeriksaan</span>";
+                    }
+                    else if(element.status_surat==2)
+                    {
+                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Revisi</span>";
+                    }
+                    else if(element.status_surat==3)
+                    {
+                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-primary'>Disetujui</span>";
+                    }
+                    else if(element.status_surat==4)
+                    {
+                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Terkirim</span>";
+                    }
+
+                    var tanggal_surat = tanggal_indo(element.tgl_surat);
+
+                    if(element.nomor_surat==null)
+                    {
+                        var nsrt = "-"; 
+                    }
+                    else
+                    {
+                        var nsrt = element.nomor_surat; 
+                    }
+                    //var tanggal_terima = tanggal_indo(element.tgl_terima);
+                    var tabel = "";
+                    var tabel2 = "";
+                    var tabel3 = "";
+                    tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+element.nomor_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+nsrt+"</td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>STATUS</th><td width='25%'>"+sts+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pembuat+"</b><br>"+element.jabatan_pembuat+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'>"+nama_instansis+"</td></tr>";
+
+                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>ISI</th><td width='50%'>"+element.isi_surat+"</td></tr>";    
+                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KLASIFIKASI</th><td width='50%'>"+kla+"</td></tr>";
+                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KECEPATAN</th><td width='50%'>"+kecepatan+"</td></tr>";
+                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KEAMANAN</th><td width='50%'>"+keamanan+"</td></tr>";
+                    //tabel += "<tr><th>TEMBUSAN</th><td>"+element.nama_tembusan+" <br> "+element.jabatan_tembusan+"</td></tr>";
+                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>RINGKASAN</th><td width='50%'>"+element.ringkasan+"</td></tr>";
+                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>PINDAIAN</th><td width='50%'>"+file+"</td></tr>";
+                    
+                    tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>TEMBUSAN</th><td width='50%'>"+nama_instansist+"</td>";
+                    tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>PEMERIKSA</th><td width='50%'>"+pemeriksa_surat+"</td>";
+                    tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>KAITAN SURAT MASUK</th><td width='50%'>"+sm+"</td>";
+                    
+                    $("#tabel").html(tabel).show();
+                    $("#tabel2").html(tabel2).show();
+                    $("#tabel3").html(tabel3).show();
+
+                    if(element.nip_tembusan==$("#nip_login").val())
+                    {
+                        $("#buat_dispo").hide();
+                        $("#histor").hide();
+                    }
+                    else
+                    {
+                        $("#buat_dispo").show();
+                        $("#histor").show();
+                    }
+                    
+                    //$("#pemeriksa_master").val(JSON.stringify(element.pemeriksa_));
+                    var isi = "[";
+                    var jsondata = element.pemeriksa_;
+                    var nomor = 1;
+                    if(jsondata)
+                    {
+                        for (var i = 0; i < jsondata.length; i++) {
+                            var nip = jsondata[i]['nip_pemeriksa'];
+                            var nama = jsondata[i]['nama_pemeriksa'];
+                            var jabatan = jsondata[i]['jabatan_pemeriksa'];
+                            isi += '{"nip_pemeriksa":"'+nip+'","nama_pemeriksa":"'+nama+'","jabatan_pemeriksa":"'+jabatan+'"}';
+                            if(nomor<jsondata.length)
+                            {
+                                isi += ",";
+                            }
+                            nomor++;
+                        }
+
+                    }
+                    $("#pemeriksa_master").val(isi+"]");
+                    //showdisposisi();
+                },
+                error : function(data)
+                {
+
+                }
             });
         }
 
@@ -535,44 +512,33 @@
        }
 
        $("#simpan").submit(function() {
-                $.ajax({ 
-                        
-                    type: 'GET', 
-                    url: '/gettoken', 
-                    success: function (data) { 
-                        $.ajax({ 
-                        type: 'PUT', 
-                        url: '/api/konsep-surat/checkingConcept/{{params.id}}', 
-                        headers: {
-                        'Authorization': 'Bearer ' + data.token
-                        },
-                        data : "id_surat_keluar={{params.id}}"+"&status="+$("#status").val(),
-                        success: function (data) 
-                        { 
-                            if(data.success==false)
-                            {
-                                swal("Gagal!", "Perubahan Status Gagal.", "error");
-                            }
-                            else if(data.success==true)
-                            {
-                                swal({title: "Berhasil", text: "Perubahan Status Berhasil.", type: "success"},
-                                function(){ 
-                                    window.location.href="/konsep-surat/checked";
-                                }
-                                );
-                            }
-                        },
-                        error: function(data)
-                        {
-                            swal("Gagal!", "Perubahan Status Gagal.", "error");
-                        }
-                        });
-                    },
-                    error: function ()
-                    {
-                        return false;
+            $.ajax({ 
+            type: 'PUT', 
+            url: '/api/konsep-surat/checkingConcept/{{params.id}}', 
+            headers: {
+            'Authorization': 'Bearer {{sesi}}'
+            },
+            data : "id_surat_keluar={{params.id}}"+"&status="+$("#status").val(),
+            success: function (data) 
+            { 
+                if(data.success==false)
+                {
+                    swal("Gagal!", "Perubahan Status Gagal.", "error");
+                }
+                else if(data.success==true)
+                {
+                    swal({title: "Berhasil", text: data.message, type: "success"},
+                    function(){ 
+                        window.location.href="/konsep-surat/checked";
                     }
-                    });
+                    );
+                }
+            },
+            error: function(data)
+            {
+                swal("Gagal!", "Perubahan Status Gagal.", "error");
+            }
+            }); 
             return false;    
         });
        

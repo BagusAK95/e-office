@@ -156,75 +156,57 @@
       {
           $.ajax({ 
               type: 'GET', 
-              url: '/gettoken', 
-              success: function (data) { 
-                  $.ajax({ 
-                      type: 'GET', 
-                      url: '/api/profile', 
-                      headers: {
-                          'Authorization': 'Bearer ' + data.token
-                      },
-                      success: function (data) { 
-                          $("#nip").val(data.data.nip);
-                          $("#email").val(data.data.email);
-                          $("#no_hp").val(data.data.nohp);
-
-                          var level='';
-                          if(data.data.level==1)
-                          {
-                            level = 'Admin';
-                          }
-                          else if(data.data.level==2)
-                          {
-                            level = 'Pimpinan';
-                          }
-                          else if(data.data.level==3)
-                          {
-                            level = 'Tata Usaha';
-                          }
-                          else if(data.data.level==4)
-                          {
-                            level = 'Staff';
-                          }
-                          $("#jabatan").html(data.data.nama_jabatan).show();
-                      }
-                  });
+              url: '/api/profile', 
+              headers: {
+                  'Authorization': 'Bearer {{sesi}}'
               },
-              error: function ()
-              {
-                  return false;
+              success: function (data) { 
+                  $("#nip").val(data.data.nip);
+                  $("#email").val(data.data.email);
+                  $("#no_hp").val(data.data.nohp);
+
+                  var level='';
+                  if(data.data.level==1)
+                  {
+                    level = 'Admin';
+                  }
+                  else if(data.data.level==2)
+                  {
+                    level = 'Pimpinan';
+                  }
+                  else if(data.data.level==3)
+                  {
+                    level = 'Tata Usaha';
+                  }
+                  else if(data.data.level==4)
+                  {
+                    level = 'Staff';
+                  }
+                  $("#jabatan").html(data.data.nama_jabatan).show();
               }
-              });
+          });
       }
 
       function simpan()
       {
-            $("#loader").fadeIn("slow");
-            $.ajax({ 
-                type: 'GET', 
-                url: '/gettoken', 
-                success: function (data) { 
-                    $.ajax({ 
-                        type: 'PUT', 
-                        url: '/api/profile', 
-                        headers: {
-                            'Authorization': 'Bearer ' + data.token
-                        },
-                        data : $("#simpan").serialize(),
-                        success: function (data) { 
-                            swal("Berhasil!", "Data telah disimpan.", "success");
-                            batal();
-                            window.location.reload();
-                            $("#loader").fadeOut("xslow");
-                        }
+        $("#loader").fadeIn("slow");
+        $.ajax({ 
+            type: 'PUT', 
+            url: '/api/profile', 
+            headers: {
+                'Authorization': 'Bearer {{sesi}}'
+            },
+            data : $("#simpan").serialize(),
+            success: function (data) { 
+                swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
+                    function(){ 
+                      window.location.reload();
                     });
-                },
-                error: function ()
-                {
-                    return false;
-                }
-            });
-        }
+                batal();
+                $("#loader").fadeOut("xslow");
+            }
+        });
+      }
       $('#upload_lampiran').on('submit', function(e){
        $(".loader").show();
            var date = new Date();

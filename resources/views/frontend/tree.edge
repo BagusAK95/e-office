@@ -58,6 +58,7 @@
   
     </div>
   </div>
+  <script src="/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
       <script>
         $( document ).ready(function() {
             /*Main*/
@@ -75,51 +76,126 @@
             $("#loader").fadeIn("slow");
             $.ajax({ 
                 type: 'GET', 
-                url: '/gettoken', 
-                success: function (data) { 
-                    $.ajax({ 
-                        type: 'GET', 
-                        url: '/api/master-pegawai/byLocation/'+id, 
-                        headers: {
-                            'Authorization': 'Bearer ' + data.token
-                        },
-                        success: function (data) { 
-                            var isi = "";
-                            var number = 1;
-                            $.each(data.data, function(index, element) {
-                                var depan="";
-                                if(element.gelar_depan)
-                                {
-                                    depan += element.gelar_depan+" ";
-                                }
-                                var belakang = "";
-                                if(element.gelar_belakang)
-                                {
-                                    belakang += ", "+element.gelar_belakang;
-                                }
-                                if(number==1)
-                                {
-                                  isi += "<tr bgcolor='#1e88e5' style='color:white'><td>"+number+".</td><td>"+depan+element.nama+belakang+"</td> <td>"+element.nama_jabatan+"&nbsp;<i class='icon md-account'></i></td></tr>";
-                                }
-                                else
-                                {
-                                  isi += "<tr ><td>"+number+".</td><td>"+depan+element.nama+belakang+"</td> <td>"+element.nama_jabatan+"</td></tr>";
-                                }
-                                number++;
-                            });
-                            var html = "<table class='table table-striped table-bordered'><tr  align='center'><th>No</th><th>Nama Pegawai</th><th>Jabatan</th></tr>";
-                            $("#detail").html(html+isi).show();
-                            $("#loader").fadeOut("xslow");
-                            $('#myModal').modal('show');
-                        }
-                    });
+                url: '/api/master-pegawai/byLocation/'+id, 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
                 },
-                error: function ()
-                {
-                    return false;
+                success: function (data) { 
+                    var isi = "";
+                    var number = 1;
+                    $.each(data.data, function(index, element) {
+                        var depan="";
+                        if(element.gelar_depan)
+                        {
+                            depan += element.gelar_depan+" ";
+                        }
+                        var belakang = "";
+                        if(element.gelar_belakang)
+                        {
+                            belakang += ", "+element.gelar_belakang;
+                        }
+                        if(number==1)
+                        {
+                          isi += "<tr bgcolor='#1e88e5' style='color:white'><td>"+number+".</td><td>"+depan+element.nama+belakang+"</td> <td>"+element.nama_jabatan+"&nbsp;<i class='icon md-account'></i></td></tr>";
+                        }
+                        else
+                        {
+                          isi += "<tr ><td>"+number+".</td><td>"+depan+element.nama+belakang+"</td> <td>"+element.nama_jabatan+"</td></tr>";
+                        }
+                        number++;
+                    });
+                    var html = "<table class='table table-striped table-bordered'><tr  align='center'><th>No</th><th>Nama Pegawai</th><th>Jabatan</th></tr>";
+                    $("#detail").html(html+isi).show();
+                    $("#loader").fadeOut("xslow");
+                    $('#myModal').modal('show');
                 }
-                });
+            });
         }
-        
+        (function (global, factory) {
+            if (typeof define === "function" && define.amd) {
+              define('/advanced/treeview', ['jquery', 'Site'], factory);
+            } else if (typeof exports !== "undefined") {
+              factory(require('jquery'), require('Site'));
+            } else {
+              var mod = {
+                exports: {}
+              };
+              factory(global.jQuery, global.Site);
+              global.advancedTreeview = mod.exports;
+            }
+          })(this, function (_jquery, _Site) {
+            'use strict';
+
+            var _jquery2 = babelHelpers.interopRequireDefault(_jquery);
+
+            (0, _jquery2.default)(document).ready(function ($$$1) {
+              (0, _Site.run)();
+            });
+            
+            var return_first = function () {
+                var semua = "";
+                      $.ajax({ 
+                          type: 'GET', 
+                          url: '/api/master-kantor/tree-html', 
+                          headers: {
+                                      'Authorization': 'Bearer {{sesi}}'
+                                  },
+                          dataType: 'json',
+                          async: false,
+                          success: function (data) 
+                          {   
+                              //alert(data.data.toSource());
+                              var lengkap = data.data.toSource();
+                              var datanya = lengkap.replace('(', '[');
+                              var siap = datanya.replace('})', '}]');
+                              var siap1 = siap.replace(/text:/g, '"text":');
+                              var siap2 = siap1.replace(/id:/g, '"id":');
+                              var siap3 = siap2.replace(/nodes:/g, '"nodes":'); 
+                              //alert(siap3)
+                              semua = siap3;
+                          }
+                      });
+                   
+                return semua;
+                //return [{"id":12000000, "text":"DINAS KOMUNIKASI DAN INFORMATIKA", "nodes":[{"id":12010000, "text":"SEKRETARIAT ", "nodes":[{"id":12010100, "text":"SUB BAGIAN PROGRAM DAN KEUANGAN ", "nodes":[]}, {"id":12010200, "text":"SUB BAGIAN UMUM DAN KEPEGAWAIAN ", "nodes":[]}]}, {"id":12020000, "text":"BIDANG INFORMASI DAN KOMUNIKASI PUBLIK ", "nodes":[{"id":12020100, "text":"SEKSI PELAYANAN INFORMASI PUBLIK ", "nodes":[]}, {"id":12020200, "text":"SEKSI PENGELOLAAN JARINGAN KOMUNIKASI PUBLIK ", "nodes":[]}]}, {"id":12030000, "text":"BIDANG E-GOVERMENT ", "nodes":[{"id":12030100, "text":"SEKSI PENGELOLAAN INFRASTRUKTUR DAN MENARA TELEKOMUNIKASI ", "nodes":[]}, {"id":12030200, "text":"SEKSI PELAYANAN PENGELOLAAN DAN PENGEMBANGAN APLIKASI ", "nodes":[]}]}, {"id":12040000, "text":"BIDANG PERSANDIAN ", "nodes":[{"id":12040100, "text":"SEKSI TATA KELOLA PERSANDIAN ", "nodes":[]}, {"id":12040200, "text":"SEKSI OPERASIONAL PENGAMANAN PERSANDIAN", "nodes":[]}]}]}];
+            }();
+
+
+            window.getExampleTreeview = function () {
+              //alert(return_first);
+              //console.log(return_first)
+              return return_first;
+            };
+
+            var defaults = Plugin.getDefaults("treeview");
+
+            
+
+            // Example TreeView Expandible
+            // ---------------------------
+            (function () {
+              var options = _jquery2.default.extend({}, defaults, {
+                data: return_first
+              });
+
+              // Expandible
+              var $expandibleTree = (0, _jquery2.default)('#exampleExpandibleTree').treeview(options);
+
+              // Expand/collapse all
+              (0, _jquery2.default)('#exampleExpandAll').on('click', function (e) {
+                $expandibleTree.treeview('expandAll', {
+                  levels: '99'
+                });
+              });
+
+              (0, _jquery2.default)('#exampleCollapseAll').on('click', function (e) {
+                $expandibleTree.treeview('collapseAll');
+              });
+            })();
+
+
+
+          });
       </script>
+      
 @endsection
