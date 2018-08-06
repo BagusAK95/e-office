@@ -2,6 +2,7 @@
 
 const SuratKeluar = use('App/Models/SuratKeluar')
 const SuratMasuk = use('App/Models/SuratMasuk')
+const SuratTembusan = use('App/Models/SuratTembusan')
 const SuratPemeriksa = use('App/Models/SuratPemeriksa')
 const Response = use('App/Helpers/ResponseHelper')
 const Notification = use('App/Helpers/NotificationHelper')
@@ -349,7 +350,7 @@ class SuratKeluarController {
                                                         .where({ level: 3, instansi: tembusan.id_instansi })
                                                         .first()
 
-                        const insertTembusan = await SuratMasuk.create({
+                        const insertTembusan = await SuratTembusan.create({
                             instansi_penerima: tembusan.id_instansi,
                             nip_tata_usaha: dataTataUsaha.nip,
                             nama_tata_usaha: dataTataUsaha.nama_lengkap,
