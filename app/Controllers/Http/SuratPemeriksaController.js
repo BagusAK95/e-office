@@ -90,29 +90,40 @@ class SuratPemeriksaController {
             const user = await auth.getUser()
             
             const data = request.all()
-            let arr = []
+            const tambahanPemeriksa = JSON.parse(data.arr_pemeriksa)
+            const daftarPemeriksa = await SuratPemeriksa.query()
+                                                        .where('id_surat_keluar', params.id_surat_keluar)
+                                                        .orderBy('urutan', 'asc')
 
-            const arr_pemeriksa = JSON.parse(data.arr_pemeriksa)
-            for (let i = 0; i < arr_pemeriksa.length; i++) {
-                const dataPemeriksa = await SuratPemeriksa.query()
-                                                        .where({ nip_pemeriksa: arr_pemeriksa[i].nip_pemeriksa, id_surat_keluar: params.id_surat_keluar })
-                                                        .first()
-                if (dataPemeriksa) {
-                    dataPemeriksa.urutan = i + 1
-                    dataPemeriksa.save()
-                } else {
-                    arr_pemeriksa[i].id_surat_keluar = params.id_surat_keluar
-                    arr_pemeriksa[i].urutan = i + 1
-
-                    await SuratPemeriksa.create(arr_pemeriksa[i])
-
-                    arr.push(arr_pemeriksa[i].nama_pemeriksa)
+            const index = daftarPemeriksa.map((e) => { return e.nip_pemeriksa }).indexOf(user.nip)
+            if (index != -1) {
+                //Tambahkan pemeriksa tambahan ke daftar pemeriksa
+                for (let i = 0; i < tambahanPemeriksa.length; i++) {
+                    daftarPemeriksa.splice(index + i + 1, 0, tambahanPemeriksa[i])
                 }
+
+                //Update urutan
+                for (let i = 0; i < daftarPemeriksa.length; i++) {
+                    const dataPemeriksa = await SuratPemeriksa.query()
+                                                              .where({ nip_pemeriksa: daftarPemeriksa[i].nip_pemeriksa, id_surat_keluar: params.id_surat_keluar })
+                                                              .first()
+                    if (dataPemeriksa) {
+                        dataPemeriksa.urutan = i + 1
+                        dataPemeriksa.save()
+                    } else {
+                        daftarPemeriksa[i].id_surat_keluar = params.id_surat_keluar
+                        daftarPemeriksa[i].urutan = i + 1
+    
+                        await SuratPemeriksa.create(daftarPemeriksa[i])
+                    }
+                }
+    
+                Log.add(user, 'Menambahkan ' + daftarPemeriksa.map((e) => { return e.nama_pemeriksa }).join(', ') + ' Sebagai Pemeriksan Konsep Surat', daftarPemeriksa)
+    
+                return Response.format(true, null, daftarPemeriksa.length)
+            } else {
+                return Response.format(false, 'Akses ditolak', null)
             }
-
-            Log.add(user, 'Menambahkan ' + arr.join(', ') + ' Sebagai Pemeriksan Konsep Surat', arr_pemeriksa)
-
-            return Response.format(true, 'Update daftar pemeriksa berhasil', null)
         } catch (error) {            
             return Response.format(false, error, null)
         }
