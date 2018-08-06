@@ -85,8 +85,10 @@ class SuratPemeriksaController {
         }
     }
 
-    async UpdateList({ params, request }) {
+    async UpdateList({ params, request, auth }) {
         try {
+            const user = await auth.getUser()
+            
             const data = request.all()
             let arr = []
 
