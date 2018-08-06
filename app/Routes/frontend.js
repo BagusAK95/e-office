@@ -223,9 +223,13 @@ Route.get('/surat-keluar/:id', async function({ session,params,view }) {
 //End Surat Keluar//
 
 //Tembusan//
-Route.on('/surat-tembusan').render('frontend/surat_tembusan')
-Route.get('/surat-tembusan/:id', async function({ params,view }) {
-    return view.render('frontend/detail_surat_tembusan', { params })
+Route.get('/surat-tembusan', async function({ session,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/surat_tembusan', { sesi })
+})
+Route.get('/surat-tembusan/:id', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/detail_surat_tembusan', { params,sesi })
 })
 //End Tembusan//
 

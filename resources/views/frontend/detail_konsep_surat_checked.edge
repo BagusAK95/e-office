@@ -47,7 +47,7 @@
                 <ul class="panel-actions panel-actions-keep">
                     
                     <li>
-                        <button data-target="#exampleNiftyFlipHorizontal3" data-toggle="modal" type="button" class="btn btn-info"><i class='md-shield-check'></i>&nbsp;Tambah Pemeriksa</button>
+                        <button data-target="#exampleNiftyFlipHorizontal3" data-toggle="modal" type="button" class="btn btn-info" style="display:none" id="tambah_pengecek"><i class='md-shield-check'></i>&nbsp;Tambah Pemeriksa</button>
                         <button data-target="#exampleNiftyFlipHorizontal" data-toggle="modal" type="button" class="btn btn-success"><i class='md-edit'></i>&nbsp;Ubah Status</button>
                         <a href='/konsep-surat/checked' class='btn btn-danger' style='color:white'><i class='md-undo'></i>&nbsp;Kembali</a>
                     </li>
@@ -189,6 +189,7 @@
             /*Page*/
             showtable();
             pegawaiall2(); 
+            cekcoy();
             $("#loader").fadeOut("xslow");
             /*Page*/
         });
@@ -296,6 +297,17 @@
                 url: '/api/konsep-surat/{{params.id}}', 
                 success: function (data) 
                 { 
+                    
+                    if(data.success==false)
+                    {
+                        swal({title: "Konsep Surat", text: "Telah disetujui oleh pimpinan", type: "info"},
+                        function(){ 
+                            window.location.href="/konsep-surat/checked";
+                        }
+                        );
+                    }
+                    else
+                    {
                     var element = data.data;
 
                     var keamanan = "";
@@ -478,6 +490,7 @@
 
                     }
                     $("#pemeriksa_master").val(isi+"]");
+                }
                     //showdisposisi();
                 },
                 error : function(data)
@@ -544,7 +557,29 @@
             }); 
             return false;    
         });
-       
+        
+
+        function cekcoy()
+         {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/profile', 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                success: function (data) { 
+                    if((data.data.level==1)||(data.data.level==3)||(data.data.level==4))
+                    {
+                        $("#tambah_pengecek").show();
+                    }
+                    else
+                    {
+                        $("#tambah_pengecek").hide();
+                    }
+
+                }
+            });
+         }
       </script>
 @endsection
 
