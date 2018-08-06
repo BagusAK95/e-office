@@ -1963,20 +1963,4 @@ Route.group(() => {
     *       - application/json
     */
     Route.get('/statistik/unread', 'StatistikController.unread').middleware('checkToken:umum')
-
-    /**
-    * @swagger
-    * /ip:
-    *   get:
-    *     tags:
-    *       - IP
-    *     summary: Get
-    *     consumes:
-    *       - application/x-www-form-urlencoded
-    *     produces:
-    *       - application/json
-    */
-    Route.get('/ip', ({ request }) => {
-        return request.ips()
-    })
 }).prefix('api')
