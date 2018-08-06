@@ -291,72 +291,60 @@
         }
         $.ajax({ 
             type: 'GET', 
-            url: '/gettoken', 
+            url: '/api/user?'+search+'page='+page+'&limit=10', 
+            headers: {
+                'Authorization': 'Bearer {{sesi}}'
+            },
+            dataType: 'json',
             success: function (data) { 
-                $.ajax({ 
-                    type: 'GET', 
-                    url: '/api/user?'+search+'page='+page+'&limit=10', 
-                    headers: {
-                        'Authorization': 'Bearer ' + data.token
-                    },
-                    dataType: 'json',
-                    success: function (data) { 
-                        var text="";
-                        $.each(data.data.data, function(index, element) {
-                            var level='';
-                            if(element.level==1)
-                            {
-                                level = 'Admin';
-                            }
-                            else if(element.level==2)
-                            {
-                                level = 'Pimpinan';
-                            }
-                            else if(element.level==3)
-                            {
-                                level = 'Tata Usaha';
-                            }
-                            else if(element.level==4)
-                            {
-                                level = 'Staff';
-                            }
-
-                            var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+element.kode_eselon+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-primary' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-primary' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
-                            text += tr_data;
-                        });
-
-                        $("#body").html(text).show();
-
-                        var disbalenext = '';
-                        if(data.data.lastPage==data.data.page)
-                        {
-                            disbalenext='disabled';
-                        }
-
-                        if(nama)
-                        {
-                            var naman = nama;
-                        }
-                        else
-                        {
-                            var naman = '';
-                        }
-
-                        var prev="";
-                        if(page==1)
-                        {
-                            prev = "disabled";
-                        }
-
-                        $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' "+prev+" onclick=showbrand(1,'"+naman+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) + ",'"+naman+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-primary' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-primary' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+naman+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-primary btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+naman+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div><br>Showing "+data.data.page+" to "+data.data.perPage+" of "+data.data.total+" entries").show();
+                var text="";
+                $.each(data.data.data, function(index, element) {
+                    var level='';
+                    if(element.level==1)
+                    {
+                        level = 'Admin';
                     }
+                    else if(element.level==2)
+                    {
+                        level = 'Pimpinan';
+                    }
+                    else if(element.level==3)
+                    {
+                        level = 'Tata Usaha';
+                    }
+                    else if(element.level==4)
+                    {
+                        level = 'Staff';
+                    }
+
+                    var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+element.kode_eselon+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-primary' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-primary' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                    text += tr_data;
                 });
 
+                $("#body").html(text).show();
 
-            },
-            error: function ()
-            {
-                return false;
+                var disbalenext = '';
+                if(data.data.lastPage==data.data.page)
+                {
+                    disbalenext='disabled';
+                }
+
+                if(nama)
+                {
+                    var naman = nama;
+                }
+                else
+                {
+                    var naman = '';
+                }
+
+                var prev="";
+                if(page==1)
+                {
+                    prev = "disabled";
+                }
+
+                $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' "+prev+" onclick=showbrand(1,'"+naman+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) + ",'"+naman+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-primary' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-primary' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+naman+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-primary btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+naman+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div><br>Showing "+data.data.page+" to "+data.data.perPage+" of "+data.data.total+" entries").show();
             }
         });
     }
@@ -368,87 +356,77 @@
         $("#loader").fadeIn("slow");
         $.ajax({ 
             type: 'GET', 
-            url: '/gettoken', 
-            success: function (data) {
-                $.ajax({ 
-                    type: 'GET', 
-                    url: '/api/user/'+nip, 
-                    headers: {
-                        'Authorization': 'Bearer ' + data.token
-                    },
-                    dataType: 'json',
-                    success: function (data) { 
-                        
-                        var level='';
-                        if(data.data.level==1)
-                        {
-                        level = 'Admin';
-                        }
-                        else if(data.data.level==2)
-                        {
-                        level = 'Pimpinan';
-                        }
-                        else if(data.data.level==3)
-                        {
-                        level = 'Tata Usaha';
-                        }
-                        else if(data.data.level==4)
-                        {
-                        level = 'Staff';
-                        }
+            url: '/api/user/'+nip, 
+            headers: {
+                'Authorization': 'Bearer {{sesi}}'
+            },
+            dataType: 'json',
+            success: function (data) { 
+                
+                var level='';
+                if(data.data.level==1)
+                {
+                level = 'Admin';
+                }
+                else if(data.data.level==2)
+                {
+                level = 'Pimpinan';
+                }
+                else if(data.data.level==3)
+                {
+                level = 'Tata Usaha';
+                }
+                else if(data.data.level==4)
+                {
+                level = 'Staff';
+                }
 
-                        var status = ''
-                        if(data.data.status==1)
-                        {
-                            status = "Aktif";
-                        }
-                        else
-                        {
-                            status="Non Aktif";
-                        }
-                        
-                        var foto = "../material/base/src/images/user.png";
-                        if(data.data.foto)
-                        {
-                            foto = data.data.foto;
-                        }
+                var status = ''
+                if(data.data.status==1)
+                {
+                    status = "Aktif";
+                }
+                else
+                {
+                    status="Non Aktif";
+                }
+                
+                var foto = "../material/base/src/images/user.png";
+                if(data.data.foto)
+                {
+                    foto = data.data.foto;
+                }
 
 
-                        var akses = data.data.akses;
-                        var smu = "";
-                        if(akses)
-                        {
-                            var max = akses.split(",").length;
-                            var data_akses = akses.split(",");
-                            for (var index = 0; index < max; index++) 
-                            {
-                                smu += (index+1)+". "+data_akses[index]+"<br>";
-                            }
-                        }
-                        $("#e_foto").html('<a class="avatar avatar-lg"><img width="99" height="132" src="'+foto+'"/></a>').show();
-                        $("#e_nip").html(data.data.nip).show();
-                        $("#e_nama").html(data.data.nama_lengkap).show();
-                        
-                        $("#e_nohp").html(data.data.nohp).show();
-                        $("#e_email").html(data.data.email).show();
-                        $("#e_lokasi").html(data.data.lokasi_.nmlokasi).show();
-                        $("#e_jabatan").html(data.data.nama_jabatan).show();
-                        $("#e_golongan").html(data.data.golongan).show();
-                        $("#e_level").html(level).show();
-                        $("#e_akses").html(smu).show();
-                        $("#e_kode_eselon").html(data.data.kode_eselon).show();
-                        $("#e_status").html(status).show();
-                        $("#e_keterangan").html(data.data.keterangan).show();
-                        
-                        $("#loader").fadeOut("xslow");
-                        $('#editModal').modal('show');
-                        
-                    },
-                    error: function ()
+                var akses = data.data.akses;
+                var smu = "";
+                if(akses)
+                {
+                    var max = akses.split(",").length;
+                    var data_akses = akses.split(",");
+                    for (var index = 0; index < max; index++) 
                     {
-                        return false;
+                        smu += (index+1)+". "+data_akses[index]+"<br>";
                     }
-                });
+                }
+                $("#e_foto").html('<a class="avatar avatar-lg"><img width="99" height="132" src="'+foto+'"/></a>').show();
+                $("#e_nip").html(data.data.nip).show();
+                $("#e_nama").html(data.data.nama_lengkap).show();
+                
+                $("#e_nohp").html(data.data.nohp).show();
+                $("#e_email").html(data.data.email).show();
+                $("#e_lokasi").html(data.data.lokasi_.nmlokasi).show();
+                $("#e_jabatan").html(data.data.nama_jabatan).show();
+                $("#e_golongan").html(data.data.golongan).show();
+                $("#e_level").html(level).show();
+                $("#e_akses").html(smu).show();
+                $("#e_kode_eselon").html(data.data.kode_eselon).show();
+                $("#e_status").html(status).show();
+                $("#e_keterangan").html(data.data.keterangan).show();
+                
+                $("#loader").fadeOut("xslow");
+                $('#editModal').modal('show');
+                
             },
             error: function ()
             {
@@ -467,62 +445,52 @@
         $("#di").prop( "checked",false );
         $.ajax({ 
             type: 'GET', 
-            url: '/gettoken', 
-            success: function (data) {
-                $.ajax({ 
-                    type: 'GET', 
-                    url: '/api/user/'+nip, 
-                    headers: {
-                        'Authorization': 'Bearer ' + data.token
-                    },
-                    dataType: 'json',
-                    success: function (data) { 
-                        
-                        var akses = data.data.akses;
-                        var smu = "";
-                        if(akses)
-                        {
-                            var max = akses.split(",").length;
-                            var data_akses = akses.split(",");
-                            for (var index = 0; index < max; index++) 
-                            {
-                                if(data_akses[index]=="suratmasuk")
-                                {
-                                    $("#sm").prop( "checked",true );
-                                }
-
-                                if(data_akses[index]=="suratkeluar")
-                                {
-                                    $("#sk").prop( "checked",true );
-                                }
-
-                                if(data_akses[index]=="disposisi")
-                                {
-                                    $("#di").prop( "checked",true );
-                                }
-                                
-                            }
-                        }
-                        $("#pegawai").val(data.data.nip);
-                        $("#nama_lengkap").val(data.data.nama_lengkap);
-                        $("#nohp").val(data.data.nohp);
-                        $("#email").val(data.data.email);
-                        $("#kode_lokasi").val(data.data.kode_lokasi);
-                        $("#kode_jabatan").val(data.data.kode_jabatan);
-                        $("#nama_jabatan").val(data.data.nama_jabatan);
-                        $("#golongan").val(data.data.golongan);
-                        $("#level").val(data.data.level);
-                        $("#status").val(data.data.status);
-                        $("#kode_eselon").val(data.data.kode_eselon);
-                        $("#orange").html(data.data.nama_lengkap).show();
-                        $("#loader").fadeOut("xslow");
-                        $('#editmodaln').modal('show');
-                    },
-                    error: function ()
+            url: '/api/user/'+nip, 
+            headers: {
+                'Authorization': 'Bearer {{sesi}}'
+            },
+            dataType: 'json',
+            success: function (data) { 
+                
+                var akses = data.data.akses;
+                var smu = "";
+                if(akses)
+                {
+                    var max = akses.split(",").length;
+                    var data_akses = akses.split(",");
+                    for (var index = 0; index < max; index++) 
                     {
-                        return false;
+                        if(data_akses[index]=="suratmasuk")
+                        {
+                            $("#sm").prop( "checked",true );
+                        }
+
+                        if(data_akses[index]=="suratkeluar")
+                        {
+                            $("#sk").prop( "checked",true );
+                        }
+
+                        if(data_akses[index]=="disposisi")
+                        {
+                            $("#di").prop( "checked",true );
+                        }
+                        
                     }
-                });
+                }
+                $("#pegawai").val(data.data.nip);
+                $("#nama_lengkap").val(data.data.nama_lengkap);
+                $("#nohp").val(data.data.nohp);
+                $("#email").val(data.data.email);
+                $("#kode_lokasi").val(data.data.kode_lokasi);
+                $("#kode_jabatan").val(data.data.kode_jabatan);
+                $("#nama_jabatan").val(data.data.nama_jabatan);
+                $("#golongan").val(data.data.golongan);
+                $("#level").val(data.data.level);
+                $("#status").val(data.data.status);
+                $("#kode_eselon").val(data.data.kode_eselon);
+                $("#orange").html(data.data.nama_lengkap).show();
+                $("#loader").fadeOut("xslow");
+                $('#editmodaln').modal('show');
             },
             error: function ()
             {
@@ -541,37 +509,27 @@
             
             $("#loader").fadeIn("slow");
             $.ajax({ 
-                type: 'GET', 
-                url: '/gettoken', 
-                success: function (data) {
-                    $.ajax({ 
-                        type: 'DELETE', 
-                        url: '/api/user/'+nip, 
-                        headers: {
-                            'Authorization': 'Bearer ' + data.token
-                        },
-                        dataType: 'json',
-                        success: function (data) 
-                        { 
-                            if(data.success==false)
-                            {
-                                swal("Gagal!", "Hapus data gagal.", "error");
-                            }
-                            else if(data.success==true)
-                            {
-                                swal({title: "Berhasil", text: "Berhasil hapus data.", type: "success"},
-                                function(){ 
-                                    location.reload();
-                                }
-                                );
-                            }
-                            $("#loader").fadeOut("xslow");
-                        },
-                        error: function ()
-                        {
-                            return false;
+                type: 'DELETE', 
+                url: '/api/user/'+nip, 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                dataType: 'json',
+                success: function (data) 
+                { 
+                    if(data.success==false)
+                    {
+                        swal("Gagal!", "Hapus data gagal.", "error");
+                    }
+                    else if(data.success==true)
+                    {
+                        swal({title: "Berhasil", text: "Berhasil hapus data.", type: "success"},
+                        function(){ 
+                            location.reload();
                         }
-                    });
+                        );
+                    }
+                    $("#loader").fadeOut("xslow");
                 },
                 error: function ()
                 {
@@ -606,15 +564,11 @@
             akses += ","+$("#di").val();
         }
 
-        $.ajax({ 
-        type: 'GET', 
-        url: '/gettoken', 
-        success: function (data) { 
             $.ajax({ 
             type: 'PUT', 
             url: '/api/user/'+$("#pegawai").val(), 
             headers: {
-                    'Authorization': 'Bearer ' + data.token
+                    'Authorization': 'Bearer {{sesi}}'
             },
             data : "nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&level="+$("#level").val()+"&status="+$("#status").val()+"&akses="+akses,
             success: function (data) 
@@ -639,13 +593,7 @@
                 swal("Gagal!", "Gagal Menyimpan data.", "error");
             }
             });
-        },
-        error: function ()
-        {
             return false;
-        }
-        });
-        return false;
     });
     /*End Save Data Function*/
     

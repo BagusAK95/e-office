@@ -121,29 +121,22 @@
     {
         $.ajax({ 
             type: 'GET', 
-            url: '/gettoken', 
+            url: '/api/master-kantor/listAllParent', 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
             success: function (data) 
-            { 
-                    $.ajax({ 
-                        type: 'GET', 
-                        url: '/api/master-kantor/listAllParent', 
-                        headers: {
-                                    'Authorization': 'Bearer ' + data.token
-                                },
-                        dataType: 'json',
-                        success: function (data) 
-                        {   
-                            var isi = "";
-                            $.each(data.data, function(index, element) {
-                                isi += "<option value='"+element.kdlokasi+"-"+element.nmlokasi+"'>"+element.nmlokasi+"</option>";
-                            })
-                            $(".pegawai_tembusan").html(isi).show();
-                        },
-                        error: function ()
-                        {
-                            return false;
-                        }
-                    });
+            {   
+                var isi = "";
+                $.each(data.data, function(index, element) {
+                    isi += "<option value='"+element.kdlokasi+"-"+element.nmlokasi+"'>"+element.nmlokasi+"</option>";
+                })
+                $(".pegawai_tembusan").html(isi).show();
+            },
+            error: function ()
+            {
+                return false;
             }
         });
     }
@@ -216,15 +209,12 @@
     function simpen()
     {
        $("#loader").fadeIn();
-       $.ajax({ 
-       type: 'GET', 
-       url: '/gettoken', 
-       success: function (data_token) { 
+       
           $.ajax({ 
            type: 'POST', 
            url: '/api/tujuan-surat', 
            headers: {
-            'Authorization': 'Bearer ' + data_token.token
+            'Authorization': 'Bearer {{sesi}}'
             },
            data : 'nama='+$("#nama").val()+"&data="+"["+$("#json").val()+"]",
            success: function (datanya) 
@@ -247,12 +237,7 @@
                swal("Gagal!", data.message, "error");
            }
            });
-       },
-       error: function ()
-       {
-           return false;
-       }
-       });
+       
        return false;
     }
 </script> 

@@ -362,101 +362,87 @@
    }
    function mailChecker() 
    {
-       $.ajax({ 
-           type: 'GET', 
-           url: '/gettoken', 
-           success: function (data) 
-           { 
-                   $.ajax({ 
-                       type: 'GET', 
-                       url: "/api/master-pegawai/mailChecker", 
-                       headers: {
-                                   'Authorization': 'Bearer ' + data.token
-                               },
-                       dataType: 'json',
-                       success: function (data) 
-                       {   
-                           var isi = "[";
-                           var da = data.data;
-                           var panjang = da.length;
-                           var nomor = 1;
-                           var tabel = "";
-                           $.each(data.data, function(index, element) {
-                                var depan = ''
-                                var belakang = ''
-                                if(element.gelar_depan)
-                                {
-                                   depan += element.gelar_depan+" ";
-                                }
-                                var belakang = "";
-                                if(element.gelar_belakang)
-                                {
-                                   belakang += ", "+element.gelar_belakang;
-                                }
-                               var nip = element.nip;
-                               var nama = element.nama;
-                               var nama_jabatan = element.nama_jabatan;
-                               isi += '{"nip_pemeriksa":"'+nip+'","nama_pemeriksa":"'+nama+'","jabatan_pemeriksa":"'+nama_jabatan+'"}';
-                               tabel += '<tr><td>'+depan+nama+belakang+'</td></tr>';
-                                if(nomor<panjang)
-                                {
-                                    isi += ",";
-                                }
-                                nomor++;
-                           })
-                           isi += "]";
-                           $("#detail_pemeriksa").html(tabel).show();
-                           $("#pemeriksa_master").val(isi);
-                           //alert(isi);
-                       },
-                       error: function ()
-                       {
-                           return false;
-                       }
-                   });
-           }
-       });
+        $.ajax({ 
+            type: 'GET', 
+            url: "/api/master-pegawai/mailChecker", 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
+            success: function (data) 
+            {   
+                var isi = "[";
+                var da = data.data;
+                var panjang = da.length;
+                var nomor = 1;
+                var tabel = "";
+                $.each(data.data, function(index, element) {
+                    var depan = ''
+                    var belakang = ''
+                    if(element.gelar_depan)
+                    {
+                        depan += element.gelar_depan+" ";
+                    }
+                    var belakang = "";
+                    if(element.gelar_belakang)
+                    {
+                        belakang += ", "+element.gelar_belakang;
+                    }
+                    var nip = element.nip;
+                    var nama = element.nama;
+                    var nama_jabatan = element.nama_jabatan;
+                    isi += '{"nip_pemeriksa":"'+nip+'","nama_pemeriksa":"'+nama+'","jabatan_pemeriksa":"'+nama_jabatan+'"}';
+                    tabel += '<tr><td>'+depan+nama+belakang+'</td></tr>';
+                    if(nomor<panjang)
+                    {
+                        isi += ",";
+                    }
+                    nomor++;
+                })
+                isi += "]";
+                $("#detail_pemeriksa").html(tabel).show();
+                $("#pemeriksa_master").val(isi);
+                //alert(isi);
+            },
+            error: function ()
+            {
+                return false;
+            }
+        });
     }
    function pegawaiall2() 
    {
-       $.ajax({ 
-           type: 'GET', 
-           url: '/gettoken', 
-           success: function (data) 
-           { 
-                   $.ajax({ 
-                       type: 'GET', 
-                       url: '/api/master-pegawai', 
-                       headers: {
-                                   'Authorization': 'Bearer ' + data.token
-                               },
-                       dataType: 'json',
-                       success: function (data) 
-                       {   
-                           var isi = "";
-                           $.each(data.data.data, function(index, element) {
-                               var depan = ''
-                               var belakang = ''
-                               if(element.gelar_depan)
-                               {
-                                   depan += element.gelar_depan+" ";
-                               }
-                               var belakang = "";
-                               if(element.gelar_belakang)
-                               {
-                                   belakang += ", "+element.gelar_belakang;
-                               }
-                               isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
-                           })
-                           $("#arr_pemeriksa").html(isi).show();
-                       },
-                       error: function ()
-                       {
-                           return false;
-                       }
-                   });
-           }
-       });
+        $.ajax({ 
+            type: 'GET', 
+            url: '/api/master-pegawai', 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
+            success: function (data) 
+            {   
+                var isi = "";
+                $.each(data.data.data, function(index, element) {
+                    var depan = ''
+                    var belakang = ''
+                    if(element.gelar_depan)
+                    {
+                        depan += element.gelar_depan+" ";
+                    }
+                    var belakang = "";
+                    if(element.gelar_belakang)
+                    {
+                        belakang += ", "+element.gelar_belakang;
+                    }
+                    isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                })
+                $("#arr_pemeriksa").html(isi).show();
+            },
+            error: function ()
+            {
+                return false;
+            }
+        });
     }
     function cari_surat()
     {
@@ -466,29 +452,22 @@
     {
         $.ajax({ 
             type: 'GET', 
-            url: '/gettoken', 
+            url: '/api/master-klasifikasi', 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
             success: function (data) 
-            { 
-                    $.ajax({ 
-                        type: 'GET', 
-                        url: '/api/master-klasifikasi', 
-                        headers: {
-                                    'Authorization': 'Bearer ' + data.token
-                                },
-                        dataType: 'json',
-                        success: function (data) 
-                        {   
-                            var isi = "";
-                            $.each(data.data, function(index, element) {
-                                isi += "<option value='"+element.id+"'>"+element.nama+"</option>";
-                            })
-                            $("#klasifikasi").html(isi).show();
-                        },
-                        error: function ()
-                        {
-                            return false;
-                        }
-                    });
+            {   
+                var isi = "";
+                $.each(data.data, function(index, element) {
+                    isi += "<option value='"+element.id+"'>"+element.nama+"</option>";
+                })
+                $("#klasifikasi").html(isi).show();
+            },
+            error: function ()
+            {
+                return false;
             }
         });
     }
@@ -610,127 +589,107 @@
     }
    function pegawaiall() 
    {
-      $.ajax({ 
-          type: 'GET', 
-          url: '/gettoken', 
-          success: function (data) 
-          { 
-                  $.ajax({ 
-                      type: 'GET', 
-                      url: '/api/master-pegawai', 
-                      headers: {
-                                  'Authorization': 'Bearer ' + data.token
-                              },
-                      dataType: 'json',
-                      success: function (data) 
-                      {   
-                          var isi = "<option value=''>Pilih Pegawai</option>";
-                          $.each(data.data.data, function(index, element) {
-                              var depan = ''
-                              var belakang = ''
-                              if(element.gelar_depan)
-                              {
-                                  depan += element.gelar_depan+" ";
-                              }
-                              var belakang = "";
-                              if(element.gelar_belakang)
-                              {
-                                  belakang += ", "+element.gelar_belakang;
-                              }
-                              isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
-                          })
-                          $(".pegawai").html(isi).show();
-                      },
-                      error: function ()
-                      {
-                          return false;
-                      }
-                  });
-          }
-      });
+        $.ajax({ 
+            type: 'GET', 
+            url: '/api/master-pegawai', 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
+            success: function (data) 
+            {   
+                var isi = "<option value=''>Pilih Pegawai</option>";
+                $.each(data.data.data, function(index, element) {
+                    var depan = ''
+                    var belakang = ''
+                    if(element.gelar_depan)
+                    {
+                        depan += element.gelar_depan+" ";
+                    }
+                    var belakang = "";
+                    if(element.gelar_belakang)
+                    {
+                        belakang += ", "+element.gelar_belakang;
+                    }
+                    isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
+                })
+                $(".pegawai").html(isi).show();
+            },
+            error: function ()
+            {
+                return false;
+            }
+        });
    }
 
    function detail_pegawai()
    {
        var nip = $("#nip_penandatangan").val();
-       $.ajax({ 
-           type: 'GET', 
-           url: '/gettoken', 
-           success: function (data) 
-           { 
-                   $.ajax({ 
-                       type: 'GET', 
-                       url: '/api/master-pegawai/'+nip, 
-                       headers: {
-                                   'Authorization': 'Bearer ' + data.token
-                               },
-                       dataType: 'json',
-                       success: function (data) 
-                       {   
-                           var element = data.data;
-                           var depan = "";
-                           if(element.gelar_depan)
-                           {
-                               depan += element.gelar_depan+" ";
-                           }
-                           var belakang = "";
-                           if(element.gelar_belakang)
-                           {
-                               belakang += ", "+element.gelar_belakang;
-                           }
-                           $("#nama_penandatangan").val(depan+element.nama+belakang);
-                           $("#jabatan_penandatangan").val(element.nama_jabatan);
-                       },
-                       error: function ()
-                       {
-                           return false;
-                       }
-                   });
-           }
-       });
+        $.ajax({ 
+            type: 'GET', 
+            url: '/api/master-pegawai/'+nip, 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
+            success: function (data) 
+            {   
+                var element = data.data;
+                var depan = "";
+                if(element.gelar_depan)
+                {
+                    depan += element.gelar_depan+" ";
+                }
+                var belakang = "";
+                if(element.gelar_belakang)
+                {
+                    belakang += ", "+element.gelar_belakang;
+                }
+                $("#nama_penandatangan").val(depan+element.nama+belakang);
+                $("#jabatan_penandatangan").val(element.nama_jabatan);
+            },
+            error: function ()
+            {
+                return false;
+            }
+        });
+           
    }
    function getPegawaiByInstansi()
    {
-       var kdlokasi = $("#instansi_penerima").val();
-       $.ajax({ 
-           type: 'GET', 
-           url: '/gettoken', 
-           success: function (data) 
-           { 
-                   $.ajax({ 
-                       type: 'GET', 
-                       url: '/api/master-pegawai/byLocation/'+kdlokasi, 
-                       headers: {
-                                   'Authorization': 'Bearer ' + data.token
-                               },
-                       dataType: 'json',
-                       success: function (data) 
-                       {   
-                           var isi = "";
-                            $.each(data.data, function(index, element) {
-                              var depan = ''
-                              var belakang = ''
-                              if(element.gelar_depan)
-                              {
-                                  depan += element.gelar_depan+" ";
-                              }
-                              var belakang = "";
-                              if(element.gelar_belakang)
-                              {
-                                  belakang += ", "+element.gelar_belakang;
-                              }
-                              isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
-                            })
-                            $("#arr_penerima").html(isi).show();
-                            $("#arr_tembusan").html(isi).show();
-                       },
-                       error: function ()
-                       {
-                           return false;
-                       }
-                   });
-           }
-       });
+        var kdlokasi = $("#instansi_penerima").val();
+        $.ajax({ 
+            type: 'GET', 
+            url: '/api/master-pegawai/byLocation/'+kdlokasi, 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
+            success: function (data) 
+            {   
+                var isi = "";
+                $.each(data.data, function(index, element) {
+                    var depan = ''
+                    var belakang = ''
+                    if(element.gelar_depan)
+                    {
+                        depan += element.gelar_depan+" ";
+                    }
+                    var belakang = "";
+                    if(element.gelar_belakang)
+                    {
+                        belakang += ", "+element.gelar_belakang;
+                    }
+                    isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                })
+                $("#arr_penerima").html(isi).show();
+                $("#arr_tembusan").html(isi).show();
+            },
+            error: function ()
+            {
+                return false;
+            }
+        });
    }
    function simpen()
    {
@@ -756,15 +715,12 @@
       var textareaValue = $('#isisurat').summernote('code');
 
       var jeniss = "&arr_penerima="+$("#arr_penerima").val()+"&arr_tembusan="+$("#arr_tembusan").val();
-      $.ajax({ 
-      type: 'GET', 
-      url: '/gettoken', 
-      success: function (data_token) { 
+      
          $.ajax({ 
           type: 'POST', 
           url: '/api/konsep-surat', 
           headers: {
-           'Authorization': 'Bearer ' + data_token.token
+           'Authorization': 'Bearer {{sesi}}'
            },
           data : "nip_penandatangan="+$("#nip_penandatangan").val()+"&nama_penandatangan="+$("#nama_penandatangan").val()+"&jabatan_penandatangan="+$("#jabatan_penandatangan").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&lampiran="+$("#lampiran").val()+jeniss+"&arr_pemeriksa="+gabung+"&perihal="+$("#perihal").val()+"&dari_surat_masuk="+$("#dari_surat_masuk").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&klasifikasi="+$("#klasifikasi").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue,
           success: function (datanya) 
@@ -788,109 +744,82 @@
               swal("Gagal!", data.message, "error");
           }
           });
-      },
-      error: function ()
-      {
-          return false;
-      }
-      });
+      
       return false;
    }
 
    function listparentall() 
    {
-       $.ajax({ 
-           type: 'GET', 
-           url: '/gettoken', 
-           success: function (data) 
-           { 
-                   $.ajax({ 
-                       type: 'GET', 
-                       url: '/api/master-kantor/listAllParent', 
-                       headers: {
-                                   'Authorization': 'Bearer ' + data.token
-                               },
-                       dataType: 'json',
-                       success: function (data) 
-                       {   
-                           var isi = "<option value=''>Pilih Instansi</option>";
-                           $.each(data.data, function(index, element) {
-                               isi += "<option value='"+element.kdlokasi+"'>"+element.nmlokasi+"</option>";
-                           })
-                           $("#instansi_penerima").html(isi).show();
-                       },
-                       error: function ()
-                       {
-                           return false;
-                       }
-                   });
-           }
-       });
+        $.ajax({ 
+            type: 'GET', 
+            url: '/api/master-kantor/listAllParent', 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
+            success: function (data) 
+            {   
+                var isi = "<option value=''>Pilih Instansi</option>";
+                $.each(data.data, function(index, element) {
+                    isi += "<option value='"+element.kdlokasi+"'>"+element.nmlokasi+"</option>";
+                })
+                $("#instansi_penerima").html(isi).show();
+            },
+            error: function ()
+            {
+                return false;
+            }
+        });
    }
    $('#cari_surat').on('submit', function(){
        var ke = $("#cari").val();
         $.ajax({ 
             type: 'GET', 
-            url: '/gettoken', 
+            url: '/api/surat-masuk?keyword='+ke+'&page=1&limit=999', 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
             success: function (data) 
-            { 
-                    $.ajax({ 
-                        type: 'GET', 
-                        url: '/api/surat-masuk?keyword='+ke+'&page=1&limit=999', 
-                        headers: {
-                                    'Authorization': 'Bearer ' + data.token
-                                },
-                        dataType: 'json',
-                        success: function (data) 
-                        {   
-                           var text="";
-                           $.each(data.data.data, function(index, element) {
-                            var tgl_surat = tanggal_indo(element.tgl_surat);
-                               text+= "<tr><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td><a onclick='pilih("+element.id+")' class='btn btn-success' style='color:white'>Pilih</a></td></tr>";
-                           });
-                           $(".surat_masuk").html(text).show();
-                        },
-                        error: function ()
-                        {
-                            return false;
-                        }
-                    });
+            {   
+                var text="";
+                $.each(data.data.data, function(index, element) {
+                var tgl_surat = tanggal_indo(element.tgl_surat);
+                    text+= "<tr><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td><a onclick='pilih("+element.id+")' class='btn btn-success' style='color:white'>Pilih</a></td></tr>";
+                });
+                $(".surat_masuk").html(text).show();
+            },
+            error: function ()
+            {
+                return false;
             }
         });
         return false;
    });
    function pilih(id)
    {
-       
-       $("#dari_surat_masuk").val(id);
-       $.ajax({ 
+        $("#dari_surat_masuk").val(id);
+        $.ajax({ 
             type: 'GET', 
-            url: '/gettoken', 
+            url: "/api/surat-masuk/"+id, 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
             success: function (data) 
-            { 
-                    $.ajax({ 
-                        type: 'GET', 
-                        url: "/api/surat-masuk/"+id, 
-                        headers: {
-                                    'Authorization': 'Bearer ' + data.token
-                                },
-                        dataType: 'json',
-                        success: function (data) 
-                        {   
-                            element = data.data;
-                            var text="";
-                            var tgl_surat = tanggal_indo(element.tgl_surat);
-                            text+= "<table class='table table-striped table-bordered'>\
-                                    <tr align='center'><th>Tanggal Surat</th><th>Nomor Surat</th><th>Pengirim Surat</th><th>Perihal</th><th>Action</th></tr>\
-                                    <tr align='center'><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td><a onclick='batal("+element.id+")' class='btn btn-danger' style='color:white'>Batal</a></td></tr></table>";
-                            $("#kait").html(text).show();
-                            $('.modal').modal('hide');
-                        },
-                        error: function ()
-                        {
-                            return false;
-                        }
-                    });
+            {   
+                element = data.data;
+                var text="";
+                var tgl_surat = tanggal_indo(element.tgl_surat);
+                text+= "<table class='table table-striped table-bordered'>\
+                        <tr align='center'><th>Tanggal Surat</th><th>Nomor Surat</th><th>Pengirim Surat</th><th>Perihal</th><th>Action</th></tr>\
+                        <tr align='center'><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td><a onclick='batal("+element.id+")' class='btn btn-danger' style='color:white'>Batal</a></td></tr></table>";
+                $("#kait").html(text).show();
+                $('.modal').modal('hide');
+            },
+            error: function ()
+            {
+                return false;
             }
         });
         return false;
@@ -1093,56 +1022,40 @@
 
         function showbrand()
         {
-           $.ajax({ 
-               type: 'GET', 
-               url: '/gettoken', 
-               success: function (data) { 
-                   $.ajax({ 
-                       type: 'GET', 
-                       url: '/api/tujuan-surat?page=1&limit=99999999', 
-                       headers: {
-                           'Authorization': 'Bearer ' + data.token
-                       },
-                       dataType: 'json',
-                       success: function (data) { 
-                           var text="";
-                           $.each(data.data.data, function(index, element) 
-                           {
-                               var all = JSON.parse(element.data);
-                               var nama_instansis = "";
-                               var no = 1;
-                               $.each(all, function(index, element) {    
-                                    nama_instansis+=no+". "+element.nama_instansi+"<br>";
-                                    no++;
-                               });
-                               var tr_data = "<tr><td>"+element.nama+"</td><td>"+nama_instansis+"</td><td><button id='pilih' onclick=pilih_penerima('"+element.id+"') type='button' class='btn btn-icon btn-primary'>Pilih</button></td></tr>";
-                               text += tr_data;
-                           });
-   
-                            $(".tujuan_surat").html(text).show();
-                            $("#loader").fadeOut("xslow");
-                       }
-                   });
-   
-   
-               },
-               error: function ()
-               {
-                   return false;
-               }
-           });
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/tujuan-surat?page=1&limit=99999999', 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                dataType: 'json',
+                success: function (data) { 
+                    var text="";
+                    $.each(data.data.data, function(index, element) 
+                    {
+                        var all = JSON.parse(element.data);
+                        var nama_instansis = "";
+                        var no = 1;
+                        $.each(all, function(index, element) {    
+                            nama_instansis+=no+". "+element.nama_instansi+"<br>";
+                            no++;
+                        });
+                        var tr_data = "<tr><td>"+element.nama+"</td><td>"+nama_instansis+"</td><td><button id='pilih' onclick=pilih_penerima('"+element.id+"') type='button' class='btn btn-icon btn-primary'>Pilih</button></td></tr>";
+                        text += tr_data;
+                    });
+
+                    $(".tujuan_surat").html(text).show();
+                    $("#loader").fadeOut("xslow");
+                }
+            });
         }
         function showbrand2()
         {
-           $.ajax({ 
-               type: 'GET', 
-               url: '/gettoken', 
-               success: function (data) { 
                    $.ajax({ 
                        type: 'GET', 
                        url: '/api/tujuan-surat?page=1&limit=99999999', 
                        headers: {
-                           'Authorization': 'Bearer ' + data.token
+                           'Authorization': 'Bearer {{sesi}}'
                        },
                        dataType: 'json',
                        success: function (data) { 
@@ -1164,88 +1077,61 @@
                             $("#loader").fadeOut("xslow");
                        }
                    });
-   
-   
-               },
-               error: function ()
-               {
-                   return false;
-               }
-           });
         }
 
         function pilih_penerima(id)
         {
             $(".loader").show();
             $.ajax({ 
-               type: 'GET', 
-               url: '/gettoken', 
-               success: function (data) { 
-                   $.ajax({ 
-                       type: 'GET', 
-                       url: '/api/tujuan-surat/'+id, 
-                       headers: {
-                           'Authorization': 'Bearer ' + data.token
-                       },
-                       dataType: 'json',
-                       success: function (data) { 
+                type: 'GET', 
+                url: '/api/tujuan-surat/'+id, 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                dataType: 'json',
+                success: function (data) { 
 
-                            var all = JSON.parse(data.data.data);
-                            var nama_instansis = "";
-                            var no = 1;
-                            $.each(all, function(index, element) {    
-                                nama_instansis+=no+". "+element.nama_instansi+"<br>";
-                                no++;
-                            });
+                    var all = JSON.parse(data.data.data);
+                    var nama_instansis = "";
+                    var no = 1;
+                    $.each(all, function(index, element) {    
+                        nama_instansis+=no+". "+element.nama_instansi+"<br>";
+                        no++;
+                    });
 
-                            $("#penerima").html("<tr><th>Nama Tujuan</th><th>Instansi</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td></tr>").show();
-                            $("#arr_penerima").val(data.data.data);
-                            $('.modal').modal('hide');
-                            $("#loader").fadeOut("xslow");
-                       }
-                   });
-               },
-               error: function ()
-               {
-                   return false;
-               }
-           });
+                    $("#penerima").html("<tr><th>Nama Tujuan</th><th>Instansi</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td></tr>").show();
+                    $("#arr_penerima").val(data.data.data);
+                    $('.modal').modal('hide');
+                    $("#loader").fadeOut("xslow");
+                }
+            });
+              
         }
         function pilih_tembusan(id)
         {
             $(".loader").show();
             $.ajax({ 
-               type: 'GET', 
-               url: '/gettoken', 
-               success: function (data) { 
-                   $.ajax({ 
-                       type: 'GET', 
-                       url: '/api/tujuan-surat/'+id, 
-                       headers: {
-                           'Authorization': 'Bearer ' + data.token
-                       },
-                       dataType: 'json',
-                       success: function (data) { 
+                type: 'GET', 
+                url: '/api/tujuan-surat/'+id, 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                dataType: 'json',
+                success: function (data) { 
 
-                            var all = JSON.parse(data.data.data);
-                            var nama_instansis = "";
-                            var no = 1;
-                            $.each(all, function(index, element) {    
-                                nama_instansis+=no+". "+element.nama_instansi+"<br>";
-                                no++;
-                            });
-                            $("#tembusan").html("<tr><th>Nama Tujuan</th><th>Instansi</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td></tr>").show();
-                            $("#arr_tembusan").val(data.data.data);
-                            $('.modal').modal('hide');
-                            $("#loader").fadeOut("xslow");
-                       }
-                   });
-               },
-               error: function ()
-               {
-                   return false;
-               }
-           });
+                    var all = JSON.parse(data.data.data);
+                    var nama_instansis = "";
+                    var no = 1;
+                    $.each(all, function(index, element) {    
+                        nama_instansis+=no+". "+element.nama_instansi+"<br>";
+                        no++;
+                    });
+                    $("#tembusan").html("<tr><th>Nama Tujuan</th><th>Instansi</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td></tr>").show();
+                    $("#arr_tembusan").val(data.data.data);
+                    $('.modal').modal('hide');
+                    $("#loader").fadeOut("xslow");
+                }
+            });
         }
 </script>
 @endsection

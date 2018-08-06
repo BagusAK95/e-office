@@ -51,30 +51,56 @@ Route.get('/gettoken', ({ session }) => {
 
 //------------------------------------ Main System ---------------------------------//
 
+Route.get('/home', ({ session,view }) => {
+    const sesi = session.get('token');
+    return view.render('frontend/home', { sesi })
+})
 //Home
-Route.on('/home').render('frontend/home')
+//Route.on('/home').render('frontend/home')
 
 //Profile
-Route.on('/profile').render('frontend/profile')
+Route.get('/profile', ({ session,view }) => {
+    const sesi = session.get('token');
+    return view.render('frontend/profile', { sesi })
+})
 
 //User
-Route.on('/user').render('frontend/user')
+Route.get('/user', ({ session,view }) => {
+    const sesi = session.get('token');
+    return view.render('frontend/user', { sesi })
+})
 
-Route.on('/user/add').render('frontend/adduser')
+Route.get('/user/add', ({ session,view }) => {
+    const sesi = session.get('token');
+    return view.render('frontend/adduser', { sesi })
+})
 
 //Change Password
-Route.on('/change-password').render('frontend/change_password')
+Route.get('/change-password', ({ session,view }) => {
+    const sesi = session.get('token');
+    return view.render('frontend/change_password', { sesi })
+})
   
 //Tree
-Route.on('/kantor').render('frontend/tree')
+Route.get('/kantor', ({ session,view }) => {
+    const sesi = session.get('token');
+    return view.render('frontend/tree', { sesi })
+})
 
 //Surat Masuk
-Route.on('/surat-masuk').render('frontend/surat_masuk')
+Route.get('/surat-masuk', ({ session,view }) => {
+    const sesi = session.get('token');
+    return view.render('frontend/surat_masuk', { sesi })
+})
 
-Route.on('/surat-masuk/add').render('frontend/addsuratmasuk')
+Route.get('/surat-masuk/add', ({ session,view }) => {
+    const sesi = session.get('token');
+    return view.render('frontend/addsuratmasuk', { sesi })
+})
 
-Route.get('/surat-masuk/:id', async function({ params,view }) {
-    return view.render('frontend/detail_surat_masuk', { params })
+Route.get('/surat-masuk/:id', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/detail_surat_masuk', { params,sesi })
 })
 
 Route.get('/surat-masuk/cetak/:id', async function({ params,view }) {
@@ -88,11 +114,13 @@ Route.get('/dispo-masuk/add/:id', async function({ params,view }) {
 //End Surat Masuk
 
 //Dispo Keluar
-
-Route.on('/disposisi-keluar').render('frontend/disposisi_keluar')
-
-Route.get('/disposisi-keluar/:id', async function({ params,view }) {
-    return view.render('frontend/detail_dispo_keluar', { params })
+Route.get('/disposisi-keluar', ({ session,view }) => {
+    const sesi = session.get('token');
+    return view.render('frontend/disposisi_keluar', { sesi })
+})
+Route.get('/disposisi-keluar/:id', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/detail_dispo_keluar', { params,sesi })
 })
 
 
@@ -100,11 +128,14 @@ Route.get('/disposisi-keluar/:id', async function({ params,view }) {
 //End Dispo Keluar
 
 //Dispo Masuk
+Route.get('/disposisi-masuk', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/disposisi_masuk', { params,sesi })
+})
 
-Route.on('/disposisi-masuk').render('frontend/disposisi_masuk')
-
-Route.get('/disposisi-masuk/:id', async function({ params,view }) {
-    return view.render('frontend/detail_dispo_masuk', { params })
+Route.get('/disposisi-masuk/:id', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/detail_dispo_masuk', { params,sesi })
 })
 
 Route.get('/dispo-keluar/:id', async function({ params,view }) {
@@ -130,9 +161,11 @@ Route.get('/notifikasi/:id', async function({ params,view }) {
     return view.render('frontend/notifikasi', { params })
 })
 
-Route.get('/notifikasi-all', async function({ params,view }) {
-    return view.render('frontend/notifikasi_all', { params })
+Route.get('/notifikasi-all', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/notifikasi_all', { params,sesi })
 })
+
 
 Route.on('/error-404').render('404')
 
@@ -140,24 +173,52 @@ Route.on('/error-404').render('404')
 //End Notif
 
 //Surat Keluar//
-Route.on('/konsep-surat/add').render('frontend/add_surat_keluar')
-Route.on('/konsep-surat/maked').render('frontend/konsep_surat_maked')
-Route.on('/konsep-surat/checked').render('frontend/konsep_surat_checked')
-Route.get('/konsep-surat/maked/:id', async function({ params,view }) {
-    return view.render('frontend/detail_konsep_surat', { params })
+Route.get('/konsep-surat/add', async function({ session,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/add_surat_keluar', { sesi })
 })
-Route.get('/konsep-surat/checked/:id', async function({ params,view }) {
-    return view.render('frontend/detail_konsep_surat_checked', { params })
-})
-Route.get('/konsep-surat/edit/:id', async function({ params,view }) {
-    return view.render('frontend/edit_konsep_surat', { params })
-})
-Route.on('/tujuan-surat').render('frontend/tujuan_surat')
-Route.on('/tujuan-surat/add').render('frontend/tujuan_surat_add')
 
-Route.on('/surat-keluar').render('frontend/surat_keluar')
-Route.get('/surat-keluar/:id', async function({ params,view }) {
-    return view.render('frontend/detail_surat_keluar', { params })
+Route.get('/konsep-surat/maked', async function({ session,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/konsep_surat_maked', { sesi })
+})
+
+Route.get('/konsep-surat/checked', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/konsep_surat_checked', { params,sesi })
+})
+
+Route.get('/konsep-surat/maked/:id', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/detail_konsep_surat', { params,sesi })
+})
+
+Route.get('/konsep-surat/checked/:id', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/detail_konsep_surat_checked', { params,sesi })
+})
+Route.get('/konsep-surat/edit/:id', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/edit_konsep_surat', { params,sesi })
+})
+
+Route.get('/tujuan-surat', async function({ session,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/tujuan_surat', { sesi })
+})
+
+Route.get('/tujuan-surat/add', async function({ session,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/tujuan_surat_add', { sesi })
+})
+
+Route.get('/surat-keluar', async function({ session,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/surat_keluar', { sesi })
+})
+Route.get('/surat-keluar/:id', async function({ session,params,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/detail_surat_keluar', { params,sesi })
 })
 //End Surat Keluar//
 

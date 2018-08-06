@@ -32,34 +32,44 @@
    $( document ).ready(function() {
      /*Main*/
      $("#loader").fadeIn("slow");
-    cek_session();
+     cek_session();
      cek_token();
-    getjumlahnotif()
+     getjumlahnotif()
         function getjumlahnotif()
         {
-        //Notification Top Menu//
-        $.ajax({ 
-            type: 'GET', 
-            url: '/gettoken', 
-            success: function (data) 
-            { 
-                $.ajax({ 
-                    type: 'GET', 
-                    url: '/api/notifikasi?page=1&limit=9999999999', 
-                    headers: {
-                        'Authorization': 'Bearer ' + data.token
-                    },
-                    success: function (de) 
-                    {   
-                        var text="";
-                        $.each(de.data.data, function(index, element){
-                            if(element.status==0)
-                            {
+            //Notification Top Menu//
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/notifikasi?page=1&limit=9999999999', 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                success: function (de) 
+                {   
+                    var text="";
+                    $.each(de.data.data, function(index, element){
+                        if(element.status==0)
+                        {
+                        var tanggal = tanggal_keterangan(element.tgl);
+                        text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                        text += '<div class="media">';
+                        text += '<div class="pr-10">';
+                        text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
+                        text += '</div>';
+                        text += '<div class="media-body">';
+                        text += '<h6 class="media-heading" style="font-size:10pt">'+element.isi+'</h6>';
+                        text += '<time class="media-meta" style="font-size:10pt">'+tanggal+'</time>';
+                        text += '</div>';
+                        text += '</div>';
+                        text += '</a>';
+                        }
+                        else
+                        {
                             var tanggal = tanggal_keterangan(element.tgl);
                             text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
                             text += '<div class="media">';
                             text += '<div class="pr-10">';
-                            text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
+                            text += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
                             text += '</div>';
                             text += '<div class="media-body">';
                             text += '<h6 class="media-heading" style="font-size:10pt">'+element.isi+'</h6>';
@@ -67,30 +77,13 @@
                             text += '</div>';
                             text += '</div>';
                             text += '</a>';
-                            }
-                            else
-                            {
-                                var tanggal = tanggal_keterangan(element.tgl);
-                                text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
-                                text += '<div class="media">';
-                                text += '<div class="pr-10">';
-                                text += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
-                                text += '</div>';
-                                text += '<div class="media-body">';
-                                text += '<h6 class="media-heading" style="font-size:10pt">'+element.isi+'</h6>';
-                                text += '<time class="media-meta" style="font-size:10pt">'+tanggal+'</time>';
-                                text += '</div>';
-                                text += '</div>';
-                                text += '</a>';
-                            }
-                        });
-                        $("#notif_all").html(text).show();
-                    }
-                });
-            }
-        });
+                        }
+                    });
+                    $("#notif_all").html(text).show();
+                }
+            });
         }
-     $("#loader").fadeOut("xslow");
+        $("#loader").fadeOut("xslow");
      /*Page*/
    });
 </script>

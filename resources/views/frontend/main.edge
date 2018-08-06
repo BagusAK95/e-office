@@ -203,13 +203,18 @@
                         <a class="animsition-link" href="/surat-masuk">
                         <i class="site-menu-icon md-email-open" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Masuk</span>
-                       
+                        <div class="site-menu-badge" id="surat_masuk_notif">
+                          
+                        </div>
                         </a>
                      </li>
                      <li class="site-menu-item">
                         <a class="animsition-link" href="#">
                         <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
                         <span class="site-menu-title">Tembusan</span>
+                        <div class="site-menu-badge"  id="surat_tembusan_notif">
+                          
+                        </div>
                         </a>
                      </li>
                      <li class="site-menu-category surat">Disposisi</li>
@@ -217,12 +222,17 @@
                         <a class="animsition-link" href="/disposisi-masuk">
                         <i class="site-menu-icon md-inbox" aria-hidden="true"></i>
                         <span class="site-menu-title">Disposisi Masuk</span>
+                        <div class="site-menu-badge" id="dispo_masuk_notif">
+                        </div>
                         </a>
                      </li>
                      <li class="site-menu-item" id="disposisi_keluar">
                         <a class="animsition-link" href="/disposisi-keluar">
                         <i class="site-menu-icon md-mail-send" aria-hidden="true"></i>
                         <span class="site-menu-title">Disposisi Keluar</span>
+                        <div class="site-menu-badge" id="dispo_keluar_notif">
+                          
+                        </div>
                         </a>
                      </li>
                      <li class="site-menu-category surat" id="" >Surat Keluar</li>
@@ -242,12 +252,16 @@
                         <a class="animsition-link" href="/konsep-surat/checked">
                         <i class="site-menu-icon md-case-check" aria-hidden="true"></i>
                         <span class="site-menu-title">Pengecekan Konsep</span>
+                        <div class="site-menu-badge" id='konsep_surat_notif'>
+                        </div>
                         </a>
                      </li>
                      <li class="site-menu-item" id="surat-keluar" >
                         <a class="animsition-link" href="/surat-keluar">
                         <i class="site-menu-icon md-email" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Keluar</span>
+                        <div class="site-menu-badge" id='surat_keluar_notif'>
+                        </div>
                         </a>
                      </li>
                   </ul>
@@ -356,7 +370,7 @@
       <script src="/material/global/vendor/jstree/jstree.min.js"></script>
       <script src="/material/global/js/Plugin/bootstrap-treeview.js"></script>
       <script src="/material/global/js/Plugin/jstree.js"></script>
-      <script src="/material/base/assets/examples/js/advanced/treeview.js"></script>
+      <!--<script src="/material/base/assets/examples/js/advanced/treeview.js"></script>-->
       <script src="/material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
       <script src="/material/global/js/Plugin/bootstrap-datepicker.js"></script>
       <script src="/material/global/vendor/summernote/summernote.min.js"></script>
@@ -370,123 +384,182 @@
       <link rel="stylesheet" href="/material/toastr.css">
       <script>
          //requestPermission()
+
          tanggal_sekarang()
          function cek_session()
          {
-           $.ajax({ 
-               type: 'GET', 
-               url: '/cek_session', 
-               success: function (data) { 
-                   if(data)
-                   {
-                     return false;
-                   }
-                   else
-                   {
-                     swal({title: "Session Time Out", text: "Silahkan login kembali.", type: "error"},
-                     function(){ 
-                         window.location.href='/login';
-                     }
-                     );
-                   }
-               }
-           });
+            var sesi = "{{sesi}}";
+            if(sesi)
+            {
+              return false;
+            }
+            else
+            {
+              swal({title: "Session Time Out", text: "Silahkan login kembali.", type: "error"},
+              function(){ 
+                  window.location.href='/login';
+              }
+              );
+            }
          }
          
          function cek_token()
          {
-             $.ajax({ 
-                 type: 'GET', 
-                 url: '/gettoken', 
-                 success: function (data) { 
-                     $.ajax({ 
-                         type: 'GET', 
-                         url: '/api/profile', 
-                         headers: {
-                             'Authorization': 'Bearer ' + data.token
-                         },
-                         success: function (data) { 
-                             //alert(data.data.level);
-                             $("#level_main").val(data.data.level);
-                             $("#nip_login").val(data.data.nip);
-                             //putlevel(data.data.level)
-                             $(".nama_user").html(data.data.nama_lengkap).show();
-                             if(data.data.foto)
-                             {
-                               $(".foto").html('<img src="'+data.data.foto+'" class="img-circular-pp">').show();
-                               $("#foto").html('<img src="'+data.data.foto+'" class="img-circular">').show();
-                             }
-                             else
-                             {
-                               $(".foto").html('<img src="/material/base/src/images/user.png" class="img-circular-pp">').show();
-                               $("#foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
-                             }
-                             
-                            
-                             if(data.data.level==1)
-                             {
-                               var lv = "Admin";
-                             }
-                             else if(data.data.level==2)
-                             {
-                               var lv = "Pimpinan";
-                             }
-                             else if(data.data.level==3)
-                             {
-                               var lv = "Tata Usaha";
-                             }
-                             else if(data.data.level==4)
-                             {
-                               var lv = "Staff";
-                             }
-         
-                             $(".jabatan").html(data.data.nama_jabatan).show();
-                             $(".jabatanm").html(data.data.nama_jabatan).show();
-         
-                             if(data.data.level==1)
-                             {
-                               $(".konsol").show();
-                               //$(".surat").hide();
-                             }
-                             else
-                             {
-                               $(".konsol").hide();
-                               //$(".surat").show();
-                             }
-         
-         
-                             var akses = data.data.akses;
-                             var smu = "";
-                             if(akses)
-                             {
-                                 var max = akses.split(",").length;
-                                 var data_akses = akses.split(",");
-                                 for (var index = 0; index < max; index++) 
-                                 {
-                                     /*if(data_akses[index]=="suratmasuk")
-                                     {
-                                       $("#surat_masuk").show();
-                                     }
-                                     if(data_akses[index]=="suratkeluar")
-                                     {
-                                       $("#surat_keluar").show();
-                                     }
-                                     if(data_akses[index]=="disposisi")
-                                     {
-                                       $("#disposisi").show();
-                                       $("#disposisi_keluar").show();
-                                     }*/
-                                 }
-                             }
-                         }
-                     });
-                 },
-                 error: function ()
-                 {
-                     return false;
-                 }
-                 });
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/profile', 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                success: function (data) { 
+                    //alert(data.data.level);
+                    $("#level_main").val(data.data.level);
+                    $("#nip_login").val(data.data.nip);
+                    //putlevel(data.data.level)
+                    $(".nama_user").html(data.data.nama_lengkap).show();
+                    if(data.data.foto)
+                    {
+                      $(".foto").html('<img src="'+data.data.foto+'" class="img-circular-pp">').show();
+                      $("#foto").html('<img src="'+data.data.foto+'" class="img-circular">').show();
+                    }
+                    else
+                    {
+                      $(".foto").html('<img src="/material/base/src/images/user.png" class="img-circular-pp">').show();
+                      $("#foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
+                    }
+                    
+                  
+                    if(data.data.level==1)
+                    {
+                      var lv = "Admin";
+                    }
+                    else if(data.data.level==2)
+                    {
+                      var lv = "Pimpinan";
+                    }
+                    else if(data.data.level==3)
+                    {
+                      var lv = "Tata Usaha";
+                    }
+                    else if(data.data.level==4)
+                    {
+                      var lv = "Staff";
+                    }
+
+                    $(".jabatan").html(data.data.nama_jabatan).show();
+                    $(".jabatanm").html(data.data.nama_jabatan).show();
+
+                    if(data.data.level==1)
+                    {
+                      $(".konsol").show();
+                      //$(".surat").hide();
+                    }
+                    else
+                    {
+                      $(".konsol").hide();
+                      //$(".surat").show();
+                    }
+
+
+                    var akses = data.data.akses;
+                    var smu = "";
+                    if(akses)
+                    {
+                        var max = akses.split(",").length;
+                        var data_akses = akses.split(",");
+                        for (var index = 0; index < max; index++) 
+                        {
+                            /*if(data_akses[index]=="suratmasuk")
+                            {
+                              $("#surat_masuk").show();
+                            }
+                            if(data_akses[index]=="suratkeluar")
+                            {
+                              $("#surat_keluar").show();
+                            }
+                            if(data_akses[index]=="disposisi")
+                            {
+                              $("#disposisi").show();
+                              $("#disposisi_keluar").show();
+                            }*/
+                        }
+                    }
+                }
+            });
          }
+         notif_surat_masuk()
+         function notif_surat_masuk()
+         {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/surat-masuk/unreadAmount', 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                success: function (data) { 
+                  if(data.data>0)
+                  {
+                  $("#surat_masuk_notif").html('<span class="badge badge-pill badge-info">'+data.data+'</span>').show();
+                  }
+                    
+                }
+            });
+         }
+         notif_surat_tembusan()
+         function notif_surat_tembusan()
+         { 
+              $.ajax({ 
+                  type: 'GET', 
+                  url: '/api/surat-tembusan/unreadAmount', 
+                  headers: {
+                      'Authorization': 'Bearer {{sesi}}'
+                  },
+                  success: function (data) { 
+                    if(data.data>0)
+                    {
+                    $("#surat_tembusan_notif").html('<span class="badge badge-pill badge-info">'+data.data+'</span>').show();
+                    }
+                      
+                  }
+              });
+         }
+
+          notif_konsep_surat()
+         function notif_konsep_surat()
+         {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/konsep-surat/unreadAmount', 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                success: function (data) { 
+                  if(data.data>0)
+                  {
+                  $("#konsep_surat_notif").html('<span class="badge badge-pill badge-info">'+data.data+'</span>').show();
+                  }
+                    
+                }
+            });
+         }
+         notif_surat_keluar()
+         function notif_surat_keluar()
+         {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/surat-keluar/unreadAmount', 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                success: function (data) { 
+                  if(data.data>0)
+                  {
+                  $("#surat_keluar_notif").html('<span class="badge badge-pill badge-info">'+data.data+'</span>').show();
+                  }
+                    
+                }
+            });
+        }
          
          function tanggal_sekarang()
             {           
@@ -541,26 +614,19 @@
                    updateUIForPushEnabled(currentToken);
                    if(!$("#token_firebases").val())
                    {
-                       $.ajax({ 
-                         type: 'GET', 
-                         url: '/gettoken', 
-                         success: function (data) 
-                             { 
-                               $("#token_firebases").val(currentToken);
-                                 $.ajax({ 
-                                     type: 'PUT', 
-                                     url: '/api/setFirebase', 
-                                     data : 'firebase_device=Web&firebase_token='+currentToken,
-                                     headers: {
-                                         'Authorization': 'Bearer ' + data.token
-                                     },
-                                     success: function (data) 
-                                     { 
-                                         
-                                     }
-                                 });
-                             }
-                         });
+                      $("#token_firebases").val(currentToken);
+                        $.ajax({ 
+                            type: 'PUT', 
+                            url: '/api/setFirebase', 
+                            data : 'firebase_device=Web&firebase_token='+currentToken,
+                            headers: {
+                                'Authorization': 'Bearer {{sesi}}'
+                            },
+                            success: function (data) 
+                            { 
+                                
+                            }
+                        });
                    }
                  } else {
                    console.log('No Instance ID token available. Request permission to generate one.');
@@ -747,104 +813,91 @@
              function getjumlahnotif()
              {
                //Notification Top Menu//
-               $.ajax({ 
-                   type: 'GET', 
-                   url: '/gettoken', 
-                   success: function (data) 
-                   { 
-                       $.ajax({ 
-                           type: 'GET', 
-                           url: '/api/notifikasi?page=1&limit=20', 
-                           headers: {
-                               'Authorization': 'Bearer ' + data.token
-                           },
-                           success: function (de) 
-                           { 
-                                var jumlah_pesan = de.message;
-                                if(jumlah_pesan>0)
-                                {
-                                  $("#jumlah_notif").html("<span class='badge badge-danger up'>"+jumlah_pesan+"</span>").show();
-                                  $("#new").html("<span class='badge badge-round badge-danger'>New "+jumlah_pesan+"</span>").show();
-                                }
-                                
-                                
-                                
-                                var text="";
-                                $.each(de.data.data, function(index, element){
-                                  if(element.status==0)
-                                  {
-                                   var tanggal = tanggal_keterangan(element.tgl);
-                                   text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
-                                   text += '<div class="media">';
-                                   text += '<div class="pr-10">';
-                                   text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
-                                   text += '</div>';
-                                   text += '<div class="media-body">';
-                                   text += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'</h6>';
-                                   text += '<time class="media-meta" style="font-size:9pt">'+tanggal+'</time>';
-                                   text += '</div>';
-                                   text += '</div>';
-                                   text += '</a>';
-                                  }
-                                  else
-                                  {
-                                     var tanggal = tanggal_keterangan(element.tgl);
-                                     text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
-                                     text += '<div class="media">';
-                                     text += '<div class="pr-10">';
-                                     text += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
-                                     text += '</div>';
-                                     text += '<div class="media-body">';
-                                     text += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'</h6>';
-                                     text += '<time class="media-meta" style="font-size:9pt">'+tanggal+'</time>';
-                                     text += '</div>';
-                                     text += '</div>';
-                                     text += '</a>';
-                                  }
-                                });
-                               $("#notif_content").html(text).show();
+                $.ajax({ 
+                    type: 'GET', 
+                    url: '/api/notifikasi?page=1&limit=20', 
+                    headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+                    success: function (de) 
+                    { 
+                        var jumlah_pesan = de.message;
+                        if(jumlah_pesan>0)
+                        {
+                          $("#jumlah_notif").html("<span class='badge badge-danger up'>"+jumlah_pesan+"</span>").show();
+                          $("#new").html("<span class='badge badge-round badge-danger'>New "+jumlah_pesan+"</span>").show();
+                        }
+                        var text="";
+                        $.each(de.data.data, function(index, element){
+                          if(element.status==0)
+                          {
+                            var tanggal = tanggal_keterangan(element.tgl);
+                            text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                            text += '<div class="media">';
+                            text += '<div class="pr-10">';
+                            text += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
+                            text += '</div>';
+                            text += '<div class="media-body">';
+                            text += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'</h6>';
+                            text += '<time class="media-meta" style="font-size:9pt">'+tanggal+'</time>';
+                            text += '</div>';
+                            text += '</div>';
+                            text += '</a>';
+                          }
+                          else
+                          {
+                              var tanggal = tanggal_keterangan(element.tgl);
+                              text += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                              text += '<div class="media">';
+                              text += '<div class="pr-10">';
+                              text += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
+                              text += '</div>';
+                              text += '<div class="media-body">';
+                              text += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'</h6>';
+                              text += '<time class="media-meta" style="font-size:9pt">'+tanggal+'</time>';
+                              text += '</div>';
+                              text += '</div>';
+                              text += '</a>';
+                          }
+                        });
+                        $("#notif_content").html(text).show();
 
-                               var text2="";
-                                $.each(de.data.data, function(index, element){
-                                  if(element.status==0)
-                                  {
-                                   var tanggal = tanggal_keterangan(element.tgl);
-                                   text2 += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
-                                   text2 += '<div class="media">';
-                                   text2 += '<div class="pr-10">';
-                                   text2 += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
-                                   text2 += '</div>';
-                                   text2 += '<div class="media-body">';
-                                   text2 += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'<time class="media-meta" style="font-size:9pt;float:right">'+tanggal+'</time></h6>';
-                                   text2 += '';
-                                   text2 += '</div>';
-                                   text2 += '</div>';
-                                   text2 += '</a>';
-                                  }
-                                  else
-                                  {
-                                     var tanggal = tanggal_keterangan(element.tgl);
-                                     text2 += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
-                                     text2 += '<div class="media">';
-                                     text2 += '<div class="pr-10">';
-                                     text2 += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
-                                     text2 += '</div>';
-                                     text2 += '<div class="media-body">';
-                                     text2 += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'<time class="media-meta" style="font-size:9pt;float:right">'+tanggal+'</time></h6>';
-                                     text2 += '';
-                                     text2 += '</div>';
-                                     text2 += '</div>';
-                                     text2 += '</a>';
-                                  }
-                                });
-                               $("#home_notif").html(text2).show();
-                           }
-                       });
-                   }
-               });
-
-
-              
+                        var text2="";
+                        $.each(de.data.data, function(index, element){
+                          if(element.status==0)
+                          {
+                            var tanggal = tanggal_keterangan(element.tgl);
+                            text2 += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                            text2 += '<div class="media">';
+                            text2 += '<div class="pr-10">';
+                            text2 += '<i class="icon md-email bg-red-600 white icon-circle" aria-hidden="true"></i>';
+                            text2 += '</div>';
+                            text2 += '<div class="media-body">';
+                            text2 += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'<time class="media-meta" style="font-size:9pt;float:right">'+tanggal+'</time></h6>';
+                            text2 += '';
+                            text2 += '</div>';
+                            text2 += '</div>';
+                            text2 += '</a>';
+                          }
+                          else
+                          {
+                              var tanggal = tanggal_keterangan(element.tgl);
+                              text2 += '<a class="list-group-item dropdown-item" href="/notifikasi/'+element.id+'" role="menuitem">';
+                              text2 += '<div class="media">';
+                              text2 += '<div class="pr-10">';
+                              text2 += '<i class="icon md-shield-check bg-green-600 white icon-circle" aria-hidden="true"></i>';
+                              text2 += '</div>';
+                              text2 += '<div class="media-body">';
+                              text2 += '<h6 class="media-heading" style="font-size:9pt">'+element.isi+'<time class="media-meta" style="font-size:9pt;float:right">'+tanggal+'</time></h6>';
+                              text2 += '';
+                              text2 += '</div>';
+                              text2 += '</div>';
+                              text2 += '</a>';
+                          }
+                        });
+                        $("#home_notif").html(text2).show();
+                    }
+                });
              }
              function tanggal_keterangan(tanggal)
              {           
@@ -856,23 +909,16 @@
             function logout()
             {
               $.ajax({ 
-                   type: 'GET', 
-                   url: '/gettoken', 
-                   success: function (data) 
-                   { 
-                        $.ajax({ 
-                            type: 'PUT', 
-                            url: '/api/unsetFirebase', 
-                            data : 'firebase_device=Web',
-                            headers: {
-                               'Authorization': 'Bearer ' + data.token
-                            },
-                            success: function (data) { 
-                              window.location.href='/logout';
-                            }
-                        });
-                    }
-                  });
+                  type: 'PUT', 
+                  url: '/api/unsetFirebase', 
+                  data : 'firebase_device=Web',
+                  headers: {
+                      'Authorization': 'Bearer {{sesi}}'
+                  },
+                  success: function (data) { 
+                    window.location.href='/logout';
+                  }
+              });
             }
       </script>
       <script>
