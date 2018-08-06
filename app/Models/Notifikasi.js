@@ -24,7 +24,7 @@ class Notifikasi extends Model {
     }
 
     pengirim_ () {
-        return this.hasOne('App/Models/MasterPegawai', 'nip_pengirim', 'nip')
+        return this.hasOne('App/Models/Login', 'nip_pengirim', 'nip')
     }
 }
 
