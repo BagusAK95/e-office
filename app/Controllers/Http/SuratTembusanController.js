@@ -4,6 +4,7 @@ const Response = use('App/Helpers/ResponseHelper')
 const SuratTembusan = use('App/Models/SuratTembusan')
 const Notification = use('App/Helpers/NotificationHelper')
 const Log = use('App/Helpers/LogHelper')
+const Login = use('App/Models/Login')
 
 class SuratTembusanController {
     async list({ request, auth }) {
@@ -84,7 +85,7 @@ class SuratTembusanController {
             const user = await auth.getUser()
             const data = request.only(['tgl_terima', 'lampiran'])
 
-            let dataSurat = await SuratTembusan.query()
+            const dataSurat = await SuratTembusan.query()
                                                 .where({ instansi_penerima: user.instansi, id: params.id })
                                                 .first()
             if (dataSurat) {
