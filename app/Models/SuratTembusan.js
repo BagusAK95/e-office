@@ -18,6 +18,10 @@ class SuratTembusan extends Model {
     static get updatedAtColumn () {
         return ''
     }
+
+    klasifikasi_ () {
+        return this.hasOne('App/Models/MasterKlasifikasi', 'klasifikasi', 'id')
+    }
 }
 
 module.exports = SuratTembusan
