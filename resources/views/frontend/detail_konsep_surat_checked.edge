@@ -232,10 +232,9 @@
             $("#loader").fadeIn();        
             //Pemeriksa//
             var arr_pemeriksa = $("#arr_pemeriksa").val();
-            var pemeriksa_master = $("#pemeriksa_master").val();
-            var semua = pemeriksa_master.split("[");
             var isi_arr_pemeriksa = "";
-            var panjang = arr_pemeriksa.length;
+            var nomor = 1;
+             var panjang = arr_pemeriksa.length;
             $.each(arr_pemeriksa, function(index, da) {
                 var all = da.split("-");
                 var nip_pemeriksa = all[0];
@@ -244,11 +243,15 @@
                 isi_arr_pemeriksa += "{";
                 isi_arr_pemeriksa += '"nip_pemeriksa": "'+nip_pemeriksa+'","nama_pemeriksa": "'+nama_pemeriksa+'","jabatan_pemeriksa": "'+jabatan_pemeriksa+'"';
                 isi_arr_pemeriksa += "}";
-                isi_arr_pemeriksa += ",";
+                if(nomor<panjang)
+                {
+                    isi_arr_pemeriksa += ",";
+                }
+                nomor++;
             });
-            var gabung = "["+isi_arr_pemeriksa+semua[1];
+            var gabung = "["+isi_arr_pemeriksa+"]";
             //End Pemeriksa//
-                $.ajax({ 
+            $.ajax({ 
                 type: 'PUT', 
                 url: '/api/konsep-surat/updateChecker/{{params.id}}', 
                 headers: {

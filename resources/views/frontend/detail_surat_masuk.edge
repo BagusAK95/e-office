@@ -49,6 +49,9 @@
                         <a href='/surat-masuk/cetak/{{params.id}}' class='btn btn-info' target="_blank"><i class='md-print'></i>&nbsp;Cetak</a>
                     </li>-->
                     <li>
+                        <button class="btn btn-info" style="display:none;" data-target="#exampleNiftyFlipHorizontal3" data-toggle="modal" type="button" id="tombol_kirim"><i class='md-mail-send'></i>&nbsp;Kirim Ke Pimpinan</button>
+                    </li>
+                    <li>
                         <button class="btn btn-success" data-target="#exampleNiftyFlipHorizontal" data-toggle="modal" type="button"><i class='md-mail-send'></i>&nbsp;Buat Disposisi</button>
                     </li>
                     <li>
@@ -214,6 +217,96 @@
     </div>
     <!-- End Modal -->
 
+    <!-- Modal -->
+    <div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontal3" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-simple">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h4 class="modal-title">Kirim Surat Ke Pimpinan</h4>
+        </div>
+        <form id="simpenen">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xxl-4 col-lg-12">
+                    <!-- Example Panel With Heading -->
+                    <div class="panel-body">
+                        <div class="col-lg-12">
+                            <div class="form-group " data-plugin="formMaterial">
+                                <label class="form-control-label">Tanggal Terima</label>
+                                <input type="text" class="form-control datepicker" name="tanggal_terima" id="tanggal_terima" data-plugin="datepicker" readonly required='true' />
+                            </div>
+                            <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">Kirim Ke Pelaksana Harian?&nbsp;<span style="color:red"></span></label>
+                                <div class="checkbox-custom checkbox-primary">
+                                <input type="checkbox" id="inputUnchecked" value="true" onclick="myFunction()">
+                                <label for="inputUnchecked">Ya</label>
+                                </input>
+                                </div>
+                            </div>
+                            <div class="form-group" id="tampilkan_plt" data-plugin="formMaterial" style="display: none;">
+                                <label class="form-control-label" for="inputEmail">Pelaksana Harian&nbsp;</label>
+                                <select name="nip_penerima" id="nip_penerima" class="form-control pegawai_plt"  data-plugin="select2" >
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputEmail">Lampiran&nbsp;</label>
+                                <div class="input-group">
+                                    <span class="input-group-prepend">
+                                    <button class="btn btn-primary" class="btn btn-primary" data-target="#examplePositionSidebar" data-toggle="modal"
+                                    type="button"><i class="md-collection-plus"></i>&nbsp;Lampiran</button>
+                                    <button type="button" class="btn btn-danger" onclick="$('#lampiranss').val('')"><i class="md-close"></i>&nbsp;Reset</button>
+                                    </span>
+                                    <input type="text" id="lampiranss" class="form-control" readonly style="width:60%" required>
+                                </div>
+                            </div>
+                                 
+                        </div>
+                        
+                    </div>
+                    <!-- End Example Panel With Heading -->
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" style='float:right'><i class='icon md-plus'></i>&nbsp;Simpan</button>
+        </div>
+        </form>
+    </div>
+    </div>
+</div>
+<!-- End Modal -->
+    <!-- Modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="examplePositionSidebar" aria-hidden="true" aria-labelledby="examplePositionSidebar"
+    role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-simple modal-sidebar modal-sm">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">Upload Lampiran</h4>
+        </div>
+        <div class="modal-body">
+            <form method="post" enctype='multipart/form-data' id="upload_lampiran">
+                    Lampiran
+                    <input type="file" name="file" id="file">
+                    <br>
+                    <br>
+                    <center>
+                        <div class="loader vertical-align-middle loader-ellipsis" style="display: none;"></div>
+                    </center>
+                <button type="submit" class="btn btn-primary">Upload Lampiran</button>
+                </form>
+        </div>
+        </div>
+    </div>
+    </div>
+    <!-- End Modal -->
+
       <!-- Trigger the modal with a button -->
 
       <script>
@@ -230,9 +323,110 @@
             showdisposisi();
             pegawaiall();
             instruksi();
+            pegawaiplt() 
             $("#loader").fadeOut("xslow");
             /*Page*/
         });
+
+        $('#upload_lampiran').on('submit', function(e){
+       $(".loader").show();
+           var date = new Date();
+   
+           var year = date.getFullYear();
+           var month = date.getMonth() + 1;
+           var day = date.getDate();
+           var hours = date.getHours();
+           var minutes = date.getMinutes();
+           var seconds = date.getSeconds();
+   
+           var all = $("#file").val();
+           var neww = all.split(".");
+           var eks = neww[1];
+           
+           e.preventDefault();
+           var form = e.target;
+           var data = new FormData(form);
+           $.ajax({
+           url: "/upload_file",
+           method: form.method,
+           processData: false,
+           contentType: false,
+           data: data,
+           processData: false,
+           success: function(msg){
+                var datalama = $("#lampiranss").val();
+                //alert(msg)
+                if(datalama)
+                {
+                    $("#lampiranss").val(datalama+","+"/uploads/"+msg);
+                }
+                else
+                {
+                    $("#lampiranss").val("/uploads/"+msg);
+                }
+               $(".loader").hide();
+               $('#examplePositionSidebar').modal('hide');
+           },
+           error:function()
+           {
+               $(".loader").hide();
+               $('#examplePositionSidebar').modal('hide');
+           }
+           });
+           
+       });
+
+
+    function pegawaiplt() 
+   { 
+        $.ajax({ 
+        type: 'GET', 
+        url: '/api/master-pegawai', 
+        headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+        dataType: 'json',
+        success: function (data) 
+        {   
+            var isi = "<option value=''>Pilih Pegawai</option>";
+            $.each(data.data.data, function(index, element) {
+                var depan = ''
+                var belakang = ''
+                if(element.gelar_depan)
+                {
+                    depan += element.gelar_depan+" ";
+                }
+                var belakang = "";
+                if(element.gelar_belakang)
+                {
+                    belakang += ", "+element.gelar_belakang;
+                }
+                isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.jabatan+"'>"+depan+element.nama+belakang+" - "+element.nama_jabatan+"</option>";
+            })
+            $(".pegawai_plt").html(isi).show();
+        },
+        error: function ()
+        {
+            return false;
+        }
+        });
+   }
+        function myFunction() {
+        // Get the checkbox
+            var checkBox = document.getElementById("inputUnchecked");
+            // Get the output text
+            var text = document.getElementById("text");
+
+            // If the checkbox is checked, display the output text
+            if (checkBox.checked == true)
+            {
+                $("#tampilkan_plt").show();
+            } 
+            else 
+            {
+                $("#tampilkan_plt").hide();
+            }
+        } 
         function showtable()
         {
             //alert("ssdsd");
@@ -343,6 +537,14 @@
                         $("#histor").show();
                     }
                     
+                    if(element.status_surat==0)
+                    {   
+                        $("#tombol_kirim").show();
+                    }
+                    else
+                    {
+                        $("#tombol_kirim").hide();
+                    }
                     //showdisposisi();
                 },
                 error : function(data)
@@ -615,6 +817,51 @@
             });
             return false;    
         })
+
+
+        $("#simpenen").submit(function() {
+                    
+                var plt = "";
+                if($("#inputUnchecked").val()==true)
+                {
+                    var da = $("#nip_penerima").val();
+                    var all = da.split("-");
+                    var nip = all[0];
+                    var nama = all[1];
+                    var jabatan = all[2];
+                    var plt = "&nip_plt="+nip+"&nama_plt="+nama+"&jabatan_plt="+jabatan;
+                }
+                //Data  
+                $.ajax({ 
+                type: 'PUT', 
+                url: '/api/surat-masuk/{{params.id}}', 
+                headers: {
+                'Authorization': 'Bearer {{sesi}}'
+                },
+                data : "id={{params.id}}"+"&tgl_terima="+$("#tanggal_terima").val()+"&lampiran="+$("#lampiranss").val()+plt,
+                success: function (data) 
+                { 
+                    if(data.success==false)
+                    {
+                        swal("Gagal!", "Gagal melakukan pengiriman surat.", "error");
+                    }
+                    else if(data.success==true)
+                    {
+                        swal({title: "Berhasil", text: data.message, type: "success"},
+                        function(){ 
+                            window.location.reload();
+                        }
+                        );
+                    }
+                },
+                error: function(data)
+                {
+                    swal("Gagal!", "Gagal melakukan pengiriman surat.", "error");
+                }
+                });
+                return false;
+            });
+            
       </script>
 @endsection
 
