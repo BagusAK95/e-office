@@ -295,6 +295,7 @@ class SuratKeluarController {
                                             .where({ instansi_pengirim: user.instansi, id: params.id })
                                             .first()
             if (dataSurat) {
+                dataSurat.nomor_surat = data.nomor_surat
                 dataSurat.nip_tata_usaha = user.nip
                 dataSurat.nama_tata_usaha = user.nama_lengkap
                 dataSurat.jabatan_tata_usaha = user.nama_jabatan
@@ -309,13 +310,13 @@ class SuratKeluarController {
                 }).join(',');
 
                 arrPenerima.forEach(async (penerima) => {
-                    if (penerima.nip_instansi) {
+                    if (penerima.id_instansi) {
                         const dataTataUsaha = await Login.query()
-                                                        .where({ level: 3, instansi: penerima.nip_instansi })
+                                                        .where({ level: 3, instansi: penerima.id_instansi })
                                                         .first()
 
                         const insertSurat = await SuratMasuk.create({
-                            instansi_penerima: penerima.nip_instansi,
+                            instansi_penerima: penerima.id_instansi,
                             nip_tata_usaha: dataTataUsaha.nip,
                             nama_tata_usaha: dataTataUsaha.nama_lengkap,
                             jabatan_tata_usaha: dataTataUsaha.nama_jabatan,
@@ -343,13 +344,13 @@ class SuratKeluarController {
                 })
 
                 arrTembusan.forEach(async (tembusan) => {
-                    if (tembusan.nip_instansi) {
+                    if (tembusan.id_instansi) {
                         const dataTataUsaha = await Login.query()
-                                                        .where({ level: 3, instansi: tembusan.nip_instansi })
+                                                        .where({ level: 3, instansi: tembusan.id_instansi })
                                                         .first()
 
                         const insertTembusan = await SuratMasuk.create({
-                            instansi_penerima: tembusan.nip_instansi,
+                            instansi_penerima: tembusan.id_instansi,
                             nip_tata_usaha: dataTataUsaha.nip,
                             nama_tata_usaha: dataTataUsaha.nama_lengkap,
                             jabatan_tata_usaha: dataTataUsaha.nama_jabatan,
