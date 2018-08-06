@@ -1935,4 +1935,32 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/log', 'LogController.list').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /statistik/total:
+    *   get:
+    *     tags:
+    *       - Statistik
+    *     summary: Total
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/statistik/total', 'StatistikController.total').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /statistik/unread:
+    *   get:
+    *     tags:
+    *       - Statistik
+    *     summary: Unread
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/statistik/unread', 'StatistikController.unread').middleware('checkToken:umum')
 }).prefix('api')
