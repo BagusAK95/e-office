@@ -75,7 +75,7 @@
                         <input type="checkbox" id="remember" name="checkbox">
                        
                      </div>
-                     <a class="float-right" href="#">Forgot password?</a>
+                     <a class="float-right" href="#" onclick="forgot()">Forgot password?</a>
                   </div>
                   <button type="submit" class="btn btn-primary btn-block">Sign in</button> 
                </form>
@@ -137,6 +137,13 @@
                 Site.run();
            });
          })(document, window, jQuery);
+         function forgot()
+         {
+            swal({title: "Lupa Password", text: "Segera hubungi admin", type: "info"},
+            function(){ 
+                //window.location.href="/surat-masuk";
+            });
+         }
       </script>
    </body>
 </html>
