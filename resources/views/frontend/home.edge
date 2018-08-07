@@ -11,130 +11,118 @@
      -moz-border-radius: 100px;
     }
     </style>
- <div class="page-content container-fluid">
+<div class="page-content container-fluid">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12">
         <div class="row">
           <div class="col-lg-3">
-            <!-- Page Widget -->
-            <div class="card card-shadow text-center">
-              <div class="card-block" style="height:290px">
-                <a class="" href="javascript:void(0)">
-                 <center> <span id="foto"></span></center>
-                </a>
-                <h4 class="profile-user nama_user"></h4>
-                <p class="profile-job jabatanm"></p>
-                
-               
-                
+              <div class="card card-block p-30">
+                <div class="counter counter-lg">
+                  <div class="counter-label text-uppercase">Surat Masuk</div>
+                  <div class="counter-number-group">
+                    <span class="counter-icon mr-10 green-600">
+                      <i class="md-email-open"></i>
+                    </span>
+                    <span class="counter-number" id="sm">0</span>
+                    <span class="counter-number-related"></span>
+                  </div>
+                </div>
               </div>
-              
+          </div>
+          <div class="col-lg-3">
+              <div class="card card-block p-30">
+                  <div class="counter counter-lg">
+                    <div class="counter-label text-uppercase">Disposisi Masuk</div>
+                    <div class="counter-number-group">
+                      <span class="counter-icon mr-10 yellow-600">
+                        <i class="md-inbox"></i>
+                      </span>
+                      <span class="counter-number" id="dp">0</span>
+                      <span class="counter-number-related"></span>
+                    </div>
+                  </div>
+                </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-block p-30">
+                <div class="counter counter-lg">
+                  <div class="counter-label text-uppercase">Konsep Surat</div>
+                  <div class="counter-number-group">
+                    <span class="counter-icon mr-10 blue-600">
+                      <i class="md-case-check"></i>
+                    </span>
+                    <span class="counter-number" id="ks">0</span>
+                    <span class="counter-number-related"></span>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-lg-3">
+              <div class="card card-block p-30">
+                  <div class="counter counter-lg">
+                    <div class="counter-label text-uppercase">Surat Keluar</div>
+                    <div class="counter-number-group">
+                      <span class="counter-icon mr-10 red-600">
+                        <i class="md-email"></i>
+                      </span>
+                      <span class="counter-number" id="sk">0</span>
+                      <span class="counter-number-related"></span>
+                    </div>
+                  </div>
+                </div>
             </div>
-            <!-- End Page Widget -->
-         <!-- Example Panel With Heading -->
-              <div class="panel panel-bordered panel-primary">
-                  <!--<div class="panel-heading">
-                    <h3 class="panel-title"><i class="icon md-view-web"></i>&nbsp;Kalender</h3>
+
+            <!--<div class="col-lg-3">
+                <div class="card card-block p-30">
+                    <div class="counter counter-lg">
+                      <div class="counter-label text-uppercase">Surat Tembusan</div>
+                      <div class="counter-number-group">
+                        <span class="counter-icon mr-10 red-600">
+                          <i class="md-email"></i>
+                        </span>
+                        <span class="counter-number" id="st">0</span>
+                        <span class="counter-number-related"></span>
+                      </div>
+                    </div>
+                  </div>
+              </div>-->
+         
+          
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+          <!-- Page Widget -->
+          <div class="card card-shadow text-center">
+            <div class="card-block" style="">
+              <a class="" href="javascript:void(0)">
+               <center> <span id="foto"></span></center>
+              </a>
+              <h4 class="profile-user nama_user"></h4>
+              <p class="profile-job jabatanm"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-9">
+          <div class="panel" style="">
+            <div class="panel panel-bordered panel-primary">
+                  <div class="panel-heading">
+                    <h3 class="panel-title"><i class="icon md-view-dashboard"></i>&nbsp;Dashboard</h3>
                     <div class="panel-actions">
                         <a class="panel-action icon md-minus" data-toggle="panel-collapse" aria-expanded="true"
                           aria-hidden="true"></a>
                     </div>
                   </div>
                   <div class="panel-body">
-                  
-                  </div>-->
-              </div>
-              <!-- End Example Panel With Heading -->
-            
-          </div>
-
-          <div class="col-lg-9">
-            <!-- Panel -->
-            <div class="panel" style="">
-             
-              <div class="panel panel-bordered panel-primary">
-                    <div class="panel-heading">
-                      <h3 class="panel-title"><i class="icon md-view-dashboard"></i>&nbsp;Dashboard</h3>
-                      <div class="panel-actions">
-                          <a class="panel-action icon md-minus" data-toggle="panel-collapse" aria-expanded="true"
-                            aria-hidden="true"></a>
-                      </div>
-                    </div>
-                    <div class="panel-body">
-                      <center>
-                          <p style='font-size:13pt'><i class="icon md-notifications-active" aria-hidden="true"></i> <b>Selamat Datang <span class='nama_user'></span></b>, pastikan logout setelah menggunakan aplikasi ini.</p>
-                          
-                      </center>
-                      <div class="card-group">
-                          <div class="card card-block p-0">
-                            <div class="counter counter-lg counter-inverse bg-blue-600 vertical-align h-150">
-                              <div class="vertical-align-middle">
-                                  <div class="counter-label text-uppercase font-size-16">surat masuk</div>
-                                <div class="counter-icon mb-5"><i class="md-email-open" aria-hidden="true"></i></div>
-                                <span class="counter-number" id="sm">0</span>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <div class="card card-block p-0">
-                            <div class="counter counter-lg counter-inverse bg-purple-600 vertical-align h-150">
-                              <div class="vertical-align-middle">
-                                <div class="counter-label text-uppercase font-size-16">disposisi</div>
-                                <div class="counter-icon mb-5"><i class="icon md-inbox" aria-hidden="true"></i></div>
-                                <span class="counter-number" id="dp">0</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="card card-block p-0">
-                              <div class="counter counter-lg counter-inverse bg-orange-600 vertical-align h-150">
-                                <div class="vertical-align-middle">
-                                    <div class="counter-label text-uppercase font-size-16">konsep surat</div>
-                                  <div class="counter-icon mb-5"><i class="icon md-case-check" aria-hidden="true"></i></div>
-                                  <span class="counter-number" id="ks">0</span>
-                                </div>
-                              </div>
-                            </div>
-                            
-                    </div>
-
-                    <div class="card-group">
-                    <div class="card card-block p-0">
-                        <div class="counter counter-lg counter-inverse bg-green-600 vertical-align h-150">
-                          <div class="vertical-align-middle">
-                              <div class="counter-label text-uppercase font-size-16">surat keluar</div>
-                            <div class="counter-icon mb-5"><i class="icon md-email" aria-hidden="true"></i></div>
-                            <span class="counter-number" id="sk">0</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card card-block p-0">
-                          <div class="counter counter-lg counter-inverse bg-red-600 vertical-align h-150">
-                            <div class="vertical-align-middle">
-                                <div class="counter-label text-uppercase font-size-16">surat tembusan</div>
-                              <div class="counter-icon mb-5"><i class="icon md-assignment" aria-hidden="true"></i></div>
-                              <span class="counter-number" id="st">0</span>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-
+                    <center>
+                        <p style='font-size:13pt'><i class="icon md-notifications-active" aria-hidden="true"></i> <b>Selamat Datang <span class='nama_user'></span></b>, pastikan logout setelah menggunakan aplikasi ini.</p>
+                    </center>
                 </div>
-              </div>
-             
-
-            <!-- End Panel -->
-          </div>
-          <div class="col-xl-12 col-lg-12">
-              <!-- Card -->
-              
-                
-              </div>
-              <!-- End Card -->
-            </div>
-
-          
             </div>
           </div>
         </div>
-      </div>
+    </div>
+  </div>
 <script>
    $( document ).ready(function() {
      /*Main*/
