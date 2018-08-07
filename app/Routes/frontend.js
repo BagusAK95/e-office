@@ -236,7 +236,7 @@ Route.get('/surat-tembusan/:id', async function({ session,params,view }) {
 })
 //End Tembusan//
 
-Route.get('/log', async function({ session,view }) {
+Route.get('/log-activity', async function({ session,view }) {
     const sesi = session.get('token');
     return view.render('frontend/log', { sesi })
 })
