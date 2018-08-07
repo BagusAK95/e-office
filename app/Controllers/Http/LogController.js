@@ -10,10 +10,10 @@ class LogController {
 
             let sql = []
             if (request.get().tgl_awal) {
-                sql.push(`tgl >= '` + request.get().tgl_awal + `'`)
+                sql.push(`tgl >= '` + request.get().tgl_awal + ` 00:00:00'`)
             }
             if (request.get().tgl_akhir) {
-                sql.push(`tgl <= '` + request.get().tgl_akhir + `'`)
+                sql.push(`tgl <= '` + request.get().tgl_akhir + ` 23:59:59'`)
             }
             if (user.level == 1) {
                 if (request.get().nip) {
@@ -24,7 +24,6 @@ class LogController {
             } else {
                 sql.push(`nip = '` + user.nip + `'`)
             }
-            
             sql.push('instansi = ' + user.instansi)
 
             const data = await Log.query()
