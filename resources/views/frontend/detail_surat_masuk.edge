@@ -52,7 +52,7 @@
                         <button class="btn btn-info" style="display:none;" data-target="#exampleNiftyFlipHorizontal3" data-toggle="modal" type="button" id="tombol_kirim"><i class='md-mail-send'></i>&nbsp;Kirim Ke Pimpinan</button>
                     </li>
                     <li>
-                        <button class="btn btn-success" data-target="#exampleNiftyFlipHorizontal" data-toggle="modal" type="button"><i class='md-mail-send'></i>&nbsp;Buat Disposisi</button>
+                        <button class="btn btn-success" data-target="#exampleNiftyFlipHorizontal" style="display:none;" data-toggle="modal" id="dsp" type="button"><i class='md-mail-send'></i>&nbsp;Buat Disposisi</button>
                     </li>
                     <li>
                         <a href='/surat-masuk' class='btn btn-danger' style='color:white'><i class='md-undo'></i>&nbsp;Kembali</a>
@@ -323,7 +323,8 @@
             showdisposisi();
             pegawaiall();
             instruksi();
-            pegawaiplt() 
+            pegawaiplt();
+            cek_tokens(); 
             $("#loader").fadeOut("xslow");
             /*Page*/
         });
@@ -862,6 +863,27 @@
                 return false;
             });
             
+
+             function cek_tokens()
+         {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/profile', 
+                headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+                },
+                success: function (data) { 
+                    if(data.data.level==2)
+                    {
+                      $("#dsp").show();
+                    }
+                    else
+                    {
+                      $("#dsp").hide();
+                    } 
+                }
+            });
+         }
       </script>
 @endsection
 
