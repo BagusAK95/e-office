@@ -229,6 +229,7 @@ Route.get('/surat-tembusan', async function({ session,view }) {
 })
 
 
+
 Route.get('/surat-tembusan/:id', async function({ session,params,view }) {
     const sesi = session.get('token');
     return view.render('frontend/detail_surat_tembusan', { params,sesi })
