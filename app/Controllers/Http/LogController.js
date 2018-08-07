@@ -1,6 +1,7 @@
 'use strict'
 
 const Log = use('App/Models/Log')
+const Response = use('App/Helpers/ResponseHelper')
 
 class LogController {
     async list({ request, auth }) {
