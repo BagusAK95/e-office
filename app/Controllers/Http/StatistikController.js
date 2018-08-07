@@ -53,18 +53,19 @@ class StatistikController {
                                                           .getCount()
             arrData.push({ nama: 'Surat Tembusan', total: countSuratTembusan })
             
-            const countDisposisi = await Disposisi.query()
-                                                  .where({ instansi: user.instansi, nip_penerima: user.nip })
-                                                  .getCount()
-            arrData.push({ nama: 'Disposisi', total: countDisposisi })
+            const countDisposisiMasuk = await Disposisi.query()
+                                                       .where({ instansi: user.instansi, nip_penerima: user.nip })
+                                                       .getCount()
+            arrData.push({ nama: 'Disposisi Masuk', total: countDisposisiMasuk })
+
+            const countDisposisiKeluar = await Disposisi.query()
+                                                        .where({ instansi: user.instansi, nip_pengirim: user.nip })
+                                                        .getCount()
+            arrData.push({ nama: 'Disposisi Keluar', total: countDisposisiKeluar })
 
             const countKonsepSurat = await SuratKeluar.query()
-                                                      .where('instansi_pengirim', user.instansi)
-                                                      .whereBetween('status_surat', [1, 2])
-                                                      .whereHas('pemeriksa_', (pemeriksa) => {
-                                                          pemeriksa.where({ nip_pemeriksa: user.nip})
-                                                                   .whereNot('status', 0)
-                                                      })
+                                                      .where({ instansi_pengirim: user.instansi, nip_pembuat: user.nip})
+                                                      .whereBetween('status_surat', [1, 2])                                                      
                                                       .getCount()
             arrData.push({ nama: 'Konsep Surat', total: countKonsepSurat })
             
