@@ -227,12 +227,18 @@ Route.get('/surat-tembusan', async function({ session,view }) {
     const sesi = session.get('token');
     return view.render('frontend/surat_tembusan', { sesi })
 })
+
+
 Route.get('/surat-tembusan/:id', async function({ session,params,view }) {
     const sesi = session.get('token');
     return view.render('frontend/detail_surat_tembusan', { params,sesi })
 })
 //End Tembusan//
 
+Route.get('/log', async function({ session,view }) {
+    const sesi = session.get('token');
+    return view.render('frontend/log', { sesi })
+})
 Route.on('/coba').render('frontend/coba')
 Route.post('/upload_file', async ({ params,request }) => {
   const profilePic = request.file('file')

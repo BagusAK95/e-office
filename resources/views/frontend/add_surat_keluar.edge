@@ -710,11 +710,32 @@
             isi_arr_pemeriksa += "}";
             isi_arr_pemeriksa += ",";
         });
-        var gabung = "["+isi_arr_pemeriksa+semua[1];
+        if(arr_pemeriksa)
+        {
+            var gabung = "["+isi_arr_pemeriksa+semua[1];
+        }
+        else
+        {
+            var gabung = "[]";
+        }
+        
         //End Pemeriksa//;
-      var textareaValue = $('#isisurat').summernote('code');
+        var textareaValue = $('#isisurat').summernote('code');
+        
 
-      var jeniss = "&arr_penerima="+$("#arr_penerima").val()+"&arr_tembusan="+$("#arr_tembusan").val();
+        var isinepenerima = "[]";
+        if($("#arr_penerima").val())
+        {
+            var isinepenerima = $("#arr_penerima").val();
+        }
+
+        var isinetembusan = "[]";
+        if($("#arr_tembusan").val())
+        {
+            var isinetembusan = $("#arr_penerima").val();
+        }
+
+        var jeniss = "&arr_penerima="+isinepenerima+"&arr_tembusan="+isinetembusan;
       
          $.ajax({ 
           type: 'POST', 
@@ -1099,13 +1120,23 @@
                         no++;
                     });
 
-                    $("#penerima").html("<tr><th>Nama Tujuan</th><th>Instansi</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td></tr>").show();
+                    $("#penerima").html("<tr><th>Nama Tujuan</th><th>Instansi</th><th>Action</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td><td><a class='btn btn-danger' style='color:white' onclick='batal_penerima()'>Batal</a></td></tr>").show();
                     $("#arr_penerima").val(data.data.data);
                     $('.modal').modal('hide');
                     $("#loader").fadeOut("xslow");
                 }
             });
               
+        }
+        function batal_penerima()
+        {
+            $("#penerima").html("").show();
+            $("#arr_penerima").val("[]");
+        }
+        function batal_tembusan()
+        {
+            $("#tembusan").html("").show();
+            $("#arr_tembusan").val("[]");
         }
         function pilih_tembusan(id)
         {
@@ -1126,7 +1157,7 @@
                         nama_instansis+=no+". "+element.nama_instansi+"<br>";
                         no++;
                     });
-                    $("#tembusan").html("<tr><th>Nama Tujuan</th><th>Instansi</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td></tr>").show();
+                    $("#tembusan").html("<tr><th>Nama Tujuan</th><th>Instansi</th><th>Action</th></tr><tr><td>"+data.data.nama+"</td><td>"+nama_instansis+"</td><td><a class='btn btn-danger' style='color:white' onclick='batal_tembusan()'>Batal</a></tr>").show();
                     $("#arr_tembusan").val(data.data.data);
                     $('.modal').modal('hide');
                     $("#loader").fadeOut("xslow");

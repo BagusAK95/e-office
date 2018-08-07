@@ -37,7 +37,7 @@
                       <span class="counter-icon mr-10 yellow-600">
                         <i class="md-inbox"></i>
                       </span>
-                      <span class="counter-number" id="dp">0</span>
+                      <span class="counter-number" id="dm">0</span>
                       <span class="counter-number-related"></span>
                     </div>
                   </div>
@@ -46,12 +46,12 @@
           <div class="col-lg-3">
             <div class="card card-block p-30">
                 <div class="counter counter-lg">
-                  <div class="counter-label text-uppercase">Konsep Surat</div>
+                  <div class="counter-label text-uppercase">Disposisi Keluar</div>
                   <div class="counter-number-group">
                     <span class="counter-icon mr-10 blue-600">
-                      <i class="md-case-check"></i>
+                      <i class="md-mail-send"></i>
                     </span>
-                    <span class="counter-number" id="ks">0</span>
+                    <span class="counter-number" id="dk">0</span>
                     <span class="counter-number-related"></span>
                   </div>
                 </div>
@@ -60,12 +60,12 @@
           <div class="col-lg-3">
               <div class="card card-block p-30">
                   <div class="counter counter-lg">
-                    <div class="counter-label text-uppercase">Surat Keluar</div>
+                    <div class="counter-label text-uppercase">Konsep Surat</div>
                     <div class="counter-number-group">
                       <span class="counter-icon mr-10 red-600">
-                        <i class="md-email"></i>
+                        <i class="md-case-check"></i>
                       </span>
-                      <span class="counter-number" id="sk">0</span>
+                      <span class="counter-number" id="ks">0</span>
                       <span class="counter-number-related"></span>
                     </div>
                   </div>
@@ -107,7 +107,7 @@
           <div class="panel" style="">
             <div class="panel panel-bordered panel-primary">
                   <div class="panel-heading">
-                    <h3 class="panel-title"><i class="icon md-view-dashboard"></i>&nbsp;Dashboard</h3>
+                    <h3 class="panel-title"><i class="icon md-view-dashboard"></i>&nbsp;Log Aktivitas</h3>
                     <div class="panel-actions">
                         <a class="panel-action icon md-minus" data-toggle="panel-collapse" aria-expanded="true"
                           aria-hidden="true"></a>
@@ -115,8 +115,29 @@
                   </div>
                   <div class="panel-body">
                     <center>
-                        <p style='font-size:13pt'><i class="icon md-notifications-active" aria-hidden="true"></i> <b>Selamat Datang <span class='nama_user'></span></b>, pastikan logout setelah menggunakan aplikasi ini.</p>
+                       <!-- <p style='font-size:13pt'><i class="icon md-notifications-active" aria-hidden="true"></i> <b>Selamat Datang <span class='nama_user'></span></b>, pastikan logout setelah menggunakan aplikasi ini.</p>-->
                     </center>
+                    <br>
+                    <div class="col-xxl-12 col-lg-12">
+                        <!-- Panel Projects -->
+                        <div class="panel" id="projects">
+                          <div class="panel-heading">
+                          </div>
+                          <div class="table-responsive">
+                            <table class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th>Keterangan</th>
+                                  <th>Waktu</th>
+                                </tr>
+                              </thead>
+                              <tbody id="tampil_log">
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <!-- End Panel Projects -->
+                      </div>
                 </div>
             </div>
           </div>
@@ -135,6 +156,7 @@
      requestPermission()
      resetUI();
      calll();
+     logak();
      $("#loader").fadeOut("xslow");
      /*Page*/
    });
@@ -156,24 +178,19 @@
                       $("#sm").html(data.data[0].total).show();
                     }
 
-                    if(data.data[1].nama=="Surat Tembusan")
+                    if(data.data[2].nama=="Disposisi Masuk")
                     {
-                      $("#st").html(data.data[1].total).show();
+                      $("#dm").html(data.data[2].total).show();
                     }
 
-                    if(data.data[2].nama=="Disposisi")
+                    if(data.data[3].nama=="Disposisi Keluar")
                     {
-                      $("#dp").html(data.data[2].total).show();
+                      $("#dk").html(data.data[3].total).show();
                     }
 
-                    if(data.data[3].nama=="Konsep Surat")
+                    if(data.data[4].nama=="Konsep Surat")
                     {
-                      $("#ks").html(data.data[3].total).show();
-                    }
-
-                    if(data.data[4].nama=="Surat Keluar")
-                    {
-                      $("#sk").html(data.data[4].total).show();
+                      $("#ks").html(data.data[4].total).show();
                     }
                     
                 },
@@ -183,6 +200,40 @@
                 }
             });
         }
+
+        function logak() 
+        {
+            $.ajax({ 
+                type: 'GET', 
+                url: '/api/log?page=1&limit=10', 
+                headers: {
+                            'Authorization': 'Bearer {{sesi}}'
+                        },
+                dataType: 'json',
+                success: function (data) 
+                { 
+                  
+                  var dat = "";
+                  
+                  $.each(data.data.data, function(index, element) {
+                    //alert(element.tgl);
+                    var tgl = tanggal_jam_indo(element.tgl);
+                     dat += "<tr><td>"+element.keterangan+"</td><td>"+tgl+"</td></tr>";
+                  }); 
+                  $("#tampil_log").html(dat).show();
+                },
+                error: function ()
+                {
+                    return false;
+                }
+            });
+        }
+
+        function tanggal_jam_indo(tanggal)
+       {           
+            moment.locale('id'); 
+            return moment(tanggal).format("LLL");
+       }
 </script>
 @endsection
 
