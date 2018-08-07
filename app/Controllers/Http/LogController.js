@@ -15,9 +15,16 @@ class LogController {
             if (request.get().tgl_akhir) {
                 sql.push(`tgl <= '` + request.get().tgl_akhir + `'`)
             }
-            if (request.get().nip) {
-                sql.push(`nip = '` + user.nip + `'`)                
+            if (user.level == 1) {
+                if (request.get().nip) {
+                    sql.push(`nip = '` + request.get().nip + `'`)
+                } else {
+                    sql.push(`nip = '` + user.nip + `'`)
+                }
+            } else {
+                sql.push(`nip = '` + user.nip + `'`)
             }
+            
             sql.push('instansi = ' + user.instansi)
 
             const data = await Log.query()
