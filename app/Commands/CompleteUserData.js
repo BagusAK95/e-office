@@ -4,6 +4,7 @@ const { Command } = require('@adonisjs/ace')
 const Hash = use('Hash')
 const AsyncLoop = require('node-async-loop')
 const MasterPegawai = use('App/Models/MasterPegawai')
+const MasterKantor = use('App/Models/MasterKantor')
 const Login = use('App/Models/Login')
 
 class CompleteUserData extends Command {
@@ -47,7 +48,7 @@ class CompleteUserData extends Command {
                 golongan: pegawai.golongan,
                 password: await Hash.make(pegawai.nip),
                 level: 4,
-                akses: 'suratmasuk,disposisi,suratkeluar',
+                akses: '',
                 status: 1,
                 keyword: jabatan.concat(' | ', arrNamaLengkap.join(' '))
               }
@@ -63,10 +64,40 @@ class CompleteUserData extends Command {
           this.process(page += 1)
         })
       } else {
-        console.log('Done.')
+        this.setAdmin()
       }
     } catch (error) {
       console.error('Error : ' + error)
+    }
+  }
+
+  async setAdmin() {
+    try {
+      const masterKantor = await masterKantor.query().where('kdparent', null)
+      AsyncLoop(masterKantor, async(kantor, next) => {
+        const data = {
+          nip: kantor.kdlokasi,
+          instansi: kantor.kdlokasi,
+          nama_lengkap: kantor.nmlokasi,
+          kode_lokasi: null,
+          kode_jabatan: null,
+          nama_jabatan: null,
+          kode_eselon: null,
+          golongan: null,
+          password: await Hash.make(kantor.kdlokasi),
+          level: 1,
+          akses: 'administrator',
+          status: 1,
+          keyword: ''
+        }
+
+        const insert = await Login.create(data)
+        console.log('Admin ' + insert.nama_lengkap + ' -> Success.')
+      }, () => {
+        console.log('Done.')
+      })
+    } catch (error) {
+      console.error('Error : ' + error)      
     }
   }
 }

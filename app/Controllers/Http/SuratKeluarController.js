@@ -310,7 +310,7 @@ class SuratKeluarController {
                 const arrTembusan = JSON.parse(dataSurat.arr_tembusan)
                 const listTembusan = arrTembusan.map((elem) => {
                     return elem.nama_instansi;
-                }).join(',');
+                }).join('|');
 
                 arrPenerima.forEach(async (penerima) => {
                     if (penerima.id_instansi) {
