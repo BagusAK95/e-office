@@ -17,7 +17,7 @@ class CompleteUserData extends Command {
   }
 
   async handle (args, options) {
-    this.setAdmin()
+    this.process()
   }
 
   async process(page = 1) {
