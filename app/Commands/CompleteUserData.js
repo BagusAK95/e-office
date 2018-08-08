@@ -17,7 +17,7 @@ class CompleteUserData extends Command {
   }
 
   async handle (args, options) {
-    this.process()
+    this.setAdmin()
   }
 
   async process(page = 1) {
@@ -73,7 +73,7 @@ class CompleteUserData extends Command {
 
   async setAdmin() {
     try {
-      const masterKantor = await masterKantor.query().where('kdparent', null)
+      const masterKantor = await MasterKantor.query().where('kdparent', null)
       AsyncLoop(masterKantor, async(kantor, next) => {
         const data = {
           nip: kantor.kdlokasi,
@@ -84,7 +84,7 @@ class CompleteUserData extends Command {
           nama_jabatan: null,
           kode_eselon: null,
           golongan: null,
-          password: await Hash.make(kantor.kdlokasi),
+          password: await Hash.make(kantor.kdlokasi.toString()),
           level: 1,
           akses: 'administrator',
           status: 1,
@@ -93,6 +93,8 @@ class CompleteUserData extends Command {
 
         const insert = await Login.create(data)
         console.log('Admin ' + insert.nama_lengkap + ' -> Success.')
+
+        next()
       }, () => {
         console.log('Done.')
       })
