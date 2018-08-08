@@ -1280,11 +1280,6 @@ Route.group(() => {
     *         description: Tanggal Surat
     *         required: true
     *         type: string
-    *       - name: nomor_agenda
-    *         in: formData
-    *         description: Nomor Agenda
-    *         required: true
-    *         type: string
     *       - name: lampiran
     *         in: formData
     *         description: Lampiran
@@ -1489,6 +1484,11 @@ Route.group(() => {
     *         in: formData
     *         description: Status (2=Revisi, 3=Disetujui)
     *         required: true
+    *         type: string
+    *       - name: keterangan
+    *         in: formData
+    *         description: Keterangan
+    *         required: false
     *         type: string
     */
     Route.put('/konsep-surat/checkingConcept/:id_surat_keluar', 'SuratPemeriksaController.updateStatus').middleware('checkToken:umum')
@@ -1812,6 +1812,16 @@ Route.group(() => {
     *       - name: nomor_surat
     *         in: formData
     *         description: Nomor Surat
+    *         required: true
+    *         type: string
+    *       - name: nomor_agenda
+    *         in: formData
+    *         description: Nomor Agenda
+    *         required: true
+    *         type: string
+    *       - name: lampiran
+    *         in: formData
+    *         description: Lampiran
     *         required: true
     *         type: string
     */

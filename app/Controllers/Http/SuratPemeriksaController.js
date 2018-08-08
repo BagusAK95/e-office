@@ -21,7 +21,7 @@ class SuratPemeriksaController {
             } else {
                 const updatePemeriksa = await SuratPemeriksa.query()
                                                             .where({ id_surat_keluar: params.id_surat_keluar, nip_pemeriksa: user.nip })
-                                                            .update({ status : data.status})
+                                                            .update({ status: data.status, keterangan: data.keterangan })
                 if (updatePemeriksa > 0) {
                     switch (Number(data.status)) {
                         case 2: //Revisi

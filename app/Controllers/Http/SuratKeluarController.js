@@ -297,6 +297,8 @@ class SuratKeluarController {
                                             .first()
             if (dataSurat) {
                 dataSurat.nomor_surat = data.nomor_surat
+                dataSurat.nomor_agenda = data.nomor_agenda
+                dataSurat.lampiran = data.lampiran
                 dataSurat.nip_tata_usaha = user.nip
                 dataSurat.nama_tata_usaha = user.nama_lengkap
                 dataSurat.jabatan_tata_usaha = user.nama_jabatan
@@ -323,7 +325,7 @@ class SuratKeluarController {
                             jabatan_tata_usaha: dataTataUsaha.nama_jabatan,
                             tgl_surat: dataSurat.tgl_surat,
                             nomor_surat: data.nomor_surat,
-                            nomor_agenda: dataSurat.nomor_agenda,
+                            nomor_agenda: data.nomor_agenda,
                             perihal: dataSurat.perihal,
                             jenis_instansi: 1,
                             nama_instansi: dataPengirim.nmlokasi,
@@ -357,7 +359,7 @@ class SuratKeluarController {
                             jabatan_tata_usaha: dataTataUsaha.nama_jabatan,
                             tgl_surat: dataSurat.tgl_surat,
                             nomor_surat: data.nomor_surat,
-                            nomor_agenda: dataSurat.nomor_agenda,
+                            nomor_agenda: data.nomor_agenda,
                             perihal: dataSurat.perihal,
                             jenis_instansi: 1,
                             nama_instansi: dataPengirim.nmlokasi,
