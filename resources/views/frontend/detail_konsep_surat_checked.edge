@@ -110,6 +110,10 @@
                                         <option value="3">Disetujui</option>
                                     </select>
                                 </div>
+                                <div class="form-group" data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">Keterangan</label>
+                                    <textarea class="form-control" name="keterangan" id="input_keterangan"></textarea>
+                                </div>
                             </div>
                         </div>
                         <!-- End Example Panel With Heading -->
@@ -176,6 +180,32 @@
      </div>
    </div>
    <!-- End Modal -->
+
+
+      <!-- Modal -->
+      <div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontal4" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-simple">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Keterangan</h4>
+            </div>
+            <form id="simpan">
+               <div class="modal-body">
+                   <div class="row">
+                       <div class="col-xxl-4 col-lg-12" id="keterangan">
+                           
+                       </div>
+                   </div>
+               </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- End Modal -->
+
       <!-- Trigger the modal with a button -->
 
       <script>
@@ -298,6 +328,9 @@
                 success: function (data) 
                 { 
                     
+                    
+                    
+
                     if(data.success==false)
                     {
                         swal({title: "Konsep Surat", text: "Telah disetujui oleh pimpinan", type: "info"},
@@ -309,7 +342,8 @@
                     else
                     {
                     var element = data.data;
-
+                    
+                    
                     var keamanan = "";
                     if(element.keamanan==1)
                     {
@@ -392,10 +426,36 @@
                     var pemeriksa_surat = "";
                     var no = 1;
                     $.each(element.pemeriksa_, function(index, element) {    
-                        pemeriksa_surat+=no+". "+element.nama_pemeriksa+"<br>";
+                        var cek_tanggal_baca = element.tgl_baca;
+                        var stt_pemeriksa = "";
+                        if(cek_tanggal_baca==null)
+                        {   
+                            stt_pemeriksa="<span style='color:white' class='badge badge-pill badge-lg badge-danger'>Belum Dibaca</span>";
+                        }
+                        else
+                        {
+                            if(element.status==1)
+                            {
+                                stt_pemeriksa="<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Belum Diperiksa</span>";
+                            }
+                            else if(element.status==2)
+                            {
+                                stt_pemeriksa="<a onclick=ket('"+encodeURIComponent(element.keterangan)+"')><span style='color:white' class='badge badge-pill badge-lg badge-info'>Revisi</span></a>";
+                            }
+                            else if(element.status==3)
+                            {
+                                stt_pemeriksa="<a onclick=ket('"+encodeURIComponent(element.keterangan)+"')><span style='color:white' class='badge badge-pill badge-lg badge-success'>Disetujui</span></a>";
+                            }
+                            else
+                            {
+                                stt_pemeriksa="<span style='color:white' class='badge badge-pill badge-lg badge-primary'>Sudah Dibaca</span>";
+                            }
+                        }
+                        
+                        pemeriksa_surat+=""+no+". "+element.nama_pemeriksa+"<span style='float:right'>"+stt_pemeriksa+"</span><br>";
                         no++;
                     });
-                    
+
                     var sm = "";
                     if(element.dari_surat_masuk)
                     {
@@ -441,7 +501,7 @@
                     tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+element.nomor_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+nsrt+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>STATUS</th><td width='25%'>"+sts+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
-                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pembuat+"</b><br>"+element.jabatan_pembuat+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'>"+nama_instansis+"</td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PEMBUAT KONSEP</th><td width='25%'><b>"+element.nama_pembuat+"</b><br>"+element.jabatan_pembuat+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'>"+nama_instansis+"</td></tr>";
 
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>ISI</th><td width='50%'>"+element.isi_surat+"</td></tr>";    
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KLASIFIKASI</th><td width='50%'>"+kla+"</td></tr>";
@@ -534,7 +594,7 @@
             headers: {
             'Authorization': 'Bearer {{sesi}}'
             },
-            data : "id_surat_keluar={{params.id}}"+"&status="+$("#status").val(),
+            data : "id_surat_keluar={{params.id}}"+"&status="+$("#status").val()+"&keterangan="+$("#input_keterangan").val(),
             success: function (data) 
             { 
                 if(data.success==false)
@@ -579,6 +639,19 @@
 
                 }
             });
+         }
+         function ket(keterangan)
+         {
+            if(keterangan=='null')
+            {
+                var ket = "Tidak ada keterangan";
+            }
+            else
+            {
+                var ket = decodeURIComponent(keterangan);
+            }
+            $('#keterangan').html("<center>"+ket+"</center>").show();
+            $('#exampleNiftyFlipHorizontal4').modal("show");
          }
       </script>
 @endsection

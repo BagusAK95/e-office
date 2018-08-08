@@ -328,7 +328,7 @@
         if(nip_tembusan)
         {
             tabel += ", "+isi_tembusan;
-            nip_tembusan += ","+isi_tembusan;
+            nip_tembusan += "|"+isi_tembusan;
         }
         else
         {
@@ -346,7 +346,7 @@
         $.each(isi_tembusan, function(index, da) {
             if(nip_tembusan)
             {
-                nip_tembusan += ","+da;
+                nip_tembusan += "|"+da;
             }
             else
             {

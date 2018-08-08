@@ -102,6 +102,21 @@
                                    <label class="form-control-label" for="inputEmail">Nomor Surat</label>
                                    <input type="text" class="form-control" name="nomor_surat" id="nomor_surat"/>
                                 </div>
+                                <div class="form-group " data-plugin="formMaterial">
+                                    <label class="form-control-label" for="inputEmail">Nomor Agenda</label>
+                                    <input type="text" class="form-control" name="nomor_agenda" id="nomor_agenda"/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputEmail">Lampiran&nbsp;</label>
+                                    <div class="input-group">
+                                        <span class="input-group-prepend">
+                                        <button class="btn btn-primary" class="btn btn-primary" data-target="#examplePositionSidebar" data-toggle="modal"
+                                        type="button"><i class="md-collection-plus"></i>&nbsp;Lampiran</button>
+                                        <button type="button" class="btn btn-danger" onclick="$('#lampiranss').val('')"><i class="md-close"></i>&nbsp;Reset</button>
+                                        </span>
+                                        <input type="text" id="lampiranss" class="form-control" readonly style="width:60%" required>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- End Example Panel With Heading -->
@@ -115,6 +130,33 @@
           </form>
         </div>
       </div>
+    </div>
+    <!-- End Modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="examplePositionSidebar" aria-hidden="true" aria-labelledby="examplePositionSidebar"
+    role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-simple modal-sidebar modal-sm">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">Upload Lampiran</h4>
+        </div>
+        <div class="modal-body">
+            <form method="post" enctype='multipart/form-data' id="upload_lampiran">
+                    Lampiran
+                    <input type="file" name="file" id="file">
+                    <br>
+                    <br>
+                    <center>
+                        <div class="loader vertical-align-middle loader-ellipsis" style="display: none;"></div>
+                    </center>
+                <button type="submit" class="btn btn-primary">Upload Lampiran</button>
+                </form>
+        </div>
+        </div>
+    </div>
     </div>
     <!-- End Modal -->
     <!-- Modal -->
@@ -137,6 +179,30 @@
         </div>
     </div>
     <!-- End Modal -->
+
+    <!-- Modal -->
+    <div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontal4" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-simple">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Keterangan</h4>
+                </div>
+                <form id="simpan">
+                   <div class="modal-body">
+                       <div class="row">
+                           <div class="col-xxl-4 col-lg-12" id="keterangan">
+                               
+                           </div>
+                       </div>
+                   </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
       <script>
         $( document ).ready(function() {
             /*Main*/
@@ -151,7 +217,53 @@
             $("#loader").fadeOut("xslow");
             /*Page*/
         });
-
+        $('#upload_lampiran').on('submit', function(e){
+       $(".loader").show();
+           var date = new Date();
+   
+           var year = date.getFullYear();
+           var month = date.getMonth() + 1;
+           var day = date.getDate();
+           var hours = date.getHours();
+           var minutes = date.getMinutes();
+           var seconds = date.getSeconds();
+   
+           var all = $("#file").val();
+           var neww = all.split(".");
+           var eks = neww[1];
+           
+           e.preventDefault();
+           var form = e.target;
+           var data = new FormData(form);
+           $.ajax({
+           url: "/upload_file",
+           method: form.method,
+           processData: false,
+           contentType: false,
+           data: data,
+           processData: false,
+           success: function(msg){
+                var datalama = $("#lampiranss").val();
+                //alert(msg)
+                if(datalama)
+                {
+                    $("#lampiranss").val(datalama+","+"/uploads/"+msg);
+                }
+                else
+                {
+                    $("#lampiranss").val("/uploads/"+msg);
+                }
+               $(".loader").hide();
+               $('#examplePositionSidebar').modal('hide');
+           },
+           error:function()
+           {
+               $(".loader").hide();
+               $('#examplePositionSidebar').modal('hide');
+           }
+           });
+           
+       });
         function simpen_pemeriksa()
         {
             $("#loader").fadeIn();        
@@ -327,10 +439,36 @@
                         no++;
                     });
 
-                    var pemeriksa_surat = "";
+                   var pemeriksa_surat = "";
                     var no = 1;
                     $.each(element.pemeriksa_, function(index, element) {    
-                        pemeriksa_surat+=no+". "+element.nama_pemeriksa+"<br>";
+                        var cek_tanggal_baca = element.tgl_baca;
+                        var stt_pemeriksa = "";
+                        if(cek_tanggal_baca==null)
+                        {   
+                            stt_pemeriksa="<span style='color:white' class='badge badge-pill badge-lg badge-danger'>Belum Dibaca</span>";
+                        }
+                        else
+                        {
+                            if(element.status==1)
+                            {
+                                stt_pemeriksa="<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Belum Diperiksa</span>";
+                            }
+                            else if(element.status==2)
+                            {
+                                stt_pemeriksa="<a onclick=ket('"+encodeURIComponent(element.keterangan)+"')><span style='color:white' class='badge badge-pill badge-lg badge-info'>Revisi</span></a>";
+                            }
+                            else if(element.status==3)
+                            {
+                                stt_pemeriksa="<a onclick=ket('"+encodeURIComponent(element.keterangan)+"')><span style='color:white' class='badge badge-pill badge-lg badge-success'>Disetujui</span></a>";
+                            }
+                            else
+                            {
+                                stt_pemeriksa="<span style='color:white' class='badge badge-pill badge-lg badge-primary'>Sudah Dibaca</span>";
+                            }
+                        }
+                        
+                        pemeriksa_surat+=""+no+". "+element.nama_pemeriksa+"<span style='float:right'>"+stt_pemeriksa+"</span><br>";
                         no++;
                     });
                     
@@ -380,7 +518,7 @@
                     tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+element.nomor_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+nsrt+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>STATUS</th><td width='25%'>"+sts+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
-                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pembuat+"</b><br>"+element.jabatan_pembuat+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'>"+nama_instansis+"</td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>ATAS NAMA</th><td width='25%'><b>"+element.nama_penandatangan+"</b><br>"+element.jabatan_penandatangan+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'>"+nama_instansis+"</td></tr>";
 
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>ISI</th><td width='50%'>"+element.isi_surat+"</td></tr>";    
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KLASIFIKASI</th><td width='50%'>"+kla+"</td></tr>";
@@ -473,7 +611,7 @@
                     headers: {
                     'Authorization': 'Bearer {{sesi}}'
                     },
-                    data : "id={{params.id}}"+"&nomor_surat="+$("#nomor_surat").val(),
+                    data : "id={{params.id}}"+"&nomor_surat="+$("#nomor_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&lampiran="+$("#lampiranss").val(),
                     success: function (data) 
                     { 
                         if(data.success==false)
@@ -497,7 +635,19 @@
                     });
             return false;    
         });
-       
+        function ket(keterangan)
+         {
+            if(keterangan=='null')
+            {
+                var ket = "Tidak ada keterangan";
+            }
+            else
+            {
+                var ket = decodeURIComponent(keterangan);
+            }
+            $('#keterangan').html("<center>"+ket+"</center>").show();
+            $('#exampleNiftyFlipHorizontal4').modal("show");
+         }
       </script>
 @endsection
 

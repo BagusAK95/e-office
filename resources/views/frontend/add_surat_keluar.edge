@@ -72,11 +72,12 @@
                                 <label class="form-control-label" for="inputEmail">Tanggal Surat&nbsp;<span style="color:red">*</span></label>
                                 <input type="text" class="form-control datepicker" name="tanggal_surat" id="tanggal_surat" data-plugin="datepicker" readonly required='true' />
                               </div>
-                              <div class="form-group" data-plugin="formMaterial">
+                              <div class="form-group" data-plugin="formMaterial" style="display:none;">
                                 <label class="form-control-label" for="inputEmail">Nomor Agenda&nbsp;<span style="color:red">*</span></label>
                                 <input type="text" id="nomor_agenda" class="form-control">
                               </div>
                               <div class="form-group">
+                                    <label class="form-control-label" for="inputEmail">Lampiran&nbsp;</label>
                                 <div class="input-group">
                                     <span class="input-group-prepend">
                                     <button type="button" class="btn btn-primary" data-target="#exampleNiftyJustMe2" data-toggle="modal"><i class="md-collection-plus"></i>&nbsp;Lampiran</button>
@@ -159,7 +160,7 @@
                                     <select name="arr_pemeriksa" class="form-control" id="arr_pemeriksa" data-plugin="select2" multiple="" placeholder="Tambahkan Pemeriksa">
                                     </select>
                                     <br>
-                                    <table class="table table-striped table-bordered" style="width:30%">
+                                    <table class="table table-striped table-bordered" style="width:100%">
                                         <tbody id="detail_pemeriksa">
                                         </tbody>
                                     </table>
@@ -392,7 +393,7 @@
                     var nama = element.nama;
                     var nama_jabatan = element.nama_jabatan;
                     isi += '{"nip_pemeriksa":"'+nip+'","nama_pemeriksa":"'+nama+'","jabatan_pemeriksa":"'+nama_jabatan+'"}';
-                    tabel += '<tr><td>'+depan+nama+belakang+'</td></tr>';
+                    tabel += '<tr><td>'+depan+nama+belakang+'</td><td>'+nama_jabatan+'</td></tr>';
                     if(nomor<panjang)
                     {
                         isi += ",";
@@ -743,7 +744,7 @@
           headers: {
            'Authorization': 'Bearer {{sesi}}'
            },
-          data : "nip_penandatangan="+$("#nip_penandatangan").val()+"&nama_penandatangan="+$("#nama_penandatangan").val()+"&jabatan_penandatangan="+$("#jabatan_penandatangan").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&lampiran="+$("#lampiran").val()+jeniss+"&arr_pemeriksa="+gabung+"&perihal="+$("#perihal").val()+"&dari_surat_masuk="+$("#dari_surat_masuk").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&klasifikasi="+$("#klasifikasi").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue,
+          data : "nip_penandatangan="+$("#nip_penandatangan").val()+"&nama_penandatangan="+$("#nama_penandatangan").val()+"&jabatan_penandatangan="+$("#jabatan_penandatangan").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&lampiran="+$("#lampiran").val()+jeniss+"&arr_pemeriksa="+gabung+"&perihal="+$("#perihal").val()+"&dari_surat_masuk="+$("#dari_surat_masuk").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&klasifikasi="+$("#klasifikasi").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue,
           success: function (datanya) 
           { 
               if(datanya.success==false)

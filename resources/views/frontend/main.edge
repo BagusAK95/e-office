@@ -530,6 +530,25 @@
               });
          }
 
+         notif_dispo_masuk()
+         function notif_dispo_masuk()
+         { 
+              $.ajax({ 
+                  type: 'GET', 
+                  url: '/api/disposisi/unreadAmount', 
+                  headers: {
+                      'Authorization': 'Bearer {{sesi}}'
+                  },
+                  success: function (data) { 
+                    if(data.data>0)
+                    {
+                    $("#dispo_masuk_notif").html('<span class="badge badge-pill badge-info">'+data.data+'</span>').show();
+                    }
+                      
+                  }
+              });
+         }
+
           notif_konsep_surat()
          function notif_konsep_surat()
          {
