@@ -111,6 +111,26 @@
                <!-- End Navbar Toolbar -->
                <!-- Navbar Toolbar Right -->
                <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+                  
+                  <li class="nav-item dropdown">
+                      <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title=""
+                      aria-expanded="false" data-animation="scale-up" role="button">
+                          <span class="nama_user"></span>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+                          <div class="list-group">
+                              <div class="dropdown-menu-header">
+                                  <h5>JABATAN</h5>
+                                  <span id='new'></span>
+                               </div>
+                               <div class="dropdown-menu-footer">
+                                  <br>
+                                    <center><span style="font-size:11pt" class="jabatanm"></span></center>
+                                  <br>
+                                </div>
+                          </div>
+                       </div>
+                   </li>
                   <li class="nav-item dropdown">
                      <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="Notifications"
                         aria-expanded="false" data-animation="scale-up" role="button">
@@ -419,10 +439,31 @@
                 },
                 success: function (data) { 
                     //alert(data.data.level);
+                    $.ajax({ 
+                      type: 'GET', 
+                      url: '/api/master-pegawai/'+data.data.nip, 
+                      headers: {
+                          'Authorization': 'Bearer {{sesi}}'
+                      },
+                      success: function (element) { 
+                        var depan="";
+                        if(element.data.gelar_depan)
+                        {
+                            depan += element.data.gelar_depan+" ";
+                        }
+                        var belakang = "";
+                        if(element.data.gelar_belakang)
+                        {
+                            belakang += ", "+element.data.gelar_belakang;
+                        }
+                        $(".nama_user").html(depan+data.data.nama_lengkap+belakang).show();
+                      }
+                    });
+                    
                     $("#level_main").val(data.data.level);
                     $("#nip_login").val(data.data.nip);
                     //putlevel(data.data.level)
-                    $(".nama_user").html(data.data.nama_lengkap).show();
+                    
                     if(data.data.foto)
                     {
                       $(".foto").html('<img src="'+data.data.foto+'" class="img-circular-pp">').show();

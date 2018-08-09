@@ -137,8 +137,7 @@
                             <tr>
                                 <th>Nama Pengirim</th>
                                 <th>Nama Penerima</th>
-                                <th>Isi Disposisi</th>
-                                <th width='100px'>Tanggal</th>
+                                <th width='100px'>Status</th>
                             </tr>
                         </thead>
                         <tbody id="dispo">
@@ -178,7 +177,29 @@
     </div>
 </div>
 <!-- End Modal -->
-
+    <!-- Modal -->
+    <div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontal4" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-simple">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Isi Disposisi</h4>
+                </div>
+                <form id="simpan">
+                   <div class="modal-body">
+                       <div class="row">
+                           <div class="col-xxl-4 col-lg-12" id="keterangan">
+                               
+                           </div>
+                       </div>
+                   </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
       <!-- Trigger the modal with a button -->
 
       <script>
@@ -221,33 +242,33 @@
                     var keamanand = "";
                     if(element_dispo.keamanan==1)
                     {
-                        keamanand = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
+                        keamanand = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
                     }
                     else if(element_dispo.keamanan==2)
                     {
-                        keamanand = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-info'>Rahasia Terbatas</span>";
+                        keamanand = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Rahasia Terbatas</span>";
                     }
                     else if(element_dispo.keamanan==3)
                     {
-                        keamanand = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-warning'>Rahasia</span>";
+                        keamanand = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Rahasia</span>";
                     }
                     else if(element_dispo.keamanan==4)
                     {
-                        keamanand = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-danger'>Sangat Rahasia</span>";
+                        keamanand = "<span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Sangat Rahasia</span>";
                     }
 
                     var kecepatand = "";
                     if(element_dispo.kecepatan==1)
                     {
-                        kecepatand = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
+                        kecepatand = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
                     }
                     else if(element.kecepatan==2)
                     {
-                        kecepatand = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-warning'>Segera</span>";
+                        kecepatand = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Segera</span>";
                     }
                     else if(element.kecepatan==3)
                     {
-                        kecepatand = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-danger'>Amat Segera</span>";
+                        kecepatand = "<span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Amat Segera</span>";
                     }
 
 
@@ -255,33 +276,33 @@
                     var keamanan = "";
                     if(element.keamanan==1)
                     {
-                        keamanan = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
+                        keamanan = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
                     }
                     else if(element.keamanan==2)
                     {
-                        keamanan = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-info'>Rahasia Terbatas</span>";
+                        keamanan = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Rahasia Terbatas</span>";
                     }
                     else if(element.keamanan==3)
                     {
-                        keamanan = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-warning'>Rahasia</span>";
+                        keamanan = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Rahasia</span>";
                     }
                     else if(element.keamanan==4)
                     {
-                        keamanan = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-danger'>Sangat Rahasia</span>";
+                        keamanan = "<span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Sangat Rahasia</span>";
                     }
 
                     var kecepatan = "";
                     if(element.kecepatan==1)
                     {
-                        kecepatan = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
+                        kecepatan = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Biasa</span>";
                     }
                     else if(element.kecepatan==2)
                     {
-                        kecepatan = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-warning'>Segera</span>";
+                        kecepatan = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Segera</span>";
                     }
                     else if(element.kecepatan==3)
                     {
-                        kecepatan = "<span style='color:white;width:140px' class='badge badge-pill badge-lg badge-danger'>Amat Segera</span>";
+                        kecepatan = "<span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Amat Segera</span>";
                     }
                     
                     var tanggal_surat = tanggal_indo(element.tgl_surat);
@@ -296,13 +317,33 @@
                             var myarr = cek_lampiran.split(",");
                             for (var i = 0, len = myarr.length; i < len; i++) 
                             {
-                                file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+myarr[i]+"</a><br>";    
+                                var sal = myarr[i];
+                                var fl = sal.split(".");
+                                if(fl[1]=='pdf')
+                                {
+                                   var isno = "<i class='icon md-collection-pdf' style='font-size: 30px;'></i>";
+                                }
+                                else
+                                {
+                                    var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
+                                }
+                                file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+isno+"</a>&nbsp;&nbsp;";    
                             }
                             //ada
                         }
                         else
                         {
                             //tiadak ada
+                            var sal = myarr[i];
+                            var fl = sal.split(".");
+                            if(fl[1]=='pdf')
+                            {
+                                var isno = "<i class='icon md-collection-pdf' style='font-size: 30px;'></i>";
+                            }
+                            else
+                            {
+                                var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
+                            }
                             file = "<a onclick=preview('"+myarr[i]+"') href='#' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
                         }
                     }
@@ -324,7 +365,8 @@
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>TANGGAL TERIMA</th><td width='25%'>"+tanggal_terima+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'>"+element.nama_pengirim+"<br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'>"+element.nama_pimpinan+"<br>"+element.jabatan_pimpinan+"</td></tr>";
                     
-                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>ISI</th><td width='50%'>"+element.isi_surat+"</td></tr>";
+                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='100%' colspan='2'>ISI</th></tr>";    
+                    tabel2 += "<tr><td width='50%' colspan='2'>"+element.isi_surat+"</td></tr>";    
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KECEPATAN</th><td width='50%'>"+kecepatan+"</td></tr>";
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KEAMANAN</th><td width='50%'>"+keamanan+"</td></tr>";
                     //tabel += "<tr><th>TEMBUSAN</th><td>"+element.nama_tembusan+" <br> "+element.jabatan_tembusan+"</td></tr>";
@@ -375,7 +417,7 @@
             var ekstensi = all[1];
             if(ekstensi=='pdf')
             {
-                $('#file_preview').html('<embed src="'+file+'" type="application/pdf" width="100%" height="560px"/>');
+                $('#file_preview').html('<embed src="'+file+'" type="application/pdf"  style="margin-left:-345px" width="217%" height="567px"/>');
             }
             else
             {
@@ -484,16 +526,32 @@
                     var isi="";
                     $.each(data.data, function(index, element) 
                     {
-                        if(element.tgl_disposisi)
+                        var sts="";
+                        if(element.status==1)
                         {
-                            var tagg = tanggal_jam_indo(element.tgl_disposisi);
+                            sts = "<a onclick=ket('"+encodeURIComponent(element.isi_disposisi)+"')><span style='color:white;' class='badge badge-pill badge-lg badge-success'>Selesai</span></a>";
+                            sts += "<br><span style='font-size: 8pt;'>"+tanggal_keterangan(element.tgl_selesai)+"</span>";
+                        }
+                        else if(element.status==2)
+                        {
+                            sts = "<a onclick=ket('"+encodeURIComponent(element.isi_disposisi)+"')><span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Ditolak</span></a>";
+                            sts += "<br><span style='font-size: 8pt;'>-</span>";
                         }
                         else
                         {
-                            var tagg = "-";
+                            if(element.tgl_baca)
+                            {
+                                sts = "<a onclick=ket('"+encodeURIComponent(element.isi_disposisi)+"')><span style='color:white;' class='badge badge-pill badge-lg badge-info'>Sudah Dibaca</span></a>";
+                                sts += "<br><span style='font-size: 8pt;'>"+tanggal_keterangan(element.tgl_baca)+"</span>";
+                            }
+                            else
+                            {
+                                sts = "<a onclick=ket('"+encodeURIComponent(element.isi_disposisi)+"')><span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Belum Dibaca</span></a>";
+                                sts += "<br><span style='font-size: 8pt;'>-</span>";
+                            }
+                            
                         }
-                        
-                        isi+='<tr><td>'+element.nama_pengirim+'</td><td>'+element.nama_penerima+'</td><td>'+element.isi_disposisi+'</td><td>'+tagg+'</td></tr>';
+                        isi+='<tr><td>'+element.nama_pengirim+'</td><td>'+element.nama_penerima+'</td><td>'+sts+'</td></tr>';
                         
                     });
                     //alert(isi);
@@ -533,6 +591,19 @@
                 }
             });
         }
+        function ket(keterangan)
+         {
+            if(keterangan=='null')
+            {
+                var ket = "Tidak ada keterangan";
+            }
+            else
+            {
+                var ket = decodeURIComponent(keterangan);
+            }
+            $('#keterangan').html("<center>"+ket+"</center>").show();
+            $('#exampleNiftyFlipHorizontal4').modal("show");
+         }
       </script>
 @endsection
 

@@ -42,7 +42,7 @@
                   <thead>
                      <tr>
                         <th width='100px'>TANGGAL</th>
-                        <th >PENGIRIM</th>                        
+                        <th >PERIHAL</th>                        
                         <th >TUJUAN</th>
                         <th >KETERANGAN</th>
                         <th >ACTION</th>
@@ -276,7 +276,7 @@
 
                         var tg_disposisi = tanggal_indo(element.tgl_disposisi);
 
-                        var tr_data = "<tr><td>"+tg_disposisi+"</td><td><b>"+element.nama_pengirim+"</b><br>"+element.jabatan_pengirim+"</td><td><b>"+element.nama_penerima+"</b><br>"+element.jabatan_penerima+"</td><td align='center'>"+sts+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/disposisi-keluar/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><button onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                        var tr_data = "<tr><td>"+tg_disposisi+"</td><td>"+element.surat_.perihal+"</td><td><b>"+element.nama_penerima+"</b><br>"+element.jabatan_penerima+"</td><td align='center'>"+sts+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/disposisi-keluar/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><button onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
                         text += tr_data;
                     });
 

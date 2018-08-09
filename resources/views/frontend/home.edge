@@ -91,19 +91,21 @@
         </div>
       </div>
 
-      <div class="col-lg-3">
+      <div class="col-lg-4">
           <!-- Page Widget -->
           <div class="card card-shadow text-center">
             <div class="card-block" style="">
-              <a class="" href="javascript:void(0)">
-               <center> <span id="foto"></span></center>
-              </a>
-              <h4 class="profile-user nama_user"></h4>
-              <p class="profile-job jabatanm"></p>
+                <link href="/material/calendar/dcalendar.picker.css" rel="stylesheet" type="text/css">
+               
+                <script src="/material/calendar/dcalendar.picker.js"></script>
+                <center><table width='50%' id="calendar-demo" class="calendar"></table></center>
+                <script>
+                $('#calendar-demo').dcalendar(); //creates the calendar
+                </script>
             </div>
           </div>
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-8">
           <div class="panel" style="">
             <div class="panel panel-bordered panel-primary">
                   <div class="panel-heading">

@@ -214,24 +214,44 @@
                             }
                             
                             var file = '';
-                            if(element.lampiran)
+                    if(element.lampiran)
+                    {
+                        var cek_lampiran = element.lampiran;
+                        if(cek_lampiran.includes(',') > -1)
+                        {
+                            var myarr = cek_lampiran.split(",");
+                            for (var i = 0, len = myarr.length; i < len; i++) 
                             {
-                                var cek_lampiran = element.lampiran;
-                                if(cek_lampiran.includes(',') > -1)
+                                var sal = myarr[i];
+                                var fl = sal.split(".");
+                                if(fl[1]=='pdf')
                                 {
-                                    var myarr = cek_lampiran.split(",");
-                                    for (var i = 0, len = myarr.length; i < len; i++) 
-                                    {
-                                        file += "<a target='_blank' href='"+myarr[i]+"' >"+myarr[i]+"</a><br>";    
-                                    }
-                                    //ada
+                                   var isno = "<i class='icon md-collection-pdf' style='font-size: 30px;'></i>";
                                 }
                                 else
                                 {
-                                    //tiadak ada
-                                    file = "<a target='_blank' href='"+element.lampiran+"' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
+                                    var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
                                 }
+                                file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+isno+"</a>&nbsp;&nbsp;";    
                             }
+                            //ada
+                        }
+                        else
+                        {
+                            //tiadak ada
+                            var sal = myarr[i];
+                            var fl = sal.split(".");
+                            if(fl[1]=='pdf')
+                            {
+                                var isno = "<i class='icon md-collection-pdf' style='font-size: 30px;'></i>";
+                            }
+                            else
+                            {
+                                var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
+                            }
+                            file = "<a onclick=preview('"+myarr[i]+"') href='#' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
+                        }
+                    }
 
                             var tanggal_surat = tanggal_indo(element.tgl_surat);
                             var tanggal_terima = tanggal_indo(element.tgl_terima);
