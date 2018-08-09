@@ -94,7 +94,7 @@ class CompleteUserData extends Command {
             nama_lengkap: kantor.nmlokasi,
             kode_lokasi: null,
             kode_jabatan: null,
-            nama_jabatan: null,
+            nama_jabatan: 'Administrator',
             kode_eselon: null,
             golongan: null,
             password: await Hash.make(kantor.kdlokasi.toString()),
@@ -109,6 +109,7 @@ class CompleteUserData extends Command {
           console.log('Admin ' + insert.nama_lengkap + ' -> Created.')
         } else {
           exist.nama_lengkap = kantor.nmlokasi
+          exist.nama_jabatan = 'Administrator'
           await exist.save()
 
           console.log('Admin ' + exist.nama_lengkap + ' -> Updated.')
