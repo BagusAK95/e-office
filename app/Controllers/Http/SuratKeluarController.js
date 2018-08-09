@@ -4,6 +4,7 @@ const SuratKeluar = use('App/Models/SuratKeluar')
 const SuratMasuk = use('App/Models/SuratMasuk')
 const SuratTembusan = use('App/Models/SuratTembusan')
 const SuratPemeriksa = use('App/Models/SuratPemeriksa')
+const SuratPengiriman = use('App/Models/SuratPengiriman')
 const Response = use('App/Helpers/ResponseHelper')
 const Notification = use('App/Helpers/NotificationHelper')
 const MasterKantor = use('App/Models/MasterKantor')
@@ -378,6 +379,15 @@ class SuratKeluarController {
                             Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Sebagai Tembusan', '/surat-tembusan/' + insertTembusan.id)                
                         }
                     }
+                })
+
+                const arrPengiriman = arrPenerima.concat(arrTembusan)
+                arrPengiriman.forEach(async (pengiriman) => {
+                    await SuratPengiriman.create({
+                        id_surat_keluar: params.id,
+                        id_instansi: pengiriman.id_instansi,
+                        nama_instansi: pengiriman.nama_instansi
+                    })
                 })
 
                 Log.add(user, 'Mengirimkan Surat Atas Nama ' + dataSurat.nama_penandatangan + ' Ke Instansi Terkait')   
