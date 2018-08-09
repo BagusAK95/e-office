@@ -2016,5 +2016,25 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-pengiriman', 'SuratPengirimanController.updateResi').middleware('checkToken:tatausaha')
+    Route.put('/surat-pengiriman', 'SuratPengirimanController.updateResi').middleware('checkToken:tatausaha')
+
+    /**
+    * @swagger
+    * /surat-pengiriman/track/{id}:
+    *   get:
+    *     tags:
+    *       - Surat Pengiriman
+    *     summary: Track Resi
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-pengiriman/track/:id', 'SuratPengirimanController.trackResi')
 }).prefix('api')
