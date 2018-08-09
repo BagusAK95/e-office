@@ -1,5 +1,6 @@
 'use strict'
 
+const SuratPengiriman = use('App/Models/SuratPengiriman')
 const SuratMasuk = use('App/Models/SuratMasuk')
 const Login = use('App/Models/Login')
 const Response = use('App/Helpers/ResponseHelper')
@@ -133,6 +134,10 @@ class SuratMasukController {
                     if (data.tgl_baca_tata_usaha == null) {
                         data.tgl_baca_tata_usaha = new Date()
                         await data.save()
+
+                        await SuratPengiriman.query()
+                                             .where({ id_instansi: user.instansi, id_surat_masuk: params.id })
+                                             .update({ tgl_baca: new Date() })
                     }
                 }
                 

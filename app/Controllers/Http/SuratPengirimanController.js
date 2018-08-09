@@ -12,7 +12,7 @@ class SuratPengirimanController {
             const user = await auth.getUser()
             const data = request.all()
 
-            const pengiriman = await SuratPengiriman.find(params.id)
+            const pengiriman = await SuratPengiriman.query().where({ id: params.id, pengirim: user.instansi }).first()
             if (pengiriman) {
                 pengiriman.kurir = data.kurir
                 pengiriman.resi = data.resi
@@ -32,7 +32,7 @@ class SuratPengirimanController {
     async trackResi({ params, auth, response }) {
         try {
             const user = await auth.getUser()
-            const pengiriman = await SuratPengiriman.find(params.id)
+            const pengiriman = await SuratPengiriman.query().where({ id: params.id, pengirim: user.instansi }).first()
             if (pengiriman) {
                 return new Promise((resolve, reject) => {
                     Request.post({

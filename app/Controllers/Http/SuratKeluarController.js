@@ -268,6 +268,7 @@ class SuratKeluarController {
                                           })
                                           .with('klasifikasi_')
                                           .with('surat_masuk_')
+                                          .with('pengiriman_')
                                           .first()
             if (data) {
                 if (data.nip_tata_usaha == user.nip) {
@@ -343,7 +344,22 @@ class SuratKeluarController {
 
                         if (insertSurat) {
                             Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)                
+                        
+                            await SuratPengiriman.create({
+                                pengirim: user.instansi,
+                                id_surat_keluar: params.id,
+                                id_instansi: penerima.id_instansi,
+                                nama_instansi: penerima.nama_instansi,
+                                id_surat_masuk: insertSurat.id
+                            })
                         }
+                    } else {
+                        await SuratPengiriman.create({
+                            pengirim: user.instansi,
+                            id_surat_keluar: params.id,
+                            id_instansi: penerima.id_instansi,
+                            nama_instansi: penerima.nama_instansi
+                        })
                     }
                 })
 
@@ -376,18 +392,24 @@ class SuratKeluarController {
                         })
 
                         if (insertTembusan) {
-                            Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Sebagai Tembusan', '/surat-tembusan/' + insertTembusan.id)                
-                        }
-                    }
-                })
+                            Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Sebagai Tembusan', '/surat-tembusan/' + insertTembusan.id)
 
-                const arrPengiriman = arrPenerima.concat(arrTembusan)
-                arrPengiriman.forEach(async (pengiriman) => {
-                    await SuratPengiriman.create({
-                        id_surat_keluar: params.id,
-                        id_instansi: pengiriman.id_instansi,
-                        nama_instansi: pengiriman.nama_instansi
-                    })
+                            await SuratPengiriman.create({
+                                pengirim: user.instansi,
+                                id_surat_keluar: params.id,
+                                id_instansi: tembusan.id_instansi,
+                                nama_instansi: tembusan.nama_instansi,
+                                id_surat_tembusan: insertTembusan.id
+                            })
+                        }
+                    } else {
+                        await SuratPengiriman.create({
+                            pengirim: user.instansi,
+                            id_surat_keluar: params.id,
+                            id_instansi: tembusan.id_instansi,
+                            nama_instansi: tembusan.nama_instansi
+                        })
+                    }
                 })
 
                 Log.add(user, 'Mengirimkan Surat Atas Nama ' + dataSurat.nama_penandatangan + ' Ke Instansi Terkait')   
