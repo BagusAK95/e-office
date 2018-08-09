@@ -27,8 +27,8 @@ class SuratMasuk extends Model {
         return this.hasOne('App/Models/MasterKlasifikasi', 'klasifikasi', 'id')
     }
 
-    tembusan_ () {
-        return this.hasMany('App/Models/SuratTembusan', 'id', 'id_surat_masuk')
+    disposisi_ () {
+        return this.hasMany('App/Models/Disposisi', 'id', 'id_surat_masuk')
     }
 }
 

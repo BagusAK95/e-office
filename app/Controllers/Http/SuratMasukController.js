@@ -78,6 +78,7 @@ class SuratMasukController {
 
             const data = await SuratMasuk.query()
                                          .whereRaw(sql.join(' AND '))
+                                         .withCount('disposisi_ as total_disposisi')
                                          .orderBy('tgl_terima', 'desc')
                                          .paginate(Number(request.get().page), Number(request.get().limit))
             
