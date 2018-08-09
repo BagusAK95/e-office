@@ -1973,4 +1973,48 @@ Route.group(() => {
     *       - application/json
     */
     Route.get('/statistik/unread', 'StatistikController.unread').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /ekspedisi:
+    *   get:
+    *     tags:
+    *       - Ekspedisi
+    *     summary: List All
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/ekspedisi', 'MasterEkspedisiController.listAll').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /surat-pengiriman:
+    *   put:
+    *     tags:
+    *       - Surat Pengiriman
+    *     summary: Update Resi
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id
+    *         in: path
+    *         description: Id
+    *         required: true
+    *         type: string
+    *       - name: kurir
+    *         in: formData
+    *         description: Kode Ekspedisi
+    *         required: true
+    *         type: string
+    *       - name: resi
+    *         in: formData
+    *         description: Nomor Resi
+    *         required: true
+    *         type: string
+    */
+    Route.get('/surat-pengiriman', 'SuratPengirimanController.updateResi').middleware('checkToken:tatausaha')
 }).prefix('api')
