@@ -57,6 +57,7 @@ class DisposisiController {
             //Get data dari database
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
+                                        .with('surat_')
                                         .orderBy('tgl_disposisi', 'desc')
                                         .paginate(Number(request.get().page), Number(request.get().limit))
             
@@ -89,6 +90,7 @@ class DisposisiController {
             //Ambil data dari database
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
+                                        .with('surat_')
                                         .orderBy('tgl_disposisi', 'desc')
                                         .paginate(Number(request.get().page), Number(request.get().limit))
 
