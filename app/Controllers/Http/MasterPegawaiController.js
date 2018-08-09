@@ -177,7 +177,7 @@ class MasterPegawaiController {
                 arrPegawai.push(await MasterPegawai.find(pimpinan.nip))
             }
 
-            const arrFixPegawai = arrPegawai.filter(pegawai => pegawai.nip != user.nip)
+            const arrFixPegawai = arrPegawai.filter((elem, index, self) => { return index == self.map((e) => e.nip).indexOf(elem.nip) })
             return Response.format(true, null, arrFixPegawai)
         } catch (error) {
             return Response.format(false, error, null)
