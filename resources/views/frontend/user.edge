@@ -29,7 +29,7 @@
                         </div>
                      </div>
                      <div class="col-sm-6 col-lg-4">
-                        <div class=""> <input class="form-control" placeholder="Search" id='search' type="text"></div>
+                        <div class=""><form id="foms"> <input class="form-control" placeholder="Search" id='search' type="text"><input type="submit" style="display:none;"></form></div>
                      </div>
                   </div>
                </div>
@@ -252,7 +252,7 @@
         /*Page*/
     });
     /*Search Function*/
-   $("#search").keyup(function(){
+   $("#foms").submit(function(){
        if($("#search").val())    
        {
            showbrand(1,$("#search").val());
@@ -261,6 +261,7 @@
        {
            showbrand(1,'');
        }
+       return false;
    });
    /*End Search Function*/
 
@@ -323,7 +324,14 @@
                     {
                         eselon = "-"
                     }
-                    var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+eselon+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-primary' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-primary' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button><button onclick=reset_password('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-refresh-sync' aria-hidden='true'></i></button></div></div></td></tr>";
+
+
+                    var golongan = element.golongan;
+                    if(element.golongan==null)
+                    {
+                        golongan = "-"
+                    }
+                    var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+eselon+"</td><td>"+golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-primary' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-primary' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button><button onclick=reset_password('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-refresh-sync' aria-hidden='true'></i></button></div></div></td></tr>";
                     text += tr_data;
                 });
 
