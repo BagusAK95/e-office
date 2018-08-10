@@ -1336,7 +1336,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/konsep-surat', 'SuratKeluarController.add').middleware('checkToken:umum,suratkeluar')
+    Route.post('/konsep-surat', 'SuratKeluarController.add').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1441,7 +1441,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/konsep-surat/:id', 'SuratKeluarController.updateConcept').middleware('checkToken:umum')
+    Route.put('/konsep-surat/:id', 'SuratKeluarController.updateConcept').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1461,7 +1461,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/konsep-surat/:id', 'SuratKeluarController.delete').middleware('checkToken:umum')
+    Route.delete('/konsep-surat/:id', 'SuratKeluarController.delete').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
