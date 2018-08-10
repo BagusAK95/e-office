@@ -2037,8 +2037,4 @@ Route.group(() => {
     *         type: string
     */
     Route.get('/surat-pengiriman/track/:id', 'SuratPengirimanController.trackResi')
-
-    Route.get('/ip', ({ request }) => {
-        return request.header('x-forwarded-for')
-    })
 }).prefix('api')

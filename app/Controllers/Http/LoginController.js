@@ -17,7 +17,7 @@ class LoginController {
                         const token = await auth.generate(data) //Generate token
 
                         //Tambah Log
-                        Log.add(data, 'Login Dari IP ' + request.ip(), token)
+                        Log.add(data, 'Login Dari IP ' + request.header('x-forwarded-for'), token)
                         
                         return Response.format(true, null, token)
                     } else {
