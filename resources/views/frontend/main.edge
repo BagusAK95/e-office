@@ -445,18 +445,26 @@
                       headers: {
                           'Authorization': 'Bearer {{sesi}}'
                       },
-                      success: function (element) { 
-                        var depan="";
-                        if(element.data.gelar_depan)
+                      success: function (element) {
+                        if(element.success==false) 
                         {
-                            depan += element.data.gelar_depan+" ";
+                          $(".nama_user").html("").show();
                         }
-                        var belakang = "";
-                        if(element.data.gelar_belakang)
+                        else
                         {
-                            belakang += ", "+element.data.gelar_belakang;
+                          var depan="";
+                          if(element.data.gelar_depan)
+                          {
+                              depan += element.data.gelar_depan+" ";
+                          }
+                          var belakang = "";
+                          if(element.data.gelar_belakang)
+                          {
+                              belakang += ", "+element.data.gelar_belakang;
+                          }
+                          $(".nama_user").html(data.data.nama_lengkap).show();
                         }
-                        $(".nama_user").html(depan+data.data.nama_lengkap+belakang).show();
+                        
                       }
                     });
                     

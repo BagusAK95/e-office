@@ -211,6 +211,7 @@
                         <option value="2">Pimpinan</option>
                         <option value="3">Tata Usaha</option>
                         <option value="4">Staff</option>
+                        <option value="5">Sekretaris</option>
                      </select>
                   </div>
                   <div class="form-group" data-plugin="formMaterial">
@@ -316,8 +317,13 @@
                     {
                         level = 'Staff';
                     }
-
-                    var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+element.kode_eselon+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-primary' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-primary' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                    
+                    var eselon = element.kode_eselon;
+                    if(element.kode_eselon==null)
+                    {
+                        eselon = "-"
+                    }
+                    var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+eselon+"</td><td>"+element.golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-primary' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-primary' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button><button onclick=reset_password('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-refresh-sync' aria-hidden='true'></i></button></div></div></td></tr>";
                     text += tr_data;
                 });
 
@@ -605,6 +611,48 @@
             return false;
         }
         return true;
+    }
+
+    function reset_password(nip)
+    {
+        if(confirm("Password akan diisi sesuai dengan NIP masing-masing, yakin melakukan reset password?"))
+        {
+            
+        $("#loader").fadeIn("slow");
+        
+            $.ajax({ 
+            type: 'PUT', 
+            url: '/api/user/'+nip, 
+            headers: {
+                    'Authorization': 'Bearer {{sesi}}'
+            },
+            data : "password="+nip,
+            success: function (data) 
+            { 
+                if(data.success==false)
+                {
+                    swal("Gagal!", "Gagal Mereset password.", "error");
+                }
+                else if(data.success==true)
+                {
+                    swal({title: "Berhasil", text: "Berhasil Mereset password.", type: "success"},
+                    function(){ 
+                        location.reload();
+                    }
+                    );
+                }
+                
+                $("#loader").fadeOut("xslow");
+            },
+            error: function(data)
+            {
+                swal("Gagal!", "Gagal Mereset password.", "error");
+            }
+            });
+            return false;
+            
+        }
+
     }
     /*End Addon Function*/
     
