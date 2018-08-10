@@ -99,7 +99,7 @@ class UserController {
 
             const data = await Login.query()
                                     .whereRaw(sql.join(' AND '))
-                                    .orderBy('kode_eselon', 'asc')
+                                    .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')
                                     .paginate(Number(request.get().page), Number(request.get().limit))
                             
             Log.add(user, 'Melihat Daftar User Pada Halaman ' + request.get().page)

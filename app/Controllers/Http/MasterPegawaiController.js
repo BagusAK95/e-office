@@ -36,8 +36,7 @@ class MasterPegawaiController {
             //Get data dari database
             const data = await MasterPegawai.query()
                                             .where('kode_lokasi', params.kode_lokasi)
-                                            .orderBy('kode_eselon', 'desc')
-                                            .orderBy('kode_jabatan', 'desc')
+                                            .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')
             
             return Response.format(true, null, data)
         } catch (error) {
@@ -128,8 +127,7 @@ class MasterPegawaiController {
 
                 const atasan = await MasterPegawai.query()
                                                 .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
-                                                .orderBy('kode_eselon', 'desc')
-                                                .orderBy('kode_jabatan', 'desc')
+                                                .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
                                                 .first()
                 if (atasan) {
                     arrPegawai.push(atasan)
@@ -139,8 +137,7 @@ class MasterPegawaiController {
 
                 const atasan = await MasterPegawai.query()
                                                 .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
-                                                .orderBy('kode_eselon', 'desc')
-                                                .orderBy('kode_jabatan', 'desc')
+                                                .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
                                                 .first()
                 if (atasan) {
                     arrPegawai.push(atasan)
@@ -153,8 +150,7 @@ class MasterPegawaiController {
 
                 const atasan = await MasterPegawai.query()
                                                 .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
-                                                .orderBy('kode_eselon', 'desc')
-                                                .orderBy('kode_jabatan', 'desc')
+                                                .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
                                                 .first()
                 if (atasan) {
                     arrPegawai.push(atasan)
