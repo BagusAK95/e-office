@@ -129,6 +129,18 @@ class UserController {
             return Response.format(false, error, null)            
         }
     }
+
+    async listAll({auth}){
+        try {
+            const user = await auth.getUser() //Ambil data user yang login
+            const data = await Login.query()
+                                    .where('instansi', user.instansi)
+                                            
+            return Response.format(true, null, data)
+        } catch (error) {
+            return Response.format(false, error, null)                
+        }
+    }
 }
 
 module.exports = UserController

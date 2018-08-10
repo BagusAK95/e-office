@@ -392,6 +392,18 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /user:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: List All
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/user', 'UserController.listAll').middleware('checkToken:umum')
+
+    /**
+    * @swagger
     * /user/{nip}:
     *   get:
     *     tags:
