@@ -2036,5 +2036,5 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-pengiriman/track/:id', 'SuratPengirimanController.trackResi')
+    Route.get('/surat-pengiriman/track/:id', 'SuratPengirimanController.trackResi').middleware('checkToken:tatausaha')
 }).prefix('api')
