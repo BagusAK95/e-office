@@ -1990,7 +1990,7 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /surat-pengiriman:
+    * /surat-pengiriman/{id}:
     *   put:
     *     tags:
     *       - Surat Pengiriman
@@ -2016,7 +2016,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/surat-pengiriman', 'SuratPengirimanController.updateResi').middleware('checkToken:umum,suratkeluar')
+    Route.put('/surat-pengiriman/:id', 'SuratPengirimanController.updateResi').middleware('checkToken:umum,suratkeluar')
 
     /**
     * @swagger
