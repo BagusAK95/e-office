@@ -392,7 +392,7 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /user:
+    * /user/all:
     *   get:
     *     tags:
     *       - User
@@ -400,7 +400,55 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/user', 'UserController.listAll').middleware('checkToken:umum')
+    Route.get('/user/all', 'UserController.listAll').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /user/byLocation/{kode_lokasi}:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: List By Location
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: kode_lokasi
+    *         in: path
+    *         description: Kode Lokasi
+    *         required: true
+    *         type: string
+    */
+    Route.get('/user/byLocation/:kode_lokasi', 'UserController.listByLocation').middleware('checkToken:umum')
+
+    /**
+    * @swagger
+    * /user/dispositionReciver/{id_surat_masuk}:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: List All Disposition Reciver
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: id_surat_masuk
+    *         in: path
+    *         description: Id Surat Masuk
+    *         required: true
+    *         type: string
+    */
+    Route.get('/user/dispositionReciver/:id_surat_masuk', 'UserController.listAllDispositionReciver').middleware('checkToken:umum,disposisi')
+
+    /**
+    * @swagger
+    * /user/mailChecker:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: List All Mail Checker
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/user/mailChecker', 'UserController.listAllMailChecker').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -452,7 +500,7 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /master-pegawai:
+    * /master-pegawai/all:
     *   get:
     *     tags:
     *       - Master Pegawai
@@ -460,55 +508,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-pegawai', 'MasterPegawaiController.listAll').middleware('checkToken:admin')
-
-    /**
-    * @swagger
-    * /master-pegawai/byLocation/{kode_lokasi}:
-    *   get:
-    *     tags:
-    *       - Master Pegawai
-    *     summary: List By Location
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: kode_lokasi
-    *         in: path
-    *         description: Kode Lokasi
-    *         required: true
-    *         type: string
-    */
-    Route.get('/master-pegawai/byLocation/:kode_lokasi', 'MasterPegawaiController.listByLocation').middleware('checkToken:admin')
-
-    /**
-    * @swagger
-    * /master-pegawai/dispositionReciver/{id_surat_masuk}:
-    *   get:
-    *     tags:
-    *       - Master Pegawai
-    *     summary: List All Disposition Reciver
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: id_surat_masuk
-    *         in: path
-    *         description: Id Surat Masuk
-    *         required: true
-    *         type: string
-    */
-    Route.get('/master-pegawai/dispositionReciver/:id_surat_masuk', 'MasterPegawaiController.listAllDispositionReciver').middleware('checkToken:umum,disposisi')
-
-    /**
-    * @swagger
-    * /master-pegawai/mailChecker:
-    *   get:
-    *     tags:
-    *       - Master Pegawai
-    *     summary: List All Mail Checker
-    *     produces:
-    *       - application/json
-    */
-    Route.get('/master-pegawai/mailChecker', 'MasterPegawaiController.listAllMailChecker').middleware('checkToken:umum,konsepsurat')
+    Route.get('/master-pegawai/all', 'MasterPegawaiController.listAll').middleware('checkToken:admin')
 
     /**
     * @swagger
