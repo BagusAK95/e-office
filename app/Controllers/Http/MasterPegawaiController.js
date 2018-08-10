@@ -176,7 +176,7 @@ class MasterPegawaiController {
                                         .where({ level: 2, instansi: user.instansi })
                                         .first()
             if (pimpinan) {
-                arrPegawai.push(pimpinan.nip)
+                arrPegawai.push(pimpinan)
             }
 
             const arrFixPegawai = arrPegawai.filter((elem, index, self) => { return index == self.map((e) => e.nip).indexOf(elem.nip) })
