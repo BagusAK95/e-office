@@ -10,10 +10,6 @@ class CheckToken {
         if (user.level != 1) {
           return response.send(Response.format(false, 'Akses ditolak', null))
         }
-      } else if (rule[0] == 'tatausaha') {
-        if (user.level != 3) {
-          return response.send(Response.format(false, 'Akses ditolak', null))
-        }
       }
 
       if (rule[1]) {

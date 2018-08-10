@@ -436,7 +436,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai', 'MasterPegawaiController.list').middleware('checkToken:umum')
+    Route.get('/master-pegawai', 'MasterPegawaiController.list').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -448,7 +448,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-pegawai', 'MasterPegawaiController.listAll').middleware('checkToken:umum')
+    Route.get('/master-pegawai', 'MasterPegawaiController.listAll').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -466,7 +466,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/byLocation/:kode_lokasi', 'MasterPegawaiController.listByLocation').middleware('checkToken:umum')
+    Route.get('/master-pegawai/byLocation/:kode_lokasi', 'MasterPegawaiController.listByLocation').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -484,7 +484,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/dispositionReciver/:id_surat_masuk', 'MasterPegawaiController.listAllDispositionReciver').middleware('checkToken:umum')
+    Route.get('/master-pegawai/dispositionReciver/:id_surat_masuk', 'MasterPegawaiController.listAllDispositionReciver').middleware('checkToken:umum,disposisi')
 
     /**
     * @swagger
@@ -496,7 +496,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/master-pegawai/mailChecker', 'MasterPegawaiController.listAllMailChecker').middleware('checkToken:umum')
+    Route.get('/master-pegawai/mailChecker', 'MasterPegawaiController.listAllMailChecker').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -514,7 +514,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkToken:umum')
+    Route.get('/master-pegawai/:nip', 'MasterPegawaiController.detail').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -689,7 +689,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkToken:tatausaha,suratmasuk')
+    Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkToken:umum,suratmasuk')
 
     /**
     * @swagger
@@ -709,7 +709,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkToken:tatausaha,suratmasuk')
+    Route.delete('/surat-masuk/:id', 'SuratMasukController.delete').middleware('checkToken:umum,suratmasuk')
 
     /**
     * @swagger
@@ -754,7 +754,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/surat-masuk/:id', 'SuratMasukController.send').middleware('checkToken:tatausaha,suratmasuk')
+    Route.put('/surat-masuk/:id', 'SuratMasukController.send').middleware('checkToken:umum,suratmasuk')
 
     /**
     * @swagger
@@ -794,7 +794,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-masuk', 'SuratMasukController.list').middleware('checkToken:umum')
+    Route.get('/surat-masuk', 'SuratMasukController.list').middleware('checkToken:umum,suratmasuk')
 
     /**
     * @swagger
@@ -828,7 +828,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-masuk/:id', 'SuratMasukController.detail').middleware('checkToken:umum')
+    Route.get('/surat-masuk/:id', 'SuratMasukController.detail').middleware('checkToken:umum,suratmasuk')
 
     /**
     * @swagger
@@ -868,7 +868,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-tembusan', 'SuratTembusanController.list').middleware('checkToken:umum')
+    Route.get('/surat-tembusan', 'SuratTembusanController.list').middleware('checkToken:umum,suratmasuk')
 
     /**
     * @swagger
@@ -898,7 +898,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/surat-tembusan/:id', 'SuratTembusanController.send').middleware('checkToken:tatausaha')
+    Route.put('/surat-tembusan/:id', 'SuratTembusanController.send').middleware('checkToken:umum,suratmasuk')
 
     /**
     * @swagger
@@ -932,7 +932,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-tembusan/:id', 'SuratTembusanController.detail').middleware('checkToken:umum')
+    Route.get('/surat-tembusan/:id', 'SuratTembusanController.detail').middleware('checkToken:umum,suratmasuk')
 
     /**
     * @swagger
@@ -1007,7 +1007,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/disposisi/setStatus/:id', 'DisposisiController.setStatus').middleware('checkToken:umum')
+    Route.put('/disposisi/setStatus/:id', 'DisposisiController.setStatus').middleware('checkToken:umum,disposisi')
 
     /**
     * @swagger
@@ -1067,7 +1067,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/disposisi/masuk', 'DisposisiController.listIn').middleware('checkToken:umum')
+    Route.get('/disposisi/masuk', 'DisposisiController.listIn').middleware('checkToken:umum,disposisi')
 
     /**
     * @swagger
@@ -1107,7 +1107,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/disposisi/keluar', 'DisposisiController.listOut').middleware('checkToken:umum')
+    Route.get('/disposisi/keluar', 'DisposisiController.listOut').middleware('checkToken:umum,disposisi')
 
     /**
     * @swagger
@@ -1127,7 +1127,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/disposisi/surat/:id_surat_masuk', 'DisposisiController.listAllByMail').middleware('checkToken:umum')
+    Route.get('/disposisi/surat/:id_surat_masuk', 'DisposisiController.listAllByMail').middleware('checkToken:umum,disposisi')
 
     /**
     * @swagger
@@ -1161,7 +1161,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/disposisi/:id', 'DisposisiController.detail').middleware('checkToken:umum')
+    Route.get('/disposisi/:id', 'DisposisiController.detail').middleware('checkToken:umum,disposisi')
 
     /**
     * @swagger
@@ -1491,7 +1491,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/konsep-surat/checkingConcept/:id_surat_keluar', 'SuratPemeriksaController.updateStatus').middleware('checkToken:umum')
+    Route.put('/konsep-surat/checkingConcept/:id_surat_keluar', 'SuratPemeriksaController.updateStatus').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1516,7 +1516,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/konsep-surat/updateChecker/:id_surat_keluar', 'SuratPemeriksaController.UpdateList').middleware('checkToken:umum')
+    Route.put('/konsep-surat/updateChecker/:id_surat_keluar', 'SuratPemeriksaController.UpdateList').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1556,7 +1556,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/konsep-surat/listChecked', 'SuratKeluarController.listConceptChecked').middleware('checkToken:umum')
+    Route.get('/konsep-surat/listChecked', 'SuratKeluarController.listConceptChecked').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1596,7 +1596,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/konsep-surat/listMaked', 'SuratKeluarController.listConceptMaked').middleware('checkToken:umum')
+    Route.get('/konsep-surat/listMaked', 'SuratKeluarController.listConceptMaked').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1630,7 +1630,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/konsep-surat/:id', 'SuratKeluarController.detailConcept').middleware('checkToken:umum')
+    Route.get('/konsep-surat/:id', 'SuratKeluarController.detailConcept').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1655,7 +1655,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/tujuan-surat', 'SuratGroupTujuanController.add').middleware('checkToken:umum')
+    Route.post('/tujuan-surat', 'SuratGroupTujuanController.add').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1685,7 +1685,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/tujuan-surat/:id', 'SuratGroupTujuanController.edit').middleware('checkToken:umum')
+    Route.put('/tujuan-surat/:id', 'SuratGroupTujuanController.edit').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1705,7 +1705,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.delete('/tujuan-surat/:id', 'SuratGroupTujuanController.delete').middleware('checkToken:umum')
+    Route.delete('/tujuan-surat/:id', 'SuratGroupTujuanController.delete').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1730,7 +1730,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/tujuan-surat', 'SuratGroupTujuanController.list').middleware('checkToken:umum')
+    Route.get('/tujuan-surat', 'SuratGroupTujuanController.list').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1750,7 +1750,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/tujuan-surat/:id', 'SuratGroupTujuanController.detail').middleware('checkToken:umum')
+    Route.get('/tujuan-surat/:id', 'SuratGroupTujuanController.detail').middleware('checkToken:umum,konsepsurat')
 
     /**
     * @swagger
@@ -1790,7 +1790,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-keluar', 'SuratKeluarController.listMail').middleware('checkToken:umum')
+    Route.get('/surat-keluar', 'SuratKeluarController.listMail').middleware('checkToken:umum,suratkeluar')
 
     /**
     * @swagger
@@ -1825,7 +1825,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail').middleware('checkToken:tatausaha,suratkeluar')
+    Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail').middleware('checkToken:umum,suratkeluar')
 
     /**
     * @swagger
@@ -1859,7 +1859,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-keluar/:id', 'SuratKeluarController.detailMail').middleware('checkToken:umum')
+    Route.get('/surat-keluar/:id', 'SuratKeluarController.detailMail').middleware('checkToken:umum,suratkeluar')
 
     /**
     * @swagger
@@ -2016,7 +2016,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/surat-pengiriman', 'SuratPengirimanController.updateResi').middleware('checkToken:tatausaha')
+    Route.put('/surat-pengiriman', 'SuratPengirimanController.updateResi').middleware('checkToken:umum,suratkeluar')
 
     /**
     * @swagger
@@ -2036,5 +2036,5 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/surat-pengiriman/track/:id', 'SuratPengirimanController.trackResi').middleware('checkToken:tatausaha')
+    Route.get('/surat-pengiriman/track/:id', 'SuratPengirimanController.trackResi').middleware('checkToken:umum,suratkeluar')
 }).prefix('api')

@@ -74,8 +74,8 @@ class MasterPegawaiController {
                         filterLokasi.push(Number(startLokasi + i + '0000'))
                     }
 
-                    const data = await MasterPegawai.query()
-                                                    .whereIn('kode_lokasi', filterLokasi)
+                    const data = await Login.query()
+                                            .whereIn('kode_lokasi', filterLokasi)
 
                     return Response.format(true, null, data)
                 } else {
@@ -98,8 +98,8 @@ class MasterPegawaiController {
                             filterLokasi.push(startLokasi)
                         }
 
-                        const data = await MasterPegawai.query()
-                                                        .whereIn('kode_lokasi', filterLokasi)
+                        const data = await Login.query()
+                                                .whereIn('kode_lokasi', filterLokasi)
                                                         
                         return Response.format(true, null, data)
                     } else {
@@ -125,20 +125,20 @@ class MasterPegawaiController {
             if (arrLokasi[4] != "0") {
                 arrLokasi[4] = "0"
 
-                const atasan = await MasterPegawai.query()
-                                                .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
-                                                .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
-                                                .first()
+                const atasan = await Login.query()
+                                          .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
+                                          .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
+                                          .first()
                 if (atasan) {
                     arrPegawai.push(atasan)
                 }
             } else {
                 arrLokasi[2] = "0"
 
-                const atasan = await MasterPegawai.query()
-                                                .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
-                                                .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
-                                                .first()
+                const atasan = await Login.query()
+                                          .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
+                                          .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
+                                          .first()
                 if (atasan) {
                     arrPegawai.push(atasan)
                 }
@@ -148,10 +148,10 @@ class MasterPegawaiController {
             if (arrLokasi[2] != "0") {
                 arrLokasi[2] = "0"
 
-                const atasan = await MasterPegawai.query()
-                                                .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
-                                                .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
-                                                .first()
+                const atasan = await Login.query()
+                                          .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
+                                          .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
+                                          .first()
                 if (atasan) {
                     arrPegawai.push(atasan)
                 }
@@ -162,7 +162,7 @@ class MasterPegawaiController {
                                         .where({ level: 5, instansi: user.instansi })
                                         .first()
             if (sekretaris) {
-                arrPegawai.push(await MasterPegawai.find(sekretaris.nip))
+                arrPegawai.push(sekretaris)
             }
 
             /* Get Pimpinan */
@@ -170,7 +170,7 @@ class MasterPegawaiController {
                                         .where({ level: 2, instansi: user.instansi })
                                         .first()
             if (pimpinan) {
-                arrPegawai.push(await MasterPegawai.find(pimpinan.nip))
+                arrPegawai.push(pimpinan.nip)
             }
 
             const arrFixPegawai = arrPegawai.filter((elem, index, self) => { return index == self.map((e) => e.nip).indexOf(elem.nip) })
