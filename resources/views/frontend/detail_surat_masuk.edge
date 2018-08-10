@@ -61,6 +61,12 @@
                 </ul>
               </div>
               <div class="panel-body">
+                    <div class="alert dark alert-alt alert-info alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            <b>Dibaca Tanggal : <span id="dibaca">-</span></b>
+                          </div>
                 <div class="col-lg-12">
                     <div class="row">
                             <input type='hidden' value='{{params.id}}' id='id_surat'/>
@@ -128,8 +134,7 @@
                             <tr>
                                 <th>Pengirim</th>
                                 <th>Penerima</th>
-                                <th>Isi Disposisi</th>
-                                <th width='100px'>Tanggal</th>
+                                <th width='100px'>Status</th>
                             </tr>
                         </thead>
                         <tbody id="dispo">
@@ -306,7 +311,29 @@
     </div>
     </div>
     <!-- End Modal -->
-
+    <!-- Modal -->
+    <div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontal4" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-simple">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Isi Disposisi</h4>
+                </div>
+                <form id="simpan">
+                   <div class="modal-body">
+                       <div class="row">
+                           <div class="col-xxl-4 col-lg-12" id="keterangan">
+                               
+                           </div>
+                       </div>
+                   </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal -->
       <!-- Trigger the modal with a button -->
 
       <script>
@@ -491,19 +518,47 @@
                             var myarr = cek_lampiran.split(",");
                             for (var i = 0, len = myarr.length; i < len; i++) 
                             {
-                                file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+myarr[i]+"</a><br>";    
+                                var sal = myarr[i];
+                                var fl = sal.split(".");
+                                if(fl[1]=='pdf')
+                                {
+                                   var isno = "<i class='icon md-collection-pdf' style='font-size: 30px;'></i>";
+                                }
+                                else
+                                {
+                                    var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
+                                }
+                                file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+isno+"</a>&nbsp;&nbsp;";    
                             }
                             //ada
                         }
                         else
                         {
                             //tiadak ada
+                            var sal = myarr[i];
+                            var fl = sal.split(".");
+                            if(fl[1]=='pdf')
+                            {
+                                var isno = "<i class='icon md-collection-pdf' style='font-size: 30px;'></i>";
+                            }
+                            else
+                            {
+                                var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
+                            }
                             file = "<a onclick=preview('"+myarr[i]+"') href='#' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
                         }
                     }
                     
                     var tembs  = element.arr_tembusan;
-                    var res = tembs.replace("|", "<br>");
+                    if(tembs)
+                    {
+                        var res = tembs.replace("|", "<br>");
+                    }
+                    else
+                    {
+                        var res = "";
+                    }
+                    
 
                     var tanggal_surat = tanggal_indo(element.tgl_surat);
                     var tanggal_terima = tanggal_indo(element.tgl_terima);
@@ -513,9 +568,10 @@
                     tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+element.nomor_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+element.nomor_surat+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>TANGGAL TERIMA</th><td width='25%'>"+tanggal_terima+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
-                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+element.nama_pimpinan+"</b><br>"+element.jabatan_pimpinan+"</td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br><span style='font-size:9pt'>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</span></td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+element.nama_pimpinan+"</b><br><span style='font-size:9pt'>"+element.jabatan_pimpinan+"</span></td></tr>";
 
-                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>ISI</th><td width='50%'>"+element.isi_surat+"</td></tr>";    
+                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='100%' colspan='2'>ISI</th></tr>";    
+                    tabel2 += "<tr><td width='50%' colspan='2'>"+element.isi_surat+"</td></tr>";    
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KLASIFIKASI</th><td width='50%'>"+kla+"</td></tr>";
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KECEPATAN</th><td width='50%'>"+kecepatan+"</td></tr>";
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KEAMANAN</th><td width='50%'>"+keamanan+"</td></tr>";
@@ -549,6 +605,17 @@
                     {
                         $("#tombol_kirim").hide();
                     }
+
+                    if($("#level_main").val()==2)
+                    {
+                        //pimpinan
+                        $("#dibaca").html(tanggal_jam_indo(element.tanggal_baca_pimpian)).show();
+                    }
+                    else if($("#level_main").val()==3)
+                    {
+                        //tu
+                        $("#dibaca").html(tanggal_jam_indo(element.tanggal_baca_tata_usaha)).show();
+                    }
                     //showdisposisi();
                 },
                 error : function(data)
@@ -564,7 +631,7 @@
             var ekstensi = all[1];
             if(ekstensi=='pdf')
             {
-                $('#file_preview').html('<embed src="'+file+'" type="application/pdf" width="100%" height="560px"/>');
+                $('#file_preview').html('<embed src="'+file+'" type="application/pdf"  style="margin-left:-345px" width="217%" height="567px"/>');
             }
             else
             {
@@ -663,8 +730,33 @@
                     var isi="";
                     $.each(data.data, function(index, element) 
                     {
-                        var tagg = tanggal_indo(element.tgl_disposisi);
-                        isi+='<tr><td>'+element.nama_pengirim+'</td><td>'+element.nama_penerima+'</td><td>'+element.isi_disposisi+'</td><td>'+tagg+'</td></tr>';
+                        //var tagg = tanggal_indo(element.tgl_disposisi);
+                        var sts="";
+                        if(element.status==1)
+                        {
+                            sts = "<a onclick=ket('"+encodeURIComponent(element.isi_disposisi)+"')><span style='color:white;' class='badge badge-pill badge-lg badge-success'>Selesai</span></a>";
+                            sts += "<br><span style='font-size: 8pt;'>"+tanggal_keterangan(element.tgl_selesai)+"</span>";
+                        }
+                        else if(element.status==2)
+                        {
+                            sts = "<a onclick=ket('"+encodeURIComponent(element.isi_disposisi)+"')><span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Ditolak</span></a>";
+                            sts += "<br><span style='font-size: 8pt;'>-</span>";
+                        }
+                        else
+                        {
+                            if(element.tgl_baca)
+                            {
+                                sts = "<a onclick=ket('"+encodeURIComponent(element.isi_disposisi)+"')><span style='color:white;' class='badge badge-pill badge-lg badge-info'>Sudah Dibaca</span></a>";
+                                sts += "<br><span style='font-size: 8pt;'>"+tanggal_keterangan(element.tgl_baca)+"</span>";
+                            }
+                            else
+                            {
+                                sts = "<a onclick=ket('"+encodeURIComponent(element.isi_disposisi)+"')><span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Belum Dibaca</span></a>";
+                                sts += "<br><span style='font-size: 8pt;'>-</span>";
+                            }
+                            
+                        }
+                        isi+='<tr><td>'+element.nama_pengirim+'</td><td>'+element.nama_penerima+'</td><td>'+sts+'</td></tr>';
                         
                     });
                     //alert(isi);
@@ -886,6 +978,19 @@
                     } 
                 }
             });
+         }
+         function ket(keterangan)
+         {
+            if(keterangan=='null')
+            {
+                var ket = "Tidak ada keterangan";
+            }
+            else
+            {
+                var ket = decodeURIComponent(keterangan);
+            }
+            $('#keterangan').html("<center>"+ket+"</center>").show();
+            $('#exampleNiftyFlipHorizontal4').modal("show");
          }
       </script>
 @endsection

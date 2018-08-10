@@ -53,8 +53,9 @@
                         <th style='width:120px'>TANGGAL</th>
                         <th style='width:150px'>NOMOR SURAT</th>
                         <th>PENGIRIM</th>
+                        <th>DISPOSISI</th>
                         <th style='width:230px'>PERIHAL</th>
-                        <th style='width:140px'>PIMPINAN</th>
+                        <th style='width:140px'>KETERANGAN</th>
                         <th>ACTION</th>
                      </tr>
                   </thead>
@@ -314,11 +315,19 @@
                             //var stts  = "<span style='color:white' class='badge badge-pill badge-lg badge-danger'>By Sistem</span></span>";
                         }
 
+                        if(element.__meta__.total_disposisi>0)
+                        {
+                            var dp = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Sudah</span>";
+                        }
+                        else
+                        {
+                            var dp = "<span style='color:white' class='badge badge-pill badge-lg badge-danger'>Belum</span>";
+                        }
                         
                         var tgl_surat = tanggal_indo(element.tgl_surat);
                         var tgl_terima = tanggal_indo(element.tgl_terima);
                         var status = '';
-                        var tr_data = "<tr><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td align='center'>"+status_baca_pimpinan+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/surat-masuk/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><button id='deletesurat' onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+                        var tr_data = "<tr><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b><br><span style='font-size:9pt'>"+element.nama_instansi+"</span></td><td>"+dp+"</td><td>"+element.perihal+"</td><td align='center'>"+status_baca_pimpinan+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/surat-masuk/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><button id='deletesurat' onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
                         text += tr_data;
                     });
 

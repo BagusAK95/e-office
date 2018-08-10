@@ -470,13 +470,33 @@
                             var myarr = cek_lampiran.split(",");
                             for (var i = 0, len = myarr.length; i < len; i++) 
                             {
-                                file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+myarr[i]+"</a><br>";    
+                                var sal = myarr[i];
+                                var fl = sal.split(".");
+                                if(fl[1]=='pdf')
+                                {
+                                   var isno = "<i class='icon md-collection-pdf' style='font-size: 30px;'></i>";
+                                }
+                                else
+                                {
+                                    var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
+                                }
+                                file += "<a onclick=preview('"+myarr[i]+"') href='#'>"+isno+"</a>&nbsp;&nbsp;";    
                             }
                             //ada
                         }
                         else
                         {
                             //tiadak ada
+                            var sal = myarr[i];
+                            var fl = sal.split(".");
+                            if(fl[1]=='pdf')
+                            {
+                                var isno = "<i class='icon md-collection-pdf' style='font-size: 30px;'></i>";
+                            }
+                            else
+                            {
+                                var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
+                            }
                             file = "<a onclick=preview('"+myarr[i]+"') href='#' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
                         }
                     }
@@ -491,7 +511,8 @@
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>TANGGAL TERIMA</th><td width='25%'>"+tanggal_terima+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+element.nama_pimpinan+"</b><br>"+element.jabatan_pimpinan+"</td></tr>";
 
-                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>ISI</th><td width='50%'>"+element.isi_surat+"</td></tr>";    
+                    tabel2 += "<tr><th bgcolor='#f1f1f1' width='100%' colspan='2'>ISI</th></tr>";    
+                    tabel2 += "<tr><td width='50%' colspan='2'>"+element.isi_surat+"</td></tr>"; 
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KLASIFIKASI</th><td width='50%'>"+kla+"</td></tr>";
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KECEPATAN</th><td width='50%'>"+kecepatan+"</td></tr>";
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KEAMANAN</th><td width='50%'>"+keamanan+"</td></tr>";
@@ -540,7 +561,7 @@
             var ekstensi = all[1];
             if(ekstensi=='pdf')
             {
-                $('#file_preview').html('<embed src="'+file+'" type="application/pdf" width="100%" height="560px"/>');
+                $('#file_preview').html('<embed src="'+file+'" type="application/pdf"  style="margin-left:-345px" width="217%" height="567px"/>');
             }
             else
             {

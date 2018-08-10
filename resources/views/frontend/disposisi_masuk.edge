@@ -43,8 +43,8 @@
                   <thead>
                      <tr>
                         <th width='150px'>TANGGAL</th>
-                        <th >PENGIRIM</th>                        
-                        <th >TUJUAN</th>
+                        <th >PERIHAL</th>                        
+                        <th >PENGIRIM SURAT</th>
                         <th >KETERANGAN</th>
                         <th >ACTION</th>
                      </tr>
@@ -216,7 +216,7 @@
                 var text="";
                 $.each(data.data.data, function(index, element) 
                 {
-                
+
                 /* var keamanan = "";
                 if(element.keamanan==1)
                 {
@@ -278,7 +278,7 @@
 
                     var tg_disposisi = tanggal_indo(element.tgl_disposisi);
 
-                    var tr_data = "<tr><td>"+tg_disposisi+"</td><td><b>"+element.nama_pengirim+"</b><br>"+element.jabatan_pengirim+"</td><td><b>"+element.nama_penerima+"</b><br>"+element.jabatan_penerima+"</td><td align='center'>"+sts+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/disposisi-masuk/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
+                    var tr_data = "<tr><td>"+tg_disposisi+"</td><td>"+element.surat_.perihal+"</td><td>"+element.surat_.nama_pengirim+"</td><td align='center'>"+sts+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/disposisi-masuk/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
                     text += tr_data;
                 });
                 
