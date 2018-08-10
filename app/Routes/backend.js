@@ -2039,7 +2039,6 @@ Route.group(() => {
     Route.get('/surat-pengiriman/track/:id', 'SuratPengirimanController.trackResi')
 
     Route.get('/ip', ({ request }) => {
-        console.log(request.headers())
-        return request.headers()
+        return request.header('x-forwarded-for')
     })
 }).prefix('api')
