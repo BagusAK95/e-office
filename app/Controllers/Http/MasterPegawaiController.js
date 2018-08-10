@@ -130,7 +130,9 @@ class MasterPegawaiController {
                                           .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
                                           .first()
                 if (atasan) {
-                    arrPegawai.push(atasan)
+                    if (atasan.level != 2 && atasan.level != 5) {
+                        arrPegawai.push(atasan)                        
+                    }
                 }
             } else {
                 arrLokasi[2] = "0"
@@ -140,7 +142,9 @@ class MasterPegawaiController {
                                           .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
                                           .first()
                 if (atasan) {
-                    arrPegawai.push(atasan)
+                    if (atasan.level != 2 && atasan.level != 5) {
+                        arrPegawai.push(atasan)                        
+                    }
                 }
             }
 
@@ -153,7 +157,9 @@ class MasterPegawaiController {
                                           .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
                                           .first()
                 if (atasan) {
-                    arrPegawai.push(atasan)
+                    if (atasan.level != 2 && atasan.level != 5) {
+                        arrPegawai.push(atasan)                        
+                    }
                 }
             }
 
