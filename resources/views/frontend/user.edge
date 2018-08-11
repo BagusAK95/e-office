@@ -227,6 +227,8 @@
                      <input type="checkbox" name="sm" id="sm" value="suratmasuk"> Surat Masuk<br>
                      <input type="checkbox" name="sk" id="sk" value="suratkeluar"> Surat Keluar<br>
                      <input type="checkbox" name="di" id="di" value="disposisi"> Disposisi<br>
+                     <input type="checkbox" name="di" id="di" value="konsepsurat"> Konsep Surat<br>
+                     
                   </div>
                   <br>
                   <div style="float:right">
@@ -318,18 +320,22 @@
                     {
                         level = 'Staff';
                     }
+                    else if(element.level==5)
+                    {
+                        level = 'Sekretaris';
+                    }
                     
                     var eselon = element.kode_eselon;
                     if(element.kode_eselon==null)
                     {
-                        eselon = "-"
+                        eselon = "-";
                     }
 
 
                     var golongan = element.golongan;
                     if(element.golongan==null)
                     {
-                        golongan = "-"
+                        golongan = "-";
                     }
                     var tr_data = "<tr><td>"+element.nip+"</td><td>"+element.nama_lengkap+"</td><td>"+eselon+"</td><td>"+golongan+"</td><td>"+level+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><button type='button' class='btn btn-icon btn-primary' onclick=detail('"+element.nip+"')><i class='icon md-eye' aria-hidden='true'></i></button><button type='button' class='btn btn-icon btn-primary' onclick=editcok('"+element.nip+"')><i class='icon md-edit' aria-hidden='true'></i></button><button onclick=delete_data('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button><button onclick=reset_password('"+element.nip+"') type='button' class='btn btn-icon btn-primary'><i class='icon md-refresh-sync' aria-hidden='true'></i></button></div></div></td></tr>";
                     text += tr_data;
@@ -393,6 +399,10 @@
                 else if(data.data.level==4)
                 {
                 level = 'Staff';
+                }
+                else if(data.data.level==5)
+                {
+                level = 'Sekretaris';
                 }
 
                 var status = ''

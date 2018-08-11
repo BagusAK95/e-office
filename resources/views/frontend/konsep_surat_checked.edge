@@ -58,7 +58,6 @@
                   data-tablesaw-mode-switch data-tablesaw-minimap data-tablesaw-mode-exclude="columntoggle">
                   <thead>
                      <tr>
-                        <th >NOMOR AGENDA</th>
                         <th width='150px'>TANGGAL</th>
                         <th >PEMBUAT</th>
                         <th width='300px'>TUJUAN</th>                        
@@ -262,7 +261,7 @@
 
                         var tgl_surat = tanggal_indo(element.tgl_surat);
 
-                        var tr_data = "<tr><td>"+element.nomor_agenda+"</td><td>"+tgl_surat+"</td><td><b>"+element.nama_pembuat+"</b><br>"+element.jabatan_pembuat+"</td><td>"+nama_instansis+"</td><td>"+element.perihal+"</td><td align='center'>"+sts+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/konsep-surat/checked/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
+                        var tr_data = "<tr><td>"+tgl_surat+"</td><td><b>"+element.nama_pembuat+"</b><br>"+element.jabatan_pembuat+"</td><td>"+nama_instansis+"</td><td>"+element.perihal+"</td><td align='center'>"+sts+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/konsep-surat/checked/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
                         text += tr_data;
                     });
                     

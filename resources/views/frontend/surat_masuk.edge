@@ -296,13 +296,38 @@
                         
                         if(element.status_surat==1)
                         {
-                            //var stts = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Manual</span></span>";
-                            var status_baca_pimpinan="<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Belum Dibaca</span><br><b>-</b>";
-                            if(element.tgl_baca_pimpinan)
+                            if($("#level_main").val()==2)
                             {
-                                var tglbc = tanggal_jam_indo(element.tgl_baca_pimpinan);
-                                status_baca_pimpinan = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Sudah Dibaca</span><br><span style='font-size:8pt'><b>"+tglbc+"</b></span>";
+                                //Pimpinan
+                                var status_baca_pimpinan="<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Belum Dibaca</span><br><b>-</b>";
+                                if(element.tgl_baca_pimpinan)
+                                {
+                                    var tglbc = tanggal_jam_indo(element.tgl_baca_pimpinan);
+                                    status_baca_pimpinan = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Sudah Dibaca</span><br><span style='font-size:8pt'><b>"+tglbc+"</b></span>";
+                                }
                             }
+                            else if($("#level_main").val()==3)
+                            {
+                                //TU
+                                var status_baca_pimpinan="<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Belum Dibaca</span><br><b>-</b>";
+                                if(element.tgl_baca_tata_usaha)
+                                {
+                                    var tglbc = tanggal_jam_indo(element.tgl_baca_tata_usaha);
+                                    status_baca_pimpinan = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Sudah Dibaca</span><br><span style='font-size:8pt'><b>"+tglbc+"</b></span>";
+                                }
+                            }
+                            else
+                            {
+                                //PLT
+                                var status_baca_pimpinan="<span style='color:white' class='badge badge-pill badge-lg badge-warning'>Belum Dibaca</span><br><b>-</b>";
+                                if(element.tgl_baca_plt)
+                                {
+                                    var tglbc = tanggal_jam_indo(element.tgl_baca_plt);
+                                    status_baca_pimpinan = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Sudah Dibaca</span><br><span style='font-size:8pt'><b>"+tglbc+"</b></span>";
+                                }
+                            }
+                            //var stts = "<span style='color:white' class='badge badge-pill badge-lg badge-success'>Manual</span></span>";
+                            
                         }
                         else
                         {

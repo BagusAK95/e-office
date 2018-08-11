@@ -500,16 +500,56 @@
                             file = "<a onclick=preview('"+myarr[i]+"') href='#' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
                         }
                     }
+                    //alert(element.arr_tembusan);
+
+                    
+
+                    var tembs  = element.arr_tembusan;
+                    if(tembs)
+                    {
+                        var res = "";
+                        var all = tembs.split("|");
+                        $.each(all, function(index, element) 
+                        {
+                            res+=element+"<br>";
+                        });
+                    }
+                    else
+                    {
+                        var res = "";
+                    }
 
                     var tanggal_surat = tanggal_indo(element.tgl_surat);
-                    var tanggal_terima = tanggal_indo(element.tgl_terima);
+                    var tanggal_terima = "-";
+                    if(element.tgl_terima)
+                    {
+                        var tanggal_terima = tanggal_indo(element.tgl_terima);
+                    }
+                    var no_agenda = "-";
+                    if(element.nomor_agenda)
+                    {
+                        no_agenda = element.nomor_agenda;
+                    }
+
+                    var nmpimpinan = "-";
+                    if(element.nama_pimpinan)
+                    {
+                        nmpimpinan = element.nama_pimpinan;
+                    }
+
+                    var jabatanpimpinan = "-";
+                    if(element.jabatan_pimpinan)
+                    {
+                        jabatanpimpinan = element.jabatan_pimpinan;
+                    }
+
                     var tabel = "";
                     var tabel2 = "";
                     var tabel3 = "";
                     tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
-                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+element.nomor_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+element.nomor_surat+"</td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+no_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+element.nomor_surat+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>TANGGAL TERIMA</th><td width='25%'>"+tanggal_terima+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
-                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+element.nama_pimpinan+"</b><br>"+element.jabatan_pimpinan+"</td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+nmpimpinan+"</b><br>"+jabatanpimpinan+"</td></tr>";
 
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='100%' colspan='2'>ISI</th></tr>";    
                     tabel2 += "<tr><td width='50%' colspan='2'>"+element.isi_surat+"</td></tr>"; 
@@ -521,7 +561,7 @@
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>PINDAIAN</th><td width='50%'>"+file+"</td></tr>";
                     
                     //tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>PELAKSANA HARIAN</th><td width='50%'><b>"+element.nama_plt+"</b><br>"+element.jabatan_plt+"</td></tr>";
-                    tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>TEMBUSAN</th><td width='50%'>"+element.arr_tembusan+"</td>";
+                    tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>TEMBUSAN</th><td width='50%'>"+res+"</td>";
                     
                     $("#tabel").html(tabel).show();
                     $("#tabel2").html(tabel2).show();

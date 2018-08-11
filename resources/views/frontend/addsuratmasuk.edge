@@ -360,7 +360,7 @@
    {
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai', 
+            url: '/api/user/all', 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -368,19 +368,8 @@
             success: function (data) 
             {   
                 var isi = "<option value=''>Pilih Pegawai</option>";
-                $.each(data.data.data, function(index, element) {
-                    var depan = ''
-                    var belakang = ''
-                    if(element.gelar_depan)
-                    {
-                        depan += element.gelar_depan+" ";
-                    }
-                    var belakang = "";
-                    if(element.gelar_belakang)
-                    {
-                        belakang += ", "+element.gelar_belakang;
-                    }
-                    isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
+                $.each(data.data, function(index, element) {
+                    isi += "<option value='"+element.nip+"'>"+element.nama_lengkap+"</option>";
                 })
                 $(".pegawai").html(isi).show();
             },
@@ -419,7 +408,7 @@
    { 
         $.ajax({ 
         type: 'GET', 
-        url: '/api/master-pegawai', 
+        url: '/api/user/all', 
         headers: {
                     'Authorization': 'Bearer {{sesi}}'
                 },
@@ -427,19 +416,8 @@
         success: function (data) 
         {   
             var isi = "<option value=''>Pilih Pegawai</option>";
-            $.each(data.data.data, function(index, element) {
-                var depan = ''
-                var belakang = ''
-                if(element.gelar_depan)
-                {
-                    depan += element.gelar_depan+" ";
-                }
-                var belakang = "";
-                if(element.gelar_belakang)
-                {
-                    belakang += ", "+element.gelar_belakang;
-                }
-                isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+" - "+element.nama_jabatan+"</option>";
+            $.each(data.data, function(index, element) {
+                isi += "<option value='"+element.nip+"'>"+element.nama_lengkap+" - "+element.nama_jabatan+"</option>";
             })
             $(".pegawai_plt").html(isi).show();
         },
@@ -455,7 +433,7 @@
        var nip = $("#nip_penerima").val();
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai/'+nip, 
+            url: '/api/user/'+nip, 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -463,17 +441,7 @@
             success: function (data) 
             {   
                 var element = data.data;
-                var depan = "";
-                if(element.gelar_depan)
-                {
-                    depan += element.gelar_depan+"";
-                }
-                var belakang = "";
-                if(element.gelar_belakang)
-                {
-                    belakang += ""+element.gelar_belakang;
-                }
-                $("#nama_penerima").val(depan+element.nama+belakang);
+                $("#nama_penerima").val(element.nama_lengkap);
                 $("#jabatan_penerima").val(element.nama_jabatan);
             },
             error: function ()

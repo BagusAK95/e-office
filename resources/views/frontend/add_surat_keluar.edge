@@ -233,7 +233,7 @@
 <div class="modal-dialog modal-simple" >
   <div class="modal-content">
     <div class="modal-header">
-      <h4 class="modal-title">Surat Masuk</h4>
+      <h4 class="modal-title">Kaitkan Surat</h4>
     </div>
     <div class="modal-body">
         <form id="cari_surat">
@@ -342,6 +342,7 @@
        mailChecker();
        showbrand();
        showbrand2();
+       semua();
        $("#loader").fadeOut("xslow");
        /*Page*/
    });
@@ -365,7 +366,7 @@
    {
         $.ajax({ 
             type: 'GET', 
-            url: "/api/master-pegawai/mailChecker", 
+            url: "/api/user/mailChecker", 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -378,22 +379,11 @@
                 var nomor = 1;
                 var tabel = "";
                 $.each(data.data, function(index, element) {
-                    var depan = ''
-                    var belakang = ''
-                    if(element.gelar_depan)
-                    {
-                        depan += element.gelar_depan+" ";
-                    }
-                    var belakang = "";
-                    if(element.gelar_belakang)
-                    {
-                        belakang += ", "+element.gelar_belakang;
-                    }
                     var nip = element.nip;
-                    var nama = element.nama;
+                    var nama = element.nama_lengkap;
                     var nama_jabatan = element.nama_jabatan;
                     isi += '{"nip_pemeriksa":"'+nip+'","nama_pemeriksa":"'+nama+'","jabatan_pemeriksa":"'+nama_jabatan+'"}';
-                    tabel += '<tr><td>'+depan+nama+belakang+'</td><td>'+nama_jabatan+'</td></tr>';
+                    tabel += '<tr><td>'+nama+'</td><td>'+nama_jabatan+'</td></tr>';
                     if(nomor<panjang)
                     {
                         isi += ",";
@@ -415,7 +405,7 @@
    {
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai', 
+            url: '/api/user/all', 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -423,19 +413,8 @@
             success: function (data) 
             {   
                 var isi = "";
-                $.each(data.data.data, function(index, element) {
-                    var depan = ''
-                    var belakang = ''
-                    if(element.gelar_depan)
-                    {
-                        depan += element.gelar_depan+" ";
-                    }
-                    var belakang = "";
-                    if(element.gelar_belakang)
-                    {
-                        belakang += ", "+element.gelar_belakang;
-                    }
-                    isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                $.each(data.data, function(index, element) {
+                    isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.nama_jabatan+"'>"+element.nama_lengkap+"</option>";
                 })
                 $("#arr_pemeriksa").html(isi).show();
             },
@@ -592,7 +571,7 @@
    {
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai', 
+            url: '/api/user/all', 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -600,19 +579,8 @@
             success: function (data) 
             {   
                 var isi = "<option value=''>Pilih Pegawai</option>";
-                $.each(data.data.data, function(index, element) {
-                    var depan = ''
-                    var belakang = ''
-                    if(element.gelar_depan)
-                    {
-                        depan += element.gelar_depan+" ";
-                    }
-                    var belakang = "";
-                    if(element.gelar_belakang)
-                    {
-                        belakang += ", "+element.gelar_belakang;
-                    }
-                    isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
+                $.each(data.data, function(index, element) {
+                    isi += "<option value='"+element.nip+"'>"+element.nama_lengkap+"</option>";
                 })
                 $(".pegawai").html(isi).show();
             },
@@ -628,7 +596,7 @@
        var nip = $("#nip_penandatangan").val();
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai/'+nip, 
+            url: '/api/user/'+nip, 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -636,17 +604,7 @@
             success: function (data) 
             {   
                 var element = data.data;
-                var depan = "";
-                if(element.gelar_depan)
-                {
-                    depan += element.gelar_depan+" ";
-                }
-                var belakang = "";
-                if(element.gelar_belakang)
-                {
-                    belakang += ", "+element.gelar_belakang;
-                }
-                $("#nama_penandatangan").val(depan+element.nama+belakang);
+                $("#nama_penandatangan").val(element.nama_lengkap);
                 $("#jabatan_penandatangan").val(element.nama_jabatan);
             },
             error: function ()
@@ -661,7 +619,7 @@
         var kdlokasi = $("#instansi_penerima").val();
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai/byLocation/'+kdlokasi, 
+            url: '/api/user/byLocation/'+kdlokasi, 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -670,18 +628,7 @@
             {   
                 var isi = "";
                 $.each(data.data, function(index, element) {
-                    var depan = ''
-                    var belakang = ''
-                    if(element.gelar_depan)
-                    {
-                        depan += element.gelar_depan+" ";
-                    }
-                    var belakang = "";
-                    if(element.gelar_belakang)
-                    {
-                        belakang += ", "+element.gelar_belakang;
-                    }
-                    isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                    isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.nama_jabatan+"'>"+element.nama_lengkap+"</option>";
                 })
                 $("#arr_penerima").html(isi).show();
                 $("#arr_tembusan").html(isi).show();
@@ -797,7 +744,7 @@
        var ke = $("#cari").val();
         $.ajax({ 
             type: 'GET', 
-            url: '/api/surat-masuk?keyword='+ke+'&page=1&limit=999', 
+            url: '/api/disposisi/masuk?keyword='+ke+'&page=1&limit=999', 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -806,8 +753,9 @@
             {   
                 var text="";
                 $.each(data.data.data, function(index, element) {
-                var tgl_surat = tanggal_indo(element.tgl_surat);
-                    text+= "<tr><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td><a onclick='pilih("+element.id+")' class='btn btn-success' style='color:white'>Pilih</a></td></tr>";
+                    var srt = element.surat_;
+                    var tgl_surat = tanggal_indo(srt.tgl_surat);
+                    text+= "<tr><td>"+tgl_surat+"</td><td>"+srt.nomor_surat+"</td><td><b>"+srt.nama_pengirim+"</b>,"+srt.nama_instansi+","+srt.jabatan_pengirim+"</td><td>"+srt.perihal+"</td><td><a onclick='pilih("+srt.id+","+element.id+")' class='btn btn-success' style='color:white'>Pilih</a></td></tr>";
                 });
                 $(".surat_masuk").html(text).show();
             },
@@ -818,12 +766,38 @@
         });
         return false;
    });
-   function pilih(id)
+
+   function semua()
+   {
+        $.ajax({ 
+            type: 'GET', 
+            url: '/api/disposisi/masuk?page=1&limit=999', 
+            headers: {
+                        'Authorization': 'Bearer {{sesi}}'
+                    },
+            dataType: 'json',
+            success: function (data) 
+            {   
+                var text="";
+                $.each(data.data.data, function(index, element) {
+                    var srt = element.surat_;
+                    var tgl_surat = tanggal_indo(srt.tgl_surat);
+                    text+= "<tr><td>"+tgl_surat+"</td><td>"+srt.nomor_surat+"</td><td><b>"+srt.nama_pengirim+"</b>,"+srt.nama_instansi+","+srt.jabatan_pengirim+"</td><td>"+srt.perihal+"</td><td><a onclick='pilih("+srt.id+","+element.id+")' class='btn btn-success' style='color:white'>Pilih</a></td></tr>";
+                });
+                $(".surat_masuk").html(text).show();
+            },
+            error: function ()
+            {
+                return false;
+            }
+        });
+   }
+   function pilih(id_surat,id)
    {
         $("#dari_surat_masuk").val(id);
         $.ajax({ 
             type: 'GET', 
-            url: "/api/surat-masuk/"+id, 
+            url: "/api/disposisi/"+id, 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -831,11 +805,12 @@
             success: function (data) 
             {   
                 element = data.data;
+                var srt = data.data.surat_;
                 var text="";
                 var tgl_surat = tanggal_indo(element.tgl_surat);
                 text+= "<table class='table table-striped table-bordered'>\
                         <tr align='center'><th>Tanggal Surat</th><th>Nomor Surat</th><th>Pengirim Surat</th><th>Perihal</th><th>Action</th></tr>\
-                        <tr align='center'><td>"+tgl_surat+"</td><td>"+element.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+element.perihal+"</td><td><a onclick='batal("+element.id+")' class='btn btn-danger' style='color:white'>Batal</a></td></tr></table>";
+                        <tr align='center'><td>"+tgl_surat+"</td><td>"+srt.nomor_surat+"</td><td><b>"+element.nama_pengirim+"</b>,"+element.nama_instansi+","+element.jabatan_pengirim+"</td><td>"+srt.perihal+"</td><td><a onclick='batal("+element.id+")' class='btn btn-danger' style='color:white'>Batal</a></td></tr></table>";
                 $("#kait").html(text).show();
                 $('.modal').modal('hide');
             },

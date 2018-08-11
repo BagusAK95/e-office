@@ -106,8 +106,8 @@
                                 <div class="form-group " data-plugin="formMaterial">
                                     <label class="form-control-label" for="inputEmail">Status</label>
                                     <select class="form-control" name="status" id="status">
-                                        <option value="2">Revisi</option>
                                         <option value="3">Disetujui</option>
+                                        <option value="2">Revisi</option>
                                     </select>
                                 </div>
                                 <div class="form-group" data-plugin="formMaterial">
@@ -227,7 +227,7 @@
         {
             $.ajax({ 
                 type: 'GET', 
-                url: '/api/master-pegawai', 
+                url: '/api/user/all', 
                 headers: {
                             'Authorization': 'Bearer {{sesi}}'
                         },
@@ -235,19 +235,8 @@
                 success: function (data) 
                 {   
                     var isi = "";
-                    $.each(data.data.data, function(index, element) {
-                        var depan = ''
-                        var belakang = ''
-                        if(element.gelar_depan)
-                        {
-                            depan += element.gelar_depan+" ";
-                        }
-                        var belakang = "";
-                        if(element.gelar_belakang)
-                        {
-                            belakang += ", "+element.gelar_belakang;
-                        }
-                        isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                    $.each(data.data, function(index, element) {
+                        isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.nama_jabatan+"'>"+element.nama_lengkap+"</option>";
                     })
                     $("#arr_pemeriksa").html(isi).show();
                 },
@@ -517,12 +506,18 @@
                     {
                         var nsrt = element.nomor_surat; 
                     }
+
+                    var agen = "-";
+                    if(element.nomor_agenda)
+                    {
+                        agen+=element.nomor_agenda;
+                    }
                     //var tanggal_terima = tanggal_indo(element.tgl_terima);
                     var tabel = "";
                     var tabel2 = "";
                     var tabel3 = "";
                     tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
-                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+element.nomor_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+nsrt+"</td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+agen+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+nsrt+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>STATUS</th><td width='25%'>"+sts+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PEMBUAT KONSEP</th><td width='25%'><b>"+element.nama_pembuat+"</b><br>"+element.jabatan_pembuat+"</td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'>"+nama_instansis+"</td></tr>";
 

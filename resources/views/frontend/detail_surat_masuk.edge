@@ -409,7 +409,7 @@
    { 
         $.ajax({ 
         type: 'GET', 
-        url: '/api/master-pegawai', 
+        url: '/api/user/all', 
         headers: {
                     'Authorization': 'Bearer {{sesi}}'
                 },
@@ -417,19 +417,8 @@
         success: function (data) 
         {   
             var isi = "<option value=''>Pilih Pegawai</option>";
-            $.each(data.data.data, function(index, element) {
-                var depan = ''
-                var belakang = ''
-                if(element.gelar_depan)
-                {
-                    depan += element.gelar_depan+" ";
-                }
-                var belakang = "";
-                if(element.gelar_belakang)
-                {
-                    belakang += ", "+element.gelar_belakang;
-                }
-                isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.jabatan+"'>"+depan+element.nama+belakang+" - "+element.nama_jabatan+"</option>";
+            $.each(data.data, function(index, element) {
+                isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.jabatan+"'>"+element.nama_lengkap+" - "+element.nama_jabatan+"</option>";
             })
             $(".pegawai_plt").html(isi).show();
         },
@@ -552,7 +541,12 @@
                     var tembs  = element.arr_tembusan;
                     if(tembs)
                     {
-                        var res = tembs.replace("|", "<br>");
+                        var res = "";
+                        var all = tembs.split("|");
+                        $.each(all, function(index, element) 
+                        {
+                            res+=element+"<br>";
+                        });
                     }
                     else
                     {
@@ -561,14 +555,37 @@
                     
 
                     var tanggal_surat = tanggal_indo(element.tgl_surat);
-                    var tanggal_terima = tanggal_indo(element.tgl_terima);
+
+                    var tanggal_terima = "-";
+                    if(element.tgl_terima)
+                    {
+                        var tanggal_terima = tanggal_indo(element.tgl_terima);
+                    }
+                    var no_agenda = "-";
+                    if(element.nomor_agenda)
+                    {
+                        no_agenda = element.nomor_agenda;
+                    }
+
+                    var nmpimpinan = "-";
+                    if(element.nama_pimpinan)
+                    {
+                        nmpimpinan = element.nama_pimpinan;
+                    }
+
+                    var jabatanpimpinan = "-";
+                    if(element.jabatan_pimpinan)
+                    {
+                        jabatanpimpinan = element.jabatan_pimpinan;
+                    }
+
                     var tabel = "";
                     var tabel2 = "";
                     var tabel3 = "";
                     tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
-                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+element.nomor_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+element.nomor_surat+"</td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+no_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+element.nomor_surat+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>TANGGAL TERIMA</th><td width='25%'>"+tanggal_terima+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
-                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br><span style='font-size:9pt'>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</span></td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+element.nama_pimpinan+"</b><br><span style='font-size:9pt'>"+element.jabatan_pimpinan+"</span></td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br><span style='font-size:9pt'>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</span></td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+nmpimpinan+"</b><br><span style='font-size:9pt'>"+jabatanpimpinan+"</span></td></tr>";
 
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='100%' colspan='2'>ISI</th></tr>";    
                     tabel2 += "<tr><td width='50%' colspan='2'>"+element.isi_surat+"</td></tr>";    
@@ -605,16 +622,17 @@
                     {
                         $("#tombol_kirim").hide();
                     }
+                    
 
                     if($("#level_main").val()==2)
                     {
                         //pimpinan
-                        $("#dibaca").html(tanggal_jam_indo(element.tanggal_baca_pimpian)).show();
+                        $("#dibaca").html(tanggal_jam_indo(element.tgl_baca_pimpian)).show();
                     }
                     else if($("#level_main").val()==3)
                     {
                         //tu
-                        $("#dibaca").html(tanggal_jam_indo(element.tanggal_baca_tata_usaha)).show();
+                        $("#dibaca").html(tanggal_jam_indo(element.tgl_baca_tata_usaha)).show();
                     }
                     //showdisposisi();
                 },
@@ -811,7 +829,7 @@
         {
             $.ajax({ 
                 type: 'GET', 
-                url: '/api/master-pegawai/dispositionReciver/{{params.id}}', 
+                url: '/api/user/dispositionReciver/{{params.id}}', 
                 headers: {
                             'Authorization': 'Bearer {{sesi}}'
                         },
@@ -820,18 +838,8 @@
                 {   
                     var isi = "";
                     $.each(data.data, function(index, element) {
-                        var depan = ''
-                        var belakang = ''
-                        if(element.gelar_depan)
-                        {
-                            depan += element.gelar_depan+" ";
-                        }
-                        var belakang = "";
-                        if(element.gelar_belakang)
-                        {
-                            belakang += ", "+element.gelar_belakang;
-                        }
-                        isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                        
+                        isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.nama_jabatan+"'>"+element.nama_lengkap+"</option>";
                     })
                     $(".pegawai").html(isi).show();
                 },

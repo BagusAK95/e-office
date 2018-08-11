@@ -468,7 +468,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/user/:nip', 'UserController.detail').middleware('checkToken:admin')
+    Route.get('/user/:nip', 'UserController.detail').middleware('checkToken:umum')
 
     /**
     * @swagger

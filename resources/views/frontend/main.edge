@@ -121,7 +121,7 @@
                           <div class="list-group">
                               <div class="dropdown-menu-header">
                                   <h5>JABATAN</h5>
-                                  <span id='new'></span>
+                                  <span></span>
                                </div>
                                <div class="dropdown-menu-footer">
                                   <br>
@@ -439,34 +439,15 @@
                 },
                 success: function (data) { 
                     //alert(data.data.level);
-                    $.ajax({ 
-                      type: 'GET', 
-                      url: '/api/master-pegawai/'+data.data.nip, 
-                      headers: {
-                          'Authorization': 'Bearer {{sesi}}'
-                      },
-                      success: function (element) {
-                        if(element.success==false) 
-                        {
-                          $(".nama_user").html("").show();
-                        }
-                        else
-                        {
-                          var depan="";
-                          if(element.data.gelar_depan)
-                          {
-                              depan += element.data.gelar_depan+" ";
-                          }
-                          var belakang = "";
-                          if(element.data.gelar_belakang)
-                          {
-                              belakang += ", "+element.data.gelar_belakang;
-                          }
-                          $(".nama_user").html(data.data.nama_lengkap).show();
-                        }
-                        
-                      }
-                    });
+                 
+                        //alert(data.data.nama_lengkap);
+                    var ddppnn = "";
+                    if(data.data.level==1)
+                    {
+                      ddppnn += "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Admin</span>&nbsp;&nbsp;";
+                    }
+                      $(".nama_user").html(ddppnn+data.data.nama_lengkap).show();
+                   
                     
                     $("#level_main").val(data.data.level);
                     $("#nip_login").val(data.data.nip);
