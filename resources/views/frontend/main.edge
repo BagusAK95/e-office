@@ -224,8 +224,8 @@
                         <span class="site-menu-title">Log Aktivitas</span>
                         </a>
                      </li>
-                     <li class="site-menu-category surat konsol_non_admin">Surat Masuk</li>
-                     <li class="site-menu-item konsol_non_admin" id="surat_masuk" >
+                     <li class="site-menu-category surat konsol_non_admin surat_masuk_menu" style="display:none;">Surat Masuk</li>
+                     <li class="site-menu-item konsol_non_admin surat_masuk_menu" id="surat_masuk" style="display:none;" >
                         <a class="animsition-link" href="/surat-masuk">
                         <i class="site-menu-icon md-email-open" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Masuk</span>
@@ -234,7 +234,7 @@
                         </div>
                         </a>
                      </li>
-                     <li class="site-menu-item konsol_non_admin">
+                     <li class="site-menu-item konsol_non_admin surat_masuk_menu" style="display:none;">
                         <a class="animsition-link" href="/surat-tembusan">
                         <i class="site-menu-icon md-assignment" aria-hidden="true"></i>
                         <span class="site-menu-title">Tembusan</span>
@@ -243,8 +243,8 @@
                         </div>
                         </a>
                      </li>
-                     <li class="site-menu-category surat konsol_non_admin">Disposisi</li>
-                     <li class="site-menu-item konsol_non_admin" id="disposisi">
+                     <li class="site-menu-category surat konsol_non_admin disposisi_menu" style="display:none;">Disposisi</li>
+                     <li class="site-menu-item konsol_non_admin disposisi_menu" id="disposisi" style="display:none;">
                         <a class="animsition-link" href="/disposisi-masuk">
                         <i class="site-menu-icon md-inbox" aria-hidden="true"></i>
                         <span class="site-menu-title">Disposisi Masuk</span>
@@ -252,7 +252,7 @@
                         </div>
                         </a>
                      </li>
-                     <li class="site-menu-item konsol_non_admin" id="disposisi_keluar">
+                     <li class="site-menu-item konsol_non_admin disposisi_menu" id="disposisi_keluar style="display:none;"">
                         <a class="animsition-link" href="/disposisi-keluar">
                         <i class="site-menu-icon md-mail-send" aria-hidden="true"></i>
                         <span class="site-menu-title">Disposisi Keluar</span>
@@ -261,14 +261,14 @@
                         </div>
                         </a>
                      </li>
-                     <li class="site-menu-category surat konsol_non_admin" id="" >Surat Keluar</li>
-                     <li class="site-menu-item konsol_non_admin" id="" >
+                     <li class="site-menu-category surat konsol_non_admin " id="" >Surat Keluar</li>
+                     <li class="site-menu-item konsol_non_admin konsep_surat_menu" id="" style="display:none;">
                       <a class="animsition-link" href="/tujuan-surat">
                       <i class="site-menu-icon md-navigation" aria-hidden="true"></i>
                       <span class="site-menu-title">Tujuan Surat</span>
                       </a>
                     </li>
-                     <li class="site-menu-item konsol_non_admin" id="surat-keluar" >
+                     <li class="site-menu-item konsol_non_admin konsep_surat_menu" id="surat-keluar" style="display:none;">
                         <a class="animsition-link" href="/konsep-surat/maked">
                         <i class="site-menu-icon md-collection-item" aria-hidden="true"></i>
                         <span class="site-menu-title">Pengajuan Konsep</span>
@@ -282,7 +282,7 @@
                         </div>
                         </a>
                      </li>
-                     <li class="site-menu-item konsol_non_admin" id="surat-keluar" >
+                     <li class="site-menu-item konsol_non_admin surat_keluar_menu" id="surat-keluar" style="display:none;">
                         <a class="animsition-link" href="/surat-keluar">
                         <i class="site-menu-icon md-email" aria-hidden="true"></i>
                         <span class="site-menu-title">Surat Keluar</span>
@@ -441,6 +441,31 @@
                     //alert(data.data.level);
                  
                         //alert(data.data.nama_lengkap);
+                    var hak = data.data.akses;
+                    var smuanya = hak.split(",");
+                    $.each(smuanya, function(index, element) {
+                      if(element=="suratmasuk")
+                      {
+                        $(".surat_masuk_menu").show();
+                      }
+
+                      if(element=="disposisi")
+                      {
+                        $(".disposisi_menu").show();
+                      }
+
+                      if(element=="suratkeluar")
+                      {
+                        $(".surat_keluar_menu").show();
+                      }
+
+                      if(element=="konsepsurat")
+                      {
+                        $(".konsep_surat_menu").show();
+                      }
+
+                    });
+                    
                     var ddppnn = "";
                     if(data.data.level==1)
                     {
@@ -473,17 +498,17 @@
                     else if(data.data.level==2)
                     {
                       var lv = "Pimpinan";
-                      $(".konsol_non_admin").show();
+                      //$(".konsol_non_admin").show();
                     }
                     else if(data.data.level==3)
                     {
                       var lv = "Tata Usaha";
-                      $(".konsol_non_admin").show();
+                      //$(".konsol_non_admin").show();
                     }
                     else if(data.data.level==4)
                     {
                       var lv = "Staff";
-                      $(".konsol_non_admin").show();
+                      //$(".konsol_non_admin").show();
                     }
 
                     $(".jabatan").html(data.data.nama_jabatan).show();
