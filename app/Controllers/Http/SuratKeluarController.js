@@ -292,7 +292,7 @@ class SuratKeluarController {
     async sendMail({ params, request, auth }) {
         try {
             const user = await auth.getUser()
-            const data = request.only(['nomor_surat'])
+            const data = request.only(['nomor_surat', 'nomor_agenda', 'lampiran'])
 
             const dataSurat = await SuratKeluar.query()
                                             .where({ instansi_pengirim: user.instansi, id: params.id })
