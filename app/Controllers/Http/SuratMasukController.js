@@ -165,6 +165,9 @@ class SuratMasukController {
                                             .where({ level: 2, instansi: user.instansi })
                                             .first()
             if (dataPimpinan) {
+                dataSurat.nip_tata_usaha = user.nip
+                dataSurat.nama_tata_usaha = user.nama_lengkap
+                dataSurat.jabatan_tata_usaha = user.nama_jabatan
                 dataSurat.nip_pimpinan = dataPimpinan.nip
                 dataSurat.nama_pimpinan = dataPimpinan.nama_lengkap
                 dataSurat.jabatan_pimpinan = dataPimpinan.nama_jabatan

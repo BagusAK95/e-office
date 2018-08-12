@@ -316,15 +316,8 @@ class SuratKeluarController {
 
                 arrPenerima.forEach(async (penerima) => {
                     if (penerima.id_instansi) {
-                        const dataTataUsaha = await Login.query()
-                                                        .where({ level: 3, instansi: penerima.id_instansi })
-                                                        .first()
-
                         const insertSurat = await SuratMasuk.create({
                             instansi_penerima: penerima.id_instansi,
-                            nip_tata_usaha: dataTataUsaha.nip,
-                            nama_tata_usaha: dataTataUsaha.nama_lengkap,
-                            jabatan_tata_usaha: dataTataUsaha.nama_jabatan,
                             tgl_surat: dataSurat.tgl_surat,
                             nomor_surat: data.nomor_surat,
                             nomor_agenda: data.nomor_agenda,
@@ -342,16 +335,26 @@ class SuratKeluarController {
                             status_surat: 0
                         })
 
-                        if (insertSurat) {
-                            Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)                
-                        
-                            await SuratPengiriman.create({
-                                pengirim: user.instansi,
-                                id_surat_keluar: params.id,
-                                id_instansi: penerima.id_instansi,
-                                nama_instansi: penerima.nama_instansi,
-                                id_surat_masuk: insertSurat.id
-                            })
+                        await SuratPengiriman.create({
+                            pengirim: user.instansi,
+                            id_surat_keluar: params.id,
+                            id_instansi: penerima.id_instansi,
+                            nama_instansi: penerima.nama_instansi,
+                            id_surat_masuk: insertSurat.id
+                        })
+
+                        const dataTataUsaha = await Login.query()
+                                                        .where({ level: 3, instansi: penerima.id_instansi })
+                                                        .first()
+                        if (dataTataUsaha) {
+                            insertSurat.nip_tata_usaha = dataTataUsaha.nip
+                            insertSurat.nama_tata_usaha = dataTataUsaha.nama_lengkap
+                            insertSurat.jabatan_tata_usaha = dataTataUsaha.nama_jabatan
+                            insertSurat.save()
+
+                            if (insertSurat) {
+                                Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)
+                            }    
                         }
                     } else {
                         await SuratPengiriman.create({
@@ -365,15 +368,8 @@ class SuratKeluarController {
 
                 arrTembusan.forEach(async (tembusan) => {
                     if (tembusan.id_instansi) {
-                        const dataTataUsaha = await Login.query()
-                                                        .where({ level: 3, instansi: tembusan.id_instansi })
-                                                        .first()
-
                         const insertTembusan = await SuratTembusan.create({
                             instansi_penerima: tembusan.id_instansi,
-                            nip_tata_usaha: dataTataUsaha.nip,
-                            nama_tata_usaha: dataTataUsaha.nama_lengkap,
-                            jabatan_tata_usaha: dataTataUsaha.nama_jabatan,
                             tgl_surat: dataSurat.tgl_surat,
                             nomor_surat: data.nomor_surat,
                             nomor_agenda: data.nomor_agenda,
@@ -391,16 +387,26 @@ class SuratKeluarController {
                             status_surat: 0
                         })
 
-                        if (insertTembusan) {
-                            Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Sebagai Tembusan', '/surat-tembusan/' + insertTembusan.id)
+                        await SuratPengiriman.create({
+                            pengirim: user.instansi,
+                            id_surat_keluar: params.id,
+                            id_instansi: tembusan.id_instansi,
+                            nama_instansi: tembusan.nama_instansi,
+                            id_surat_tembusan: insertTembusan.id
+                        })
 
-                            await SuratPengiriman.create({
-                                pengirim: user.instansi,
-                                id_surat_keluar: params.id,
-                                id_instansi: tembusan.id_instansi,
-                                nama_instansi: tembusan.nama_instansi,
-                                id_surat_tembusan: insertTembusan.id
-                            })
+                        const dataTataUsaha = await Login.query()
+                                                        .where({ level: 3, instansi: tembusan.id_instansi })
+                                                        .first()
+                        if (dataTataUsaha) {
+                            insertTembusan.nip_tata_usaha = dataTataUsaha.nip
+                            insertTembusan.nama_tata_usaha = dataTataUsaha.nama_lengkap
+                            insertTembusan.jabatan_tata_usaha = dataTataUsaha.nama_jabatan
+                            insertTembusan.save()
+    
+                            if (insertTembusan) {
+                                Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Sebagai Tembusan', '/surat-tembusan/' + insertTembusan.id)
+                            }    
                         }
                     } else {
                         await SuratPengiriman.create({

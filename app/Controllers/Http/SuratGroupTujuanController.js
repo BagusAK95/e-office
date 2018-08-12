@@ -57,7 +57,7 @@ class SuratGroupTujuanController {
 
                 Log.add(user, 'Menghapus Tujuan Surat Dengan Nama ' + data.nama, data)
 
-                return Response.format(true, null, destroy)
+                return Response.format(true, null, data)
             } else {
                 return Response.format(false, 'Group tujuan tidak ditemukan', null)
             }
