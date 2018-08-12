@@ -76,7 +76,7 @@
             $("#loader").fadeIn("slow");
             $.ajax({ 
                 type: 'GET', 
-                url: '/api/master-pegawai/byLocation/'+id, 
+                url: '/api/user/byLocation/'+id, 
                 headers: {
                     'Authorization': 'Bearer {{sesi}}'
                 },
@@ -84,23 +84,13 @@
                     var isi = "";
                     var number = 1;
                     $.each(data.data, function(index, element) {
-                        var depan="";
-                        if(element.gelar_depan)
-                        {
-                            depan += element.gelar_depan+" ";
-                        }
-                        var belakang = "";
-                        if(element.gelar_belakang)
-                        {
-                            belakang += ", "+element.gelar_belakang;
-                        }
                         if(number==1)
                         {
-                          isi += "<tr bgcolor='#1e88e5' style='color:white'><td>"+number+".</td><td>"+depan+element.nama+belakang+"</td> <td>"+element.nama_jabatan+"&nbsp;<i class='icon md-account'></i></td></tr>";
+                          isi += "<tr bgcolor='#1e88e5' style='color:white'><td>"+number+".</td><td>"+element.nama_lengkap+"</td> <td>"+element.nama_jabatan+"&nbsp;<i class='icon md-account'></i></td></tr>";
                         }
                         else
                         {
-                          isi += "<tr ><td>"+number+".</td><td>"+depan+element.nama+belakang+"</td> <td>"+element.nama_jabatan+"</td></tr>";
+                          isi += "<tr ><td>"+number+".</td><td>"+element.nama_lengkap+"</td> <td>"+element.nama_jabatan+"</td></tr>";
                         }
                         number++;
                     });
