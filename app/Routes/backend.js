@@ -1387,11 +1387,6 @@ Route.group(() => {
     *         description: Tanggal Surat
     *         required: true
     *         type: string
-    *       - name: nomor_agenda
-    *         in: formData
-    *         description: Nomor Agenda
-    *         required: true
-    *         type: string
     *       - name: lampiran
     *         in: formData
     *         description: Lampiran

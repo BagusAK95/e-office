@@ -119,7 +119,7 @@ class SuratKeluarController {
             }
             sql.push(`instansi_pengirim = '` + user.instansi + `'`)
             sql.push(`nip_pembuat = '` + user.nip + `'`)
-            sql.push('status_surat BETWEEN 1 AND 2')
+            //sql.push('status_surat BETWEEN 1 AND 2')
 
             const data = await SuratKeluar.query()
                                           .whereRaw(sql.join(' AND '))
