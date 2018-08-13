@@ -5,6 +5,7 @@ const Login = use('App/Models/Login')
 const Response = use('App/Helpers/ResponseHelper')
 const Log = use('App/Helpers/LogHelper')
 const SuratMasuk = use('App/Models/SuratMasuk')
+const Disposisi = use('App/Models/Disposisi')
 
 class UserController {
     async add({ request, auth }) { //Todo: Check Kode Lokasi
@@ -158,6 +159,11 @@ class UserController {
     async listAllDispositionReciver({ params, auth }) {
         try {
             const user = await auth.getUser()
+
+            const dataDisposisi = await Disposisi.query()
+                                                 .where('id_surat_masuk', params.id_surat_masuk)
+            const daftarPegawai = dataDisposisi.map(e => { e.nip_penerima })
+
             const surat = await SuratMasuk.find(params.id_surat_masuk)
             if (surat) {
                 if (user.nip == surat.nip_plt) {
@@ -167,10 +173,18 @@ class UserController {
                         filterLokasi.push(Number(startLokasi + i + '0000'))
                     }
 
-                    const data = await Login.query()
-                                            .whereIn('kode_lokasi', filterLokasi)
+                    if (daftarPegawai.length > 0) {
+                        const data = await Login.query()
+                                                .whereIn('kode_lokasi', filterLokasi)
+                                                .whereNotIn('nip_penerima', daftarPegawai)
 
-                    return Response.format(true, null, data)
+                        return Response.format(true, null, data)
+                    } else {
+                        const data = await Login.query()
+                                                .whereIn('kode_lokasi', filterLokasi)
+
+                        return Response.format(true, null, data)
+                    }
                 } else {
                     const str = user.kode_lokasi.toString().replace(/([1-9])(0+$)/g, '')
                     const rgx = user.kode_lokasi.toString().match(/([1-9])(0+$)/g)
@@ -191,10 +205,18 @@ class UserController {
                             filterLokasi.push(startLokasi)
                         }
 
-                        const data = await Login.query()
-                                                .whereIn('kode_lokasi', filterLokasi)
-                                                        
-                        return Response.format(true, null, data)
+                        if (daftarPegawai.length > 0) {
+                            const data = await Login.query()
+                                                    .whereIn('kode_lokasi', filterLokasi)
+                                                    .whereNotIn('nip_penerima', daftarPegawai)
+                                                            
+                            return Response.format(true, null, data)
+                        } else {
+                            const data = await Login.query()
+                                                    .whereIn('kode_lokasi', filterLokasi)
+                                                            
+                            return Response.format(true, null, data)
+                        }
                     } else {
                         return Response.format(true, null, [])
                     }
