@@ -176,7 +176,7 @@ class UserController {
                     if (daftarPegawai.length > 0) {
                         const data = await Login.query()
                                                 .whereIn('kode_lokasi', filterLokasi)
-                                                .whereNotIn('nip_penerima', daftarPegawai)
+                                                .whereNotIn('nip', daftarPegawai)
 
                         return Response.format(true, null, data)
                     } else {
@@ -208,7 +208,7 @@ class UserController {
                         if (daftarPegawai.length > 0) {
                             const data = await Login.query()
                                                     .whereIn('kode_lokasi', filterLokasi)
-                                                    .whereNotIn('nip_penerima', daftarPegawai)
+                                                    .whereNotIn('nip', daftarPegawai)
                                                             
                             return Response.format(true, null, data)
                         } else {
