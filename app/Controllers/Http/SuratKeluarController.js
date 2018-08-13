@@ -137,32 +137,40 @@ class SuratKeluarController {
     async updateConcept({ params, request, auth }) {
         try {
             const user = await auth.getUser()
-
             const data = request.all()
-            data.status_surat = 1
-            data.keyword = ''.concat(data.nama_pembuat, ' | ', data.nama_penandatangan, ' | ', data.perihal)
 
-            const updateSurat = await SuratKeluar.query()
-                                                 .where({ instansi_pengirim: user.instansi, nip_pembuat: user.nip, id: params.id })
-                                                 .update(data)
-            if (updateSurat > 0) {
-                const updatePemeriksa = await SuratPemeriksa.query()
-                                                            .where('id_surat_keluar', params.id)
-                                                            .update({status : 0, tgl_baca: null})
-                
-                const dataPemeriksa = await SuratPemeriksa.query()
-                                                          .where({id_surat_keluar: params.id, urutan: 1})
-                                                          .first()
-                if (dataPemeriksa) {
-                    dataPemeriksa.status = 1
-                    dataPemeriksa.save()
+            const dataSurat = await SuratKeluar.query()
+                                                .where({ instansi_pengirim: user.instansi, nip_pembuat: user.nip, id: params.id })
+                                                .first()
+            if (dataSurat) {
+                if (dataSurat.status_surat == 2) {
+                    data.status_surat = 1
+                    data.keyword = ''.concat(data.nama_pembuat, ' | ', data.nama_penandatangan, ' | ', data.perihal)
 
-                    Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/checked/' + params.id)
+                    const updateSurat = await SuratKeluar.query()
+                                                         .where({ instansi_pengirim: user.instansi, nip_pembuat: user.nip, id: params.id })
+                                                         .update(data)
+
+                    const updatePemeriksa = await SuratPemeriksa.query()
+                                                                .where('id_surat_keluar', params.id)
+                                                                .update({status : 0, tgl_baca: null})
+                    
+                    const dataPemeriksa = await SuratPemeriksa.query()
+                                                              .where({ id_surat_keluar: params.id, urutan: 1 })
+                                                              .first()
+                    if (dataPemeriksa) {
+                        dataPemeriksa.status = 1
+                        dataPemeriksa.save()
+
+                        Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/checked/' + params.id)
+                    }
+
+                    Log.add(user, 'Merevisi Konsep Surat Atas Nama ' + data.nama_penandatangan, data)
+
+                    return Response.format(true, null, updateSurat)    
+                } else {
+                    return Response.format(false, 'Konsep surat harus dalam status revisi', null)
                 }
-
-                Log.add(user, 'Merevisi Konsep Surat Atas Nama ' + data.nama_penandatangan, data)
-
-                return Response.format(true, null, updateSurat)
             } else {
                 return Response.format(false, 'Konsep Surat tidak ditemukan', null)
             }    

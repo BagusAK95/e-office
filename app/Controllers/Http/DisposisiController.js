@@ -179,38 +179,42 @@ class DisposisiController {
                                              .where({ id: params.id, nip_penerima: user.nip, instansi: user.instansi })
                                              .first()
             if (disposisi) {
-                //Get data surat dari database
-                const surat = await SuratMasuk.find(disposisi.id_surat_masuk)
-                if (surat) {
-                    const data = request.only(['status', 'keterangan'])
-                    if (data.status == 1) {
-                        //Lengkapi data yang kurang
-                        disposisi.status = 1
-                        disposisi.keterangan = data.keterangan
-                        disposisi.tgl_selesai = new Date()
-                        disposisi.save()
-            
-                        //Kirim notifikasi
-                        Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
+                if (disposisi.status == 0) {
+                    //Get data surat dari database
+                    const surat = await SuratMasuk.find(disposisi.id_surat_masuk)
+                    if (surat) {
+                        const data = request.only(['status', 'keterangan'])
+                        if (data.status == 1) {
+                            //Lengkapi data yang kurang
+                            disposisi.status = 1
+                            disposisi.keterangan = data.keterangan
+                            disposisi.tgl_selesai = new Date()
+                            disposisi.save()
+                
+                            //Kirim notifikasi
+                            Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
 
-                        //Tambah log
-                        Log.add(user, 'Menyelesaikan Disposisi Dari ' + disposisi.nama_pengirim)
-                    } else if (data.status == 2) {
-                        //Lengkapi data yang kurang
-                        disposisi.status = 2
-                        disposisi.keterangan = data.keterangan
-                        disposisi.save()
-            
-                        //Kirim notifikasi
-                        Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menolak Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
-                        
-                        //Tambah log
-                        Log.add(user, 'Menolak Disposisi Dari ' + disposisi.nama_pengirim)
+                            //Tambah log
+                            Log.add(user, 'Menyelesaikan Disposisi Dari ' + disposisi.nama_pengirim)
+                        } else if (data.status == 2) {
+                            //Lengkapi data yang kurang
+                            disposisi.status = 2
+                            disposisi.keterangan = data.keterangan
+                            disposisi.save()
+                
+                            //Kirim notifikasi
+                            Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menolak Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
+                            
+                            //Tambah log
+                            Log.add(user, 'Menolak Disposisi Dari ' + disposisi.nama_pengirim)
+                        }
+
+                        return Response.format(true, null, 1)
+                    } else {
+                        return Response.format(false, 'Surat tidak ditemukan', null)
                     }
-
-                    return Response.format(true, null, 1)
                 } else {
-                    return Response.format(false, 'Surat tidak ditemukan', null)
+                    return Response.format(false, 'Disposisi harus dalam status belum selesai', null)
                 }
             } else {
                 return Response.format(false, 'Disposisi tidak ditemukan', null)

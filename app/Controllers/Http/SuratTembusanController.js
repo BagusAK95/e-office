@@ -94,30 +94,34 @@ class SuratTembusanController {
                                                 .where({ instansi_penerima: user.instansi, id: params.id })
                                                 .first()
             if (dataSurat) {
-                const dataPimpinan = await Login.query()
+                if (dataSurat.status_surat == 0) {
+                    const dataPimpinan = await Login.query()
                                                 .where({ level: 2, instansi: user.instansi })
                                                 .first()
-                if (dataPimpinan) {
-                    dataSurat.nip_tata_usaha = user.nip
-                    dataSurat.nama_tata_usaha = user.nama_lengkap
-                    dataSurat.jabatan_tata_usaha = user.nama_jabatan
-                    dataSurat.nip_pimpinan = dataPimpinan.nip
-                    dataSurat.nama_pimpinan = dataPimpinan.nama_lengkap
-                    dataSurat.jabatan_pimpinan = dataPimpinan.nama_jabatan
-                    dataSurat.tgl_terima = data.tgl_terima
-                    dataSurat.lampiran = data.lampiran
-                    dataSurat.status_surat = 1
-                    dataSurat.keyword = ''.concat(dataSurat.nomor_surat, ' | ', dataSurat.nama_instansi, ' | ', dataSurat.perihal, ' | ', dataSurat.nama_pengirim)
-                    dataSurat.save()
+                    if (dataPimpinan) {
+                        dataSurat.nip_tata_usaha = user.nip
+                        dataSurat.nama_tata_usaha = user.nama_lengkap
+                        dataSurat.jabatan_tata_usaha = user.nama_jabatan
+                        dataSurat.nip_pimpinan = dataPimpinan.nip
+                        dataSurat.nama_pimpinan = dataPimpinan.nama_lengkap
+                        dataSurat.jabatan_pimpinan = dataPimpinan.nama_jabatan
+                        dataSurat.tgl_terima = data.tgl_terima
+                        dataSurat.lampiran = data.lampiran
+                        dataSurat.status_surat = 1
+                        dataSurat.keyword = ''.concat(dataSurat.nomor_surat, ' | ', dataSurat.nama_instansi, ' | ', dataSurat.perihal, ' | ', dataSurat.nama_pengirim)
+                        dataSurat.save()
 
-                    Notification.send([user.nip, user.nama_lengkap], [dataPimpinan.nip], 'Mengirimkan Surat Nomor ' + dataSurat.nip_tata_usaha + ' Sebagai Tembusan', '/surat-tembusan/' + params.id)
-                
-                    Log.add(user, 'Mengirimkan Surat Tembusan Nomor ' + dataSurat.nomor_surat + ' Ke Pimpinan', dataSurat)
+                        Notification.send([user.nip, user.nama_lengkap], [dataPimpinan.nip], 'Mengirimkan Surat Nomor ' + dataSurat.nip_tata_usaha + ' Sebagai Tembusan', '/surat-tembusan/' + params.id)
+                    
+                        Log.add(user, 'Mengirimkan Surat Tembusan Nomor ' + dataSurat.nomor_surat + ' Ke Pimpinan', dataSurat)
 
-                    return Response.format(true, null, 1)
+                        return Response.format(true, null, 1)
+                    } else {
+                        return Response.format(false, 'Pimpinan tidak ditemukan', null)
+                    }    
                 } else {
-                    return Response.format(false, 'Pimpinan tidak ditemukan.', null)
-                }
+                    return Response.format(false, 'Surat tembusan harus dalam status belum dikirim', null)                
+            }
             } else {
                 return Response.format(false, 'Surat tidak ditemukan', null)
             }
