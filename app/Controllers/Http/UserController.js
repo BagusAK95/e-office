@@ -163,6 +163,7 @@ class UserController {
             const dataDisposisi = await Disposisi.query()
                                                  .where('id_surat_masuk', params.id_surat_masuk)
             const daftarPegawai = dataDisposisi.map(e => { e.nip_penerima })
+            console.log(daftarPegawai)
 
             const surat = await SuratMasuk.find(params.id_surat_masuk)
             if (surat) {
