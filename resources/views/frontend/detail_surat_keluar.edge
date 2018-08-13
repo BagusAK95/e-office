@@ -712,10 +712,10 @@
                                 resi = element.resi;
                             }
                             isipengiriman += "<tr>\
-                                <th>"+element.nama_instansi+"</th>\
-                                <th>"+kurir+"</th>\
-                                <th>"+resi+"</th>\
-                                <th><a onclick=updateresi("+element.id+",'"+element.kurir+"','"+element.resi+"') class='btn btn-success' style='color:white'>Isi resi</a>&nbsp;&nbsp;<a onclick='cekresi("+element.id+")'  class='btn btn-info' style='color:white'>Lacak</a></th>\
+                                <td>"+element.nama_instansi+"</td>\
+                                <td style='text-transform: uppercase;'>"+kurir+"</td>\
+                                <td>"+resi+"</td>\
+                                <td><a onclick=updateresi("+element.id+",'"+element.kurir+"','"+element.resi+"') class='btn btn-success' style='color:white'>Isi resi</a>&nbsp;&nbsp;<a onclick='cekresi("+element.id+")'  class='btn btn-info' style='color:white'>Lacak</a></td>\
                             </tr>";
                             no++;
                         });
