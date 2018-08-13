@@ -95,6 +95,7 @@
                                     <thead>
                                         <tr>
                                             <th>Instansi</th>
+                                            <th>Status Baca</th>
                                             <th>Kurir</th>
                                             <th>Resi</th>
                                             <th>Action</th>
@@ -711,8 +712,18 @@
                             {
                                 resi = element.resi;
                             }
+
+
+                            var sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Belum dibaca</span>";
+                            if(element.tgl_baca)
+                            {
+                                var tg_bc = tanggal_indo(element.tgl_baca);
+                                sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Sudah dibaca</span><BR><span style='font-size:9pt'>"+tg_bc+"</span>";
+                            }
+
                             isipengiriman += "<tr>\
                                 <td>"+element.nama_instansi+"</td>\
+                                <td align='center'>"+sts+"</td>\
                                 <td style='text-transform: uppercase;'>"+kurir+"</td>\
                                 <td>"+resi+"</td>\
                                 <td><a onclick=updateresi("+element.id+",'"+element.kurir+"','"+element.resi+"') class='btn btn-success' style='color:white'>Isi resi</a>&nbsp;&nbsp;<a onclick='cekresi("+element.id+")'  class='btn btn-info' style='color:white'>Lacak</a></td>\

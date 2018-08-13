@@ -578,6 +578,12 @@
                     {
                         jabatanpimpinan = element.jabatan_pimpinan;
                     }
+                    
+                    var almt = "-";
+                    if(element.alamat_pengirim)
+                    {
+                        almt = element.alamat_pengirim;
+                    }
 
                     var tabel = "";
                     var tabel2 = "";
@@ -585,7 +591,7 @@
                     tabel += "<tr align='center'><th colspan='4' style='font-size:16pt' >"+element.perihal+"</th></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>NOMOR AGENDA</th><td width='25%'>"+no_agenda+"</td><th width='25%' bgcolor='#f1f1f1'>NOMOR SURAT</th><td width='25%'>"+element.nomor_surat+"</td></tr>";
                     tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>TANGGAL TERIMA</th><td width='25%'>"+tanggal_terima+"</td><th width='25%' bgcolor='#f1f1f1'>TANGGAL SURAT</th><td width='25%'>"+tanggal_surat+"</td></tr>";
-                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br><span style='font-size:9pt'>"+element.jabatan_pengirim+"<br>"+element.alamat_pengirim+"</span></td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+nmpimpinan+"</b><br><span style='font-size:9pt'>"+jabatanpimpinan+"</span></td></tr>";
+                    tabel += "<tr><th width='25%' bgcolor='#f1f1f1'>PENGIRIM</th><td width='25%'><b>"+element.nama_pengirim+"</b><br><span style='font-size:9pt'>"+element.jabatan_pengirim+"<br>"+almt+"</span></td><th width='25%' bgcolor='#f1f1f1'>TUJUAN</th><td width='25%'><b>"+nmpimpinan+"</b><br><span style='font-size:9pt'>"+jabatanpimpinan+"</span></td></tr>";
 
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='100%' colspan='2'>ISI</th></tr>";    
                     tabel2 += "<tr><td width='50%' colspan='2'>"+element.isi_surat+"</td></tr>";    
@@ -595,8 +601,19 @@
                     //tabel += "<tr><th>TEMBUSAN</th><td>"+element.nama_tembusan+" <br> "+element.jabatan_tembusan+"</td></tr>";
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>RINGKASAN</th><td width='50%'>"+element.ringkasan+"</td></tr>";
                     tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>PINDAIAN</th><td width='50%'>"+file+"</td></tr>";
-                    
-                    tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>PELAKSANA HARIAN</th><td width='50%'><b>"+element.nama_plt+"</b><br>"+element.jabatan_plt+"</td></tr>";
+                    var nmplt = "-";
+                    if(element.nama_plt)
+                    {
+                        var nmplt = element.nama_plt;
+                    }
+
+                    var jbtplt = "-";
+                    if(element.jabatan_plt)
+                    {
+                        var jbtplt = element.jabatan_plt;
+                    }
+
+                    tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>PELAKSANA HARIAN</th><td width='50%'><b>"+nmplt+"</b><br>"+jbtplt+"</td></tr>";
                     tabel3 += "<tr><th bgcolor='#f1f1f1' width='50%'>TEMBUSAN</th><td width='50%'>"+res+"</td>";
                     
                     $("#tabel").html(tabel).show();
