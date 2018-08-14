@@ -72,10 +72,7 @@
                                 <label class="form-control-label" for="inputEmail">Tanggal Surat&nbsp;<span style="color:red">*</span></label>
                                 <input type="text" class="form-control datepicker" name="tanggal_surat" id="tanggal_surat" data-plugin="datepicker" readonly required='true' />
                               </div>
-                              <div class="form-group" data-plugin="formMaterial">
-                                <label class="form-control-label" for="inputEmail">Nomor Agenda&nbsp;<span style="color:red">*</span></label>
-                                <input type="text" id="nomor_agenda" class="form-control">
-                              </div>
+                              
                               <div class="form-group" data-plugin="formMaterial">
                                 <label class="form-control-label" for="inputEmail">Lampiran&nbsp;<span style="color:red">*</span></label>
                                 <div class="input-group">
@@ -499,7 +496,7 @@
    {
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai', 
+            url: '/api/user/all', 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -507,19 +504,8 @@
             success: function (data) 
             {   
                 var isi = "<option value=''>Pilih Pegawai</option>";
-                $.each(data.data.data, function(index, element) {
-                    var depan = ''
-                    var belakang = ''
-                    if(element.gelar_depan)
-                    {
-                        depan += element.gelar_depan+" ";
-                    }
-                    var belakang = "";
-                    if(element.gelar_belakang)
-                    {
-                        belakang += ", "+element.gelar_belakang;
-                    }
-                    isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
+                $.each(data.data, function(index, element) {
+                    isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.jabatan+"'>"+element.nama_lengkap+" - "+element.nama_jabatan+"</option>";
                 })
                 $(".pegawai").html(isi).show();
             },
@@ -534,7 +520,7 @@
    {
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai', 
+            url: '/api/user/all', 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -542,28 +528,15 @@
             success: function (data) 
             {   
                 var isi = "<option value=''>Pilih Pegawai</option>";
-                $.each(data.data.data, function(index, element) {
-                    var depan = ''
-                    var belakang = ''
-                    if(element.gelar_depan)
-                    {
-                        depan += element.gelar_depan+" ";
-                    }
-                    var belakang = "";
-                    if(element.gelar_belakang)
-                    {
-                        belakang += ", "+element.gelar_belakang;
-                    }
-
+                $.each(data.data, function(index, element) {
                     if(nip==element.nip)
                     {
-                        isi += "<option selected value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
+                        isi += "<option selected value='"+element.nip+"-"+element.nama_lengkap+"-"+element.jabatan+"'>"+element.nama_lengkap+"</option>";
                     }
                     else
                     {
-                        isi += "<option value='"+element.nip+"'>"+depan+element.nama+belakang+"</option>";
+                        isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.jabatan+"'>"+element.nama_lengkap+"</option>";
                     }
-                    
                 })
                 $(".pegawai").html(isi).show();
             },
@@ -579,7 +552,7 @@
         var nip = $("#nip_penandatangan").val();
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai/'+nip, 
+            url: '/api/user/'+nip, 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -587,17 +560,7 @@
             success: function (data) 
             {   
                 var element = data.data;
-                var depan = "";
-                if(element.gelar_depan)
-                {
-                    depan += element.gelar_depan+" ";
-                }
-                var belakang = "";
-                if(element.gelar_belakang)
-                {
-                    belakang += ", "+element.gelar_belakang;
-                }
-                $("#nama_penandatangan").val(depan+element.nama+belakang);
+                $("#nama_penandatangan").val(element.nama_lengkap);
                 $("#jabatan_penandatangan").val(element.nama_jabatan);
             },
             error: function ()
@@ -612,7 +575,7 @@
 
         $.ajax({ 
             type: 'GET', 
-            url: '/api/master-pegawai/byLocation/'+kdlokasi, 
+            url: '/api/user/byLocation/'+kdlokasi, 
             headers: {
                         'Authorization': 'Bearer {{sesi}}'
                     },
@@ -621,18 +584,8 @@
             {   
                 var isi = "";
                 $.each(data.data, function(index, element) {
-                    var depan = ''
-                    var belakang = ''
-                    if(element.gelar_depan)
-                    {
-                        depan += element.gelar_depan+" ";
-                    }
-                    var belakang = "";
-                    if(element.gelar_belakang)
-                    {
-                        belakang += ", "+element.gelar_belakang;
-                    }
-                    isi += "<option value='"+element.nip+"-"+element.nama+"-"+element.nama_jabatan+"'>"+depan+element.nama+belakang+"</option>";
+                   
+                    isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.nama_jabatan+"'>"+element.nama_lengkap+"</option>";
                 })
                 $("#arr_penerima").html(isi).show();
                 $("#arr_tembusan").html(isi).show();
@@ -656,12 +609,13 @@
           headers: {
            'Authorization': 'Bearer {{sesi}}'
            },
-          data : "id={{params.id}}&nip_penandatangan="+$("#nip_penandatangan").val()+"&nama_penandatangan="+$("#nama_penandatangan").val()+"&jabatan_penandatangan="+$("#jabatan_penandatangan").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&nomor_agenda="+$("#nomor_agenda").val()+"&lampiran="+$("#lampiran").val()+jeniss+"&perihal="+$("#perihal").val()+"&dari_surat_masuk="+$("#dari_surat_masuk").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&klasifikasi="+$("#klasifikasi").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue,
+          data : "id={{params.id}}&nip_penandatangan="+$("#nip_penandatangan").val()+"&nama_penandatangan="+$("#nama_penandatangan").val()+"&jabatan_penandatangan="+$("#jabatan_penandatangan").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&lampiran="+$("#lampiran").val()+jeniss+"&perihal="+$("#perihal").val()+"&dari_surat_masuk="+$("#dari_surat_masuk").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&klasifikasi="+$("#klasifikasi").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue,
           success: function (datanya) 
           { 
               if(datanya.success==false)
               {
                    swal("Gagal!", datanya.message, "error");
+                   $("#loader").hide();
               }
               else if(datanya.success==true)
               {    
@@ -675,6 +629,7 @@
           error: function(data)
           {
               swal("Gagal!", data.message, "error");
+              $("#loader").hide();
           }
           });
       
