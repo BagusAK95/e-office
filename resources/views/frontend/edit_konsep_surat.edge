@@ -531,11 +531,11 @@
                 $.each(data.data, function(index, element) {
                     if(nip==element.nip)
                     {
-                        isi += "<option selected value='"+element.nip+"-"+element.nama_lengkap+"-"+element.jabatan+"'>"+element.nama_lengkap+"</option>";
+                        isi += "<option selected value='"+element.nip+"-"+element.nama_lengkap+"-"+element.nama_jabatan+"'>"+element.nama_lengkap+"</option>";
                     }
                     else
                     {
-                        isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.jabatan+"'>"+element.nama_lengkap+"</option>";
+                        isi += "<option value='"+element.nip+"-"+element.nama_lengkap+"-"+element.nama_jabatan+"'>"+element.nama_lengkap+"</option>";
                     }
                 })
                 $(".pegawai").html(isi).show();
@@ -602,14 +602,16 @@
         var textareaValue = $('#isisurat').summernote('code');
 
         var jeniss = "&arr_penerima="+$("#arr_penerima").val()+"&arr_tembusan="+$("#arr_tembusan").val();
-      
+
+        var nip_penandatangan = $("#nip_penandatangan").val();
+        var ikii = nip_penandatangan.split("-");
          $.ajax({ 
           type: 'PUT', 
           url: '/api/konsep-surat/{{params.id}}', 
           headers: {
            'Authorization': 'Bearer {{sesi}}'
            },
-          data : "id={{params.id}}&nip_penandatangan="+$("#nip_penandatangan").val()+"&nama_penandatangan="+$("#nama_penandatangan").val()+"&jabatan_penandatangan="+$("#jabatan_penandatangan").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&lampiran="+$("#lampiran").val()+jeniss+"&perihal="+$("#perihal").val()+"&dari_surat_masuk="+$("#dari_surat_masuk").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&klasifikasi="+$("#klasifikasi").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue,
+          data : "id={{params.id}}&nip_penandatangan="+ikii[0]+"&nama_penandatangan="+$("#nama_penandatangan").val()+"&jabatan_penandatangan="+$("#jabatan_penandatangan").val()+"&tgl_surat="+$("#tanggal_surat").val()+"&lampiran="+$("#lampiran").val()+jeniss+"&perihal="+$("#perihal").val()+"&dari_surat_masuk="+$("#dari_surat_masuk").val()+"&keamanan="+$("#keamanan").val()+"&kecepatan="+$("#kecepatan").val()+"&klasifikasi="+$("#klasifikasi").val()+"&ringkasan="+$("#ringkasan").val()+"&isi_surat="+textareaValue,
           success: function (datanya) 
           { 
               if(datanya.success==false)
