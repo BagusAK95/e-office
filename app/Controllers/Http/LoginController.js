@@ -45,7 +45,8 @@ class LoginController {
             const update = await Login.query()
                                       .where('nip', user.nip)
                                       .update({
-                                          ['firebase_' + data.firebase_device.toLowerCase()]: data.firebase_token 
+                                          ['firebase_' + data.firebase_device.toLowerCase()]: data.firebase_token,
+                                          firebase_info: data.firebase_info
                                       })
             if (update > 0) {
                 return Response.format(true, null, update)                

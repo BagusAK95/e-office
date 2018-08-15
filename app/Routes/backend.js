@@ -93,6 +93,11 @@ Route.group(() => {
     *         description: Token
     *         required: true
     *         type: string
+    *       - name: firebase_info
+    *         in: formData
+    *         description: Info Device (Type, IME, dll)
+    *         required: false
+    *         type: string
     */
     Route.put('/setFirebase', 'LoginController.setFirebase').middleware('checkToken:umum')
 
