@@ -94,11 +94,11 @@
                                 <table class="table table-bordered ">
                                     <thead>
                                         <tr>
-                                            <th>Instansi</th>
+                                            <th width='350px'>Instansi</th>
                                             <th>Status Baca</th>
                                             <th>Kurir</th>
                                             <th>Resi</th>
-                                            <th>Action</th>
+                                            <th>Keterangan</th>
                                         </tr>
                                     </thead>
                                     <tbody id='tabel_pengiriman'>
@@ -720,13 +720,24 @@
                                 var tg_bc = tanggal_indo(element.tgl_baca);
                                 sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Sudah dibaca</span><BR><span style='font-size:9pt'>"+tg_bc+"</span>";
                             }
+                            
+                            if(element.tgl_terima)
+                            {
+                                $("#dukur").html("Diterima").show();
+                                var tombolnya = "<td>Diterima <b>"+element.penerima+"</b><br>"+tanggal_indo(element.tgl_terima)+"</td>";
+                            }
+                            else
+                            {
+                                $("#dukur").html("Action").show();
+                                var tombolnya = "<td><a onclick=updateresi("+element.id+",'"+element.kurir+"','"+element.resi+"') class='btn btn-success' style='color:white'>Isi resi</a>&nbsp;&nbsp;<a onclick='cekresi("+element.id+")'  class='btn btn-info' style='color:white'>Lacak</a></td>";
+                            }
 
                             isipengiriman += "<tr>\
                                 <td>"+element.nama_instansi+"</td>\
                                 <td align='center'>"+sts+"</td>\
                                 <td style='text-transform: uppercase;'>"+kurir+"</td>\
                                 <td>"+resi+"</td>\
-                                <td><a onclick=updateresi("+element.id+",'"+element.kurir+"','"+element.resi+"') class='btn btn-success' style='color:white'>Isi resi</a>&nbsp;&nbsp;<a onclick='cekresi("+element.id+")'  class='btn btn-info' style='color:white'>Lacak</a></td>\
+                                "+tombolnya+"\
                             </tr>";
                             no++;
                         });
