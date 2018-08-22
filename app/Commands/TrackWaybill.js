@@ -73,6 +73,7 @@ class TrackWaybill extends Command {
         }
       })
     }, () => {
+      console.log('No Queue, Wait Timeout 3 Hours...')
       this.waitTimeout()
     })
   }
