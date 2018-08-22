@@ -49,7 +49,7 @@ $( ".form-signin" ).submit(function( event ) {
                 'Authorization': 'Bearer ' + token
             },
             success: function (data) { 
-                putsession(data.data.level);
+                putsession(data.data.level,data.data.akses);
             }
         });
      },
@@ -64,11 +64,11 @@ $( ".form-signin" ).submit(function( event ) {
   });
  }
  
- function putsession(sesi)
+ function putsession(sesi,akses)
  {
      $.ajax({ 
      type: 'GET', 
-     url: '/putsession/'+sesi, 
+     url: '/putsession/'+sesi+'/'+akses, 
      success: function (data) 
      { 
          $(".loader").hide();
