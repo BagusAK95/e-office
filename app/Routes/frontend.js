@@ -25,9 +25,11 @@ Route.get('/puttoken/:id', async ({ params , session }) => {
     //retconst post = params.idurn post
 })
 
-Route.get('/putsession/:id', ({ params, session, response }) => {
+Route.get('/putsession/:id/:akses', ({ params, session, response }) => {
     const post = params.id;
+    const akses = params.akses;
     session.put('level', post);
+    session.put('akses', akses);
 })
 
 Route.get('/cek_session', ({ session }) => {
