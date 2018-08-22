@@ -1,3 +1,32 @@
+$( document ).ready(function() {
+    cek_session_ada();
+});
+function cek_session_ada()
+ {
+     $(".loader").show();
+     $.ajax({ 
+     type: 'GET', 
+     url: '/cek_session', 
+     success: function (data) 
+     { 
+         $(".loader").hide();
+         if(data)
+         {
+            window.location.href='/home';    
+         }
+         else
+         {
+            return false;
+         }
+         
+     },
+     error : function(data)
+     {
+         $(".loader").hide();
+         return false;
+     }
+  });
+ }
 $( ".form-signin" ).submit(function( event ) {
  $(".loader").show();
  $.ajax({ 
