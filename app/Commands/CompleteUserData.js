@@ -9,7 +9,7 @@ const Login = use('App/Models/Login')
 
 class CompleteUserData extends Command {
   static get signature () {
-    return 'complete_user_data'
+    return 'complete-user-data'
   }
 
   static get description () {
