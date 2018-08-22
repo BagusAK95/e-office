@@ -1,200 +1,185 @@
-@layout('frontend/main')
-@section('content')    
-      <div class="page-content container-fluid">
-        <div class="row">
-          <div class="col-xxl-4 col-lg-12">
-            <!-- Example Panel With Heading -->
-            <div class="panel panel-bordered panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title"><i class="icon md-balance"></i>&nbsp;Master Kantor</h3>
+@layout('frontend/main') 
+@section('content')
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-xxl-4 col-lg-12">
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-balance"></i>&nbsp;Master Kantor</h3>
+        </div>
+        <input type="hidden" id="aaac">
+        <div class="panel-body">
+          <div class="col-xl-12 col-md-12">
+            <!-- Example Expanded -->
+            <div class="example-wrap">
+              <h4 class="example-title"></h4>
+              <div class="example">
+                <div data-plugin="treeview" data-expand-icon="icon md-chevron-right" data-collapse-icon="icon md-chevron-down" data-source="getExampleTreeview"
+                  data-levels="99" data-node-icon="icon md-account" id="exampleExpanded"></div>
               </div>
-              <input type="hidden" id="aaac">
-              <div class="panel-body">
-                    <div class="col-xl-12 col-md-12">
-                            <!-- Example Expanded -->
-                            <div class="example-wrap">
-                              <h4 class="example-title"></h4>
-                              <div class="example">
-                                <div data-plugin="treeview" data-expand-icon="icon md-chevron-right" data-collapse-icon="icon md-chevron-down" data-source="getExampleTreeview" data-levels="99" data-node-icon="icon md-account" id="exampleExpanded"></div>
-                              </div>
-                            </div>
-                            <!-- End Example Expanded -->
-                          </div>
-            
-                    
-              </div>
-
-              
             </div>
-            <!-- End Example Panel With Heading -->
+            <!-- End Example Expanded -->
           </div>
-         
-
-
-          </div>
-
-
-
-
         </div>
       </div>
-
-      <!-- Modal -->
-      <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1"id="myModal" class="modal fade modal-primary show" style="display: none;">
-    <div class="modal-dialog">
-  
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"></button>
-          <h4 class="modal-title"><i class="icon md-accounts"></i>&nbsp;Detail<h4>
-        </div>
-        <div class="modal-body">
-          <span id="detail"></span>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-  
+      <!-- End Example Panel With Heading -->
     </div>
   </div>
-  <script src="/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
-      <script>
-        function aaac()
-        {
-          var semua = "";
-          $.ajax({ 
-              type: 'GET', 
-              url: '/api/master-kantor/tree-html', 
-              headers: {
-                          'Authorization': 'Bearer {{sesi}}'
-                      },
-              dataType: 'json',
-              async: false,
-              success: function (data) 
-              {   
-                  /// alert(data.data.toSource());
+</div>
 
-                  //alert(JSON.stringify(data.data));
-                  var lengkap = JSON.stringify(data.data);
-                  /*var datanya = lengkap.replace('(', '[');
-                  var siap = datanya.replace('})', '}]');
-                  var siap1 = siap.replace(/text:/g, '"text":');
-                  var siap2 = siap1.replace(/id:/g, '"id":');
-                  var siap3 = siap2.replace(/nodes:/g, '"nodes":'); */
-                  //alert(siap3)
-                  semua = lengkap;
-              }
-          });
-          //alert(semua);
-          //return semua;
-          $("#aaac").val(semua);
-        }
-        $( document ).ready(function() {
-            /*Main*/
-            $("#loader").fadeIn("slow");
-            cek_session();
-            cek_token();
-            /*End Main*/
-            
-            /*Page*/
-            aaac();
-            $("#loader").fadeOut("xslow");
-            /*Page*/
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade modal-primary show"
+  style="display: none;">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"></button>
+        <h4 class="modal-title">
+          <i class="icon md-accounts"></i>&nbsp;Detail
+          <h4>
+      </div>
+      <div class="modal-body">
+        <span id="detail"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script src="/material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+<script>
+  function aaac() {
+    var semua = "";
+    $.ajax({
+      type: 'GET',
+      url: '/api/master-kantor/tree-html',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      async: false,
+      success: function (data) {
+        /// alert(data.data.toSource());
+
+        //alert(JSON.stringify(data.data));
+        var lengkap = JSON.stringify(data.data);
+        /*var datanya = lengkap.replace('(', '[');
+        var siap = datanya.replace('})', '}]');
+        var siap1 = siap.replace(/text:/g, '"text":');
+        var siap2 = siap1.replace(/id:/g, '"id":');
+        var siap3 = siap2.replace(/nodes:/g, '"nodes":'); */
+        //alert(siap3)
+        semua = lengkap;
+      }
+    });
+    //alert(semua);
+    //return semua;
+    $("#aaac").val(semua);
+  }
+  $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn("slow");
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    aaac();
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+
+  function detail_pegawai(id) {
+    $("#loader").fadeIn("slow");
+    $.ajax({
+      type: 'GET',
+      url: '/api/user/byLocation/' + id,
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      success: function (data) {
+        var isi = "";
+        var number = 1;
+        $.each(data.data, function (index, element) {
+          if (number == 1) {
+            isi += "<tr bgcolor='#1e88e5' style='color:white'><td>" + number + ".</td><td>" + element.nama_lengkap +
+              "</td> <td>" + element.nama_jabatan + "&nbsp;<i class='icon md-account'></i></td></tr>";
+          } else {
+            isi += "<tr ><td>" + number + ".</td><td>" + element.nama_lengkap + "</td> <td>" + element.nama_jabatan +
+              "</td></tr>";
+          }
+          number++;
         });
-        function detail_pegawai(id)
-        {
-            $("#loader").fadeIn("slow");
-            $.ajax({ 
-                type: 'GET', 
-                url: '/api/user/byLocation/'+id, 
-                headers: {
-                    'Authorization': 'Bearer {{sesi}}'
-                },
-                success: function (data) { 
-                    var isi = "";
-                    var number = 1;
-                    $.each(data.data, function(index, element) {
-                        if(number==1)
-                        {
-                          isi += "<tr bgcolor='#1e88e5' style='color:white'><td>"+number+".</td><td>"+element.nama_lengkap+"</td> <td>"+element.nama_jabatan+"&nbsp;<i class='icon md-account'></i></td></tr>";
-                        }
-                        else
-                        {
-                          isi += "<tr ><td>"+number+".</td><td>"+element.nama_lengkap+"</td> <td>"+element.nama_jabatan+"</td></tr>";
-                        }
-                        number++;
-                    });
-                    var html = "<table class='table table-striped table-bordered'><tr  align='center'><th>No</th><th>Nama Pegawai</th><th>Jabatan</th></tr>";
-                    $("#detail").html(html+isi).show();
-                    $("#loader").fadeOut("xslow");
-                    $('#myModal').modal('show');
-                }
-            });
-        }
-        (function (global, factory) {
-            if (typeof define === "function" && define.amd) {
-              define('/advanced/treeview', ['jquery', 'Site'], factory);
-            } else if (typeof exports !== "undefined") {
-              factory(require('jquery'), require('Site'));
-            } else {
-              var mod = {
-                exports: {}
-              };
-              factory(global.jQuery, global.Site);
-              global.advancedTreeview = mod.exports;
-            }
-          })(this, function (_jquery, _Site) {
-            'use strict';
+        var html =
+          "<table class='table table-striped table-bordered'><tr  align='center'><th>No</th><th>Nama Pegawai</th><th>Jabatan</th></tr>";
+        $("#detail").html(html + isi).show();
+        $("#loader").fadeOut("xslow");
+        $('#myModal').modal('show');
+      }
+    });
+  }
+  (function (global, factory) {
+    if (typeof define === "function" && define.amd) {
+      define('/advanced/treeview', ['jquery', 'Site'], factory);
+    } else if (typeof exports !== "undefined") {
+      factory(require('jquery'), require('Site'));
+    } else {
+      var mod = {
+        exports: {}
+      };
+      factory(global.jQuery, global.Site);
+      global.advancedTreeview = mod.exports;
+    }
+  })(this, function (_jquery, _Site) {
+    'use strict';
 
-            var _jquery2 = babelHelpers.interopRequireDefault(_jquery);
+    var _jquery2 = babelHelpers.interopRequireDefault(_jquery);
 
-            (0, _jquery2.default)(document).ready(function ($$$1) {
-              (0, _Site.run)();
-            });
-            
-            var return_first = function () {
-                
-                //return [{"id":12000000, "text":"DINAS KOMUNIKASI DAN INFORMATIKA", "nodes":[{"id":12010000, "text":"SEKRETARIAT ", "nodes":[{"id":12010100, "text":"SUB BAGIAN PROGRAM DAN KEUANGAN ", "nodes":[]}, {"id":12010200, "text":"SUB BAGIAN UMUM DAN KEPEGAWAIAN ", "nodes":[]}]}, {"id":12020000, "text":"BIDANG INFORMASI DAN KOMUNIKASI PUBLIK ", "nodes":[{"id":12020100, "text":"SEKSI PELAYANAN INFORMASI PUBLIK ", "nodes":[]}, {"id":12020200, "text":"SEKSI PENGELOLAAN JARINGAN KOMUNIKASI PUBLIK ", "nodes":[]}]}, {"id":12030000, "text":"BIDANG E-GOVERMENT ", "nodes":[{"id":12030100, "text":"SEKSI PENGELOLAAN INFRASTRUKTUR DAN MENARA TELEKOMUNIKASI ", "nodes":[]}, {"id":12030200, "text":"SEKSI PELAYANAN PENGELOLAAN DAN PENGEMBANGAN APLIKASI ", "nodes":[]}]}, {"id":12040000, "text":"BIDANG PERSANDIAN ", "nodes":[{"id":12040100, "text":"SEKSI TATA KELOLA PERSANDIAN ", "nodes":[]}, {"id":12040200, "text":"SEKSI OPERASIONAL PENGAMANAN PERSANDIAN", "nodes":[]}]}]}];
-            }();
+    (0, _jquery2.default)(document).ready(function ($$$1) {
+      (0, _Site.run)();
+    });
 
+    var return_first = function () {
 
-            window.getExampleTreeview = function () {
-              //alert($("#aaac").val());
-              //console.log(return_first)
-              return '['+$("#aaac").val()+']';
-            };
+      //return [{"id":12000000, "text":"DINAS KOMUNIKASI DAN INFORMATIKA", "nodes":[{"id":12010000, "text":"SEKRETARIAT ", "nodes":[{"id":12010100, "text":"SUB BAGIAN PROGRAM DAN KEUANGAN ", "nodes":[]}, {"id":12010200, "text":"SUB BAGIAN UMUM DAN KEPEGAWAIAN ", "nodes":[]}]}, {"id":12020000, "text":"BIDANG INFORMASI DAN KOMUNIKASI PUBLIK ", "nodes":[{"id":12020100, "text":"SEKSI PELAYANAN INFORMASI PUBLIK ", "nodes":[]}, {"id":12020200, "text":"SEKSI PENGELOLAAN JARINGAN KOMUNIKASI PUBLIK ", "nodes":[]}]}, {"id":12030000, "text":"BIDANG E-GOVERMENT ", "nodes":[{"id":12030100, "text":"SEKSI PENGELOLAAN INFRASTRUKTUR DAN MENARA TELEKOMUNIKASI ", "nodes":[]}, {"id":12030200, "text":"SEKSI PELAYANAN PENGELOLAAN DAN PENGEMBANGAN APLIKASI ", "nodes":[]}]}, {"id":12040000, "text":"BIDANG PERSANDIAN ", "nodes":[{"id":12040100, "text":"SEKSI TATA KELOLA PERSANDIAN ", "nodes":[]}, {"id":12040200, "text":"SEKSI OPERASIONAL PENGAMANAN PERSANDIAN", "nodes":[]}]}]}];
+    }();
 
-            var defaults = Plugin.getDefaults("treeview");
+    window.getExampleTreeview = function () {
+      //alert($("#aaac").val());
+      //console.log(return_first)
+      return '[' + $("#aaac").val() + ']';
+    };
 
-            
+    var defaults = Plugin.getDefaults("treeview");
+    // Example TreeView Expandible
+    // ---------------------------
+    (function () {
+      var options = _jquery2.default.extend({}, defaults, {
+        data: return_first
+      });
 
-            // Example TreeView Expandible
-            // ---------------------------
-            (function () {
-              var options = _jquery2.default.extend({}, defaults, {
-                data: return_first
-              });
+      // Expandible
+      var $expandibleTree = (0, _jquery2.default)('#exampleExpandibleTree').treeview(options);
 
-              // Expandible
-              var $expandibleTree = (0, _jquery2.default)('#exampleExpandibleTree').treeview(options);
+      // Expand/collapse all
+      (0, _jquery2.default)('#exampleExpandAll').on('click', function (e) {
+        $expandibleTree.treeview('expandAll', {
+          levels: '99'
+        });
+      });
 
-              // Expand/collapse all
-              (0, _jquery2.default)('#exampleExpandAll').on('click', function (e) {
-                $expandibleTree.treeview('expandAll', {
-                  levels: '99'
-                });
-              });
+      (0, _jquery2.default)('#exampleCollapseAll').on('click', function (e) {
+        $expandibleTree.treeview('collapseAll');
+      });
+    })();
+  });
 
-              (0, _jquery2.default)('#exampleCollapseAll').on('click', function (e) {
-                $expandibleTree.treeview('collapseAll');
-              });
-            })();
+</script>
 
-
-
-          });
-      </script>
-      
 @endsection

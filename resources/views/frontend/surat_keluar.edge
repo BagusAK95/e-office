@@ -1,359 +1,320 @@
-
-
-@layout('frontend/main')
-@section('content')
+ @layout('frontend/main') 
+ @section('content')
 
 <div class="page-content container-fluid">
-   <div class="row">
-      <div class="col-xxl-4 col-lg-12">
-         <!-- Example Panel With Heading -->
-         <div class="panel panel-bordered panel-primary">
-            <div class="panel-heading">
-               <h3 class="panel-title"><i class="icon md-email"></i>&nbsp;Surat Keluar</h3>
-            </div>
-            <div class="panel-body">
-               <div class="example example-grid">
-                  <div class="row">
-                     <div class="col-sm-12 col-lg-6">
-                        <div class="addsurat">
-                           <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
-                              <div class='btn-group' role='group' >
-                                 <!--<a href='/surat-masuk/add' class='btn btn-icon btn-primary add' >
+  <div class="row">
+    <div class="col-xxl-4 col-lg-12">
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-email"></i>&nbsp;Surat Keluar</h3>
+        </div>
+        <div class="panel-body">
+          <div class="example example-grid">
+            <div class="row">
+              <div class="col-sm-12 col-lg-6">
+                <div class="addsurat">
+                  <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                    <div class='btn-group' role='group'>
+                      <!--<a href='/surat-masuk/add' class='btn btn-icon btn-primary add' >
                                  <i class='icon md-plus' aria-hidden='true'></i>
                                  </a>-->
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-sm-6 col-lg-6">
-                        <div class="">
-                            <form id="searchform">
-                            <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
-                                <div class='btn-group' role='group'>
-                                    <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal" id='tgawl' type="text">
-                                    &nbsp;
-                                    &nbsp;
-                                    <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir" id='tgakh' type="text">
-                                    &nbsp;
-                                    &nbsp;
-                                    <input style="width:150px;height:45px;" class="form-control" placeholder="Search" id='search' type="text">
-                                    &nbsp;
-                                    &nbsp;
-                                    <button type="submit" class='btn btn-icon btn-primary'><i class='icon md-search' aria-hidden='true'></i></button>
-                                </div>
-                            </div>
-                            </form>
-                        </div>
-                     </div>
+                    </div>
                   </div>
-               </div>
-               <table class="table datatable table-striped table-bordered table-hover" data-role="content">
-                  <thead>
-                     <tr>
-                        <th style='width:120px'>TANGGAL</th>
-                        <th style='width:180px'>PENGIRIM</th>
-                        <th>TUJUAN</th>
-                        <th style='width:150px'>PERIHAL</th>
-                        <th style='width:140px'>STATUS</th>
-                        <th>ACTION</th>
-                     </tr>
-                  </thead>
-                  <tbody id="body">
-                  </tbody>
-               </table>
-               <div id="pagination"></div>
-               <span id="showing"></span>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-6">
+                <div class="">
+                  <form id="searchform">
+                    <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                      <div class='btn-group' role='group'>
+                        <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal"
+                          id='tgawl' type="text"> &nbsp; &nbsp;
+                        <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir"
+                          id='tgakh' type="text"> &nbsp; &nbsp;
+                        <input style="width:150px;height:45px;" class="form-control" placeholder="Search" id='search' type="text"> &nbsp; &nbsp;
+                        <button type="submit" class='btn btn-icon btn-primary'>
+                          <i class='icon md-search' aria-hidden='true'></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-         </div>
-         <!-- End Example Panel With Heading -->
+          </div>
+          <table class="table datatable table-striped table-bordered table-hover" data-role="content">
+            <thead>
+              <tr>
+                <th style='width:120px'>TANGGAL</th>
+                <th style='width:180px'>PENGIRIM</th>
+                <th>TUJUAN</th>
+                <th style='width:150px'>PERIHAL</th>
+                <th style='width:140px'>STATUS</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="body">
+            </tbody>
+          </table>
+          <div id="pagination"></div>
+          <span id="showing"></span>
+        </div>
       </div>
-   </div>
+      <!-- End Example Panel With Heading -->
+    </div>
+  </div>
 </div>
 <script>
-    $( document ).ready(function() {
-        /*Main*/
-        $("#loader").fadeIn("slow");
-        cek_session();
-        cek_token();
-        /*End Main*/
-        
-        /*Page*/
-        showbrand(1,'','','');
-        
-        
+  $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn("slow");
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    showbrand(1, '', '', '');
+
+
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+
+  /*function getsession()
+  {
+      $.ajax({ 
+      type: 'GET', 
+      url: '/getlevel', 
+      success: function (data) 
+      { 
+          //alert(data)
+          if(data==3)
+          {
+              $(".add").css('display','block');
+              $(".delete").css('display','block');   
+          }
+          else if(data==2)
+          {
+              $(".add").css("display", "none");
+              $(".delete").css("display", "none");
+          }
+          else if(data==1)
+          {
+              $(".add").css("display", "none");
+              $(".delete").css("display", "none");
+          }
+          else if(data==4)
+          {
+              $(".add").css("display", "none");
+              $(".delete").css("display", "none");
+          }
+      },
+      error : function(data)
+      {
+
+      }
+  });
+  }*/
+  $("#searchform").submit(function (event) {
+    var search = $("#search").val();
+    var tgawl = $("#tgawl").val();
+    var tgakh = $("#tgakh").val();
+    $("#loader").fadeIn("slow");
+    if ($("#search").val()) {
+      if ($("#tgawl").val()) {
+        if ($("#tgakh").val()) {
+
+          showbrand(1, search, tgawl, tgakh);
+        } else {
+          showbrand(1, search, tgawl, '');
+        }
+      } else {
+        showbrand(1, search, '', '');
+      }
+    } else {
+      if ($("#tgawl").val()) {
+        if ($("#tgakh").val()) {
+
+          showbrand(1, "", tgawl, tgakh);
+        } else {
+          showbrand(1, "", tgawl, '');
+        }
+      } else {
+        showbrand(1, "", '', '');
+      }
+    }
+    return false;
+  });
+
+  function cari() {
+
+  }
+
+  function dopagin() {
+    var halaman = $("#pagin").val();
+    var search = $("#search").val();
+    var tgawl = $("#tgawl").val();
+    var tgakh = $("#tgakh").val();
+    $("#loader").fadeIn("slow");
+    if ($("#search").val()) {
+      if ($("#tgawl").val()) {
+        if ($("#tgakh").val()) {
+
+          showbrand(halaman, search, tgawl, tgakh);
+        } else {
+          showbrand(halaman, search, tgawl, '');
+        }
+      } else {
+        showbrand(halaman, search, '', '');
+      }
+    } else {
+      if ($("#tgawl").val()) {
+        if ($("#tgakh").val()) {
+
+          showbrand(halaman, "", tgawl, tgakh);
+        } else {
+          showbrand(halaman, "", tgawl, '');
+        }
+      } else {
+        showbrand(halaman, "", '', '');
+      }
+    }
+  }
+
+
+  function showbrand(page, nama, tgawl, tgakh) {
+    var parameter = '';
+    if (nama == '') {
+      var naman = "";
+    } else {
+      var naman = "keyword=" + nama + "&";
+    }
+
+    if (tgawl == '') {
+      var tgl_awal = "";
+    } else {
+      var tgl_awal = "tgl_awal=" + tgawl + "&";
+    }
+
+    if (tgakh == '') {
+      var tgl_akhir = "";
+    } else {
+      var tgl_akhir = "tgl_akhir=" + tgakh + "&";
+    }
+    parameter += naman + tgl_awal + tgl_akhir;
+
+    $.ajax({
+      type: 'GET',
+      url: '/api/surat-keluar?' + parameter + 'page=' + page + '&limit=10',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        var text = "";
+        $.each(data.data.data, function (index, element) {
+          var all = JSON.parse(element.arr_penerima);
+          //console.log(all);
+          var nama_instansis = "";
+          var no = 1;
+          $.each(all, function (index, element) {
+            nama_instansis += no + ". " + element.nama_instansi + "<br>";
+            no++;
+          });
+
+          var tgl_surat = tanggal_indo(element.tgl_surat);
+
+          var sts = "";
+          if (element.status_surat == 1) {
+            sts =
+              "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Proses Pemeriksaan</span>";
+          } else if (element.status_surat == 2) {
+            sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Revisi</span>";
+          } else if (element.status_surat == 3) {
+            sts =
+              "<span style='color:white;' class='badge badge-pill badge-lg badge-primary'>Disetujui</span>";
+          } else if (element.status_surat == 4) {
+            sts =
+              "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Terkirim</span>";
+            $("#stat_kirim").hide();
+          }
+
+          var dibaca = "";
+          if (element.tgl_baca_tata_usaha) {
+            dibaca = "<span style='font-size:9pt'><i>Dibaca TU<br> pada " + tanggal_jam_indo(element.tgl_baca_tata_usaha) +
+              "<i></span>";
+          }
+          //var tgl_terima = tanggal_indo(element.tgl_terima);
+          var status = '';
+          var tr_data = "<tr><td>" + tgl_surat + "</td><td><b>" + element.nama_pembuat + "</b><br>" + element
+            .jabatan_pembuat + "</td><td>" + nama_instansis + "</td><td>" + element.perihal +
+            "</td><td align='center'>" + sts + "<br>" + dibaca +
+            "</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/surat-keluar/" +
+            element.id +
+            "'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
+          text += tr_data;
+        });
+
+        $("#body").html(text).show();
+
+        var disbalenext = '';
+        if (data.data.lastPage == data.data.page) {
+          disbalenext = 'disabled';
+        }
+
+        if (nama) {
+          var isi_nama = naman;
+        } else {
+          var isi_nama = "";
+        }
+
+
+
+        var prev = "";
+        if (page == 1) {
+          prev = "disabled";
+        }
+
+        $("#pagination").html(
+          "<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' " +
+          prev + " onclick=showbrand(1,'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir +
+          "')><i class='icon fa-angle-double-left'></i></button><button " + prev +
+          " class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) + ",'" + isi_nama + "','" +
+          tgl_awal + "','" + tgl_akhir +
+          "')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='" +
+          data.data.page + "'><button class='btn btn-xs btn-primary' style='width:50px'> of " + data.data.lastPage +
+          " </button><button class='btn btn-xs btn-primary' " + disbalenext + " onclick=showbrand(" + (data.data
+            .page + 1) + ",'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir +
+          "')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-primary btn-pill-right' onclick=showbrand(" +
+          data.data.lastPage + ",'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir + "') " + disbalenext +
+          "><i class='icon fa-angle-double-right'></i></button></div><br>Showing " + data.data.page + " to " +
+          data.data.perPage + " of " + data.data.total + " entries").show();
+        //getsession();
         $("#loader").fadeOut("xslow");
-        /*Page*/
+      }
     });
+  }
 
-    /*function getsession()
-    {
-        $.ajax({ 
-        type: 'GET', 
-        url: '/getlevel', 
-        success: function (data) 
-        { 
-            //alert(data)
-            if(data==3)
-            {
-                $(".add").css('display','block');
-                $(".delete").css('display','block');   
-            }
-            else if(data==2)
-            {
-                $(".add").css("display", "none");
-                $(".delete").css("display", "none");
-            }
-            else if(data==1)
-            {
-                $(".add").css("display", "none");
-                $(".delete").css("display", "none");
-            }
-            else if(data==4)
-            {
-                $(".add").css("display", "none");
-                $(".delete").css("display", "none");
-            }
-        },
-        error : function(data)
-        {
+  function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
 
-        }
-    });
-    }*/
-    $( "#searchform" ).submit(function( event ) {
-        var search = $("#search").val();
-        var tgawl = $("#tgawl").val();
-        var tgakh = $("#tgakh").val();
-        $("#loader").fadeIn("slow");
-        if($("#search").val())    
-        {
-            if($("#tgawl").val())
-            {
-                if($("#tgakh").val())
-                {
-                    
-                    showbrand(1,search,tgawl,tgakh);
-                }
-                else
-                {
-                    showbrand(1,search,tgawl,'');
-                }
-            }
-            else
-            {
-                showbrand(1,search,'','');
-            }
-        }
-        else
-        {
-            if($("#tgawl").val())
-            {
-                if($("#tgakh").val())
-                {
-                    
-                    showbrand(1,"",tgawl,tgakh);
-                }
-                else
-                {
-                    showbrand(1,"",tgawl,'');
-                }
-            }
-            else
-            {
-                showbrand(1,"",'','');
-            }
-        }
-        return false;
-    });
+  function tanggal_indo(tanggal) {
+    moment.locale('id');
+    return moment(tanggal).format("LL");
+  }
 
-   function cari()
-   {
-       
-   }
-   
-   function dopagin()
-   {
-       var halaman = $("#pagin").val();
-       var search = $("#search").val();
-       var tgawl = $("#tgawl").val();
-       var tgakh = $("#tgakh").val();
-        $("#loader").fadeIn("slow");
-       if($("#search").val())    
-       {
-           if($("#tgawl").val())
-           {
-               if($("#tgakh").val())
-               {
-                   
-                   showbrand(halaman,search,tgawl,tgakh);
-               }
-               else
-               {
-                   showbrand(halaman,search,tgawl,'');
-               }
-           }
-           else
-           {
-               showbrand(halaman,search,'','');
-           }
-       }
-       else
-       {
-           if($("#tgawl").val())
-           {
-               if($("#tgakh").val())
-               {
-                   
-                   showbrand(halaman,"",tgawl,tgakh);
-               }
-               else
-               {
-                   showbrand(halaman,"",tgawl,'');
-               }
-           }
-           else
-           {
-               showbrand(halaman,"",'','');
-           }
-       }
-   }
-   
-       
-       function showbrand(page,nama,tgawl,tgakh)
-       {
-           var parameter = '';
-           if(nama=='')
-           {
-               var naman = "";
-           }
-           else
-           {
-               var naman = "keyword="+nama+"&";
-           }
+  function tanggal_jam_indo(tanggal) {
+    moment.locale('id');
+    return moment(tanggal).format("LLL");
+  }
 
-           if(tgawl=='')
-           {
-               var tgl_awal = "";
-           }
-           else
-           {
-               var tgl_awal = "tgl_awal="+tgawl+"&";
-           }
-   
-           if(tgakh=='')
-           {
-               var tgl_akhir = "";
-           }
-           else
-           {
-               var tgl_akhir = "tgl_akhir="+tgakh+"&";
-           }
-           parameter += naman+tgl_awal+tgl_akhir;
-           
-            $.ajax({ 
-                type: 'GET', 
-                url: '/api/surat-keluar?'+parameter+'page='+ page + '&limit=10', 
-                headers: {
-                    'Authorization': 'Bearer {{sesi}}'
-                },
-                dataType: 'json',
-                success: function (data) { 
-                    var text="";
-                    $.each(data.data.data, function(index, element) 
-                    {
-                        var all = JSON.parse(element.arr_penerima);
-                        //console.log(all);
-                        var nama_instansis = "";
-                        var no = 1;
-                        $.each(all, function(index, element) {    
-                            nama_instansis+=no+". "+element.nama_instansi+"<br>";
-                            no++;
-                        });
-
-                        var tgl_surat = tanggal_indo(element.tgl_surat);
-
-                        var sts = "";
-                    if(element.status_surat==1)
-                    {
-                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Proses Pemeriksaan</span>";
-                    }
-                    else if(element.status_surat==2)
-                    {
-                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Revisi</span>";
-                    }
-                    else if(element.status_surat==3)
-                    {
-                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-primary'>Disetujui</span>";
-                    }
-                    else if(element.status_surat==4)
-                    {
-                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Terkirim</span>";
-                        $("#stat_kirim").hide();
-                    }
-
-                        var dibaca = "";
-                        if(element.tgl_baca_tata_usaha)
-                        {
-                            dibaca = "<span style='font-size:9pt'><i>Dibaca TU<br> pada "+tanggal_jam_indo(element.tgl_baca_tata_usaha)+"<i></span>";
-                        }
-                        //var tgl_terima = tanggal_indo(element.tgl_terima);
-                        var status = '';
-                        var tr_data = "<tr><td>"+tgl_surat+"</td><td><b>"+element.nama_pembuat+"</b><br>"+element.jabatan_pembuat+"</td><td>"+nama_instansis+"</td><td>"+element.perihal+"</td><td align='center'>"+sts+"<br>"+dibaca+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/surat-keluar/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
-                        text += tr_data;
-                    });
-
-                    $("#body").html(text).show();
-
-                    var disbalenext = '';
-                    if(data.data.lastPage==data.data.page)
-                    {
-                        disbalenext='disabled';
-                    }
-
-                    if(nama)
-                    {
-                        var isi_nama = naman;
-                    }
-                    else
-                    {
-                        var isi_nama = "";
-                    }
-                    
-
-
-                    var prev="";
-                    if(page==1)
-                    {
-                        prev = "disabled";
-                    }
-
-                    $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' "+prev+" onclick=showbrand(1,'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-primary' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-primary' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-primary btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div><br>Showing "+data.data.page+" to "+data.data.perPage+" of "+data.data.total+" entries").show();
-                    //getsession();
-                    $("#loader").fadeOut("xslow");
-                }
-            });
-       }
-   
-       function isNumber(evt) {
-           evt = (evt) ? evt : window.event;
-           var charCode = (evt.which) ? evt.which : evt.keyCode;
-           if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-               return false;
-           }
-           return true;
-       }
-       
-       function tanggal_indo(tanggal)
-       {           
-            moment.locale('id'); 
-            return moment(tanggal).format("LL");
-       }
-       function tanggal_jam_indo(tanggal)
-       {           
-            moment.locale('id'); 
-            return moment(tanggal).format("LLL");
-       }
-       
-</script> 
+</script>
 @endsection
-

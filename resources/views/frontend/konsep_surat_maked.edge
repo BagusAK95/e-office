@@ -1,17 +1,19 @@
-@layout('frontend/main')
+@layout('frontend/main') 
 @section('content')
-<div class="page-content container-fluid">
-   <div class="row">
-      <div class="col-xxl-4 col-lg-12">
-         <!-- Example Panel With Heading -->
-         <div class="panel panel-bordered panel-primary">
-            <div class="panel-heading">
-               <h3 class="panel-title"><i class="icon md-collection-item"></i>&nbsp;Daftar Pengajuan Konsep</h3>
-            </div>
-            <div class="panel-body">
 
-               <div class="example example-grid">
-                    <!--<div class="nav-tabs-horizontal" data-plugin="tabs">
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-xxl-4 col-lg-12">
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-collection-item"></i>&nbsp;Daftar Pengajuan Konsep</h3>
+        </div>
+        <div class="panel-body">
+
+          <div class="example example-grid">
+            <!--<div class="nav-tabs-horizontal" data-plugin="tabs">
                         <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item" role="presentation"><a class="nav-link active" href="/konsep-surat/maked"
                             aria-controls="exampleTabsOne" role="tab"><i class='icon md-collection-item' aria-hidden='true'></i> Pengajuan</a></li>
@@ -20,337 +22,300 @@
                         </ul>
                     </div>
                     <br>-->
-                  <div class="row">
-                     <div class="col-sm-12 col-lg-6">
-                        <div class="">
-                            <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
-                                <div class='btn-group' role='group' >
-                                    <a href='/konsep-surat/add' class='btn btn-icon btn-primary add' >
-                                    <i class='icon md-plus' aria-hidden='true'></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>   
-                     </div>
-                     <div class="col-sm-6 col-lg-6">
-                        <div class="">
-                            <form id="searchform">
-                           <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
-                              <div class='btn-group' role='group'>
-                                 <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal" id='tgawl' type="text">
-                                 &nbsp;
-                                 &nbsp;
-                                 <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir" id='tgakh' type="text">
-                                 &nbsp;
-                                 &nbsp;
-                                 <input style="width:150px;height:45px;" class="form-control" placeholder="Search" id='search' type="text">
-                                 &nbsp;
-                                 &nbsp;
-                                 <button type="submit" class='btn btn-icon btn-primary'>
-                                 <i class='icon md-search' aria-hidden='true'></i>
-                                 </button>
-                              </div>
-                           </div>
-                           </form>
-                        </div>
-                     </div>
+            <div class="row">
+              <div class="col-sm-12 col-lg-6">
+                <div class="">
+                  <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                    <div class='btn-group' role='group'>
+                      <a href='/konsep-surat/add' class='btn btn-icon btn-primary add'>
+                        <i class='icon md-plus' aria-hidden='true'></i>
+                      </a>
+                    </div>
                   </div>
-               </div>
-               <table class="table table-striped table-bordered" data-tablesaw-mode="swipe"
-                  data-tablesaw-mode-switch data-tablesaw-minimap data-tablesaw-mode-exclude="columntoggle">
-                  <thead>
-                     <tr>
-                        <th width='150px'>TANGGAL</th>
-                        <th width='300px'>TUJUAN</th>                        
-                        <th >PERIHAL</th>
-                        <th >STATUS</th>
-                        <th >ACTION</th>
-                     </tr>
-                  </thead>
-                  <tbody id="body">
-                  </tbody>
-               </table>
-               <div id="pagination"></div>
-               <span id="showing"></span>
+                </div>
+              </div>
+              <div class="col-sm-6 col-lg-6">
+                <div class="">
+                  <form id="searchform">
+                    <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                      <div class='btn-group' role='group'>
+                        <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal"
+                          id='tgawl' type="text"> &nbsp; &nbsp;
+                        <input style="width:130px;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir"
+                          id='tgakh' type="text"> &nbsp; &nbsp;
+                        <input style="width:150px;height:45px;" class="form-control" placeholder="Search" id='search' type="text"> &nbsp; &nbsp;
+                        <button type="submit" class='btn btn-icon btn-primary'>
+                          <i class='icon md-search' aria-hidden='true'></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
-         </div>
-         <!-- End Example Panel With Heading -->
+          </div>
+          <table class="table table-striped table-bordered" data-tablesaw-mode="swipe" data-tablesaw-mode-switch data-tablesaw-minimap
+            data-tablesaw-mode-exclude="columntoggle">
+            <thead>
+              <tr>
+                <th width='150px'>TANGGAL</th>
+                <th width='300px'>TUJUAN</th>
+                <th>PERIHAL</th>
+                <th>STATUS</th>
+                <th>ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="body">
+            </tbody>
+          </table>
+          <div id="pagination"></div>
+          <span id="showing"></span>
+        </div>
       </div>
-   </div>
+      <!-- End Example Panel With Heading -->
+    </div>
+  </div>
 </div>
 <script>
-    $( document ).ready(function() {
-        /*Main*/
-        $("#loader").fadeIn("slow");
-        cek_session();
-        cek_token();
-        /*End Main*/
-        
-        /*Page*/
-        showbrand(1,'','','');
+  $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn("slow");
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    showbrand(1, '', '', '');
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+
+
+  $("#searchform").submit(function (event) {
+    $("#loader").fadeIn("slow");
+    var search = $("#search").val();
+    var tgawl = $("#tgawl").val();
+    var tgakh = $("#tgakh").val();
+
+    if ($("#search").val()) {
+      if ($("#tgawl").val()) {
+        if ($("#tgakh").val()) {
+
+          showbrand(1, search, tgawl, tgakh);
+        } else {
+          showbrand(1, search, tgawl, '');
+        }
+      } else {
+        showbrand(1, search, '', '');
+      }
+    } else {
+      if ($("#tgawl").val()) {
+        if ($("#tgakh").val()) {
+
+          showbrand(1, "", tgawl, tgakh);
+        } else {
+          showbrand(1, "", tgawl, '');
+        }
+      } else {
+        showbrand(1, "", '', '');
+      }
+    }
+    return false;
+  });
+
+  function dopagin() {
+    var halaman = $("#pagin").val();
+    var search = $("#search").val();
+    var tgawl = $("#tgawl").val();
+    var tgakh = $("#tgakh").val();
+
+    if ($("#search").val()) {
+      if ($("#tgawl").val()) {
+        if ($("#tgakh").val()) {
+
+          showbrand(halaman, search, tgawl, tgakh);
+        } else {
+          showbrand(halaman, search, tgawl, '');
+        }
+      } else {
+        showbrand(halaman, search, '', '');
+      }
+    } else {
+      if ($("#tgawl").val()) {
+        if ($("#tgakh").val()) {
+
+          showbrand(halaman, "", tgawl, tgakh);
+        } else {
+          showbrand(halaman, "", tgawl, '');
+        }
+      } else {
+        showbrand(halaman, "", '', '');
+      }
+    }
+  }
+
+
+  function showbrand(page, nama, tgawl, tgakh) {
+
+    var parameter = '';
+    if (nama == '') {
+      var naman = "";
+    } else {
+      var naman = "keyword=" + nama + "&";
+    }
+
+    if (tgawl == '') {
+      var tgl_awal = "";
+    } else {
+      var tgl_awal = "tgl_awal=" + tgawl + "&";
+    }
+
+    if (tgakh == '') {
+      var tgl_akhir = "";
+    } else {
+      var tgl_akhir = "tgl_akhir=" + tgakh + "&";
+    }
+    parameter += naman + tgl_awal + tgl_akhir;
+
+    $.ajax({
+      type: 'GET',
+      url: '/api/konsep-surat/listMaked?' + parameter + "page=" + page + '&limit=10',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+
+        var text = "";
+        $.each(data.data.data, function (index, element) {
+          var sts = "";
+          if (element.status_surat == 1) {
+            sts =
+              "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Proses Pemeriksaan</span>";
+          } else if (element.status_surat == 2) {
+            sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Revisi</span>";
+          } else if (element.status_surat == 3) {
+            sts =
+              "<span style='color:white;' class='badge badge-pill badge-lg badge-primary'>Disetujui</span>";
+          } else if (element.status_surat == 4) {
+            sts =
+              "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Terkirim</span>";
+          }
+
+          var all = JSON.parse(element.arr_penerima);
+          //console.log(all);
+          var nama_instansis = "";
+          var no = 1;
+          $.each(all, function (index, element) {
+            nama_instansis += no + ". " + element.nama_instansi + "<br>";
+            no++;
+          });
+
+
+          var tgl_surat = tanggal_indo(element.tgl_surat);
+
+          var tr_data = "<tr><td>" + tgl_surat + "</td><td>" + nama_instansis + "</td><td>" + element.perihal +
+            "</td><td align='center'>" + sts +
+            "</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/konsep-surat/maked/" +
+            element.id +
+            "'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><a style='color:white' class='btn btn-icon btn-primary' href='/konsep-surat/edit/" +
+            element.id +
+            "'><i class='icon md-edit' aria-hidden='true'></i></a><button id='deletesurat' onclick=delete_data('" +
+            element.id +
+            "') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+          text += tr_data;
+        });
+
+        $("#body").html(text).show();
+
+        var disbalenext = '';
+        if (data.data.lastPage == data.data.page) {
+          disbalenext = 'disabled';
+        }
+
+        if (nama) {
+          var isi_nama = naman;
+        } else {
+          var isi_nama = "";
+        }
+
+
+        var prev = "";
+        if (page == 1) {
+          prev = "disabled";
+        }
+
+        $("#pagination").html(
+          "<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' " +
+          prev + " onclick=showbrand(1,'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir +
+          "')><i class='icon fa-angle-double-left'></i></button><button " + prev +
+          " class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) + ",'" + isi_nama + "','" +
+          tgl_awal + "','" + tgl_akhir +
+          "')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='" +
+          data.data.page + "'><button class='btn btn-xs btn-primary' style='width:50px'> of " + data.data.lastPage +
+          " </button><button class='btn btn-xs btn-primary' " + disbalenext + " onclick=showbrand(" + (data.data
+            .page + 1) + ",'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir +
+          "')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-primary btn-pill-right' onclick=showbrand(" +
+          data.data.lastPage + ",'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir + "') " + disbalenext +
+          "><i class='icon fa-angle-double-right'></i></button></div><br>Showing " + data.data.page + " to " +
+          data.data.perPage + " of " + data.data.total + " entries").show();
         $("#loader").fadeOut("xslow");
-        /*Page*/
+      }
     });
 
+  }
 
-    $( "#searchform" ).submit(function( event ) {
-        $("#loader").fadeIn("slow");
-        var search = $("#search").val();
-        var tgawl = $("#tgawl").val();
-        var tgakh = $("#tgakh").val();
-    
-        if($("#search").val())    
-        {
-            if($("#tgawl").val())
-            {
-                if($("#tgakh").val())
-                {
-                    
-                    showbrand(1,search,tgawl,tgakh);
-                }
-                else
-                {
-                    showbrand(1,search,tgawl,'');
-                }
-            }
-            else
-            {
-                showbrand(1,search,'','');
-            }
+  function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  function tanggal_indo(tanggal) {
+    moment.locale('id');
+    return moment(tanggal).format("LL");
+  }
+
+  function tanggal_jam_indo(tanggal) {
+    moment.locale('id');
+    return moment(tanggal).format("LLL");
+  }
+
+  function delete_data(nip) {
+    if (confirm('Yakin menghapus data ini?')) {
+      $.ajax({
+        type: 'DELETE',
+        url: '/api/konsep-surat/' + nip,
+        headers: {
+          'Authorization': 'Bearer {{sesi}}'
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.success == false) {
+            swal("Gagal!", "Hapus data gagal.", "error");
+          } else if (data.success == true) {
+            swal({
+                title: "Berhasil",
+                text: "Berhasil hapus data.",
+                type: "success"
+              },
+              function () {
+                location.reload();
+              }
+            );
+          }
+        },
+        error: function () {
+          return false;
         }
-        else
-        {
-            if($("#tgawl").val())
-            {
-                if($("#tgakh").val())
-                {
-                    
-                    showbrand(1,"",tgawl,tgakh);
-                }
-                else
-                {
-                    showbrand(1,"",tgawl,'');
-                }
-            }
-            else
-            {
-                showbrand(1,"",'','');
-            }
-        }
-        return false;
-    });
-   
-   function dopagin()
-   {
-       var halaman = $("#pagin").val();
-       var search = $("#search").val();
-       var tgawl = $("#tgawl").val();
-       var tgakh = $("#tgakh").val();
-   
-       if($("#search").val())    
-       {
-           if($("#tgawl").val())
-           {
-               if($("#tgakh").val())
-               {
-                   
-                   showbrand(halaman,search,tgawl,tgakh);
-               }
-               else
-               {
-                   showbrand(halaman,search,tgawl,'');
-               }
-           }
-           else
-           {
-               showbrand(halaman,search,'','');
-           }
-       }
-       else
-       {
-           if($("#tgawl").val())
-           {
-               if($("#tgakh").val())
-               {
-                   
-                   showbrand(halaman,"",tgawl,tgakh);
-               }
-               else
-               {
-                   showbrand(halaman,"",tgawl,'');
-               }
-           }
-           else
-           {
-               showbrand(halaman,"",'','');
-           }
-       }
-   }
-   
-       
-       function showbrand(page,nama,tgawl,tgakh)
-       {
-           
-           var parameter = '';
-           if(nama=='')
-           {
-               var naman = "";
-           }
-           else
-           {
-               var naman = "keyword="+nama+"&";
-           }
+      });
+    } else {
+      return false;
+    }
+  }
 
-           if(tgawl=='')
-           {
-               var tgl_awal = "";
-           }
-           else
-           {
-               var tgl_awal = "tgl_awal="+tgawl+"&";
-           }
-   
-           if(tgakh=='')
-           {
-               var tgl_akhir = "";
-           }
-           else
-           {
-               var tgl_akhir = "tgl_akhir="+tgakh+"&";
-           }
-           parameter += naman+tgl_awal+tgl_akhir;
-  
-            $.ajax({ 
-                type: 'GET', 
-                url: '/api/konsep-surat/listMaked?'+parameter+"page="+page+'&limit=10', 
-                headers: {
-                    'Authorization': 'Bearer {{sesi}}'
-                },
-                dataType: 'json',
-                success: function (data) { 
-                    
-                var text="";
-                    $.each(data.data.data, function(index, element) 
-                    {
-                    var sts = "";
-                    if(element.status_surat==1)
-                    {
-                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-warning'>Proses Pemeriksaan</span>";
-                    }
-                    else if(element.status_surat==2)
-                    {
-                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Revisi</span>";
-                    }
-                    else if(element.status_surat==3)
-                    {
-                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-primary'>Disetujui</span>";
-                    }
-                    else if(element.status_surat==4)
-                    {
-                        sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Terkirim</span>";
-                    }
-
-                    var all = JSON.parse(element.arr_penerima);
-                    //console.log(all);
-                    var nama_instansis = "";
-                    var no = 1;
-                    $.each(all, function(index, element) {    
-                        nama_instansis+=no+". "+element.nama_instansi+"<br>";
-                        no++;
-                    });
-
-
-                        var tgl_surat = tanggal_indo(element.tgl_surat);
-
-                        var tr_data = "<tr><td>"+tgl_surat+"</td><td>"+nama_instansis+"</td><td>"+element.perihal+"</td><td align='center'>"+sts+"</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/konsep-surat/maked/"+element.id+"'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><a style='color:white' class='btn btn-icon btn-primary' href='/konsep-surat/edit/"+element.id+"'><i class='icon md-edit' aria-hidden='true'></i></a><button id='deletesurat' onclick=delete_data('"+element.id+"') type='button' class='btn btn-icon btn-primary delete'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
-                        text += tr_data;
-                    });
-                    
-                    $("#body").html(text).show();
-
-                    var disbalenext = '';
-                    if(data.data.lastPage==data.data.page)
-                    {
-                        disbalenext='disabled';
-                    }
-
-                    if(nama)
-                    {
-                        var isi_nama = naman;
-                    }
-                    else
-                    {
-                        var isi_nama = "";
-                    }
-
-
-                    var prev="";
-                    if(page==1)
-                    {
-                        prev = "disabled";
-                    }
-
-                    $("#pagination").html("<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' "+prev+" onclick=showbrand(1,'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-double-left'></i></button><button "+prev+" class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='"+data.data.page+"'><button class='btn btn-xs btn-primary' style='width:50px'> of "+data.data.lastPage+" </button><button class='btn btn-xs btn-primary' "+disbalenext+" onclick=showbrand(" + (data.data.page + 1) + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"')><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-primary btn-pill-right' onclick=showbrand(" + data.data.lastPage + ",'"+isi_nama+"','"+tgl_awal+"','"+tgl_akhir+"') "+disbalenext+"><i class='icon fa-angle-double-right'></i></button></div><br>Showing "+data.data.page+" to "+data.data.perPage+" of "+data.data.total+" entries").show();
-                    $("#loader").fadeOut("xslow");
-                }
-            });
-   
-       }
-       function isNumber(evt) {
-           evt = (evt) ? evt : window.event;
-           var charCode = (evt.which) ? evt.which : evt.keyCode;
-           if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-               return false;
-           }
-           return true;
-       }
-       function tanggal_indo(tanggal)
-       {           
-            moment.locale('id'); 
-            return moment(tanggal).format("LL");
-       }
-       function tanggal_jam_indo(tanggal)
-       {           
-            moment.locale('id'); 
-            return moment(tanggal).format("LLL");
-       }
-       function delete_data(nip)
-       {
-           if(confirm('Yakin menghapus data ini?'))
-           {
-            $.ajax({ 
-                type: 'DELETE', 
-                url: '/api/konsep-surat/'+nip, 
-                headers: {
-                    'Authorization': 'Bearer {{sesi}}'
-                },
-                dataType: 'json',
-                success: function (data) 
-                { 
-                    if(data.success==false)
-                    {
-                        swal("Gagal!", "Hapus data gagal.", "error");
-                    }
-                    else if(data.success==true)
-                    {
-                        swal({title: "Berhasil", text: "Berhasil hapus data.", type: "success"},
-                        function(){ 
-                            location.reload();
-                        }
-                        );
-                    }
-                },
-                error: function ()
-                {
-                    return false;
-                }
-            });
-           }
-           else
-           {
-               return false;
-           }
-       }
-</script> 
+</script>
 @endsection
-

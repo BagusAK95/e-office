@@ -1,245 +1,241 @@
-
-
 @layout('frontend/main')
 @section('content')
+
 <div class="page-content container-fluid">
-   <div class="row">
-      <div class="col-xxl-4 col-lg-12">
-         <!-- Example Panel With Heading -->
-         <div class="panel panel-bordered panel-primary">
-            <div class="panel-heading">
-               <h3 class="panel-title"><i class="icon md-plus"></i>&nbsp;Tujuan Surat Keluar</h3>
-            </div>
-            <div class="panel-body">
-               <div class="col-lg-12">
-                  <!-- Example Default -->
-                  <style> 
-                     .tab {
-                     display: none;
-                     }
-                     .steping {
-                     }
-                     .steping.active {
-                     opacity: 1;
-                     }
-                     .steping.finish {
-                     color: #fff;
-                     background-color: #3f51b5;
-                     }
-                  </style>
-                  <form autocomplete="off" id="simpan">
-                     <!--Main-->
-                     <div class="panel">
-                        <div class="panel-body container-fluid">
-                           
-                                <div class="form-group" data-plugin="formMaterial">
-                                    <label class="form-control-label" for="inputEmail">Nama&nbsp;</label>
-                                        <input type="text" id="nama" class="form-control">
-                                </div>
+  <div class="row">
+    <div class="col-xxl-4 col-lg-12">
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-plus"></i>&nbsp;Tujuan Surat Keluar</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-lg-12">
+            <!-- Example Default -->
+            <style>
+              .tab {
+                display: none;
+              }
 
-                                <div class="form-group" data-plugin="formMaterial">
-                                    <label class="form-control-label" for="inputEmail">Jenis Instansi&nbsp;<span style="color:red">*</span> </label>
-                                        <select name="jenis" class="form-control" id="jenis" onchange="do_jenis()">
-                                            <option value="1">ODP</option>
-                                            <option value="2">Swasta</option>
-                                        </select>
-                                </div>
+              .steping {}
 
-                                <div class="form-group" data-plugin="formMaterial">
-                                    <div id="pns">
-                                        <label class="form-control-label" for="inputEmail">Instansi&nbsp;</label>
-                                        <select name="instansi" id="instansi" class="form-control pegawai_tembusan" onchange="do_otomatis()"  data-plugin="select2" multiple="">
-                                        </select>
-                                    </div>
-                                    <div id="swasta" data-plugin="formMaterial" style="display:none;">
-                                        <label class="form-control-label" for="inputEmail">Instansi&nbsp;</label>
-                                        <div class="input-group">
-                                            <input type="text" id="instansi_swasta" name="instansi_swasta" class="form-control" style="width:60%" required>
-                                            <span class="input-group-prepend">
-                                            <button type="button" class="btn btn-primary" onclick="add_instansi_swasta()"><i class="md-plus"></i>&nbsp;Add</button>
-                                            <button type="button" class="btn btn-danger" onclick='$("#json").val("");$("#tbl_swasta").html("");'><i class="md-close"></i>&nbsp;Reset</button>
-                                            </span>
-                                        </div>
-                                        <div id="tbl_swasta">
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="json" id="json" class="form-control">
-                                </div>
-                           <br>
-                           <a class="btn btn-danger waves-classic" href="/tujuan-surat" style="color:white">Batal</a>
-                           <div style="float:right" >
-                              <div style="overflow:auto;">
-                                 <div style="float:right;">
-                                      <a class='btn btn-success' onclick='simpen()' style='color:white'>Submit</a>
-                                 </div>
-                              </div>
-                           </div>
-                           <br>
-                           <br>
-                          
-                        </div>
-                     </div>
-                  </form>
+              .steping.active {
+                opacity: 1;
+              }
+
+              .steping.finish {
+                color: #fff;
+                background-color: #3f51b5;
+              }
+
+            </style>
+            <form autocomplete="off" id="simpan">
+              <!--Main-->
+              <div class="panel">
+                <div class="panel-body container-fluid">
+
+                  <div class="form-group" data-plugin="formMaterial">
+                    <label class="form-control-label" for="inputEmail">Nama&nbsp;</label>
+                    <input type="text" id="nama" class="form-control">
                   </div>
-               </div>
-            </div>
-         </div>
-         <!-- End Example Panel With Heading -->
+
+                  <div class="form-group" data-plugin="formMaterial">
+                    <label class="form-control-label" for="inputEmail">Jenis Instansi&nbsp;
+                      <span style="color:red">*</span>
+                    </label>
+                    <select name="jenis" class="form-control" id="jenis" onchange="do_jenis()">
+                      <option value="1">ODP</option>
+                      <option value="2">Swasta</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group" data-plugin="formMaterial">
+                    <div id="pns">
+                      <label class="form-control-label" for="inputEmail">Instansi&nbsp;</label>
+                      <select name="instansi" id="instansi" class="form-control pegawai_tembusan" onchange="do_otomatis()" data-plugin="select2"
+                        multiple="">
+                      </select>
+                    </div>
+                    <div id="swasta" data-plugin="formMaterial" style="display:none;">
+                      <label class="form-control-label" for="inputEmail">Instansi&nbsp;</label>
+                      <div class="input-group">
+                        <input type="text" id="instansi_swasta" name="instansi_swasta" class="form-control" style="width:60%" required>
+                        <span class="input-group-prepend">
+                          <button type="button" class="btn btn-primary" onclick="add_instansi_swasta()">
+                            <i class="md-plus"></i>&nbsp;Add</button>
+                          <button type="button" class="btn btn-danger" onclick='$("#json").val("");$("#tbl_swasta").html("");'>
+                            <i class="md-close"></i>&nbsp;Reset</button>
+                        </span>
+                      </div>
+                      <div id="tbl_swasta">
+                      </div>
+                    </div>
+                    <input type="hidden" name="json" id="json" class="form-control">
+                  </div>
+                  <br>
+                  <a class="btn btn-danger waves-classic" href="/tujuan-surat" style="color:white">Batal</a>
+                  <div style="float:right">
+                    <div style="overflow:auto;">
+                      <div style="float:right;">
+                        <a class='btn btn-success' onclick='simpen()' style='color:white'>Submit</a>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
-   </div>
+    </div>
+    <!-- End Example Panel With Heading -->
+  </div>
+</div>
 </div>
 <script>
-    // Handle the event that fires when a tag is added
-    $( document ).ready(function() {
-        /*Main*/
-        $("#loader").fadeIn();
-        cek_session();
-        cek_token();
-        /*End Main*/
-        
-        /*Page*/
-        kantor() 
-        $("#loader").fadeOut("xslow");
-        /*Page*/
+  // Handle the event that fires when a tag is added
+  $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn();
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    kantor()
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+
+  function do_jenis() {
+    $("#json").val("");
+    if ($("#jenis").val() == 1) {
+      $("#pns").show();
+      $("#swasta").hide();
+    } else if ($("#jenis").val() == 2) {
+      $("#pns").hide();
+      $("#swasta").show();
+    }
+    $("#instansi").select2("val", "");
+  }
+
+  function kantor() {
+    $.ajax({
+      type: 'GET',
+      url: '/api/master-kantor/listAllParent',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        var isi = "";
+        $.each(data.data, function (index, element) {
+          isi += "<option value='" + element.kdlokasi + "-" + element.nmlokasi + "'>" + element.nmlokasi +
+            "</option>";
+        })
+        $(".pegawai_tembusan").html(isi).show();
+      },
+      error: function () {
+        return false;
+      }
     });
-    function do_jenis()
-    {
-        $("#json").val("");
-        if($("#jenis").val()==1)
-        {
-            $("#pns").show();
-            $("#swasta").hide();
-        }
-        else if($("#jenis").val()==2)
-        { 
-            $("#pns").hide();
-            $("#swasta").show(); 
-        }
-        $("#instansi").select2("val", "");
+  }
+
+  function do_otomatis() {
+    var arr_tembusan = $("#instansi").val();
+
+    var isi_arr_tembusan = "";
+    var nomor = 1;
+    var panjang = arr_tembusan.length;
+    $.each(arr_tembusan, function (index, da) {
+      var all = da.split("-");
+      var id = all[0];
+      var nama = all[1];
+      isi_arr_tembusan += "{";
+      isi_arr_tembusan += '"id_instansi": "' + id + '","nama_instansi": "' + nama + '"';
+      isi_arr_tembusan += "}";
+      if (nomor < panjang) {
+        isi_arr_tembusan += ",";
+      }
+      nomor++;
+    });
+    //isi_arr_tembusan += "]";
+
+    $("#json").val(isi_arr_tembusan);
+
+    var isin = $("#json").val();
+    if (isin == "[]") {
+      var isi_arr_tembusan = "";
+      $("#json").val(isi_arr_tembusan);
     }
-    function kantor() 
-    {
-        $.ajax({ 
-            type: 'GET', 
-            url: '/api/master-kantor/listAllParent', 
-            headers: {
-                        'Authorization': 'Bearer {{sesi}}'
-                    },
-            dataType: 'json',
-            success: function (data) 
-            {   
-                var isi = "";
-                $.each(data.data, function(index, element) {
-                    isi += "<option value='"+element.kdlokasi+"-"+element.nmlokasi+"'>"+element.nmlokasi+"</option>";
-                })
-                $(".pegawai_tembusan").html(isi).show();
+
+  }
+
+  function add_instansi_swasta() {
+    var arr_tembusan = $("#instansi_swasta").val();
+    //var awal = "[";
+    var nomor = 1;
+    //var panjang = arr_tembusan.length;
+    var isi_arr_tembusan = "";
+    isi_arr_tembusan += "{";
+    isi_arr_tembusan += '"id_instansi": null,"nama_instansi": "' + arr_tembusan + '"';
+    isi_arr_tembusan += "}";
+    if ($("#json").val()) {
+      var lama = $("#json").val();
+      var kabeh = lama + "," + isi_arr_tembusan;
+    } else {
+      var kabeh = isi_arr_tembusan;
+    }
+    $("#json").val(kabeh);
+    $("#instansi_swasta").val("");
+    //var akhir += "]";
+    var all = JSON.parse("[" + kabeh + "]");
+    var nama_instansis = "";
+    var no = 1;
+    $.each(all, function (index, element) {
+      nama_instansis += no + ". " + element.nama_instansi + "<br>";
+      no++;
+    });
+
+    $("#tbl_swasta").html("<br>" + nama_instansis).show();
+  }
+
+  function simpen() {
+    $("#loader").fadeIn();
+
+    $.ajax({
+      type: 'POST',
+      url: '/api/tujuan-surat',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      data: 'nama=' + $("#nama").val() + "&data=" + "[" + $("#json").val() + "]",
+      success: function (datanya) {
+        if (datanya.success == false) {
+          swal("Gagal!", datanya.message, "error");
+        } else if (datanya.success == true) {
+          swal({
+              title: "Berhasil",
+              text: "Berhasil Menyimpan data.",
+              type: "success"
             },
-            error: function ()
-            {
-                return false;
-            }
-        });
-    }
-    function do_otomatis()
-    {       
-            var arr_tembusan = $("#instansi").val();
-            
-            var isi_arr_tembusan = "";
-            var nomor = 1;
-            var panjang = arr_tembusan.length;
-            $.each(arr_tembusan, function(index, da) {
-                var all = da.split("-");
-                var id = all[0];
-                var nama = all[1];
-                isi_arr_tembusan += "{";
-                isi_arr_tembusan += '"id_instansi": "'+id+'","nama_instansi": "'+nama+'"';
-                isi_arr_tembusan += "}";
-                if(nomor<panjang)
-                {
-                    isi_arr_tembusan += ",";
-                }
-                nomor++;
+            function () {
+              window.location.href = "/tujuan-surat";
             });
-            //isi_arr_tembusan += "]";
-            
-            $("#json").val(isi_arr_tembusan);
-
-            var isin = $("#json").val();
-            if(isin=="[]")
-            {
-                var isi_arr_tembusan="";
-                $("#json").val(isi_arr_tembusan);   
-            }
-            
-    }
-
-    function add_instansi_swasta()
-    {       
-        var arr_tembusan = $("#instansi_swasta").val();
-        //var awal = "[";
-        var nomor = 1;
-        //var panjang = arr_tembusan.length;
-        var isi_arr_tembusan = "";
-        isi_arr_tembusan += "{";
-        isi_arr_tembusan += '"id_instansi": null,"nama_instansi": "'+arr_tembusan+'"';
-        isi_arr_tembusan += "}";
-        if($("#json").val())
-        {
-            var lama = $("#json").val();
-            var kabeh = lama+","+isi_arr_tembusan;
+          $("#loader").hide();
         }
-        else
-        {
-            var kabeh = isi_arr_tembusan;
-        }
-        $("#json").val(kabeh);
-        $("#instansi_swasta").val("");
-        //var akhir += "]";
-        var all = JSON.parse("["+kabeh+"]");
-        var nama_instansis = "";
-        var no = 1;
-        $.each(all, function(index, element) {    
-            nama_instansis+=no+". "+element.nama_instansi+"<br>";
-            no++;
-        });
+      },
+      error: function (data) {
+        swal("Gagal!", data.message, "error");
+      }
+    });
 
-        $("#tbl_swasta").html("<br>"+nama_instansis).show();
-    }
+    return false;
+  }
 
-    function simpen()
-    {
-       $("#loader").fadeIn();
-       
-          $.ajax({ 
-           type: 'POST', 
-           url: '/api/tujuan-surat', 
-           headers: {
-            'Authorization': 'Bearer {{sesi}}'
-            },
-           data : 'nama='+$("#nama").val()+"&data="+"["+$("#json").val()+"]",
-           success: function (datanya) 
-           { 
-               if(datanya.success==false)
-               {
-                    swal("Gagal!", datanya.message, "error");
-               }
-               else if(datanya.success==true)
-               {
-                    swal({title: "Berhasil", text: "Berhasil Menyimpan data.", type: "success"},
-                    function(){ 
-                        window.location.href="/tujuan-surat";
-                    });
-                    $("#loader").hide();
-               }
-           },
-           error: function(data)
-           {
-               swal("Gagal!", data.message, "error");
-           }
-           });
-       
-       return false;
-    }
-</script> 
+</script>
 @endsection
-
