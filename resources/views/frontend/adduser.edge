@@ -332,31 +332,11 @@
         }
 
         $( "#simpan" ).submit(function( event ) {
-            var akses = "";
-            if($("#sm").val())
-            {
-                 akses += $("#sm").val();
-            }
-
-            if($("#sk").val())
-            {
-                akses += ","+$("#sk").val();
-            }
-
-            if($("#di").val())
-            {
-                akses += ","+$("#di").val();
-            }
-
-            $.ajax({ 
-            type: 'GET', 
-            url: '/gettoken', 
-            success: function (data) { 
                $.ajax({ 
                 type: 'POST', 
                 url: '/api/user', 
                 headers: {
-					'Authorization': 'Bearer ' + data.token
+					'Authorization': 'Bearer {{sesi}}'
 				},
                 data : "nip="+$("#pegawai").val()+"&nama_lengkap="+$("#nama_lengkap").val()+"&nohp="+$("#nohp").val()+"&email="+$("#email").val()+"&kode_lokasi="+$("#kode_lokasi").val()+"&kode_jabatan="+$("#kode_jabatan").val()+"&nama_jabatan="+$("#nama_jabatan").val()+"&golongan="+$("#golongan").val()+"&password="+$("#password").val()+"&level="+$("#level").val()+"&status="+$("#status").val()+"&kode_eselon="+$("#kode_eselon").val()+"&akses="+akses,
                 success: function (data) 
@@ -379,13 +359,7 @@
                     swal("Gagal!", "Gagal Menyimpan data.", "error");
                 }
                 });
-            },
-            error: function ()
-            {
                 return false;
-            }
-            });
-            return false;
         });
         function ulangipassword()
         {
