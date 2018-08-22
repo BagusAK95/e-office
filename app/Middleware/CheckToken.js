@@ -10,13 +10,17 @@ class CheckToken {
         if (user.level != 1) {
           return response.send(Response.format(false, 'Akses ditolak', null))
         }
+      } else if (rule[0] == 'employe') {
+        if (user.level == 1) {
+          return response.send(Response.format(false, 'Akses ditolak', null))
+        }
       }
 
       if (rule[1]) {
         if (user.akses) {
           if (user.akses.split(',').indexOf(rule[1]) == -1) {
             return response.send(Response.format(false, 'Akses ditolak', null))
-          }  
+          }
         } else {
           return response.send(Response.format(false, 'Akses ditolak', null))
         }
