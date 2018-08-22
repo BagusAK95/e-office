@@ -58,7 +58,8 @@ const aliases = {}
 |
 */
 const commands = [
-  'App/Commands/CompleteUserData'
+  'App/Commands/CompleteUserData',
+  'App/Commands/TrackWaybill'
 ]
 
 module.exports = { providers, aceProviders, aliases, commands }
