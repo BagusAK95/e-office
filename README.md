@@ -1,10 +1,9 @@
-# First todo
+# First To do
 ```
 npm install
 ```
 
 # Setting .env
-
 ```
 HOST=127.0.0.1
 PORT=3333
@@ -25,7 +24,6 @@ RAJAONGKIR_KEY=
 ```
 
 # e-Office API Documentation
-
 ```
 http://127.0.0.1:3333/api/docs
 ```
