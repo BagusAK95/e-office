@@ -1,10 +1,10 @@
-# First To do
-### Clone Project
+# First To Do
+#### Clone Project
 ```
 git clone https://github.com/BagusAK95/e-office.git
 ```
 
-### Install Package
+#### Install Package
 ```
 npm install
 ```
