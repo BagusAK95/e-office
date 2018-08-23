@@ -1,4 +1,10 @@
 # First To do
+Clone Project
+```
+git clone https://github.com/BagusAK95/e-office.git
+```
+
+Install Package
 ```
 npm install
 ```
@@ -23,7 +29,12 @@ FIREBASE_SERVER_KEY=
 RAJAONGKIR_KEY=
 ```
 
-# e-Office API Documentation
+# Run Server
+```
+adonis serve --dev
+```
+
+# API Documentation
 ```
 http://127.0.0.1:3333/api/docs
 ```
