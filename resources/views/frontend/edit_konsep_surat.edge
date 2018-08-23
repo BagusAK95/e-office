@@ -1070,7 +1070,20 @@
       url: '/api/konsep-surat/{{params.id}}',
       success: function (data) {
 
-
+        if(data.success==false)
+        {
+          swal({
+              title: "Gagal",
+              text: data.message,
+              type: "error"
+            },
+            function () {
+              window.location.href = "/konsep-surat/maked";
+            }
+          );
+        }
+        else
+        {
         var element = data.data;
 
         //Lampiran//
@@ -1131,6 +1144,7 @@
         $("#klasifikasi").val(element.klasifikasi);
         $("#ringkasan").val(element.ringkasan);
         $('#isisurat').summernote("code", element.isi_surat);
+      }
       },
       error: function (data) {
 

@@ -59,10 +59,6 @@ Route.get('/logout', ({
   session.clear()
   response.redirect('/login')
 })
-
-/*Route.get('/gettoken', ({ session }) => {
-    return session.all()
-})*/
 //End Aut Login//
 
 //------------------------------------ Main System ---------------------------------//
@@ -234,11 +230,13 @@ Route.get('/disposisi-masuk/:id', async function ({
 //Notif
 //Route.on('/notif').render('frontend/notif')
 Route.get('/notifikasi/:id', async function ({
+  session,
   params,
   view
 }) {
+  const sesi = session.get('token');
   return view.render('frontend/notifikasi', {
-    params
+    params,sesi
   })
 }).middleware('checkAccess:all')
 

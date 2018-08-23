@@ -315,50 +315,6 @@
     return true;
   }
 
-
-
-  function delete_data(nip) {
-    if (confirm('Yakin menghapus data ini?')) {
-      $.ajax({
-        type: 'GET',
-        url: '/gettoken',
-        success: function (data) {
-          $.ajax({
-            type: 'DELETE',
-            url: '/api/surat-masuk/' + nip,
-            headers: {
-              'Authorization': 'Bearer ' + data.token
-            },
-            dataType: 'json',
-            success: function (data) {
-              if (data.success == false) {
-                swal("Gagal!", "Hapus data gagal.", "error");
-              } else if (data.success == true) {
-                swal({
-                    title: "Berhasil",
-                    text: "Berhasil hapus data.",
-                    type: "success"
-                  },
-                  function () {
-                    location.reload();
-                  }
-                );
-              }
-            },
-            error: function () {
-              return false;
-            }
-          });
-        },
-        error: function () {
-          return false;
-        }
-      });
-    } else {
-      return false;
-    }
-  }
-
   function tanggal_indo(tanggal) {
     moment.locale('id');
     return moment(tanggal).format("LL");
