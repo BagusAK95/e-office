@@ -205,6 +205,20 @@
       },
       url: '/api/konsep-surat/{{params.id}}',
       success: function (data) {
+        if(data.success==false)
+        {
+          swal({
+              title: "Gagal",
+              text: data.message,
+              type: "error"
+            },
+            function () {
+              window.location.href = "/konsep-surat/maked";
+            }
+          );
+        }
+        else
+        {
         var element = data.data;
 
         var keamanan = "";
@@ -394,7 +408,7 @@
           $("#buat_dispo").show();
           $("#histor").show();
         }
-
+      }
         //showdisposisi();
       },
       error: function (data) {
