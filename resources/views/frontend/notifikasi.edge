@@ -1,4 +1,10 @@
 <script src="/material/global/vendor/jquery/jquery.js"></script>
+<link rel="stylesheet" href="/material/global/vendor/bootstrap-sweetalert/sweetalert.css">
+<link rel="stylesheet" href="/material/global/css/bootstrap.min.css">
+<link rel="stylesheet" href="/material/global/css/bootstrap-extend.min.css">
+<script src="/material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
+<script src="/material/global/js/Plugin/bootstrap-sweetalert.js"></script>
+<script src="/material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
 <style>
 .centered {
   position: fixed;
@@ -7,6 +13,8 @@
   margin-top: -50px;
   margin-left: -100px;
 }
+
+
 </style>
 <img class="centered" src='/material/loader.gif' style='width:130px' id='loader' >
 <script>
@@ -21,15 +29,33 @@ function ridirecting()
         },
         success: function (de) 
         { 
+            //console.log(de);
             if(de.success==false)
             {
                 window.location.href="/error-404";
             }
             else
             {
-            var link = de.message;
+                if(de.message!=null)
+                {
+                    //alert("ngene");
+                    //console.log(de);
+                    var link = de.message;
+                    window.location.href=link;
+                }
+                else
+                {
+                    swal({
+                        title: "",
+                        text: de.data,
+                        type: "info"
+                    },
+                    function () {
+                        window.location.href = "/notifikasi-all";
+                    });
+                }
             //alert(link)
-            window.location.href=link;
+            //window.location.href=link;
             }
             
         }

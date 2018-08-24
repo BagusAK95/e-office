@@ -403,6 +403,16 @@ Route.get('/log-activity', async function ({
 
 /*Route.on('/coba').render('frontend/coba')*/
 
+Route.get('/broadcast', async function ({
+  session,
+  view
+}) {
+  const sesi = session.get('token');
+  return view.render('frontend/broadcast', {
+    sesi
+  })
+}).middleware('checkAccess:admin')
+
 Route.post('/upload_file', async ({
   params,
   request
