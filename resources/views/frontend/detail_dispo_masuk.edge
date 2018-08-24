@@ -528,23 +528,23 @@
         $.each(data.data.data, function (index, element) {
           //alert(element.pengirim_);
           if (element.pengirim_ != null) {
-            var pengi = element.pengirim_.nama;
+            var pengi = element.pengirim_.nama_lengkap;
           } else {
             var pengi = "";
           }
 
           var foto = "";
-          if (element.foto) {
-            foto = '<img src="' + element.foto + '">';
+          if (element.pengirim_.foto) {
+            foto = '<img class="img" src="' + element.pengirim_.foto + '">';
           } else {
-            foto = '<img src="/material/base/src/images/user.png">';
+            foto = '<img class="img" src="/material/base/src/images/user.png">';
           }
 
 
           var tagg = tanggal_jam_indo(element.tgl);
           isi += '<div class="comment media">';
           isi += '<div class="pr-20">';
-          isi += '<a class="avatar avatar-lg" href="javascript:void(0)" style="width:50px">';
+          isi += '<a class="avatar-lg" href="javascript:void(0)" style="width:50px">';
           isi += foto;
           isi += '</a>';
           isi += '</div>';

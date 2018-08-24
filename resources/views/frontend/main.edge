@@ -73,6 +73,15 @@
       -webkit-border-radius: 100px;
       -moz-border-radius: 100px;
     }
+    .img {
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      display: block;
+      border-radius: 100px;
+      -webkit-border-radius: 100px;
+      -moz-border-radius: 100px;
+    }
 
   </style>
 </head>
@@ -473,7 +482,8 @@
             ddppnn +=
               "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Admin</span>&nbsp;&nbsp;";
           }
-          $(".nama_user").html(ddppnn + data.data.nama_lengkap).show();
+          $(".nama_user").html(ddppnn + data.data.nama_lengkap).show(); 
+          $(".nama_user2").html(ddppnn +"<br>"+ data.data.nama_lengkap).show();
 
 
           $("#level_main").val(data.data.level);
