@@ -38,7 +38,7 @@ class NotifikasiController {
                 data.status = 1
                 data.save()
 
-                return Response.format(true, data.url, null)                
+                return Response.format(true, data.url, data.isi)                
             } else {
                 return Response.format(false, 'Notifikasi tidak ditemukan', null)
             }
