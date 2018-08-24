@@ -111,7 +111,7 @@ class SuratTembusanController {
                         dataSurat.keyword = ''.concat(dataSurat.nomor_surat, ' | ', dataSurat.nama_instansi, ' | ', dataSurat.perihal, ' | ', dataSurat.nama_pengirim)
                         dataSurat.save()
 
-                        Notification.send([user.nip, user.nama_lengkap], [dataPimpinan.nip], 'Mengirimkan Surat Nomor ' + dataSurat.nip_tata_usaha + ' Sebagai Tembusan', '/surat-tembusan/' + params.id)
+                        Notification.send(user, [dataPimpinan.nip], 'Mengirimkan Surat Nomor ' + dataSurat.nip_tata_usaha + ' Sebagai Tembusan', '/surat-tembusan/' + params.id)
                     
                         Log.add(user, 'Mengirimkan Surat Tembusan Nomor ' + dataSurat.nomor_surat + ' Ke Pimpinan', dataSurat)
 

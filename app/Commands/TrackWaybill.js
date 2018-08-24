@@ -53,7 +53,13 @@ class TrackWaybill extends Command {
               if (dataTataUsaha) {
                 const dataSuratKeluar = await SuratKeluar.find(pengiriman.id_surat_keluar)
                 if (dataSuratKeluar) {
-                  Notification.send([null, 'System'], [dataTataUsaha.nip], 'Mendeteksi Surat Nomor ' + dataSuratKeluar.nomor_surat + ' Telah Diterima Oleh ' + pengiriman.nama_instansi, '/surat-keluar/' + pengiriman.id_surat_keluar)                  
+                  const user = {
+                    nip: null,
+                    nama_lengkap: 'System',
+                    foto: null
+                  }
+                  
+                  Notification.send(user, [dataTataUsaha.nip], 'Mendeteksi Surat Nomor ' + dataSuratKeluar.nomor_surat + ' Telah Diterima Oleh ' + pengiriman.nama_instansi, '/surat-keluar/' + pengiriman.id_surat_keluar)                  
                 }
               }
 

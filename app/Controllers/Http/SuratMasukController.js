@@ -37,7 +37,7 @@ class SuratMasukController {
                 arr_penerima.push(data.nip_plt)
             }
 
-            Notification.send([user.nip, user.nama_lengkap], arr_penerima, 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insert.id)
+            Notification.send(user, arr_penerima, 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insert.id)
 
             Log.add(user, 'Mengirimkan Surat Masuk Nomor ' + data.nomor_surat + ' Ke Pimpinan', insert)
 
@@ -186,7 +186,7 @@ class SuratMasukController {
                         arr_penerima.push(data.nip_plt)
                     }
 
-                    Notification.send([user.nip, user.nama_lengkap], arr_penerima, 'Mengirimkan Surat Nomor ' + dataSurat.nip_tata_usaha, '/surat-masuk/' + params.id)
+                    Notification.send(user, arr_penerima, 'Mengirimkan Surat Nomor ' + dataSurat.nip_tata_usaha, '/surat-masuk/' + params.id)
                 
                     Log.add(user, 'Mengirimkan Surat Masuk Nomor ' + dataSurat.nomor_surat + ' Ke Pimpinan', dataSurat)
 

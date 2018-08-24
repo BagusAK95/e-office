@@ -12,9 +12,9 @@ const NotificationHelper = {
                     next()
                 } else {
                     const insert = await Notifikasi.create({
-                        nip_pengirim: pengirim[0],
+                        nip_pengirim: pengirim.nip,
                         nip_penerima: nip,
-                        isi: pengirim[1].trim() + ' ' + isi.trim(),
+                        isi: pengirim.nama_lengkap.trim() + ' ' + isi.trim(),
                         url: url
                     })
     
@@ -34,14 +34,16 @@ const NotificationHelper = {
                                         },
                                         body : JSON.stringify({
                                             notification: {
-                                                title: pengirim[1].trim(),
+                                                title: pengirim.nama_lengkap.trim(),
                                                 body: isi,
+                                                icon: pengirim.foto,
                                                 click_action: '/notifikasi/' + insert.id
                                             },
                                             data: {
                                                 id: insert.id,
-                                                title: pengirim[1].trim(),
+                                                title: pengirim.nama_lengkap.trim(),
                                                 body: isi,
+                                                icon: pengirim.foto,
                                                 click_action: '/notifikasi/' + insert.id
                                             },
                                             to: firebase

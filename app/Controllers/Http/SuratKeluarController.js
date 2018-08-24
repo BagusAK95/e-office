@@ -39,7 +39,7 @@ class SuratKeluarController {
 
             await SuratPemeriksa.createMany(arrPemeriksa)
 
-            Notification.send([user.nip, user.nama_lengkap], [arrPemeriksa[0].nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/checked/' + insertKonsep.id)
+            Notification.send(user, [arrPemeriksa[0].nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/checked/' + insertKonsep.id)
             
             Log.add(user, 'Menambah Konsep Surat Atas Nama ' + data.nama_penandatangan, insertKonsep)
 
@@ -162,7 +162,7 @@ class SuratKeluarController {
                         dataPemeriksa.status = 1
                         dataPemeriksa.save()
 
-                        Notification.send([user.nip, user.nama_lengkap], [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/checked/' + params.id)
+                        Notification.send(user, [dataPemeriksa.nip_pemeriksa], 'Mengajukan Persetujuan Konsep Surat', '/konsep-surat/checked/' + params.id)
                     }
 
                     Log.add(user, 'Merevisi Konsep Surat Atas Nama ' + data.nama_penandatangan, data)
@@ -361,7 +361,7 @@ class SuratKeluarController {
                             insertSurat.save()
 
                             if (insertSurat) {
-                                Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)
+                                Notification.send(user, [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat, '/surat-masuk/' + insertSurat.id)
                             }    
                         }
                     } else {
@@ -413,7 +413,7 @@ class SuratKeluarController {
                             insertTembusan.save()
     
                             if (insertTembusan) {
-                                Notification.send([user.nip, dataPengirim.nmlokasi], [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Sebagai Tembusan', '/surat-tembusan/' + insertTembusan.id)
+                                Notification.send(user, [dataTataUsaha.nip], 'Mengirimkan Surat Nomor ' + data.nomor_surat + ' Sebagai Tembusan', '/surat-tembusan/' + insertTembusan.id)
                             }    
                         }
                     } else {

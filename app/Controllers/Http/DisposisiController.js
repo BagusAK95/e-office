@@ -23,7 +23,7 @@ class DisposisiController {
                 const insert = await Disposisi.create(data) //insert ke database
 
                 //Kirim Notifikasi ke penerima
-                Notification.send([user.nip, user.nama_lengkap], [data.nip_penerima], 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-masuk/' + insert.id)
+                Notification.send(user, [data.nip_penerima], 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-masuk/' + insert.id)
 
                 //Tambah Log
                 Log.add(user, 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat + ' Untuk ' + data.nama_penerima, insert)
@@ -192,7 +192,7 @@ class DisposisiController {
                             disposisi.save()
                 
                             //Kirim notifikasi
-                            Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
+                            Notification.send(user, [disposisi.nip_pengirim], 'Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
 
                             //Tambah log
                             Log.add(user, 'Menyelesaikan Disposisi Dari ' + disposisi.nama_pengirim)
@@ -203,7 +203,7 @@ class DisposisiController {
                             disposisi.save()
                 
                             //Kirim notifikasi
-                            Notification.send([user.nip, user.nama_lengkap], [disposisi.nip_pengirim], 'Menolak Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
+                            Notification.send(user, [disposisi.nip_pengirim], 'Menolak Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + params.id)
                             
                             //Tambah log
                             Log.add(user, 'Menolak Disposisi Dari ' + disposisi.nama_pengirim)

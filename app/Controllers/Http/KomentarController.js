@@ -65,7 +65,7 @@ class KomentarController {
             arr_penerima = Array.remove(arr_penerima, user.nip) //Hapus nip yang sama
             if (arr_penerima.length > 0) {
                 //Kirim notifikasi
-                Notification.send([user.nip, user.nama_lengkap], arr_penerima, 'Mengomentari ' + konten + ' Nomor ' + nomor, url)
+                Notification.send(user, arr_penerima, 'Mengomentari ' + konten + ' Nomor ' + nomor, url)
             }
 
             return Response.format(true, null, insert)
