@@ -1,7 +1,9 @@
 'use strict'
 
 const Notifikasi = use('App/Models/Notifikasi')
+const Notification = use('App/Helpers/NotificationHelper')
 const Response = use('App/Helpers/ResponseHelper')
+const Login = use('App/Models/Login')
 
 class NotifikasiController {
     async list({ request, auth }){
@@ -42,6 +44,28 @@ class NotifikasiController {
             }
         } catch (error) {
             return Response.format(false, error, null)
+        }
+    }
+
+    async broadcast({ request, auth }) {
+        try {
+            const user = await auth.getUser()
+            const data = request.all()
+
+            if (!data.arr_penerima || data.arr_penerima == '') {
+                const penerima = await Login.query().where({ instansi: user.instansi })
+                const arr_penerima = penerima.map(e => {
+                    return e.nip
+                })
+
+                Notification.send(user, arr_penerima, 'Broadcast: ' + data.pesan)
+                return Response.format(true, null, arr_penerima.length)
+            } else {
+                Notification.send(user, data.arr_penerima.split(','), 'Broadcast: ' + data.pesan)
+                return Response.format(true, null, data.arr_penerima.split(',').length)
+            }
+        } catch (error) {
+            return Response.format(false, error, null)                
         }
     }
 }

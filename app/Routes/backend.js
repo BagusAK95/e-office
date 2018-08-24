@@ -1960,6 +1960,31 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /notifikasi/broadcast:
+    *   post:
+    *     tags:
+    *       - Notifikasi
+    *     summary: Broadcast
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: arr_penerima
+    *         in: formData
+    *         description: Array NIP Penerima
+    *         required: false
+    *         type: string
+    *       - name: pesan
+    *         in: formData
+    *         description: Isi Pesan
+    *         required: true
+    *         type: string
+    */
+    Route.post('/notifikasi/broadcast', 'NotifikasiController.broadcast').middleware('checkToken:admin')
+
+    /**
+    * @swagger
     * /statistik/total:
     *   get:
     *     tags:
