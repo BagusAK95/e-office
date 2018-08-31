@@ -80,7 +80,7 @@ class UserController {
 
                 Log.add(user, 'Menghapus User ' + data.nama_lengkap, data)
 
-                return Response.format(true, null, destroy)                
+                return Response.format(true, null, 1)                
             } else {
                 return Response.format(false, 'User tidak ditemukan', null)
             }
