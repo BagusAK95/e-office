@@ -430,21 +430,13 @@ Route.post('/profile-picture', async ({
   request,
   session
 }) => {
-  const sesi = session.get('token');
-  if(sesi)
-  {
-    const profilePic = request.file('file')
-    const a = profilePic.subtype
-    const namabaru = `${new Date().getTime()}.${a}`
-    await profilePic.move(Helpers.publicPath('uploads'), {
-      name: namabaru
-    })
-    return "/uploads/"+namabaru
-  }
-  else
-  {
-    return "Akses Ditolak."
-  }
-})
+  const profilePic = request.file('file')
+  const a = profilePic.subtype
+  const namabaru = `${new Date().getTime()}.${a}`
+  await profilePic.move(Helpers.publicPath('uploads'), {
+    name: namabaru
+  })
+  return "/uploads/"+namabaru
+}).middleware('checkAccess:all')
 
 //------------------------------------ End Main System ---------------------------------//
