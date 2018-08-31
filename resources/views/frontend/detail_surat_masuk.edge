@@ -431,7 +431,7 @@
       success: function (data) {
         var isi = "<option value=''>Pilih Pegawai</option>";
         $.each(data.data, function (index, element) {
-          isi += "<option value='" + element.nip + "-" + element.nama_lengkap + "-" + element.jabatan + "'>" +
+          isi += "<option value='" + element.nip + "#" + element.nama_lengkap + "#" + element.jabatan + "'>" +
             element.nama_lengkap + " - " + element.nama_jabatan + "</option>";
         })
         $(".pegawai_plt").html(isi).show();
@@ -806,8 +806,7 @@
         var isi = "";
         $.each(data.data, function (index, element) {
 
-          isi += "<option value='" + element.nip + "-" + element.nama_lengkap + "-" + element.nama_jabatan +
-            "'>" + element.nama_lengkap + "</option>";
+          isi += "<option value='" + element.nip + "#" + element.nama_lengkap + "#" + element.nama_jabatan + "'>" + element.nama_lengkap + "</option>";
         })
         $(".pegawai").html(isi).show();
       },
@@ -848,7 +847,7 @@
 
     var data = $(".pegawai").val();
     $.each(data, function (index, da) {
-      var all = da.split("-");
+      var all = da.split("#");
 
       var nip = all[0];
       var nama = all[1];
@@ -894,7 +893,7 @@
     var plt = "";
     if ($("#inputUnchecked").val() == true) {
       var da = $("#nip_penerima").val();
-      var all = da.split("-");
+      var all = da.split("#");
       var nip = all[0];
       var nama = all[1];
       var jabatan = all[2];

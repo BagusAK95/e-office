@@ -203,6 +203,17 @@
               kecepatan = "<span style='color:white;width:150px' class='badge badge-pill badge-lg badge-danger'>Kecepatan : Amat Segera</span>";
           }*/
 
+          if(element.surat_!=null)
+          {
+            var perih = element.surat_.perihal;
+            var pengiri = element.surat_.nama_pengirim;
+          }
+          else
+          {
+            var perih = "-";
+            var pengiri = "-";
+          }
+
           var sts = "";
           if (element.status == 1) {
             sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-success'>Selesai</span>";
@@ -222,11 +233,18 @@
             }
 
           }
+          
+          var warna = "";
+          if(!element.surat_)
+          {
+            sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Surat Terhapus</span>";
+            warna = 'style="background-color:#ffcccc";';
+          }
 
           var tg_disposisi = tanggal_indo(element.tgl_disposisi);
 
-          var tr_data = "<tr><td>" + tg_disposisi + "</td><td>" + element.surat_.perihal + "</td><td>" +
-            element.surat_.nama_pengirim + "</td><td align='center'>" + sts +
+          var tr_data = "<tr "+warna+"><td>" + tg_disposisi + "</td><td>" + perih + "</td><td>" +
+            pengiri + "</td><td align='center'>" + sts +
             "</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/disposisi-masuk/" +
             element.id +
             "'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
@@ -239,6 +257,9 @@
         if (data.data.lastPage == data.data.page) {
           disbalenext = 'disabled';
         }
+        
+
+        
 
         if (nama) {
           var isi_nama = naman;
@@ -251,8 +272,9 @@
         if (page == 1) {
           prev = "disabled";
         }
-
-        $("#pagination").html(
+        if(data.data.total>0)
+        {
+          $("#pagination").html(
           "<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' " +
           prev + " onclick=showbrand(1,'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir +
           "')><i class='icon fa-angle-double-left'></i></button><button " + prev +
@@ -266,7 +288,13 @@
           data.data.lastPage + ",'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir + "') " + disbalenext +
           "><i class='icon fa-angle-double-right'></i></button></div><br>Showing " + data.data.page + " to " +
           data.data.perPage + " of " + data.data.total + " entries").show();
+        }
+        else
+        { 
+          $("#body").html("<tr><td align='center' colspan=5>Data tidak ditemukan</td></tr>").show();
+        }
         $("#loader").fadeOut("xslow");
+
       }
     });
   }

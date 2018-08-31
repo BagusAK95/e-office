@@ -243,7 +243,9 @@
       success: function (datanya) {
 
         var element_dispo = datanya.data;
-        var id_surat_masuk = element_dispo.id_surat_masuk;
+        if(element_dispo)
+        {
+            var id_surat_masuk = element_dispo.id_surat_masuk;
 
         var element = datanya.data.surat_;
 
@@ -388,6 +390,20 @@
         //showdisposisi();
         showdisposisi(element_dispo.id_surat_masuk);
 
+        }
+        else
+        {
+          swal({
+              title: "Gagal",
+              text: "Disposisi tidak ditemukan.",
+              type: "error"
+            },
+            function () {
+              window.location.href = "/disposisi-keluar";
+              //window.location.reload();
+            });
+        }
+        
       },
       error: function (data) {
 

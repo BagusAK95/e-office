@@ -191,7 +191,7 @@
                       <label class="form-control-label" for="inputEmail">Pemeriksa&nbsp;
                         <span style="color:red">*</span>
                       </label>
-                      <input type="hidden" id="pemeriksa_master" name="pemeriksa_master">
+                      <input type="text" id="pemeriksa_master" name="pemeriksa_master">
                       <select name="arr_pemeriksa" class="form-control" id="arr_pemeriksa" data-plugin="select2" multiple="" placeholder="Tambahkan Pemeriksa">
                       </select>
                       <br>
@@ -451,7 +451,7 @@
       success: function (data) {
         var isi = "";
         $.each(data.data, function (index, element) {
-          isi += "<option value='" + element.nip + "-" + element.nama_lengkap + "-" + element.nama_jabatan +
+          isi += "<option value='" + element.nip + "#" + element.nama_lengkap + "#" + element.nama_jabatan +
             "'>" + element.nama_lengkap + "</option>";
         })
         $("#arr_pemeriksa").html(isi).show();
@@ -494,7 +494,7 @@
     var nomor = 1;
     var panjang = arr_penerima.length;
     $.each(arr_penerima, function (index, da) {
-      var all = da.split("-");
+      var all = da.split("#");
       var nip_penerima = all[0];
       var nama_penerima = all[1];
       var jabatan_penerima = all[2];
@@ -522,7 +522,7 @@
     var nomor = 1;
     var panjang = arr_tembusan.length;
     $.each(arr_tembusan, function (index, da) {
-      var all = da.split("-");
+      var all = da.split("#");
       var nip_tembusan = all[0];
       var nama_tembusan = all[1];
       var jabatan_tembusan = all[2];
@@ -581,7 +581,7 @@
 
     var panjang = arr_pemeriksa.length;
     $.each(arr_pemeriksa, function (index, da) {
-      var all = da.split("-");
+      var all = da.split("#");
       var nip_pemeriksa = all[0];
       var nama_pemeriksa = all[1];
       var jabatan_pemeriksa = all[2];
@@ -657,7 +657,7 @@
       success: function (data) {
         var isi = "";
         $.each(data.data, function (index, element) {
-          isi += "<option value='" + element.nip + "-" + element.nama_lengkap + "-" + element.nama_jabatan +
+          isi += "<option value='" + element.nip + "#" + element.nama_lengkap + "#" + element.nama_jabatan +
             "'>" + element.nama_lengkap + "</option>";
         })
         $("#arr_penerima").html(isi).show();
@@ -678,7 +678,7 @@
     var isi_arr_pemeriksa = "";
     var panjang = arr_pemeriksa.length;
     $.each(arr_pemeriksa, function (index, da) {
-      var all = da.split("-");
+      var all = da.split("#");
       var nip_pemeriksa = all[0];
       var nama_pemeriksa = all[1];
       var jabatan_pemeriksa = all[2];

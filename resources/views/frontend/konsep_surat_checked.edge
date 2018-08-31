@@ -239,7 +239,10 @@
         if (page == 1) {
           prev = "disabled";
         }
+        
 
+        if(data.data.total>0)
+        {
         $("#pagination").html(
           "<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' " +
           prev + " onclick=showbrand(1,'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir +
@@ -254,6 +257,12 @@
           data.data.lastPage + ",'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir + "') " + disbalenext +
           "><i class='icon fa-angle-double-right'></i></button></div><br>Showing " + data.data.page + " to " +
           data.data.perPage + " of " + data.data.total + " entries").show();
+        }
+        else
+        {
+          var tr_data = "<tr><td align='center' colspan='6'>Data tidak tersedia.</td></tr>";
+          $("#body").html(tr_data).show();
+        }
         $("#loader").fadeOut("xslow");
       }
     });
