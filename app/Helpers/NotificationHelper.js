@@ -37,6 +37,7 @@ const NotificationHelper = {
                                                 title: pengirim.nama_lengkap.trim(),
                                                 body: isi,
                                                 icon: pengirim.foto,
+                                                sound: 'default',
                                                 click_action: '/notifikasi/' + insert.id
                                             },
                                             data: {
