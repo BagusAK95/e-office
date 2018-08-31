@@ -103,7 +103,7 @@ class SuratMasukController {
 
                 Log.add(user, 'Menghapus Surat Masuk Nomor ' + data.nomor_surat, data)
 
-                return Response.format(true, null, destroy)                
+                return Response.format(true, null, 1)
             } else {
                 return Response.format(false, 'Surat tidak ditemukan', null)
             }
