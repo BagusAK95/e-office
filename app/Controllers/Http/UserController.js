@@ -300,6 +300,23 @@ class UserController {
             return Response.format(false, error, null)
         }
     }
+
+    async listDeviceInfo({ request, auth }) {
+        try {
+            const user = await auth.getUser()
+
+            const data = await Login.query()
+                                    .where('instansi', user.instansi)
+                                    .whereNot('firebase_info', null)
+                                    .paginate(Number(request.get().page), Number(request.get().limit))
+                            
+            Log.add(user, 'Melihat Daftar Device Info Pada Halaman ' + request.get().page)
+                                    
+            return Response.format(true, null, data)
+        } catch (error) {
+            return Response.format(false, error, null)            
+        }
+    }
 }
 
 module.exports = UserController
