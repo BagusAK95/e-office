@@ -39,7 +39,7 @@ class LoginController {
             const user = await auth.getUser() //Get data user yang login
 
             //Prepare data
-            const data = request.only(['firebase_device', 'firebase_token'])
+            const data = request.only(['firebase_device', 'firebase_token', 'firebase_info'])
 
             //Update ke database
             const update = await Login.query()
