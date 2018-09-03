@@ -427,10 +427,14 @@ Route.post('/upload_file', async ({
 }).middleware('checkAccess:all')
 
 Route.post('/profile-picture', async ({
-  request,
-  session
+  request
 }) => {
-  const profilePic = request.file('file')
+
+  const profilePic = request.file('file', {
+    types: ['image'],
+    size: '2mb'
+  })
+
   const a = profilePic.subtype
   const namabaru = `${new Date().getTime()}.${a}`
   await profilePic.move(Helpers.publicPath('uploads'), {
@@ -438,5 +442,6 @@ Route.post('/profile-picture', async ({
   })
   return "/uploads/"+namabaru
 }).middleware('checkAccess:all')
+
 
 //------------------------------------ End Main System ---------------------------------//
