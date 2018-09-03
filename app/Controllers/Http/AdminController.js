@@ -29,6 +29,34 @@ class AdminController {
             return Response.format(false, error, null)            
         }
     }
+
+    async getProfile({ auth }) {
+        try {
+            const user = await auth.authenticator('jwt_sys').getUser()
+            return Response.format(true, null, user)
+        } catch (error) {
+            return Response.format(false, error, null)            
+        }
+    }
+
+    async editProfile({ request, auth }) {
+        try {
+            const user = await auth.authenticator('jwt_sys').getUser()
+            
+            const data = request.only(['nama_lengkap', 'nohp', 'email', 'foto'])
+
+            const update = await Admin.query()
+                                      .where('id', user.id)
+                                      .update(data)
+            if (update > 0) {
+                return Response.format(true, null, update)
+            } else {
+                return Response.format(false, 'Admin tidak ditemukan', null)
+            }
+        } catch (error) {
+            return Response.format(false, error, null)
+        }
+    }
 }
 
 module.exports = AdminController

@@ -69,5 +69,19 @@ Route.group(() => {
     *         type: string
     *         format: password
     */
-   Route.post('/getToken', 'AdminController.getToken')
+    Route.post('/getToken', 'AdminController.getToken')
+
+    /**
+    * @swagger
+    * /profile:
+    *   get:
+    *     tags:
+    *       - Profile
+    *     summary: Detail
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/profile', 'AdminController.getProfile')
 }).prefix('api-sys')
