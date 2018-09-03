@@ -346,7 +346,10 @@
       success: function (datanya) {
 
         var element_dispo = datanya.data;
-        var id_surat_masuk = element_dispo.id_surat_masuk;
+
+        if(element_dispo)
+        {
+          var id_surat_masuk = element_dispo.id_surat_masuk;
 
         var element = datanya.data.surat_;
 
@@ -496,6 +499,21 @@
         showdisposisi(element_dispo.id_surat_masuk);
         pegawaiall(id_surat_masuk);
         $("#id_surat_masuk").val(id_surat_masuk);
+        }
+        else
+        {
+          swal({
+              title: "Gagal",
+              text: "Disposisi tidak ditemukan.",
+              type: "error"
+            },
+            function () {
+              window.location.href = "/disposisi-masuk";
+              //window.location.reload();
+            });
+        }
+
+        
       },
       error: function (data) {
 
@@ -725,7 +743,7 @@
       success: function (data) {
         var isi = "";
         $.each(data.data, function (index, element) {
-          isi += "<option value='" + element.nip + "-" + element.nama_lengkap + "-" + element.nama_jabatan +
+          isi += "<option value='" + element.nip + "#" + element.nama_lengkap + "#" + element.nama_jabatan +
             "'>" + element.nama_lengkap + "</option>";
         })
         $(".pegawai").html(isi).show();
@@ -768,7 +786,7 @@
 
     var data = $(".pegawai").val();
     $.each(data, function (index, da) {
-      var all = da.split("-");
+      var all = da.split("#");
 
       var nip = all[0];
       var nama = all[1];

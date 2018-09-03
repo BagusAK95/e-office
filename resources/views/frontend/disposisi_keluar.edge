@@ -200,6 +200,14 @@
           {
               kecepatan = "<span style='color:white;width:150px' class='badge badge-pill badge-lg badge-danger'>Kecepatan : Amat Segera</span>";
           }*/
+          if(element.surat_)
+          {
+            var perih = element.surat_.perihal;
+          }
+          else
+          {
+            var perih = "-";
+          }
 
           var sts = "";
           if (element.status == 1) {
@@ -221,10 +229,17 @@
 
           }
 
+          var warna = "";
+          if(!element.surat_)
+          {
+            sts = "<span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Surat Terhapus</span>";
+            warna = 'style="background-color:#ffcccc";';
+          }
+
 
           var tg_disposisi = tanggal_indo(element.tgl_disposisi);
-
-          var tr_data = "<tr><td>" + tg_disposisi + "</td><td>" + element.surat_.perihal + "</td><td><b>" +
+          
+          var tr_data = "<tr "+warna+"><td>" + tg_disposisi + "</td><td>" + perih + "</td><td><b>" +
             element.nama_penerima + "</b><br>" + element.jabatan_penerima + "</td><td align='center'>" + sts +
             "</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/disposisi-keluar/" +
             element.id +
@@ -252,7 +267,8 @@
         if (page == 1) {
           prev = "disabled";
         }
-
+        if(data.data.total>0)
+        {
         $("#pagination").html(
           "<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' " +
           prev + " onclick=showbrand(1,'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir +
@@ -267,6 +283,11 @@
           data.data.lastPage + ",'" + isi_nama + "','" + tgl_awal + "','" + tgl_akhir + "') " + disbalenext +
           "><i class='icon fa-angle-double-right'></i></button></div><br>Showing " + data.data.page + " to " +
           data.data.perPage + " of " + data.data.total + " entries").show();
+        }
+        else
+        {
+          $("#body").html("<tr><td align='center' colspan=5>Data tidak ditemukan</td></tr>").show();
+        }
         $("#loader").fadeOut("xslow");
       }
     });

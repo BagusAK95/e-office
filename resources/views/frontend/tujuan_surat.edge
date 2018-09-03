@@ -165,6 +165,10 @@
           prev = "disabled";
         }
 
+
+        if(data.data.total>0)
+        {
+
         $("#pagination").html(
           "<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' " +
           prev + " onclick=showbrand(1)><i class='icon fa-angle-double-left'></i></button><button " + prev +
@@ -177,6 +181,13 @@
           data.data.lastPage + ") " + disbalenext +
           "><i class='icon fa-angle-double-right'></i></button></div><br>Showing " + data.data.page + " to " +
           data.data.perPage + " of " + data.data.total + " entries").show();
+        }
+        else
+        {
+          var tr_data = "<tr><td align='center' colspan='4'>Data tidak tersedia.</td></tr>";
+          $("#body").html(tr_data).show();
+        }
+
         getsession();
         $("#loader").fadeOut("xslow");
       }

@@ -385,8 +385,7 @@
           if (element.gelar_belakang) {
             belakang += ", " + element.gelar_belakang;
           }
-          isi += "<option value='" + element.nip + "-" + element.nama + "-" + element.jabatan + "'>" + depan +
-            element.nama + belakang + " - " + element.nama_jabatan + "</option>";
+          isi += "<option value='" + element.nip + "#" + element.nama + "#" + element.jabatan + "'>" + depan + element.nama + belakang + " - " + element.nama_jabatan + "</option>";
         })
         $(".pegawai_plt").html(isi).show();
       },
@@ -723,7 +722,7 @@
           if (element.gelar_belakang) {
             belakang += ", " + element.gelar_belakang;
           }
-          isi += "<option value='" + element.nip + "-" + element.nama + "-" + element.nama_jabatan + "'>" +
+          isi += "<option value='" + element.nip + "#" + element.nama + "#" + element.nama_jabatan + "'>" +
             depan + element.nama + belakang + "</option>";
         })
         $(".pegawai").html(isi).show();
@@ -765,7 +764,7 @@
 
     var data = $(".pegawai").val();
     $.each(data, function (index, da) {
-      var all = da.split("-");
+      var all = da.split("#");
 
       var nip = all[0];
       var nama = all[1];
