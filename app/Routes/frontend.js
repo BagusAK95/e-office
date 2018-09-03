@@ -441,7 +441,7 @@ Route.post('/profile-picture', async ({
     name: namabaru
   })
   return "/uploads/"+namabaru
-}).middleware('checkAccess:all')
+}).middleware('checkToken:all') 
 
 
 //------------------------------------ End Main System ---------------------------------//
