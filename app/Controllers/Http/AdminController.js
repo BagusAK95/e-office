@@ -45,13 +45,49 @@ class AdminController {
             
             const data = request.only(['nama_lengkap', 'nohp', 'email', 'foto'])
 
-            const update = await Admin.query()
-                                      .where('id', user.id)
-                                      .update(data)
-            if (update > 0) {
-                return Response.format(true, null, update)
+            const checkEmail = await Admin.query()
+                                          .where('email', data.email)
+                                          .whereNot('id', user.id)
+                                          .first()
+            if (!checkEmail) {
+                const update = await Admin.query()
+                                          .where('id', user.id)
+                                          .update(data)
+                if (update > 0) {
+                    return Response.format(true, null, update)
+                } else {
+                    return Response.format(false, 'Admin tidak ditemukan', null)
+                }
             } else {
-                return Response.format(false, 'Admin tidak ditemukan', null)
+                return Response.format(false, 'Email sudah digunakan', null)
+            }
+        } catch (error) {
+            return Response.format(false, error, null)
+        }
+    }
+
+    async editPassword({ request, auth }) {
+        try {
+            const user = await auth.authenticator('jwt_sys').getUser()
+
+            let dataRequest = request.only(['password_old', 'password_new'])
+            dataRequest.password_new = await Hash.make(dataRequest.password_new)
+
+            const dataUser = await Admin.query().where({'id': user.id}).first()
+            if (dataUser) {
+                const isSame = await Hash.verify(dataRequest.password_old, dataUser.password)
+                if (isSame) {
+                    const edit = await Admin.query().where('id', user.id).update({ password: dataRequest.password_new })
+                    if (edit > 0) {
+                        return Response.format(true, null, edit)
+                    } else {
+                        return Response.format(false, 'Admin tidak ditemukan', null)
+                    }
+                } else {
+                    return Response.format(false, 'Kata sandi tidak cocok', null)
+                }
+            } else {
+                return Response.format(false, 'Token tidak valid', null)
             }
         } catch (error) {
             return Response.format(false, error, null)

@@ -427,6 +427,29 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /user/listDeviceInfo:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: List Device Info
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: page
+    *         in: query
+    *         description: Page
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Limit
+    *         required: true
+    *         type: string
+    */
+    Route.get('/user/listDeviceInfo', 'UserController.listDeviceInfo').middleware('checkToken:admin')
+
+    /**
+    * @swagger
     * /user/dispositionReciver/{id_surat_masuk}:
     *   get:
     *     tags:

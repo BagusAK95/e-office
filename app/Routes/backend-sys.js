@@ -84,4 +84,66 @@ Route.group(() => {
     *       - application/json
     */
     Route.get('/profile', 'AdminController.getProfile')
+
+    /**
+    * @swagger
+    * /profile/edit:
+    *   put:
+    *     tags:
+    *       - Profile
+    *     summary: Edit
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: nama_lengkap
+    *         in: formData
+    *         description: Nama Lengkap
+    *         required: true
+    *         type: string
+    *       - name: email
+    *         in: formData
+    *         description: Email
+    *         required: true
+    *         type: string
+    *       - name: nohp
+    *         in: formData
+    *         description: No Hp
+    *         required: true
+    *         type: string
+    *       - name: foto
+    *         in: formData
+    *         description: Foto
+    *         required: false
+    *         type: string
+    */
+    Route.put('/profile/edit', 'AdminController.editProfile')
+
+    /**
+    * @swagger
+    * /profile/editPassword:
+    *   put:
+    *     tags:
+    *       - Profile
+    *     summary: Edit Password
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: password_old
+    *         in: formData
+    *         description: Old Password
+    *         required: true
+    *         type: string
+    *         format: password
+    *       - name: password_new
+    *         in: formData
+    *         description: New Password
+    *         required: true
+    *         type: string
+    *         format: password
+    */
+    Route.put('/profile/editPassword', 'AdminController.editPassword')
 }).prefix('api-sys')
