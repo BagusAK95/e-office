@@ -444,4 +444,14 @@ Route.post('/profile-picture', async ({
 }).middleware('checkToken:all') 
 
 
+Route.get('/list_device', ({
+  session,
+  view
+}) => {
+  const sesi = session.get('token');
+  return view.render('frontend/device', {
+    sesi
+  })
+}).middleware('checkAccess:admin')
+
 //------------------------------------ End Main System ---------------------------------//
