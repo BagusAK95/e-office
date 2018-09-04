@@ -317,6 +317,60 @@ class UserController {
             return Response.format(false, error, null)            
         }
     }
+
+    /* System */
+
+    async list_Sys({ request }) {
+        try {
+            let sql = []
+            if (request.get().keyword) {
+                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
+            }
+            sql.push('instansi = ' + request.get().instansi)
+
+            const data = await Login.query()
+                                    .whereRaw(sql.join(' AND '))
+                                    .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')
+                                    .paginate(Number(request.get().page), Number(request.get().limit))
+                            
+            return Response.format(true, null, data)
+        } catch (error) {
+            return Response.format(false, error, null)            
+        }
+    }
+
+    async edit_sys({ params, request }) {
+        try {
+            let data = request.only(['nohp', 'email', 'foto', 'password', 'level', 'akses', 'status'])
+            if (data.password != null) {
+                data.password = await Hash.make(data.password)
+            }
+
+            const edit = await Login.query()
+                                    .where({ nip: params.nip, instansi: params.instansi })
+                                    .update(data)
+            if (edit > 0) {
+                return Response.format(true, null, edit)
+            } else {
+                return Response.format(false, 'User tidak ditemukan', null)
+            }
+        } catch (error) {
+            return Response.format(false, error, null)
+        }
+    }
+
+    async listDeviceInfo_Sys({ params, request }) {
+        try {
+            const data = await Login.query()
+                                    .where('instansi', params.instansi)
+                                    .whereNot('firebase_info', null)
+                                    .paginate(Number(request.get().page), Number(request.get().limit))
+                            
+            return Response.format(true, null, data)
+        } catch (error) {
+            return Response.format(false, error, null)            
+        }
+    }
 }
 
 module.exports = UserController
