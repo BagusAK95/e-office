@@ -35,7 +35,7 @@ Route.group(() => {
                     }
                 }
             },
-            apis: ['./app/Routes/backend-sys.js'] // Path to the API docs
+            apis: ['./app/Routes/backendSys.js'] // Path to the API docs
         }
         
         return swaggerJSDoc(options)
@@ -83,7 +83,7 @@ Route.group(() => {
     *     produces:
     *       - application/json
     */
-    Route.get('/profile', 'AdminController.getProfile')
+    Route.get('/profile', 'AdminController.getProfile').middleware('checkTokenSys')
 
     /**
     * @swagger
@@ -118,7 +118,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/profile/edit', 'AdminController.editProfile')
+    Route.put('/profile/edit', 'AdminController.editProfile').middleware('checkTokenSys')
 
     /**
     * @swagger
@@ -145,5 +145,127 @@ Route.group(() => {
     *         type: string
     *         format: password
     */
-    Route.put('/profile/editPassword', 'AdminController.editPassword')
+    Route.put('/profile/editPassword', 'AdminController.editPassword').middleware('checkTokenSys')
+
+    /**
+    * @swagger
+    * /user:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: List
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: instansi
+    *         in: query
+    *         description: Instansi
+    *         required: true
+    *         type: string
+    *       - name: keyword
+    *         in: query
+    *         description: Keyword
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: query
+    *         description: Page
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Limit
+    *         required: true
+    *         type: string
+    */
+    Route.get('/user', 'UserController.list_Sys').middleware('checkTokenSys')
+
+    /**
+    * @swagger
+    * /user/listDeviceInfo/{instansi}:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: List Device Info
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: instansi
+    *         in: path
+    *         description: Instansi
+    *         required: true
+    *         type: string
+    *       - name: page
+    *         in: query
+    *         description: Page
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Limit
+    *         required: true
+    *         type: string
+    */
+    Route.get('/user/listDeviceInfo/:instansi', 'UserController.listDeviceInfo_Sys').middleware('checkTokenSys')
+
+    /**
+    * @swagger
+    * /user/{instansi}/{nip}:
+    *   put:
+    *     tags:
+    *       - User
+    *     summary: Edit
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: instansi
+    *         in: path
+    *         description: Instansi
+    *         required: true
+    *         type: string
+    *       - name: nip
+    *         in: path
+    *         description: Nomor Induk Pegawai
+    *         required: true
+    *         type: string
+    *       - name: nohp
+    *         in: formData
+    *         description: Nomor Handphone
+    *         required: false
+    *         type: string
+    *       - name: email
+    *         in: formData
+    *         description: Email
+    *         required: false
+    *         type: string
+    *       - name: foto
+    *         in: formData
+    *         description: Url Foto
+    *         required: false
+    *         type: string
+    *       - name: password
+    *         in: formData
+    *         description: Password
+    *         required: false
+    *         type: string
+    *         format: password
+    *       - name: level
+    *         in: formData
+    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf, 5=Sekretaris
+    *         required: false
+    *         type: string
+    *       - name: akses
+    *         in: formData
+    *         description: Daftar Akses Menu
+    *         required: false
+    *         type: string
+    *       - name: status
+    *         in: formData
+    *         description: 0=Non Aktif, 1=Aktif
+    *         required: false
+    *         type: string
+    */
+    Route.put('/user/:instansi/:nip', 'UserController.edit_Sys').middleware('checkTokenSys')
 }).prefix('api-sys')
