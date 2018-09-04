@@ -65,7 +65,6 @@ class StatistikController {
 
             const countKonsepSurat = await SuratKeluar.query()
                                                       .where({ instansi_pengirim: user.instansi, nip_pembuat: user.nip})
-                                                      .whereBetween('status_surat', [1, 2])                                                      
                                                       .getCount()
             arrData.push({ nama: 'Konsep Surat', total: countKonsepSurat })
             
