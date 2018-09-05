@@ -33,12 +33,12 @@
             <table class="table datatable table-striped table-bordered table-hover" data-role="content">
               <thead style=''>
                 <tr align='center'>
-                  <th>FOTO</th>
-                  <th>INFO</th>
                   <th>NIP</th>
                   <th>NAMA</th>
-                  <th>JABATAN</th>
-                  
+                  <th>DEVICE</th>
+                  <th>MANUFACTURE</th>
+                  <th>MODEL</th>
+                  <th>VERSION</th>
                 </tr>
               </thead>
               <tbody id="body">
@@ -73,7 +73,13 @@
 
   /*Pagination Function*/
   function dopagin() {
-      showbrand(halaman);
+    $("#loader").fadeIn("slow");
+    var halaman = $("#pagin").val();
+    if(halaman)
+    {
+      showbrand(halaman);  
+      $("#loader").fadeOut("slow");
+    } 
   }
   /*End Pagination Function*/
 
@@ -101,11 +107,12 @@
             }
             
             text += "<tr >\
-                        <td style='vertical-align: middle;' align='center'><img src='"+foto+"' class='img-circular-pp2'></td>\
-                        <td style='vertical-align: middle;' align='center'><button type='button' class='btn btn-secondary' data-toggle='tooltip' data-placement='left' title='"+"Device Id : "+jsondoc.device_id+"&#013;Device : "+besar(jsondoc.device)+"&#013;Manufacturer : "+jsondoc.manufacturer+"&#013;Model : "+jsondoc.model+"&#013;Version : "+jsondoc.version+"'><b><i class='md-smartphone-android'></i>&nbsp;&nbsp;"+besar(jsondoc.device)+"</b></button></td>\
                         <td style='vertical-align: middle;' align='center'>"+element.nip+"</td>\
                         <td style='vertical-align: middle;' align='center'>"+element.nama_lengkap+"</td>\
-                        <td style='vertical-align: middle;' align='center'>"+element.nama_jabatan+"</td>\
+                        <td style='vertical-align: middle;' align='center'><i class='md-smartphone-android'></i>&nbsp;"+besar(jsondoc.device)+"</td>\
+                        <td style='vertical-align: middle;' align='center'>"+besar(jsondoc.manufacturer)+"</td>\
+                        <td style='vertical-align: middle;' align='center'>"+jsondoc.model+"</td>\
+                        <td style='vertical-align: middle;' align='center'>"+jsondoc.version+"</td>\
                     </tr>";
         });
 
@@ -129,7 +136,7 @@
           "<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' " +
           prev + " onclick=showbrand(1)><i class='icon fa-angle-double-left'></i></button><button " + prev +
           " class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) +
-          ")><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='" +
+          ")><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onblur='dopagin()'  onkeypress='return isNumber(event)'  value='" +
           data.data.page + "'><button class='btn btn-xs btn-primary' style='width:50px'> of " + data.data.lastPage +
           " </button><button class='btn btn-xs btn-primary' " + disbalenext + " onclick=showbrand(" + (data.data
             .page + 1) +
