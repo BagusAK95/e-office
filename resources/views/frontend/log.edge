@@ -155,7 +155,7 @@
           prev + " class='btn btn-xs btn-primary' onclick=showww(" + (data.data.page - 1) +
           ")><i class='icon fa-angle-left'></i></button>\
                         <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> \
-                        <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='" +
+                        <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onblur='dopagin()'  onkeypress='return isNumber(event)'  value='" +
           data.data.page +
           "'>\
                         <button class='btn btn-xs btn-primary' style='width:50px' > of " +
@@ -219,7 +219,7 @@
           prev + " class='btn btn-xs btn-primary' onclick=showww(" + (data.data.page - 1) +
           ")><i class='icon fa-angle-left'></i></button>\
                         <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> \
-                        <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onkeyup='dopagin()'  onkeypress='return isNumber(event)'  value='" +
+                        <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onblur='dopagin()'  onkeypress='return isNumber(event)'  value='" +
           data.data.page +
           "'>\
                         <button class='btn btn-xs btn-primary' style='width:50px' > of " + data.data
@@ -251,9 +251,13 @@
   }
 
   function dopagin() {
-    var halaman = $("#pagin").val();
     $("#loader").fadeIn("slow");
-    showww(halaman);
+    var halaman = $("#pagin").val();
+    if(halaman)
+    {
+      showww(halaman);  
+      $("#loader").fadeOut("slow");
+    } 
   }
 
 </script>
