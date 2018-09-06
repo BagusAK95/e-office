@@ -37,7 +37,7 @@ const NotificationHelper = {
                                                 title: pengirim.nama_lengkap.trim(),
                                                 body: isi,
                                                 icon: pengirim.foto,
-                                                sound: 'default',
+                                                sound: 'the-little-dwarf.mp3',
                                                 click_action: '/notifikasi/' + insert.id
                                             },
                                             data: {
