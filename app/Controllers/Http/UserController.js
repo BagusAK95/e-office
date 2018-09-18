@@ -341,7 +341,7 @@ class UserController {
 
     async edit_sys({ params, request }) {
         try {
-            let data = request.only(['nohp', 'email', 'foto', 'password', 'level', 'akses', 'status'])
+            let data = request.only(['instansi', 'kode_lokasi', 'kode_jabatan', 'nama_jabatan', 'kode_eselon', 'golongan', 'nohp', 'email', 'foto', 'password', 'level', 'akses', 'status'])
             if (data.password != null) {
                 data.password = await Hash.make(data.password)
             }
@@ -356,19 +356,6 @@ class UserController {
             }
         } catch (error) {
             return Response.format(false, error, null)
-        }
-    }
-
-    async listDeviceInfo_Sys({ params, request }) {
-        try {
-            const data = await Login.query()
-                                    .where('instansi', params.instansi)
-                                    .whereNot('firebase_info', null)
-                                    .paginate(Number(request.get().page), Number(request.get().limit))
-                            
-            return Response.format(true, null, data)
-        } catch (error) {
-            return Response.format(false, error, null)            
         }
     }
 }

@@ -182,35 +182,7 @@ Route.group(() => {
 
     /**
     * @swagger
-    * /user/listDeviceInfo/{instansi}:
-    *   get:
-    *     tags:
-    *       - User
-    *     summary: List Device Info
-    *     produces:
-    *       - application/json
-    *     parameters:
-    *       - name: instansi
-    *         in: path
-    *         description: Instansi
-    *         required: true
-    *         type: string
-    *       - name: page
-    *         in: query
-    *         description: Page
-    *         required: true
-    *         type: string
-    *       - name: limit
-    *         in: query
-    *         description: Limit
-    *         required: true
-    *         type: string
-    */
-    Route.get('/user/listDeviceInfo/:instansi', 'UserController.listDeviceInfo_Sys').middleware('checkTokenSys')
-
-    /**
-    * @swagger
-    * /user/{instansi}/{nip}:
+    * /user/{nip}:
     *   put:
     *     tags:
     *       - User
@@ -220,14 +192,39 @@ Route.group(() => {
     *     produces:
     *       - application/json
     *     parameters:
-    *       - name: instansi
-    *         in: path
-    *         description: Instansi
-    *         required: true
-    *         type: string
     *       - name: nip
     *         in: path
     *         description: Nomor Induk Pegawai
+    *         required: true
+    *         type: string
+    *       - name: instansi
+    *         in: formData
+    *         description: Instansi
+    *         required: true
+    *         type: string
+    *       - name: kode_lokasi
+    *         in: formData
+    *         description: Kode Lokasi
+    *         required: true
+    *         type: string
+    *       - name: kode_jabatan
+    *         in: formData
+    *         description: Kode Jabatan
+    *         required: true
+    *         type: string
+    *       - name: nama_jabatan
+    *         in: formData
+    *         description: Nama Jabatan
+    *         required: true
+    *         type: string
+    *       - name: kode_eselon
+    *         in: formData
+    *         description: Kode Eselon
+    *         required: true
+    *         type: string
+    *       - name: golongan
+    *         in: formData
+    *         description: Golongan
     *         required: true
     *         type: string
     *       - name: nohp
@@ -267,5 +264,146 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/user/:instansi/:nip', 'UserController.edit_Sys').middleware('checkTokenSys')
+    Route.put('/user/:nip', 'UserController.edit_Sys').middleware('checkTokenSys')
+
+    /**
+    * @swagger
+    * /user/byLocation/{kode_lokasi}:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: List By Location
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: kode_lokasi
+    *         in: path
+    *         description: Kode Lokasi
+    *         required: true
+    *         type: string
+    */
+    Route.get('/user/byLocation/:kode_lokasi', 'UserController.listByLocation').middleware('checkTokenSys')
+
+    /**
+    * @swagger
+    * /master-kantor/listAllParent:
+    *   get:
+    *     tags:
+    *       - Master Kantor
+    *     summary: List All Parent
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-kantor/listAllParent', 'MasterKantorController.listAllParent').middleware('checkTokenSys')
+
+    /**
+    * @swagger
+    * /master-kantor/listAll/{instansi}:
+    *   get:
+    *     tags:
+    *       - Master Kantor
+    *     summary: List All
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: instansi
+    *         in: path
+    *         description: Instansi
+    *         required: true
+    *         type: string
+    */
+    Route.get('/master-kantor/listAll/:instansi', 'MasterKantorController.listAll_Sys').middleware('checkTokenSys')
+   
+    /**
+    * @swagger
+    * /master-kantor:
+    *   get:
+    *     tags:
+    *       - Master Kantor
+    *     summary: List
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: page
+    *         in: query
+    *         description: Page
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Limit
+    *         required: true
+    *         type: string
+    */
+    Route.get('/master-kantor', 'MasterKantorController.listParent_Sys').middleware('checkTokenSys')
+
+    /**
+    * @swagger
+    * /master-kantor/tree-html/{instansi}:
+    *   get:
+    *     tags:
+    *       - Master Kantor
+    *     summary: Tree Html
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: instansi
+    *         in: path
+    *         description: Instansi
+    *         required: true
+    *         type: string
+    */
+    Route.get('/master-kantor/tree-html/:instansi', 'MasterKantorController.treeHtml_Sys').middleware('checkTokenSys')
+
+    /**
+    * @swagger
+    * /master-jabatan/listAll:
+    *   get:
+    *     tags:
+    *       - Master Jabatan
+    *     summary: List All
+    *     produces:
+    *       - application/json
+    */
+    Route.get('/master-jabatan/listAll', 'MasterJabatanController.listAll_Sys').middleware('checkTokenSys')
+
+    /**
+    * @swagger
+    * /log:
+    *   get:
+    *     tags:
+    *       - Log Aktifitas
+    *     summary: List
+    *     consumes:
+    *       - application/x-www-form-urlencoded
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: instansi
+    *         in: query
+    *         description: Instansi
+    *         required: true
+    *         type: string
+    *       - name: tgl_awal
+    *         in: query
+    *         description: Tanggal Awal
+    *         required: false
+    *         type: string
+    *       - name: tgl_akhir
+    *         in: query
+    *         description: Tanggal Akhir
+    *         required: false
+    *         type: string
+    *       - name: page
+    *         in: query
+    *         description: Halaman
+    *         required: true
+    *         type: string
+    *       - name: limit
+    *         in: query
+    *         description: Data per Halaman
+    *         required: true
+    *         type: string
+    */
+    Route.get('/log', 'LogController.list_Sys').middleware('checkTokenSys')
 }).prefix('api-sys')
