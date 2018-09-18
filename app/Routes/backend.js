@@ -2003,6 +2003,11 @@ Route.group(() => {
     *         description: Isi Pesan
     *         required: true
     *         type: string
+    *       - name: gambar
+    *         in: formData
+    *         description: Gambar
+    *         required: true
+    *         type: string
     */
     Route.post('/notifikasi/broadcast', 'NotifikasiController.broadcast').middleware('checkToken:admin')
 

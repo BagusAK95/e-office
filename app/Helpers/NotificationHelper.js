@@ -5,7 +5,7 @@ const Login = use('App/Models/Login')
 const Env = use('Env')
 
 const NotificationHelper = {
-    send: function(pengirim, penerima, isi, url) {
+    send: function(pengirim, penerima, isi, url, gambar) {
         AsyncLoop(penerima, async (nip, next) => {
             try {
                 if (nip === "") {
@@ -15,6 +15,7 @@ const NotificationHelper = {
                         nip_pengirim: pengirim.nip,
                         nip_penerima: nip,
                         isi: pengirim.nama_lengkap.trim() + ' ' + isi.trim(),
+                        gambar: gambar,
                         url: url
                     })
     
@@ -45,6 +46,7 @@ const NotificationHelper = {
                                                 title: pengirim.nama_lengkap.trim(),
                                                 body: isi,
                                                 icon: pengirim.foto,
+                                                main_picture: gambar,
                                                 click_action: '/notifikasi/' + insert.id
                                             },
                                             to: firebase

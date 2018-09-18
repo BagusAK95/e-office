@@ -58,10 +58,10 @@ class NotifikasiController {
                     return e.nip
                 })
 
-                Notification.send(user, arr_penerima, 'Broadcast: ' + data.pesan)
+                Notification.send(user, arr_penerima, 'Broadcast: ' + data.pesan, null, data.gambar)
                 return Response.format(true, null, arr_penerima.length)
             } else {
-                Notification.send(user, data.arr_penerima.split(','), 'Broadcast: ' + data.pesan)
+                Notification.send(user, data.arr_penerima.split(','), 'Broadcast: ' + data.pesan, null, data.gambar)
                 return Response.format(true, null, data.arr_penerima.split(',').length)
             }
         } catch (error) {
