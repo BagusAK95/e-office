@@ -454,4 +454,11 @@ Route.get('/list_device', ({
   })
 }).middleware('checkAccess:admin')
 
+
+Route.get('/privacy-policy', ({
+  view
+}) => {
+  return view.render('frontend/police')
+})
+
 //------------------------------------ End Main System ---------------------------------//

@@ -269,7 +269,7 @@
               <br>
               <input type="checkbox" name="di" id="di" value="disposisi"> Disposisi
               <br>
-              <input type="checkbox" name="di" id="di" value="konsepsurat"> Konsep Surat
+              <input type="checkbox" name="konsepsurat" id="konsepsurat" value="konsepsurat"> Konsep Surat
               <br>
 
             </div>
@@ -524,6 +524,10 @@
               $("#di").prop("checked", true);
             }
 
+             if (data_akses[index] == "konsepsurat") {
+              $("#konsepsurat").prop("checked", true);
+            }
+
           }
         }
         $("#pegawai").val(data.data.nip);
@@ -607,6 +611,10 @@
 
     if ($("#di").is(':checked')) {
       akses += "," + $("#di").val();
+    }
+
+    if ($("#konsepsurat").is(':checked')) {
+      akses += "," + $("#konsepsurat").val();
     }
 
     $.ajax({
