@@ -79,7 +79,7 @@ class SuratMasukController {
             const data = await SuratMasuk.query()
                                          .whereRaw(sql.join(' AND '))
                                          .withCount('disposisi_ as total_disposisi')
-                                         .orderBy('tgl_terima', 'desc')
+                                         .orderBy('id', 'desc')
                                          .paginate(Number(request.get().page), Number(request.get().limit))
             
             Log.add(user, 'Melihat Daftar Surat Masuk Pada Halaman ' + request.get().page)
