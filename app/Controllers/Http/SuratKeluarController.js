@@ -340,6 +340,7 @@ class SuratKeluarController {
                             kecepatan: dataSurat.kecepatan,
                             ringkasan: dataSurat.ringkasan,
                             isi_surat: dataSurat.isi_surat,
+                            lampiran: data.lampiran,
                             status_surat: 0
                         })
 
