@@ -258,12 +258,8 @@
             for (var i = 0, len = myarr.length; i < len; i++) {
               var sal = myarr[i];
               var fl = sal.split(".");
-              if (fl[1] == 'pdf') {
-                var isno = "<i class='icon md-collection-pdf' style='font-size: 30px;'></i>";
-              } else {
-                var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
-              }
-              file += "<a onclick=preview('" + myarr[i] + "') href='#'>" + isno + "</a>&nbsp;&nbsp;";
+                var isno = "<i class='icon md-file' style='font-size: 30px;'></i>";
+              file += "<a href='" + myarr[i] + "'>" + isno + "</a>&nbsp;&nbsp;";
             }
             //ada
           } else {
@@ -275,8 +271,7 @@
             } else {
               var isno = "<i class='icon md-image-o' style='font-size: 30px;'></i>";
             }
-            file = "<a onclick=preview('" + myarr[i] +
-              "') href='#' class='btn btn-round btn-outline btn-success btn-sm' style='color:white;'><i class='md-file'></i>&nbsp;Lampiran</a>";
+            file = "<a href='" + myarr[i] + "'>" + isno + "</a>&nbsp;&nbsp;";
           }
         }
 
