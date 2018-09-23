@@ -418,8 +418,11 @@ Route.post('/upload_file', async ({
   request
 }) => {
   const profilePic = request.file('file')
-  const a = profilePic.subtype
-  const namabaru = `${new Date().getTime()}.${a}`
+ 
+  const a = profilePic.clientName
+  const res = a.split(".");
+
+  const namabaru = `${new Date().getTime()}.${res[1]}`
   await profilePic.move(Helpers.publicPath('uploads'), {
     name: namabaru
   })
