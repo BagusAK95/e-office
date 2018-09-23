@@ -25,6 +25,19 @@
                       <label class="form-control-label">Pesan</label>
                       <textarea name="pesan" id="pesan" class="form-control" style="height:200px"></textarea>
                     </div>
+                    <div class="form-group">
+                      <label class="form-control-label" for="inputEmail">Gambar&nbsp;</label>
+                      <div class="input-group">
+                        <span class="input-group-prepend">
+                          <button type="button" class="btn btn-primary" data-target="#exampleNiftyJustMe2" data-toggle="modal">
+                            <i class="md-collection-plus"></i>&nbsp;Gambar</button>
+                        </span>
+                        <input type="hidden" id="gambar" class="form-control" readonly style="width:60%">
+                      </div>
+                      <div id="detail_file">
+                      </div>
+                    </div>
+
                     <input type="hidden" id="semua">
                     <button style="float:right" type="submit" class='btn btn-icon btn-primary'>
                       <i class='icon md-mail-send' aria-hidden='true'></i>&nbsp;Kirim</button>
@@ -38,6 +51,34 @@
       <!-- End Example Panel With Heading -->
     </div>
   </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade modal-just-me" id="exampleNiftyJustMe2" aria-hidden="true" aria-labelledby="exampleModalTitle" role="dialog"
+tabindex="-1" style="z-index: 9000;">
+<div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Upload Lampiran</h4>
+    </div>
+    <form method="post" enctype='multipart/form-data' id="upload_lampiran">
+      <div class="modal-body">
+        Lampiran
+        <input type="file" name="file" id="file">
+        <br>
+        <br>
+        <center>
+          <div class="loader vertical-align-middle loader-ellipsis" style="display: none;"></div>
+        </center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-primary">Upload Lampiran</button>
+      </div>
+    </form>
+  </div>
+</div>
 </div>
 <script>
   $(document).ready(function () {
@@ -113,7 +154,7 @@
     $.ajax({
       type: 'POST',
       url: '/api/notifikasi/broadcast',
-      data:"arr_penerima="+de_pegawai+"&pesan="+pesan,
+      data:"arr_penerima="+de_pegawai+"&pesan="+pesan+"&gambar="+$("#gambar").val(),
       headers: {
         'Authorization': 'Bearer {{sesi}}'
       },
@@ -151,6 +192,53 @@
     $("#loader").fadeIn("slow");
     showww(halaman);
   }
+
+  $('#upload_lampiran').on('submit', function (e) {
+    $(".loader").show();
+    var date = new Date();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+
+
+    var all = $("#file").val();
+    var neww = all.split(".");
+    var eks = neww[1];
+
+    if ((eks == "jpg") || (eks == "JPG") || (eks == "png") || (eks == "JPEG") || (eks == "jpeg") || (eks == "PNG")) {
+      e.preventDefault();
+      var form = e.target;
+      var data = new FormData(form);
+      $.ajax({
+        url: "/upload_file",
+        method: form.method,
+        processData: false,
+        contentType: false,
+        data: data,
+        processData: false,
+        success: function (msg) {
+
+          $("#gambar").val("/uploads/" + msg);
+          //alert("asd");
+          $("#detail_file").html("<b><br><a href='/uploads/"+msg+"'>/uploads/"+msg+"</a></b>").show();
+          $(".loader").hide();
+          $('.modal').modal('hide');
+        },
+        error: function () {
+          $(".loader").hide();
+          $('.modal').modal('hide');
+        }
+      });
+    } else {
+      alert("Tipe file tidak sesuai!");
+      $(".loader").hide();
+    }
+    return false;
+  });
 
 </script>
 @endsection
