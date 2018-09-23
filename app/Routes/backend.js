@@ -773,6 +773,11 @@ Route.group(() => {
     *         description: Tanggal Terima
     *         required: true
     *         type: string
+    *       - name: nomor_agenda
+    *         in: formData
+    *         description: Nomor Agenda
+    *         required: true
+    *         type: string
     *       - name: nip_plt
     *         in: formData
     *         description: NIP Pelaksana Tugas
