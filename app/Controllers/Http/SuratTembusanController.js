@@ -88,7 +88,7 @@ class SuratTembusanController {
     async send({ params, request, auth }) {
         try {
             const user = await auth.getUser()
-            const data = request.only(['tgl_terima', 'lampiran'])
+            const data = request.only(['tgl_terima', 'nomor_agenda', 'lampiran'])
 
             const dataSurat = await SuratTembusan.query()
                                                 .where({ instansi_penerima: user.instansi, id: params.id })
@@ -106,6 +106,7 @@ class SuratTembusanController {
                         dataSurat.nama_pimpinan = dataPimpinan.nama_lengkap
                         dataSurat.jabatan_pimpinan = dataPimpinan.nama_jabatan
                         dataSurat.tgl_terima = data.tgl_terima
+                        dataSurat.nomor_agenda = data.nomor_agenda
                         dataSurat.lampiran = data.lampiran
                         dataSurat.status_surat = 1
                         dataSurat.keyword = ''.concat(dataSurat.nomor_surat, ' | ', dataSurat.nama_instansi, ' | ', dataSurat.perihal, ' | ', dataSurat.nama_pengirim)
