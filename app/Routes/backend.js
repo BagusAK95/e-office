@@ -69,7 +69,7 @@ Route.group(() => {
     *         type: string
     *         format: password
     */
-    Route.post('/getToken', 'LoginController.getToken').validator('Login')
+    Route.post('/getToken', 'LoginController.getToken').validator('getToken')
 
     /**
     * @swagger
@@ -99,7 +99,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/setFirebase', 'LoginController.setFirebase').middleware('checkToken:all')
+    Route.put('/setFirebase', 'LoginController.setFirebase').validator('setFirebase').middleware('checkToken:all')
 
     /**
     * @swagger
@@ -119,7 +119,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/unsetFirebase', 'LoginController.unsetFirebase').middleware('checkToken:all')
+    Route.put('/unsetFirebase', 'LoginController.unsetFirebase').validator('unsetFirebase').middleware('checkToken:all')
 
     /**
     * @swagger
@@ -160,21 +160,6 @@ Route.group(() => {
     *         description: Url Foto
     *         required: false
     *         type: string
-    *       - name: level
-    *         in: formData
-    *         description: 1=Admin, 2=Pimpinan, 3=Tata Usaha, 4=Staf, 5=Sekretaris
-    *         required: false
-    *         type: string
-    *       - name: akses
-    *         in: formData
-    *         description: Daftar Akses Menu
-    *         required: false
-    *         type: string
-    *       - name: status
-    *         in: formData
-    *         description: 0=Non Aktif, 1=Aktif
-    *         required: false
-    *         type: string
     */
     Route.put('/profile', 'ProfileController.edit').middleware('checkToken:all')
 
@@ -203,7 +188,7 @@ Route.group(() => {
     *         type: string
     *         format: password
     */
-    Route.put('/profile/editPassword', 'ProfileController.editPassword').middleware('checkToken:all')
+    Route.put('/profile/editPassword', 'ProfileController.editPassword').validator('editProfilePassword').middleware('checkToken:all')
 
     /**
     * @swagger
@@ -245,7 +230,7 @@ Route.group(() => {
     *       - name: kode_lokasi
     *         in: formData
     *         description: Kode Lokasi
-    *         required: false
+    *         required: true
     *         type: string
     *       - name: kode_jabatan
     *         in: formData
@@ -281,7 +266,7 @@ Route.group(() => {
     *       - name: akses
     *         in: formData
     *         description: Daftar Akses Menu
-    *         required: false
+    *         required: true
     *         type: string
     *       - name: status
     *         in: formData
@@ -289,7 +274,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/user', 'UserController.add').middleware('checkToken:admin')
+    Route.post('/user', 'UserController.add').validator('addUser').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -729,7 +714,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/surat-masuk', 'SuratMasukController.add').middleware('checkToken:employe,suratmasuk')
+    Route.post('/surat-masuk', 'SuratMasukController.add').validator('addSuratMasuk').middleware('checkToken:employe,suratmasuk')
 
     /**
     * @swagger
@@ -799,7 +784,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/surat-masuk/:id', 'SuratMasukController.send').middleware('checkToken:employe,suratmasuk')
+    Route.put('/surat-masuk/:id', 'SuratMasukController.send').validator('sendSuratMasuk').middleware('checkToken:employe,suratmasuk')
 
     /**
     * @swagger
@@ -937,13 +922,18 @@ Route.group(() => {
     *         description: Tanggal Terima
     *         required: true
     *         type: string
+    *       - name: nomor_agenda
+    *         in: formData
+    *         description: Nomor Agenda
+    *         required: true
+    *         type: string
     *       - name: lampiran
     *         in: formData
     *         description: File Lampiran
     *         required: true
     *         type: string
     */
-    Route.put('/surat-tembusan/:id', 'SuratTembusanController.send').middleware('checkToken:employe,suratmasuk')
+    Route.put('/surat-tembusan/:id', 'SuratTembusanController.send').validator('sendSuratTembusan').middleware('checkToken:employe,suratmasuk')
 
     /**
     * @swagger
@@ -1022,7 +1012,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/disposisi', 'DisposisiController.add').middleware('checkToken:employe,disposisi')
+    Route.post('/disposisi', 'DisposisiController.add').validator('addDisposisi').middleware('checkToken:employe,disposisi')
 
     /**
     * @swagger
@@ -1052,7 +1042,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/disposisi/setStatus/:id', 'DisposisiController.setStatus').middleware('checkToken:employe,disposisi')
+    Route.put('/disposisi/setStatus/:id', 'DisposisiController.setStatus').validator('setStatusDisposisi').middleware('checkToken:employe,disposisi')
 
     /**
     * @swagger
@@ -1236,7 +1226,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/komentar', 'KomentarController.add').middleware('checkToken:employe')
+    Route.post('/komentar', 'KomentarController.add').validator('addKomentar').middleware('checkToken:employe')
 
     /**
     * @swagger
@@ -1381,7 +1371,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/konsep-surat', 'SuratKeluarController.add').middleware('checkToken:employe,konsepsurat')
+    Route.post('/konsep-surat', 'SuratKeluarController.add').validator('addKonsepSurat').middleware('checkToken:employe,konsepsurat')
 
     /**
     * @swagger
@@ -1424,16 +1414,6 @@ Route.group(() => {
     *         in: formData
     *         description: Lampiran
     *         required: false
-    *         type: string
-    *       - name: instansi_penerima
-    *         in: formData
-    *         description: Instansi Penerima
-    *         required: true
-    *         type: string
-    *       - name: nama_instansi
-    *         in: formData
-    *         description: Nama Instansi
-    *         required: true
     *         type: string
     *       - name: arr_penerima
     *         in: formData
@@ -1481,7 +1461,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/konsep-surat/:id', 'SuratKeluarController.updateConcept').middleware('checkToken:employe,konsepsurat')
+    Route.put('/konsep-surat/:id', 'SuratKeluarController.updateConcept').validator('editKonsepSurat').middleware('checkToken:employe,konsepsurat')
 
     /**
     * @swagger
@@ -1531,7 +1511,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/konsep-surat/checkingConcept/:id_surat_keluar', 'SuratPemeriksaController.updateStatus').middleware('checkToken:employe,konsepsurat')
+    Route.put('/konsep-surat/checkingConcept/:id_surat_keluar', 'SuratPemeriksaController.updateStatus').validator('editStatusKonsepSurat').middleware('checkToken:employe,konsepsurat')
 
     /**
     * @swagger
@@ -1556,7 +1536,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/konsep-surat/updateChecker/:id_surat_keluar', 'SuratPemeriksaController.UpdateList').middleware('checkToken:employe,konsepsurat')
+    Route.put('/konsep-surat/updateChecker/:id_surat_keluar', 'SuratPemeriksaController.UpdateList').validator('editCheckerKonsepSurat').middleware('checkToken:employe,konsepsurat')
 
     /**
     * @swagger
@@ -1695,7 +1675,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/tujuan-surat', 'SuratGroupTujuanController.add').middleware('checkToken:employe,konsepsurat')
+    Route.post('/tujuan-surat', 'SuratGroupTujuanController.add').validator('addTujuanSurat').middleware('checkToken:employe,konsepsurat')
 
     /**
     * @swagger
@@ -1725,7 +1705,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/tujuan-surat/:id', 'SuratGroupTujuanController.edit').middleware('checkToken:employe,konsepsurat')
+    Route.put('/tujuan-surat/:id', 'SuratGroupTujuanController.edit').validator('editTujuanSurat').middleware('checkToken:employe,konsepsurat')
 
     /**
     * @swagger
@@ -1865,7 +1845,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail').middleware('checkToken:employe,suratkeluar')
+    Route.post('/surat-keluar/:id', 'SuratKeluarController.sendMail').validator('sendSuratKeluar').middleware('checkToken:employe,suratkeluar')
 
     /**
     * @swagger
@@ -2011,10 +1991,10 @@ Route.group(() => {
     *       - name: gambar
     *         in: formData
     *         description: Gambar
-    *         required: true
+    *         required: false
     *         type: string
     */
-    Route.post('/notifikasi/broadcast', 'NotifikasiController.broadcast').middleware('checkToken:admin')
+    Route.post('/notifikasi/broadcast', 'NotifikasiController.broadcast').validator('sendBroadcast').middleware('checkToken:admin')
 
     /**
     * @swagger
@@ -2086,7 +2066,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.put('/surat-pengiriman/:id', 'SuratPengirimanController.updateResi').middleware('checkToken:employe,suratkeluar')
+    Route.put('/surat-pengiriman/:id', 'SuratPengirimanController.updateResi').validator('editResiSuratPengiriman').middleware('checkToken:employe,suratkeluar')
 
     /**
     * @swagger

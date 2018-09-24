@@ -2,11 +2,12 @@
 
 const Response = use('App/Helpers/ResponseHelper')
 
-class Login {
+class sendSuratKeluar {
   get rules () {
     return {
-      nip: 'required',
-      password: 'required'
+      nomor_surat: 'required',
+      nomor_agenda: 'required',
+      lampiran: 'required'
     }
   }
 
@@ -15,4 +16,4 @@ class Login {
   }
 }
 
-module.exports = Login
+module.exports = sendSuratKeluar
