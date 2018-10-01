@@ -117,6 +117,50 @@ class CompleteUserData extends Command {
 
         next()
       }, () => {
+        this.setTataUsaha()
+      })
+    } catch (error) {
+      console.error('Error : ' + error)      
+    }
+  }
+
+  async setTataUsaha() {
+    try {
+      const masterKantor = await MasterKantor.query().where('kdparent', null)
+      AsyncLoop(masterKantor, async(kantor, next) => {
+        const nip = Number(kantor.kdlokasi) + 1
+
+        const exist = await Login.find(nip)
+        if (!exist) {
+          const data = {
+            nip: nip,
+            instansi: kantor.kdlokasi,
+            nama_lengkap: kantor.nmlokasi,
+            kode_lokasi: null,
+            kode_jabatan: null,
+            nama_jabatan: 'Tata Usaha',
+            kode_eselon: null,
+            golongan: null,
+            password: await Hash.make(nip.toString()),
+            level: 3,
+            akses: 'suratmasuk,suratkeluar,disposisi,konsepsurat',
+            status: 1,
+            keyword: ''
+          }
+  
+          const insert = await Login.create(data)
+
+          console.log('Tata Usaha ' + insert.nama_lengkap + ' -> Created.')
+        } else {
+          exist.nama_lengkap = kantor.nmlokasi
+          exist.nama_jabatan = 'Tata Usaha'
+          await exist.save()
+
+          console.log('Tata Usaha ' + exist.nama_lengkap + ' -> Updated.')
+        }
+
+        next()
+      }, () => {
         console.log('Done.')
       })
     } catch (error) {
