@@ -1,0 +1,394 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="no-js css-menubar" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description" content="bootstrap material admin template">
+  <meta name="author" content="">
+  <title>e-Office</title>
+  <link rel="apple-touch-icon" href="/../material/base/assets/images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="/../material/base/assets/images/favicon.ico">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/../material/global/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/../material/global/css/bootstrap-extend.min.css">
+  <link rel="stylesheet" href="/../material/base/assets/css/site.min.css">
+  <link rel="stylesheet" href="/../material/global/fonts/font-awesome/font-awesome.css">
+  <link rel="stylesheet" href="/../material/global/vendor/bootstrap-sweetalert/sweetalert.css">
+  <link rel="stylesheet" href="/../material/global/vendor/summernote/summernote.css">
+  <!-- Plugins -->
+  <link rel="stylesheet" href="/../material/global/vendor/animsition/animsition.css">
+  <link rel="stylesheet" href="/../material/global/vendor/asscrollable/asScrollable.css">
+  <link rel="stylesheet" href="/../material/global/vendor/switchery/switchery.css">
+  <link rel="stylesheet" href="/../material/global/vendor/intro-js/introjs.css">
+  <link rel="stylesheet" href="/../material/global/vendor/slidepanel/slidePanel.css">
+  <link rel="stylesheet" href="/../material/global/vendor/flag-icon-css/flag-icon.css">
+  <link rel="stylesheet" href="/../material/global/vendor/waves/waves.css">
+  <link rel="stylesheet" href="/../material/global/vendor/asscrollable/asScrollable.css">
+  <link rel="stylesheet" href="/../material/global/vendor/select2/select2.css">
+  <link rel="stylesheet" href="/../material/global/vendor/bootstrap-select/bootstrap-select.css">
+  <link rel="stylesheet" href="/../material/global/vendor/multi-select/multi-select.css">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="/../material/global/fonts/material-design/material-design.min.css">
+  <link rel="stylesheet" href="/../material/global/fonts/brand-icons/brand-icons.min.css">
+  <link rel='stylesheet' href='/../material/font.css'>
+  <script src="/../material/moment-with-locales.js"></script>
+  <!--[if lt IE 9]>
+      <script src="material/global/vendor/html5shiv/html5shiv.min.js"></script>
+      <![endif]-->
+  <!--[if lt IE 10]>
+      <script src="material/global/vendor/media-match/media.match.min.js"></script>
+      <script src="material/global/vendor/respond/respond.min.js"></script>
+      <![endif]-->
+  <!-- Scripts -->
+  <script src="/../material/global/vendor/breakpoints/breakpoints.js"></script>
+  <script>
+    Breakpoints();
+
+  </script>
+  <script src="/../material/global/vendor/jquery/jquery.js"></script>
+  <link rel="stylesheet" href="/../material/global/vendor/bootstrap-treeview/bootstrap-treeview.css">
+  <link rel="stylesheet" href="/../material/global/vendor/jstree/jstree.min.css">
+  <link rel="stylesheet" href="/../material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css">
+
+  <style>
+    .badge-pill {
+      font-size: 9pt;
+    }
+
+  </style>
+  <style>
+    .img-circular-pp {
+      width: 30px;
+      height: 30px;
+      background-size: cover;
+      display: block;
+      border-radius: 100px;
+      -webkit-border-radius: 100px;
+      -moz-border-radius: 100px;
+    }
+    .img-circular-pp2 {
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      display: block;
+      border-radius: 100px;
+      -webkit-border-radius: 100px;
+      -moz-border-radius: 100px;
+    }
+    .img {
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      display: block;
+      border-radius: 100px;
+      -webkit-border-radius: 100px;
+      -moz-border-radius: 100px;
+    }
+
+  </style>
+</head>
+
+<body class="animsition">
+  <input type="hidden" name='level' class='level' id='level_main'>
+  <!--[if lt IE 8]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+  <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggler hamburger hamburger-close navbar-toggler-left hided" data-toggle="menubar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse" data-toggle="collapse">
+        <i class="icon md-more" aria-hidden="true"></i>
+      </button>
+      <div class="navbar-brand navbar-brand-center">
+        <img class="navbar-brand-logo" src="/material/base/assets/logo.png" title="Remark">
+        <span class="navbar-brand-text hidden-xs-down"> e-Office</span>
+      </div>
+    </div>
+    <div class="navbar-container container-fluid">
+      <!-- Navbar Collapse -->
+      <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
+        <!-- Navbar Toolbar -->
+        <ul class="nav navbar-toolbar">
+          <li class="nav-item hidden-float" id="toggleMenubar">
+            <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="scale-up" role="button">
+              <img src='/material/loader.gif' style='width:35px' id='loader' style='display:none'>
+              <i></i>
+              </span>
+            </a>
+          </li>
+        </ul>
+        <!-- End Navbar Toolbar -->
+        <!-- Navbar Toolbar Right -->
+        <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="javascript:void(0)" title="" aria-expanded="false" data-animation="scale-up"
+              role="button">
+              <span class="nama_user"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-media" role="menu">
+              <div class="list-group">
+                <div class="dropdown-menu-header">
+                  <h5>JABATAN</h5>
+                  <span></span>
+                </div>
+                <div class="dropdown-menu-footer">
+                  <br>
+                  <center>
+                    <span style="font-size:11pt" class="jabatanm"></span>
+                  </center>
+                  <br>
+                </div>
+              </div>
+            </div>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link navbar-avatar" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="scale-up" role="button">
+              <span class=" avatar-online">
+                <span class='foto'></span>
+                <i></i>
+              </span>
+            </a>
+            <div class="dropdown-menu" role="menu">
+              <a class="dropdown-item" href="/admin/profile" role="menuitem">
+                <i class="icon md-account" aria-hidden="true"></i> Profile</a>
+              <a class="dropdown-item" href="/change-password" role="menuitem">
+                <i class="icon md-key" aria-hidden="true"></i> Change Password</a>
+              <a class="dropdown-item" onclick="logout()" role="menuitem">
+                <i class="icon md-power" aria-hidden="true"></i> Logout</a>
+            </div>
+          </li>
+        </ul>
+        <!-- End Navbar Toolbar Right -->
+      </div>
+      <!-- End Navbar Collapse -->
+      <!-- Site Navbar Seach -->
+      <div class="collapse navbar-search-overlap" id="site-navbar-search">
+        <form role="search">
+          <div class="form-group">
+            <div class="input-search">
+              <i class="input-search-icon md-search" aria-hidden="true"></i>
+              <input type="text" class="form-control" name="site-search" placeholder="Search...">
+              <button type="button" class="input-search-close icon md-close" data-target="#site-navbar-search" data-toggle="collapse" aria-label="Close"></button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- End Site Navbar Seach -->
+    </div>
+  </nav>
+  <!--Menu-->
+  <div class="site-menubar">
+    <div class="site-menubar-body">
+      <div>
+        <div>
+          <ul class="site-menu" data-plugin="menu">
+            <li class="site-menu-category">Dashboard</li>
+            <li class="site-menu-item">
+              <a class="animsition-link" href="/admin/home">
+                <i class="site-menu-icon md-view-dashboard" aria-hidden="true"></i>
+                <span class="site-menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="site-menu-category konsol">Administrator</li>
+            <li class="site-menu-item konsol">
+              <a class="animsition-link" href="/user">
+                <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
+                <span class="site-menu-title">Master User</span>
+              </a>
+            </li>
+           
+          </ul>
+          <div class="site-menubar-section">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="site-menubar-footer">
+    <a href="/profile" class="fold-show" data-placement="top" data-toggle="tooltip" data-original-title="Profile">
+      <span class="icon md-account" aria-hidden="true"></span>
+    </a>
+    <a href="/change-password" data-placement="top" data-toggle="tooltip" data-original-title="Change Password">
+      <span class="icon md-key" aria-hidden="true"></span>
+    </a>
+    <a onclick="logout()" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
+      <span class="icon md-power" aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="site-gridmenu">
+    <div>
+      <div>
+      </div>
+    </div>
+  </div>
+  <!--End Menu-->
+  <!-- Page -->
+  <div style="display:none;">
+    <input id="token_firebases" type="text">
+    <div id="token_div" style="display: none;">
+      <h4>Delete Token</h4>
+      <p id="token" style="word-break: break-all;"></p>
+      <button class="btn btn-danger" onclick="deleteToken()">Delete Token</button>
+    </div>
+    <div id="permission_div" style="display: none;">
+      <h4>Get Token</h4>
+      <p id="token"></p>
+      <button class="btn btn-danger" onclick="requestPermission()">Request Token</button>
+    </div>
+    <div id="messages"></div>
+  </div>
+  <div class="page">
+    <!-- Page Content -->
+    @!section('content')
+    <!-- End Page Content -->
+  </div>
+  <!-- End Page -->
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="site-footer-legal"></div>
+    <div class="site-footer-right">
+      © 2018 e-Office
+    </div>
+  </footer>
+  <input type="hidden" id="nip_login" id="nip_login">
+  <script src="/../material/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+  <script src="/../material/global/vendor/popper-js/umd/popper.min.js"></script>
+  <script src="/../material/global/vendor/bootstrap/bootstrap.js"></script>
+  <script src="/../material/global/vendor/animsition/animsition.js"></script>
+  <script src="/../material/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+  <script src="/../material/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+  <script src="/../material/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+  <script src="/../material/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+  <script src="/../material/global/vendor/waves/waves.js"></script>
+  <!-- Plugins -->
+  <script src="/../material/global/vendor/switchery/switchery.js"></script>
+  <script src="/../material/global/vendor/intro-js/intro.js"></script>
+  <script src="/../material/global/vendor/screenfull/screenfull.js"></script>
+  <script src="/../material/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+  <script src="/../material/global/vendor/asprogress/jquery-asProgress.js"></script>
+  <script src="/../material/global/vendor/draggabilly/draggabilly.pkgd.js"></script>
+  <script src="/../material/global/vendor/raty/jquery.raty.js"></script>
+  <!-- Scripts -->
+  <script src="/../material/global/js/Component.js"></script>
+  <script src="/../material/global/js/Plugin.js"></script>
+  <script src="/../material/global/js/Base.js"></script>
+  <script src="/../material/global/js/Config.js"></script>
+  <script src="/../material/base/assets/js/Section/Menubar.js"></script>
+  <script src="/../material/base/assets/js/Section/GridMenu.js"></script>
+  <script src="/../material/base/assets/js/Section/Sidebar.js"></script>
+  <script src="/../material/base/assets/js/Section/PageAside.js"></script>
+  <script src="/../material/base/assets/js/Plugin/menu.js"></script>
+  <script src="/../material/global/js/config/colors.js"></script>
+  <script src="/../material/base/assets/js/config/tour.js"></script>
+  <script>
+    Config.set('assets', '/../material/base/assets');
+  </script>
+  <!-- Page -->
+  <script src="/../material/base/assets/js/Site.js"></script>
+  <script src="/../material/global/js/Plugin/asscrollable.js"></script>
+  <script src="/../material/global/js/Plugin/slidepanel.js"></script>
+  <script src="/../material/global/js/Plugin/switchery.js"></script>
+  <script src="/../material/global/js/Plugin/responsive-tabs.js"></script>
+  <script src="/../material/global/js/Plugin/tabs.js"></script>
+  <script src="/../material/global/js/Plugin/asprogress.js"></script>
+  <script src="/../material/global/js/Plugin/panel.js"></script>
+  <script src="/../material/global/js/Plugin/asscrollable.js"></script>
+  <script src="/../material/global/js/Plugin/raty.js"></script>
+  <script src="/../material/base/assets/examples/js/uikit/panel-structure.js"></script>
+  <script src="/../material/global/vendor/bootstrap-sweetalert/sweetalert.js"></script>
+  <script src="/../material/global/js/Plugin/bootstrap-sweetalert.js"></script>
+  <script src="/../material/base/assets/examples/js/advanced/bootbox-sweetalert.js"></script>
+  <script src="/../material/multi/select2.full.min.js?v4.0.2"></script>
+  <script src="/../material/global/js/Plugin/select2.js"></script>
+  <script src="/../material/multi/jquery.multi-select.js?v4.0.2"></script>
+  <script src="/../material/global/vendor/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+  <script src="/../material/global/vendor/jstree/jstree.min.js"></script>
+  <script src="/../material/global/js/Plugin/bootstrap-treeview.js"></script>
+  <script src="/../material/global/js/Plugin/jstree.js"></script>
+  <!--<script src="/material/base/assets/examples/js/advanced/treeview.js"></script>-->
+  <script src="/../material/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+  <script src="/../material/global/js/Plugin/bootstrap-datepicker.js"></script>
+  <script src="/../material/global/vendor/summernote/summernote.min.js"></script>
+  <script src="/../material/global/js/Plugin/summernote.js"></script>
+  <script src="/../material/base/assets/examples/js/forms/editor-summernote.js"></script>
+  <script src="/../material/global/vendor/toastr/toastr.js"></script>
+  <script src="/../material/global/js/Plugin/toastr.js"></script>
+  <link rel="stylesheet" href="/../material/animate.css">
+  <link rel="stylesheet" href="/../material/toastr.css">
+  <script>
+    //requestPermission()
+
+
+   
+  </script>
+  <script>
+    (function (document, window, $) {
+      'use strict';
+
+      var Site = window.Site;
+      $(document).ready(function () {
+        Site.run();
+      });
+    })(document, window, jQuery);
+
+
+    function cek_session() {
+      var sesi = "{{sesi}}";
+      if (sesi) {
+        return false;
+      } else {
+        swal({
+            title: "Session Time Out",
+            text: "Silahkan login kembali.",
+            type: "error"
+          },
+          function () {
+            window.location.href = '/admin';
+          }
+        );
+      }
+    }
+
+    function cek_token() {
+      $.ajax({
+        type: 'GET',
+        url: '/api-sys/profile',
+        headers: {
+          'Authorization': 'Bearer {{sesi}}'
+        },
+        success: function (data) {
+            
+          var ddppnn = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Administrator</span>&nbsp;&nbsp;";
+          $(".nama_user").html(ddppnn + data.data.nama_lengkap).show(); 
+          $(".nama_user2").html(ddppnn +"<br>"+ data.data.nama_lengkap).show();
+          //putlevel(data.data.level)
+
+          if (data.data.foto) {
+            $(".foto").html('<img src="' + data.data.foto + '" class="img-circular-pp">').show();
+            $("#foto").html('<img src="' + data.data.foto + '" class="img-circular">').show();
+          } else {
+            $(".foto").html('<img src="/material/base/src/images/user.png" class="img-circular-pp">').show();
+            $("#foto").html('<img src="/material/base/src/images/user.png" style="width:70px">').show();
+          }
+
+          $(".jabatan").html("Administrator").show();
+          $(".jabatanm").html("Administrator").show();
+        }
+      });
+    }
+
+    function logout() {
+        window.location.href = '/admin/logout';
+    }
+  </script>
+</body>
+
+</html>
