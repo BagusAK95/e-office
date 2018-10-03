@@ -246,7 +246,9 @@ class UserController {
                                           .first()
                 if (atasan) {
                     if (atasan.level != 2 && atasan.level != 5) {
-                        arrPegawai.push(atasan)                        
+                        if (atasan.nip != user.nip) {
+                            arrPegawai.push(atasan)
+                        }
                     }
                 }
             } else {
@@ -258,7 +260,9 @@ class UserController {
                                           .first()
                 if (atasan) {
                     if (atasan.level != 2 && atasan.level != 5) {
-                        arrPegawai.push(atasan)                        
+                        if (atasan.nip != user.nip) {
+                            arrPegawai.push(atasan)
+                        }
                     }
                 }
             }
@@ -273,7 +277,9 @@ class UserController {
                                           .first()
                 if (atasan) {
                     if (atasan.level != 2 && atasan.level != 5) {
-                        arrPegawai.push(atasan)                        
+                        if (atasan.nip != user.nip) {
+                            arrPegawai.push(atasan)
+                        }
                     }
                 }
             }
@@ -283,7 +289,9 @@ class UserController {
                                         .where({ level: 5, instansi: user.instansi })
                                         .first()
             if (sekretaris) {
-                arrPegawai.push(sekretaris)
+                if (sekretaris.nip != user.nip) {
+                    arrPegawai.push(sekretaris)
+                }
             }
 
             /* Get Pimpinan */
@@ -291,7 +299,9 @@ class UserController {
                                         .where({ level: 2, instansi: user.instansi })
                                         .first()
             if (pimpinan) {
-                arrPegawai.push(pimpinan)
+                if (sekretaris.nip != user.nip) {
+                    arrPegawai.push(pimpinan)
+                }
             }
 
             const arrFixPegawai = arrPegawai.filter((elem, index, self) => { return index == self.map((e) => e.nip).indexOf(elem.nip) })
