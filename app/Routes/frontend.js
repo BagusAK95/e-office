@@ -464,4 +464,51 @@ Route.get('/privacy-policy', ({
   return view.render('frontend/police')
 })
 
+//Admin//
+Route.on('/admin').render('frontend/admin_login')
+
+Route.get('/cek_session_admin', ({
+  session
+}) => {
+  return session.get('token_admin')
+})
+
+Route.get('/puttokenadmin/:id', async ({
+  params,
+  session
+}) => {
+  const post = params.id;
+  session.put('token_admin', post);
+})
+
+Route.get('/admin/home', ({
+  session,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_home', {
+    sesi
+  })
+})
+
+Route.get('/admin/profile', ({
+  session,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_profile', {
+    sesi
+  })
+})
+
+Route.get('/admin/logout', ({
+  session,
+  response
+}) => {
+  session.put('token_admin', '')
+  session.clear()
+  response.redirect('/admin')
+})
+
+//End Admin//
 //------------------------------------ End Main System ---------------------------------//
