@@ -3,6 +3,7 @@
 const Disposisi = use('App/Models/Disposisi')
 const SuratMasuk = use('App/Models/SuratMasuk')
 const SuratKeluar = use('App/Models/SuratKeluar')
+const SuratPemeriksa = use('App/Models/SuratPemeriksa')
 const SuratTembusan = use('App/Models/SuratTembusan')
 const Response = use('App/Helpers/ResponseHelper')
 
@@ -63,9 +64,9 @@ class StatistikController {
                                                         .getCount()
             arrData.push({ nama: 'Disposisi Keluar', total: countDisposisiKeluar })
 
-            const countKonsepSurat = await SuratKeluar.query()
-                                                      .where({ instansi_pengirim: user.instansi, nip_pembuat: user.nip})
-                                                      .getCount()
+            const countKonsepSurat = await SuratPemeriksa.query()
+                                                        .where({ nip_pemeriksa: user.nip, status : 1 })
+                                                        .getCount()
             arrData.push({ nama: 'Konsep Surat', total: countKonsepSurat })
             
             const countSuratKeluar = await SuratKeluar.query()
