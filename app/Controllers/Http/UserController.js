@@ -97,6 +97,7 @@ class UserController {
             if (request.get().keyword) {
                 sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
             }
+            sql.push('level not in (1,3)')
             sql.push('instansi = ' + user.instansi)
 
             const data = await Login.query()
@@ -137,6 +138,7 @@ class UserController {
             const user = await auth.getUser() //Ambil data user yang login
             const data = await Login.query()
                                     .where('instansi', user.instansi)
+                                    .whereNotIn('level', [1, 3])
                                             
             return Response.format(true, null, data)
         } catch (error) {
