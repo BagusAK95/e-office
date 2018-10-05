@@ -1,5 +1,7 @@
 'use strict'
 
+const path = require('path');
+
 /*
 |--------------------------------------------------------------------------
 | Providers
@@ -19,7 +21,8 @@ const providers = [
   '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
-  '@adonisjs/validator/providers/ValidatorProvider'
+  '@adonisjs/validator/providers/ValidatorProvider',
+  path.join(__dirname, '..', 'providers', 'Mongoose')
 ]
 
 /*
@@ -47,7 +50,9 @@ const aceProviders = [
 |   { Route: 'Adonis/Src/Route' }
 |
 */
-const aliases = {}
+const aliases = {
+  Mongoose: 'Adonis/Addons/AdonisMongoose'
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +64,8 @@ const aliases = {}
 */
 const commands = [
   'App/Commands/CompleteUserData',
-  'App/Commands/TrackWaybill'
+  'App/Commands/TrackWaybill',
+  'App/Commands/MigrationData'
 ]
 
 module.exports = { providers, aceProviders, aliases, commands }
