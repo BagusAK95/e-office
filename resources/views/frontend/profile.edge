@@ -239,7 +239,16 @@
         data: data,
         processData: false,
         success: function (msg) {
-          $("#lampiran").val("/uploads/" + msg);
+          if(msg)
+          {
+            $("#lampiran").val("/uploads/" + msg);
+            swal("Berhasil Upload File.",data.message, "success");
+          }
+          else
+          {
+            swal("Gagal Upload File.",data.message, "error");
+          }
+         
           $(".loader").hide();
           $('.modal').modal('hide');
         },
