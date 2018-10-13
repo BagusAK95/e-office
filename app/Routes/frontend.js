@@ -510,5 +510,26 @@ Route.get('/admin/logout', ({
   response.redirect('/admin')
 })
 
+Route.get('/admin/change-password', ({
+  session,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_change_password', {
+    sesi
+  })
+})
+
+//User
+Route.get('/admin/user', ({
+  session,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_user', {
+    sesi
+  })
+})
+
 //End Admin//
 //------------------------------------ End Main System ---------------------------------//

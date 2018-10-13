@@ -159,7 +159,7 @@
             <div class="dropdown-menu" role="menu">
               <a class="dropdown-item" href="/admin/profile" role="menuitem">
                 <i class="icon md-account" aria-hidden="true"></i> Profile</a>
-              <a class="dropdown-item" href="/change-password" role="menuitem">
+              <a class="dropdown-item" href="/admin/change-password" role="menuitem">
                 <i class="icon md-key" aria-hidden="true"></i> Change Password</a>
               <a class="dropdown-item" onclick="logout()" role="menuitem">
                 <i class="icon md-power" aria-hidden="true"></i> Logout</a>
@@ -199,9 +199,9 @@
             </li>
             <li class="site-menu-category konsol">Administrator</li>
             <li class="site-menu-item konsol">
-              <a class="animsition-link" href="/user">
+              <a class="animsition-link" href="/admin/user">
                 <i class="site-menu-icon md-assignment-account" aria-hidden="true"></i>
-                <span class="site-menu-title">Master User</span>
+                <span class="site-menu-title">List User</span>
               </a>
             </li>
            
@@ -213,10 +213,10 @@
     </div>
   </div>
   <div class="site-menubar-footer">
-    <a href="/profile" class="fold-show" data-placement="top" data-toggle="tooltip" data-original-title="Profile">
+    <a href="/admin/profile" class="fold-show" data-placement="top" data-toggle="tooltip" data-original-title="Profile">
       <span class="icon md-account" aria-hidden="true"></span>
     </a>
-    <a href="/change-password" data-placement="top" data-toggle="tooltip" data-original-title="Change Password">
+    <a href="/admin/change-password" data-placement="top" data-toggle="tooltip" data-original-title="Change Password">
       <span class="icon md-key" aria-hidden="true"></span>
     </a>
     <a onclick="logout()" data-placement="top" data-toggle="tooltip" data-original-title="Logout">
@@ -368,7 +368,7 @@
             
           var ddppnn = "<span style='color:white;' class='badge badge-pill badge-lg badge-info'>Administrator</span>&nbsp;&nbsp;";
           $(".nama_user").html(ddppnn + data.data.nama_lengkap).show(); 
-          $(".nama_user2").html(ddppnn +"<br>"+ data.data.nama_lengkap).show();
+          $(".nama_user2").html(ddppnn +"<br><br>"+ data.data.nama_lengkap).show();
           //putlevel(data.data.level)
 
           if (data.data.foto) {
