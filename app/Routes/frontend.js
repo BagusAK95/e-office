@@ -531,5 +531,38 @@ Route.get('/admin/user', ({
   })
 })
 
+//Kantor
+Route.get('/admin/kantor', ({
+  session,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_kantor', {
+    sesi
+  })
+})
+Route.get('/admin/detail-kantor/:id', ({
+  session,
+  params,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_detail_kantor', {
+    sesi,
+    params
+  })
+})
+
+//Log
+Route.get('/admin/log', ({
+  session,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_log', {
+    sesi
+  })
+})
+
 //End Admin//
 //------------------------------------ End Main System ---------------------------------//
