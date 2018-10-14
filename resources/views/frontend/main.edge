@@ -673,6 +673,21 @@
       $(".datepicker").val(ff);
     }
 
+    function deleteToken() {
+      messaging.getToken().then(function(currentToken) {
+        messaging.deleteToken(currentToken).then(function() {
+          console.log('Token deleted.');
+          setTokenSentToServer(false);
+          resetUI();
+        }).catch(function(err) {
+          //console.log('Unable to delete token. ', err);
+        });
+      }).catch(function(err) {
+        //console.log('Error retrieving Instance ID token. ', err);
+        //showToken('Error retrieving Instance ID token. ', err);
+      });
+    }
+
     //NOTIF//
     var config = {
       apiKey: "AIzaSyD8Tdy0YFbhRp1KJxwrJKISEMl772pEE9g",
@@ -712,7 +727,7 @@
       showToken('loading...');
       messaging.getToken().then(function (currentToken) {
 
-
+      deleteToken();
         if (currentToken) {
           sendTokenToServer(currentToken);
           updateUIForPushEnabled(currentToken);
