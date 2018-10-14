@@ -22,6 +22,8 @@ class DisposisiController {
 
                 const insert = await Disposisi.create(data) //insert ke database
 
+                const update = await Disposisi.query().where({ instansi: user.instansi, id_surat_masuk: data.id_surat_masuk, nip_penerima: user.nip }).update({ status: 1 })
+
                 //Kirim Notifikasi ke penerima
                 Notification.send(user, [data.nip_penerima], 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-masuk/' + insert.id)
 
