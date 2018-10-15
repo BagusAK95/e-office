@@ -465,7 +465,7 @@ Route.get('/privacy-policy', ({
 })
 
 //Admin//
-Route.on('/admin').render('frontend/admin_login')
+Route.on('/nimda').render('frontend/admin_login')
 
 Route.get('/cek_session_admin', ({
   session
@@ -507,7 +507,7 @@ Route.get('/admin/logout', ({
 }) => {
   session.put('token_admin', '')
   session.clear()
-  response.redirect('/admin')
+  response.redirect('/nimda')
 })
 
 Route.get('/admin/change-password', ({
