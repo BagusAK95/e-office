@@ -420,9 +420,11 @@ Route.post('/upload_file', async ({
   const profilePic = request.file('file')
  
   const a = profilePic.clientName
-  const res = a.split(".");
+  const rgx = /.*\.(.*)$/g
+  const vari = rgx.exec(a)
+  const res = vari[1];
 
-  const namabaru = `${new Date().getTime()}.${res[1]}`
+  const namabaru = `${new Date().getTime()}.${res}`
   await profilePic.move(Helpers.publicPath('uploads'), {
     name: namabaru
   })
