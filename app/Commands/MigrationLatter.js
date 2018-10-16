@@ -6,9 +6,9 @@ const SimayaSuratMasuk = use('App/Models/SimayaSuratMasuk')
 const SuratMasuk = use('App/Models/SuratMasuk')
 const User = use('App/Models/Login')
 
-class MigrationData extends Command {
+class MigrationLatter extends Command {
   static get signature () {
-    return 'migration-data {--username=@value} {--nip=@value} {--instansi=@value}'
+    return 'migration-latter {--username=@value} {--nip=@value} {--instansi=@value}'
   }
 
   static get description () {
@@ -31,9 +31,6 @@ class MigrationData extends Command {
             const pimpinan = await User.find(args.nip)
     
             AsyncLoop(docs, async (surat, next) => {
-              if (surat.fileAttachments[0]) {
-                
-              }
               const insert = await SuratMasuk.create({
                 instansi_penerima: args.instansi,
                 nip_tata_usaha: tatausaha.nip,
@@ -73,9 +70,9 @@ class MigrationData extends Command {
         }
       })      
     } catch (error) {
-      
+      console.error(error)
     }
   }
 }
 
-module.exports = MigrationData
+module.exports = MigrationLatter

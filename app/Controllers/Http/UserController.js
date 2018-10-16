@@ -6,6 +6,7 @@ const Response = use('App/Helpers/ResponseHelper')
 const Log = use('App/Helpers/LogHelper')
 const SuratMasuk = use('App/Models/SuratMasuk')
 const Disposisi = use('App/Models/Disposisi')
+const MasterKantor = use('App/Models/MasterKantor')
 
 class UserController {
     async add({ request, auth }) { //Todo: Check Kode Lokasi
@@ -162,65 +163,82 @@ class UserController {
         try {
             const user = await auth.getUser()
 
-            const dataDisposisi = await Disposisi.query()
-                                                 .where('id_surat_masuk', params.id_surat_masuk)
+            const dataDisposisi = await Disposisi.query().where('id_surat_masuk', params.id_surat_masuk)
             const daftarPegawai = dataDisposisi.map(e => e.nip_penerima)
             
             const surat = await SuratMasuk.find(params.id_surat_masuk)
             if (surat) {
                 if (user.nip == surat.nip_plt) {
-                    const startLokasi = user.kode_lokasi.toString().replace(/\d{5}$/g, '')
-                    let filterLokasi = []
-                    for (let i = 1; i <= 9; i++) {
-                        filterLokasi.push(Number(startLokasi + i + '0000'))
-                    }
-
-                    if (daftarPegawai.length > 0) {
-                        const data = await Login.query()
-                                                .whereIn('kode_lokasi', filterLokasi)
-                                                .whereNotIn('nip', daftarPegawai)
-
-                        return Response.format(true, null, data)
-                    } else {
-                        const data = await Login.query()
-                                                .whereIn('kode_lokasi', filterLokasi)
-
-                        return Response.format(true, null, data)
-                    }
-                } else {
-                    const str = user.kode_lokasi.toString().replace(/([1-9])(0+$)/g, '')
-                    const rgx = user.kode_lokasi.toString().match(/([1-9])(0+$)/g)
-                    if (rgx) {
-                        
-                        const arr = rgx[0].split('')
-                        let filterLokasi = []
-                        for (let i = 1; i <= 9; i++) {
-                            let startLokasi = str
-                            for (let j = 0; j < arr.length; j++) {
-                                if (j == 2) {
-                                    startLokasi += i + ''
-                                } else {
-                                    startLokasi += arr[j]
-                                }
-                            }
-
-                            filterLokasi.push(startLokasi)
-                        }
-
+                    const dataBawahan = await MasterKantor.query().where('kdparent', user.instansi)
+                    const daftarBawahan = dataBawahan.map(e => e.kdlokasi)
+                    if (daftarBawahan.length > 0) {
                         if (daftarPegawai.length > 0) {
                             const data = await Login.query()
-                                                    .whereIn('kode_lokasi', filterLokasi)
+                                                    .whereIn('kode_lokasi', daftarBawahan)
+                                                    .where('kode_jabatan', 20000)
                                                     .whereNotIn('nip', daftarPegawai)
-                                                            
+    
                             return Response.format(true, null, data)
                         } else {
                             const data = await Login.query()
-                                                    .whereIn('kode_lokasi', filterLokasi)
-                                                            
+                                                    .whereIn('kode_lokasi', daftarBawahan)
+                                                    .where('kode_jabatan', 20000)
+    
                             return Response.format(true, null, data)
                         }
                     } else {
-                        return Response.format(true, null, [])
+                        if (daftarPegawai.length > 0) {
+                            const data = await Login.query()
+                                                    .where('kode_lokasi', user.instansi)
+                                                    .whereNot('kode_jabatan', 20000)
+                                                    .whereNotIn('nip', daftarPegawai)
+    
+                            return Response.format(true, null, data)
+                        } else {
+                            const data = await Login.query()
+                                                    .where('kode_lokasi', user.instansi)
+                                                    .whereNot('kode_jabatan', 20000)
+    
+                            return Response.format(true, null, data)
+                        }
+                    }
+                } else {
+                    const dataBawahan = await MasterKantor.query().where('kdparent', user.kode_lokasi)
+                    const daftarBawahan = dataBawahan.map(e => e.kdlokasi)
+                    if (daftarBawahan.length > 0) {
+                        if (daftarPegawai.length > 0) {
+                            const data = await Login.query()
+                                                    .whereIn('kode_lokasi', daftarBawahan)
+                                                    .where('kode_jabatan', 20000)
+                                                    .whereNotIn('nip', daftarPegawai)
+    
+                            return Response.format(true, null, data)
+                        } else {
+                            const data = await Login.query()
+                                                    .whereIn('kode_lokasi', daftarBawahan)
+                                                    .where('kode_jabatan', 20000)
+    
+                            return Response.format(true, null, data)
+                        }
+                    } else {
+                        if (user.kode_jabatan == 20000) { //Harus kepala bagian
+                            if (daftarPegawai.length > 0) {
+                                const data = await Login.query()
+                                                        .where('kode_lokasi', user.kode_lokasi)
+                                                        .whereNot('kode_jabatan', 20000)
+                                                        .whereNotIn('nip', daftarPegawai)
+        
+                                return Response.format(true, null, data)
+                            } else {
+                                const data = await Login.query()
+                                                        .where('kode_lokasi', user.kode_lokasi)
+                                                        .whereNot('kode_jabatan', 20000)
+        
+                                return Response.format(true, null, data)
+                            }    
+                        } else {
+                            return Response.format(true, null, [])
+                        }
                     }
                 }
             } else {
@@ -230,58 +248,47 @@ class UserController {
             return Response.format(false, error, null)
         }
     }
-
+    
     async listAllMailChecker({ auth }) {
         try {
             const user = await auth.getUser()
 
             let arrPegawai = []
-            let arrLokasi = user.kode_lokasi.toString().match(/\d{5}$/g)[0].split('')
-
+            
             /* Get Atasan 1 */
-            if (arrLokasi[4] != "0") {
-                arrLokasi[4] = "0"
-
-                const atasan = await Login.query()
-                                          .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
-                                          .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
-                                          .first()
-                if (atasan) {
-                    if (atasan.level != 2 && atasan.level != 5) {
-                        if (atasan.nip != user.nip) {
-                            arrPegawai.push(atasan)
-                        }
-                    }
-                }
-            } else {
-                arrLokasi[2] = "0"
-
-                const atasan = await Login.query()
-                                          .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
-                                          .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
-                                          .first()
-                if (atasan) {
-                    if (atasan.level != 2 && atasan.level != 5) {
-                        if (atasan.nip != user.nip) {
-                            arrPegawai.push(atasan)
-                        }
+            const atasan1 = await Login.query()
+                                        .where({ kode_jabatan: 20000, kode_lokasi: user.kode_lokasi })
+                                        .first()
+            if (atasan1) {
+                if (atasan1.level != 2 && atasan1.level != 5) {
+                    if (atasan1.nip != user.nip) {
+                        arrPegawai.push(atasan1)
                     }
                 }
             }
 
             /* Get Atasan 2 */
-            if (arrLokasi[2] != "0") {
-                arrLokasi[2] = "0"
+            const lokasiAtasan2 = await MasterKantor.find(user.kode_lokasi)
+            const atasan2 = await Login.query()
+                                        .where({ kode_jabatan: 20000, kode_lokasi: lokasiAtasan2.kdparent })
+                                        .first()
+            if (atasan2) {
+                if (atasan2.level != 2 && atasan2.level != 5) {
+                    if (atasan2.nip != user.nip) {
+                        arrPegawai.push(atasan2)
+                    }
+                }
+            }
 
-                const atasan = await Login.query()
-                                          .where('kode_lokasi', user.kode_lokasi.toString().replace(/\d{5}$/g, arrLokasi.join('')))
-                                          .orderByRaw('kode_eselon IS NULL ASC, kode_eselon ASC')            
-                                          .first()
-                if (atasan) {
-                    if (atasan.level != 2 && atasan.level != 5) {
-                        if (atasan.nip != user.nip) {
-                            arrPegawai.push(atasan)
-                        }
+            /* Get Atasan 3 */
+            const lokasiAtasan3 = await MasterKantor.find(lokasiAtasan2.kdparent)
+            const atasan3 = await Login.query()
+                                        .where({ kode_jabatan: 20000, kode_lokasi: lokasiAtasan3.kdparent })
+                                        .first()
+            if (atasan3) {
+                if (atasan3.level != 2 && atasan3.level != 5) {
+                    if (atasan3.nip != user.nip) {
+                        arrPegawai.push(atasan3)
                     }
                 }
             }
@@ -301,13 +308,12 @@ class UserController {
                                         .where({ level: 2, instansi: user.instansi })
                                         .first()
             if (pimpinan) {
-                if (sekretaris.nip != user.nip) {
+                if (pimpinan.nip != user.nip) {
                     arrPegawai.push(pimpinan)
                 }
             }
 
-            const arrFixPegawai = arrPegawai.filter((elem, index, self) => { return index == self.map((e) => e.nip).indexOf(elem.nip) })
-            return Response.format(true, null, arrFixPegawai)
+            return Response.format(true, null, arrPegawai)
         } catch (error) {
             return Response.format(false, error, null)
         }

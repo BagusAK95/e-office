@@ -63,9 +63,9 @@ const aliases = {
 |
 */
 const commands = [
-  'App/Commands/CompleteUserData',
   'App/Commands/TrackWaybill',
-  'App/Commands/MigrationData'
+  'App/Commands/MigrationLatter',
+  'App/Commands/MigrationUser'
 ]
 
 module.exports = { providers, aceProviders, aliases, commands }
