@@ -9,47 +9,18 @@
       <div class="panel panel-bordered panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <i class="icon md-assignment-account"></i>&nbsp;List User</h3>
+            <i class="icon md-balance"></i>&nbsp;List Kantor</h3>
           <div class="panel-actions">
             <a class="panel-action icon md-minus" data-toggle="panel-collapse" aria-expanded="true" aria-hidden="true"></a>
           </div>
         </div>
         <div class="panel-body">
-          
-
-          <div class="example example-grid">
-                <form id="foms">
-                <div class="row">
-                  <div class="col-sm-12 col-lg-12">
-                    <div class="">
-                      <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
-                        <div class='btn-group' role='group'>
-                                <select name="instansi" id="instansi"  data-plugin="select2" style="width: 350px;">
-                                </select>
-                                &nbsp;
-                                <input class="form-control" placeholder="Search" id='search' style="width: 250px;" type="text">
-                                &nbsp;
-                                <button type="submit" class="btn btn-primary">
-                                    Cari
-                                </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                </div>
-            </form>
-              </div>
-
           <div class="table-responsive">
             <table class="table datatable table-striped table-bordered table-hover" data-role="content">
               <thead style=''>
                 <tr>
-                  <th>NIP</th>
+                  <th>KODE</th>
                   <th>NAMA</th>
-                  <th>ESELON</th>
-                  <th>GOLONGAN</th>
-                  <th>LEVEL</th>
                   <!--<th style='width:120px'>ACTION</th>-->
                 </tr>
               </thead>
@@ -337,7 +308,7 @@
     }
     $.ajax({
       type: 'GET',
-      url: '/api-sys/user?'+"instansi="+$("#instansi").val()+"&"+ search + 'page=' + page + '&limit=10',
+      url: '/api-sys/master-kantor?page='+page+'&limit=10',
       headers: {
         'Authorization': 'Bearer {{sesi}}'
       },
@@ -345,34 +316,8 @@
       success: function (data) {
         var text = "";
         $.each(data.data.data, function (index, element) {
-          var level = '';
-          if (element.level == 1) {
-            level = 'Admin';
-          } else if (element.level == 2) {
-            level = 'Pimpinan';
-          } else if (element.level == 3) {
-            level = 'Tata Usaha';
-          } else if (element.level == 4) {
-            level = 'Staff';
-          } else if (element.level == 5) {
-            level = 'Sekretaris';
-          }
-
-          var eselon = element.kode_eselon;
-          if (element.kode_eselon == null) {
-            eselon = "-";
-          }
-
-
-          var golongan = element.golongan;
-          if (element.golongan == null) {
-            golongan = "-";
-          }
-          var tr_data = "<tr><td>" + element.nip + "</td><td>" + element.nama_lengkap + "</td><td>" + eselon +
-            "</td><td>" + golongan + "</td><td>" + level +
-            "</td><!--<td><button type='button' class='btn btn-icon btn-primary' onclick=editcok('" +
-            element.nip +
-            "')><i class='icon md-edit' aria-hidden='true'></i></button></td>--></tr>";
+          var tr_data = "<tr><td>" + element.kdlokasi + "</td><td><a style='text-decoration: none;' href='/admin/detail-kantor/"+element.kdlokasi+"'>" + element.nmlokasi + "</a></td>"+
+            "</tr>";
           text += tr_data;
         });
 
@@ -711,7 +656,7 @@
       },
       dataType: 'json',
       success: function (data) {
-        var text = "<option>Pilih Kantor</option>";
+        var text = "<option>Pilih Instansi</option>";
         $.each(data.data, function (index, element) {
           text += "<option style='text-align: center;' value='"+element.kdlokasi+"'>"+element.nmlokasi+"</option>";
         });

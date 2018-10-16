@@ -1,0 +1,255 @@
+@layout('frontend/admin_main')
+@section('content')
+
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-xxl-5 col-lg-4">
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-run"></i>&nbsp;Log Aktivitas</h3>
+        </div>
+        <div class="panel-body">
+          <div class="example example-grid">
+            <div class="row">
+              <div class="col-sm-12 col-lg-12">
+                <div class="">
+                  <form id="searchform">
+                    <div class="form-group " data-plugin="formMaterial">
+                      <label class="form-control-label">Kantor</label>
+                      <select name="instansi" id="pegawai"  data-plugin="select2">
+                      </select>
+                    </div>
+                    <div class="form-group " data-plugin="formMaterial">
+                      <label class="form-control-label">Tanggal Awal</label>
+                      <input style="width:100%;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Awal"
+                        id='tgawl' type="text">
+                    </div>
+                    <div class="form-group " data-plugin="formMaterial">
+                      <label class="form-control-label">Tanggal Akhir</label>
+                      <input style="width:100%;height:45px;" class="form-control datepicker" data-plugin="datepicker" placeholder="Tanggal Akhir"
+                        id='tgakh' type="text">
+                    </div>
+                    <button style="float:right" type="submit" class='btn btn-icon btn-primary'>
+                      <i class='icon md-search' aria-hidden='true'></i>&nbsp;Cari</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Example Panel With Heading -->
+    </div>
+    <div class="col-xxl-7 col-lg-8">
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-run"></i>&nbsp;Detail Log Aktivitas</h3>
+        </div>
+        <div class="panel-body">
+          <table class="table datatable table-striped table-bordered table-hover" data-role="content">
+            <thead>
+              <tr>
+                <th>Nama Pengguna</th>
+                <th>Jabatan</th>
+                <th>Keterangan</th>
+                <th>Waktu</th>
+              </tr>
+            </thead>
+            <tbody id="tampil_log">
+            </tbody>
+          </table>
+          <div id="pagination"></div>
+        </div>
+      </div>
+      <!-- End Example Panel With Heading -->
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn("slow");
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    //showbrand(1,'','','');
+
+    showInstansi();
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+
+    /*End Addon Function*/
+function showInstansi() {
+    $.ajax({
+      type: 'GET',
+      url: '/api-sys/master-kantor/listAllParent',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        var text = "<option>Pilih Kantor</option>";
+        $.each(data.data, function (index, element) {
+          text += "<option style='text-align: center;' value='"+element.kdlokasi+"'>"+element.nmlokasi+"</option>";
+        });
+        $("#pegawai").html(text).show();
+      }
+    });
+}
+
+  $("#searchform").submit(function (event) {
+    var page = 1;
+    $("#loader").fadeIn("slow");
+    var pegawai = $("#pegawai").val();
+    var tgawl = $("#tgawl").val();
+    var tgakh = $("#tgakh").val();
+    $.ajax({
+      type: 'GET',
+      url: '/api-sys/log?instansi=' + pegawai + '&tgl_awal=' + tgawl + '&tgl_akhir=' + tgakh + '&page=1&limit=10',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        if (data)
+          var dat = "";
+
+        $.each(data.data.data, function (index, element) {
+          //alert(element.tgl);
+          var tgl = tanggal_jam_indo(element.tgl);
+          dat += "<tr><td>"+element.nama+"</td><td>"+element.jabatan+"</td><td>" + element.keterangan + "</td><td>" + tgl + "</td></tr>";
+        });
+        $("#tampil_log").html(dat).show();
+        var disbalenext = '';
+        if (data.data.lastPage == data.data.page) {
+          disbalenext = 'disabled';
+        }
+
+        var prev = "";
+        if (page == 1) {
+          prev = "disabled";
+        }
+
+        $("#pagination").html(
+          "<center><div class='btn-group' aria-label='Basic example' role='group'>\
+                        <button class='btn btn-sm btn-primary btn-pill-left' " +
+          prev +
+          " onclick=showww(1) ><i class='icon fa-angle-double-left'></i></button>\
+                        <button " +
+          prev + " class='btn btn-xs btn-primary' onclick=showww(" + (data.data.page - 1) +
+          ")><i class='icon fa-angle-left'></i></button>\
+                        <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> \
+                        <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onblur='dopagin()'  onkeypress='return isNumber(event)'  value='" +
+          data.data.page +
+          "'>\
+                        <button class='btn btn-xs btn-primary' style='width:50px' > of " +
+          data.data.lastPage +
+          " </button>\
+                        <button class='btn btn-xs btn-primary' " + disbalenext +
+          " onclick=showww(" + (data.data.page + 1) +
+          ") ><i class='icon fa-angle-right'></i></button>\
+                        <button class='btn btn-xs btn-primary btn-pill-right'  onclick=showww(" +
+          data.data.lastPage + ") " + disbalenext +
+          "><i class='icon fa-angle-double-right'></i></button>\
+                        </div><br>Showing " +
+          data.data.page + " to " + data.data.perPage + " of " + data.data.total + " entries").show();
+        $("#loader").fadeOut("slow");
+      },
+      error: function () {
+        return false;
+      }
+    });
+    return false;
+  });
+
+  function showww(page) {
+    $("#loader").fadeIn("slow");
+    var pegawai = $("#pegawai").val();
+    var tgawl = $("#tgawl").val();
+    var tgakh = $("#tgakh").val();
+    $.ajax({
+      type: 'GET',
+      url: '/api-sys/log?instansi=' + pegawai + '&tgl_awal=' + tgawl + '&tgl_akhir=' + tgakh + '&page=' + page + '&limit=10',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        if (data)
+          var dat = "";
+
+        $.each(data.data.data, function (index, element) {
+          //alert(element.tgl);
+          var tgl = tanggal_jam_indo(element.tgl);
+          dat += "<tr><td>"+element.nama+"</td><td>"+element.jabatan+"</td><td>" + element.keterangan + "</td><td>" + tgl + "</td></tr>";
+        });
+        $("#tampil_log").html(dat).show();
+        var disbalenext = '';
+        if (data.data.lastPage == data.data.page) {
+          disbalenext = 'disabled';
+        }
+
+        var prev = "";
+        if (page == 1) {
+          prev = "disabled";
+        }
+
+        $("#pagination").html(
+          "<center><div class='btn-group' aria-label='Basic example' role='group'>\
+                        <button class='btn btn-sm btn-primary btn-pill-left' " +
+          prev +
+          " onclick=showww(1) ><i class='icon fa-angle-double-left'></i></button>\
+                        <button " +
+          prev + " class='btn btn-xs btn-primary' onclick=showww(" + (data.data.page - 1) +
+          ")><i class='icon fa-angle-left'></i></button>\
+                        <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> \
+                        <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onblur='dopagin()'  onkeypress='return isNumber(event)'  value='" +
+          data.data.page +
+          "'>\
+                        <button class='btn btn-xs btn-primary' style='width:50px' > of " + data.data
+          .lastPage + " </button>\
+                        <button class='btn btn-xs btn-primary' " +
+          disbalenext + " onclick=showww(" + (data.data.page + 1) +
+          ") ><i class='icon fa-angle-right'></i></button>\
+                        <button class='btn btn-xs btn-primary btn-pill-right'  onclick=showww(" +
+          data.data.lastPage + ") " + disbalenext +
+          "><i class='icon fa-angle-double-right'></i></button>\
+                        </div><br>Showing " +
+          data.data.page + " to " + data.data.perPage + " of " + data.data.total + " entries").show();
+        $("#loader").fadeOut("slow");
+      },
+      error: function () {
+        return false;
+      }
+    });
+  }
+
+  function tanggal_indo(tanggal) {
+    moment.locale('id');
+    return moment(tanggal).format("LL");
+  }
+
+  function tanggal_jam_indo(tanggal) {
+    moment.locale('id');
+    return moment(tanggal).format("LLL");
+  }
+
+  function dopagin() {
+    $("#loader").fadeIn("slow");
+    var halaman = $("#pagin").val();
+    if(halaman)
+    {
+      showww(halaman);  
+      $("#loader").fadeOut("slow");
+    } 
+  }
+
+</script>
+@endsection

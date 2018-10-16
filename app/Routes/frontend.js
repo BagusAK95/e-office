@@ -420,9 +420,11 @@ Route.post('/upload_file', async ({
   const profilePic = request.file('file')
  
   const a = profilePic.clientName
-  const res = a.split(".");
+  const rgx = /.*\.(.*)$/g
+  const vari = rgx.exec(a)
+  const res = vari[1];
 
-  const namabaru = `${new Date().getTime()}.${res[1]}`
+  const namabaru = `${new Date().getTime()}.${res}`
   await profilePic.move(Helpers.publicPath('uploads'), {
     name: namabaru
   })
@@ -465,7 +467,7 @@ Route.get('/privacy-policy', ({
 })
 
 //Admin//
-Route.on('/admin').render('frontend/admin_login')
+Route.on('/nimda').render('frontend/admin_login')
 
 Route.get('/cek_session_admin', ({
   session
@@ -507,7 +509,7 @@ Route.get('/admin/logout', ({
 }) => {
   session.put('token_admin', '')
   session.clear()
-  response.redirect('/admin')
+  response.redirect('/nimda')
 })
 
 Route.get('/admin/change-password', ({
@@ -527,6 +529,39 @@ Route.get('/admin/user', ({
 }) => {
   const sesi = session.get('token_admin');
   return view.render('frontend/admin_user', {
+    sesi
+  })
+})
+
+//Kantor
+Route.get('/admin/kantor', ({
+  session,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_kantor', {
+    sesi
+  })
+})
+Route.get('/admin/detail-kantor/:id', ({
+  session,
+  params,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_detail_kantor', {
+    sesi,
+    params
+  })
+})
+
+//Log
+Route.get('/admin/log', ({
+  session,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_log', {
     sesi
   })
 })
