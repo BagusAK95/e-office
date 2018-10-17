@@ -101,7 +101,7 @@ tabindex="-1" style="z-index: 9000;">
   function pegawaiall() {
     $.ajax({
       type: 'GET',
-      url: '/api/master-pegawai',
+      url: 'api/user/all',
       headers: {
         'Authorization': 'Bearer {{sesi}}'
       },
@@ -110,18 +110,9 @@ tabindex="-1" style="z-index: 9000;">
         var isi = "<option value='-' selected>Semua Pegawai</option>";
         var isi_semua = "";
         var no = 1;
-        var total = data.data.total;
-        $.each(data.data.data, function (index, element) {
-          var depan = ''
-          var belakang = ''
-          if (element.gelar_depan) {
-            depan += element.gelar_depan + " ";
-          }
-          var belakang = "";
-          if (element.gelar_belakang) {
-            belakang += ", " + element.gelar_belakang;
-          }
-          isi += "<option value='" + element.nip + "'>" + depan + element.nama + belakang + "</option>";
+        var total = data.total;
+        $.each(data.data, function (index, element) {
+          isi += "<option value='" + element.nip + "'>"+ element.nama_lengkap +"</option>";
           isi_semua += element.nip;
           if(no<total)
           {
