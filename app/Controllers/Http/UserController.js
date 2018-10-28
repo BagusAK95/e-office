@@ -338,6 +338,22 @@ class UserController {
 
     /* System */
 
+    async detail_Sys({ params }) {
+        try {
+            const data = await Login.query()
+                                    .where({ nip: params.nip, instansi: params.instansi })
+                                    .with('lokasi_')
+                                    .first()
+            if (data) {
+                return Response.format(true, null, data)
+            } else {
+                return Response.format(false, 'User tidak ditemukan', null)
+            }
+        } catch (error) {
+            return Response.format(false, error, null)            
+        }
+    }
+
     async list_Sys({ request }) {
         try {
             let sql = []

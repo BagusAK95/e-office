@@ -182,6 +182,29 @@ Route.group(() => {
 
     /**
     * @swagger
+    * /user/{instansi}/{nip}:
+    *   get:
+    *     tags:
+    *       - User
+    *     summary: Detail
+    *     produces:
+    *       - application/json
+    *     parameters:
+    *       - name: instansi
+    *         in: path
+    *         description: Instansi
+    *         required: true
+    *         type: string
+    *       - name: nip
+    *         in: path
+    *         description: NIP
+    *         required: true
+    *         type: string
+    */
+    Route.get('/user/:instansi/:nip', 'UserController.Detail_Sys').middleware('checkTokenSys')
+
+    /**
+    * @swagger
     * /user/{nip}:
     *   put:
     *     tags:
