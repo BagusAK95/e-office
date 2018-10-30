@@ -60,7 +60,6 @@ const aliases = {
 */
 const commands = [
   'App/Commands/TrackWaybill',
-  'App/Commands/MigrationLatter',
   'App/Commands/MigrationUser'
 ]
 
