@@ -201,7 +201,7 @@ Route.group(() => {
     *         required: true
     *         type: string
     */
-    Route.get('/user/:instansi/:nip', 'UserController.Detail_Sys').middleware('checkTokenSys')
+    Route.get('/user/:instansi/:nip', 'UserController.detail_Sys').middleware('checkTokenSys')
 
     /**
     * @swagger
