@@ -1,7 +1,5 @@
 'use strict'
 
-const path = require('path');
-
 /*
 |--------------------------------------------------------------------------
 | Providers
@@ -21,8 +19,7 @@ const providers = [
   '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
-  '@adonisjs/validator/providers/ValidatorProvider',
-  path.join(__dirname, '..', 'providers', 'Mongoose')
+  '@adonisjs/validator/providers/ValidatorProvider'
 ]
 
 /*
@@ -51,7 +48,6 @@ const aceProviders = [
 |
 */
 const aliases = {
-  Mongoose: 'Adonis/Addons/AdonisMongoose'
 }
 
 /*

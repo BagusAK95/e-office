@@ -3,7 +3,7 @@
 const { Command } = require('@adonisjs/ace')
 const MasterKantor = use('App/Models/MasterKantor')
 const AsyncLoop = require('node-async-loop')
-const Login = use('App/Models/Login')
+const Login = use('App/Models/LoginAsync')
 const Request = require('request')
 const Hash = use('Hash')
 
