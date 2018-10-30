@@ -3,7 +3,7 @@
 const { Command } = require('@adonisjs/ace')
 const MasterKantor = use('App/Models/MasterKantor')
 const AsyncLoop = require('node-async-loop')
-const Login = use('App/Models/LoginAsync')
+const Login = use('App/Models/Login')
 const Request = require('request')
 const Hash = use('Hash')
 
@@ -45,6 +45,7 @@ class CompleteUserData extends Command {
               exist.kode_eselon = doc.eselon
               exist.golongan = doc.nama_golongan
               exist.keyword = keyword
+              exist.last_sync = new Date()
               await exist.save()
 
               console.log(exist.nama_lengkap + ' -> Updated.')
@@ -62,7 +63,8 @@ class CompleteUserData extends Command {
                 level: 4,
                 akses: 'disposisi,konsepsurat',
                 status: 1,
-                keyword: keyword
+                keyword: keyword,
+                last_sync: new Date()
               })
 
               console.log(arrNamaLengkap.join(' ').trim() + ' -> Created.')
@@ -101,13 +103,15 @@ class CompleteUserData extends Command {
             level: 1,
             akses: 'administrator',
             status: 1,
-            keyword: ''
+            keyword: '',
+            last_sync: new Date()
           })
 
           console.log('Admin ' + kantor.nmlokasi + ' -> Created.')
         } else {
           admin.nama_lengkap = kantor.nmlokasi
           admin.nama_jabatan = 'Administrator'
+          admin.last_sync = new Date()
           await admin.save()
 
           console.log('Admin ' + admin.nama_lengkap + ' -> Updated.')
@@ -129,13 +133,15 @@ class CompleteUserData extends Command {
             level: 3,
             akses: 'suratmasuk,suratkeluar,disposisi,konsepsurat',
             status: 1,
-            keyword: ''
+            keyword: '',
+            last_sync: new Date()
           })
 
           console.log('Tata Usaha ' + kantor.nmlokasi + ' -> Created.')
         } else {
           tataUsaha.nama_lengkap = kantor.nmlokasi
           tataUsaha.nama_jabatan = 'Tata Usaha'
+          tataUsaha.last_sync = new Date()
           await tataUsaha.save()
 
           console.log('Tata Usaha ' + tataUsaha.nama_lengkap + ' -> Updated.')
