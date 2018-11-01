@@ -381,7 +381,7 @@ class UserController {
             }
 
             const edit = await Login.query()
-                                    .where({ nip: params.nip, instansi: params.instansi })
+                                    .where({ nip: params.nip })
                                     .update(data)
             if (edit > 0) {
                 return Response.format(true, null, edit)
