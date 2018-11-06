@@ -1,0 +1,461 @@
+@layout('frontend/admin_main') 
+@section('content')
+
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-xxl-4 col-lg-12">
+      <div id="cover-spin" style="width:100%"></div>
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-assignment-account"></i>&nbsp;Edit User -
+            <span id="orange"></span></h3>
+          <div class="panel-actions">
+            <a class="panel-action icon md-minus" data-toggle="panel-collapse" aria-expanded="true" aria-hidden="true"></a>
+          </div>
+        </div>
+        <div class="panel-body">
+                <form autocomplete="off" id="simpan">
+                        <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                            <label class="form-control-label" for="inputEmail">NIP</label>
+                            <input type="hidden" readonly id="pegawai" name="nip" class="form-control">
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                            <label class="form-control-label" for="inputEmail">Nama Lengkap</label>
+                            <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" readonly>
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial" >
+                            <label class="form-control-label" for="inputEmail">Instansi</label>
+                            <select name="instansi" id="instansi" onchange="do_lokasi()" data-plugin="select2" class="form-control">
+
+                            </select>
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial" >
+                            <label class="form-control-label" for="inputEmail">Lokasi</label>
+                            <select name="lokasi" id="lokasi" data-plugin="select2" class="form-control">
+                                
+                            </select>
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial" >
+                            <label class="form-control-label" for="inputEmail">Jabatan</label>
+                            <select name="jabatan" id="jabatan" data-plugin="select2" class="form-control">
+                                
+                            </select>
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">Kode Eselon</label>
+                            <input type="text" class="form-control" name="kode_eselon" id="kode_eselon">
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">Golongan</label>
+                            <input type="text" class="form-control" name="golongan" id="golongan">
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial">
+                          <label class="form-control-label" for="inputEmail">No HP</label>
+                          <input type="text" class="form-control" name="nohp" id="nohp">
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial">
+                          <label class="form-control-label" for="inputEmail">Email</label>
+                          <input type="email" class="form-control" name="email" id="email">
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">Foto</label><br>
+                            <button class="btn btn-primary" class="btn btn-primary" data-target="#examplePositionSidebar" data-toggle="modal" type="button"><i class="md-collection-plus"></i>&nbsp;Foto</button>
+                            <input type="hidden" id="foto" name="foto">
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial">
+                          <label class="form-control-label" for="inputEmail">Level</label>
+                          <select name="level" id="level" class="form-control">
+                            <option value="1">Admin</option>
+                            <option value="2">Pimpinan</option>
+                            <option value="3">Tata Usaha</option>
+                            <option value="4">Staff</option>
+                            <option value="5">Sekretaris</option>
+                          </select>
+                        </div>
+                        <div class="form-group" data-plugin="formMaterial">
+                                <label class="form-control-label" for="inputEmail">Akses</label>
+                                <BR>
+                                <input type="checkbox" name="sm" id="sm" value="suratmasuk"> Surat Masuk
+                                <br>
+                                <input type="checkbox" name="sk" id="sk" value="suratkeluar"> Surat Keluar
+                                <br>
+                                <input type="checkbox" name="di" id="di" value="disposisi"> Disposisi
+                                <br>
+                                <input type="checkbox" name="konsepsurat" id="konsepsurat" value="konsepsurat"> Konsep Surat
+                                <br>
+                  
+                              </div>
+                        <div class="form-group" data-plugin="formMaterial">
+                          <label class="form-control-label" for="inputEmail">Status</label>
+                          <select name="status" id="status" class="form-control">
+                            <option value="1">Aktif</option>
+                            <option value="0">Non Aktif</option>
+                          </select>
+                        </div>
+                       
+                        <br>
+                        <div style="float:right">
+                          <button type="submit" class="btn btn-success waves-effect waves-classic">Simpan</button>
+                        </div>
+                      </form>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+    
+<!-- Modal -->
+<div class="modal fade" id="examplePositionSidebar" aria-hidden="true" aria-labelledby="examplePositionSidebar" role="dialog"
+  tabindex="-1">
+  <div class="modal-dialog modal-simple modal-sidebar modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Upload Foto</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" enctype='multipart/form-data' id="upload_lampiran">
+          
+          <input type="file" name="file" id="file">
+          <br>
+          <br>
+          <center>
+            <div class="loader vertical-align-middle loader-ellipsis" style="display: none;"></div>
+          </center>
+          <button type="submit" class="btn btn-primary">Upload Lampiran</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal -->
+
+
+
+
+
+<script>
+      $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn("slow");
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    //getJabatan();
+    //getLokasi()
+    editcok();
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+
+  function getJabatan(id) {
+    $.ajax({
+      type: 'GET',
+      url: '/api-sys/master-jabatan/listAll',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        var isi = "";
+        $.each(data.data, function (index, element) {
+            if(element.kdjabatan==id)
+            {
+                isi += "<option selected='selected' value='" + element.kdjabatan +"#"+element.nmjabatan+"'>" + element.nmjabatan + "</option>";
+            }
+            else
+            {
+                isi += "<option value='" + element.kdjabatan +"#"+element.nmjabatan+"'>" + element.nmjabatan + "</option>";
+            }
+        })
+        $("#jabatan").html(isi).show();
+      },
+      error: function () {
+        return false;
+      }
+    });
+  }
+
+  function do_lokasi(id,idd)
+  {
+    $.ajax({
+      type: 'GET',
+      url: '/api-sys/master-kantor/listAll/'+idd,
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        var isi = "";
+        $.each(data.data, function (index, element) {
+          if(id==element.kdlokasi)
+          {
+            isi += "<option selected='selected' value='" + element.kdlokasi +"'>" + element.nmlokasi + "</option>";
+          }
+          else
+          {
+            isi += "<option value='" + element.kdlokasi +"'>" + element.nmlokasi + "</option>";
+          }
+          
+        })
+        $("#lokasi").html(isi).show();
+      },
+      error: function () {
+        return false;
+      }
+    });
+  }
+
+  /*function getLokasi() {
+    $.ajax({
+      type: 'GET',
+      url: '/api-sys/master-kantor/listAllParent',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        var isi = "<option>Pilih Instansi</option>";
+        $.each(data.data, function (index, element) {
+          isi += "<option value='" + element.kdlokasi +"'>" + element.nmlokasi + "</option>";
+        })
+        $("#instansi").html(isi).show();
+      },
+      error: function () {
+        return false;
+      }
+    });
+  }*/
+  function getLokasi2(id) {
+    $.ajax({
+      type: 'GET',
+      url: '/api-sys/master-kantor/listAllParent',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        var isi = "<option>Pilih Instansi</option>";
+        $.each(data.data, function (index, element) {
+            if(id==element.kdlokasi)
+            {
+                isi += "<option selected='selected' value='" + element.kdlokasi +"'>" + element.nmlokasi + "</option>";
+            }
+            else
+            {
+                isi += "<option value='" + element.kdlokasi +"'>" + element.nmlokasi + "</option>";
+            }
+          
+        })
+        $("#instansi").html(isi).show();
+      },
+      error: function () {
+        return false;
+      }
+    });
+  }
+
+    function editcok() {
+    $("#loader").fadeIn("slow");
+    $("#sm").prop("checked", false);
+    $("#sk").prop("checked", false);
+    $("#di").prop("checked", false);
+    $.ajax({
+      type: 'GET',
+      url: '/api-sys/user/{{params.instansi}}/{{params.id}}',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+
+        var akses = data.data.akses;
+        var smu = "";
+        if (akses) {
+          var max = akses.split(",").length;
+          var data_akses = akses.split(",");
+          for (var index = 0; index < max; index++) {
+            if (data_akses[index] == "suratmasuk") {
+              $("#sm").prop("checked", true);
+            }
+
+            if (data_akses[index] == "suratkeluar") {
+              $("#sk").prop("checked", true);
+            }
+
+            if (data_akses[index] == "disposisi") {
+              $("#di").prop("checked", true);
+            }
+
+             if (data_akses[index] == "konsepsurat") {
+              $("#konsepsurat").prop("checked", true);
+            }
+
+          }
+        }
+        //$("#instansi").val(data.data.instansi);
+        getLokasi2(data.data.instansi);
+        do_lokasi(data.data.kode_lokasi,data.data.instansi);
+        getJabatan(data.data.kode_jabatan);
+        $("#golongan").val(data.data.golongan);
+        //$("#jabatan").val(data.data.kode_jabatan+"#"+data.data.nama_jabatan);
+        $("#kode_eselon").val(data.data.kode_eselon);
+        $("#nohp").val(data.data.nohp);
+        $("#email").val(data.data.email);
+        $("#foto").val(data.data.foto);
+        $("#level").val(data.data.level);
+        $("#status").val(data.data.status);
+
+        $("#orange").html(data.data.nama_lengkap).show();
+        
+        $("#loader").fadeOut("xslow");
+        $('#editmodaln').modal('show');
+      },
+      error: function () {
+        return false;
+      }
+    });
+  }
+  $('#upload_lampiran').on('submit', function (e) {
+    $(".loader").show();
+    var date = new Date();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+
+
+    var all = $("#file").val();
+    var neww = all.split(".");
+    var eks = neww[1];
+
+    if ((eks == "jpg") || (eks == "JPG") || (eks == "png") || (eks == "JPEG") || (eks == "jpeg")) {
+      e.preventDefault();
+      var form = e.target;
+      var data = new FormData(form);
+      $.ajax({
+        url: "/profile-picture-admin",
+        method: form.method,
+        processData: false,
+        contentType: false,
+        data: data,
+        processData: false,
+        success: function (msg) {
+          if(msg)
+          {
+            $("#foto").val("/uploads/" + msg);
+            swal("Berhasil Upload File.",data.message, "success");
+          }
+          else
+          {
+            swal("Gagal Upload File.",data.message, "error");
+          }
+         
+          $(".loader").hide();
+          $('.modal').modal('hide');
+        },
+        error: function () {
+          $(".loader").hide();
+          $('.modal').modal('hide');
+        }
+      });
+    } else {
+      alert("Tipe file tidak sesuai!");
+      $(".loader").hide();
+    }
+    return false;
+  });
+
+
+$("#simpan").submit(function (event) {
+
+var all = $("#jabatan").val()
+var res = all.split("#");
+var kdjabatan = res[0];
+var nmjabatan = res[1];
+
+$("#loader").fadeIn("slow");
+var akses = "";
+if ($("#sm").is(':checked')) {
+  akses += $("#sm").val();
+}
+
+if ($("#sk").is(':checked')) {
+    if ($("#sm").is(':checked'))
+    {
+        akses += "," + $("#sk").val();
+    }
+    else
+    {
+        akses += $("#sk").val();
+    }
+}
+
+if ($("#di").is(':checked')) {
+    if (($("#sk").is(':checked')) || $("#sm").is(':checked'))
+    {
+        akses += "," + $("#di").val();
+    }
+    else
+    {
+        akses += $("#di").val();
+    }
+  
+}
+
+if ($("#konsepsurat").is(':checked')) {
+    if ((($("#di").is(':checked')) || $("#sm").is(':checked') || $("#sk").is(':checked'))) {
+        akses += "," + $("#konsepsurat").val();
+    }
+    else
+    {
+        akses += $("#konsepsurat").val();
+    }
+}
+
+$.ajax({
+  type: 'PUT',
+  url: '/api-sys/user/{{params.id}}',
+  headers: {
+    'Authorization': 'Bearer {{sesi}}'
+  },
+  data: "nip={{params.id}}&instansi=" + $("#instansi").val() + "&kode_lokasi=" + $("#lokasi").val() +
+    "&kode_jabatan=" + kdjabatan + "&nama_jabatan=" + nmjabatan +
+    "&kode_eselon=" + $("#kode_eselon").val() + "&golongan=" + $("#golongan").val() + "&nohp=" + $("#nohp").val() +"&email=" + $("#email").val() +"&foto=" + $("#foto").val() + "&level=" + $(
+      "#level").val() + "&status=" + $("#status").val() + "&akses=" + akses,
+  success: function (data) {
+    if (data.success == false) {
+      swal("Gagal!", "Gagal Menyimpan data.", "error");
+    } else if (data.success == true) {
+      swal({
+          title: "Berhasil",
+          text: "Berhasil Menyimpan data.",
+          type: "success"
+        },
+        function () {
+          location.reload();
+        }
+      );
+    }
+
+    $("#loader").fadeOut("xslow");
+  },
+  error: function (data) {
+    swal("Gagal!", "Gagal Menyimpan data.", "error");
+  }
+});
+return false;
+});
+/*End Save Data Function*/
+
+</script>
+@endsection

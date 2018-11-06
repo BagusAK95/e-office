@@ -50,7 +50,7 @@
                   <th>ESELON</th>
                   <th>GOLONGAN</th>
                   <th>LEVEL</th>
-                  <!--<th style='width:120px'>ACTION</th>-->
+                  <th style='width:120px'>ACTION</th>
                 </tr>
               </thead>
               <tbody id="body">
@@ -370,9 +370,8 @@
           }
           var tr_data = "<tr><td>" + element.nip + "</td><td>" + element.nama_lengkap + "</td><td>" + eselon +
             "</td><td>" + golongan + "</td><td>" + level +
-            "</td><!--<td><button type='button' class='btn btn-icon btn-primary' onclick=editcok('" +
-            element.nip +
-            "')><i class='icon md-edit' aria-hidden='true'></i></button></td>--></tr>";
+            "</td><td align='center'><a class='btn btn-icon btn-primary' target='_blank' href='/admin/detail-user/" +
+            element.nip +"/"+element.instansi+"'><i class='icon md-edit' aria-hidden='true'></i></a></td></tr>";
           text += tr_data;
         });
 
@@ -492,44 +491,19 @@
   /*End Show Detail Function*/
 
   /*Edit Data Function*/
-  function editcok(nip) {
+  function editcok(nip,instansi) {
     $("#loader").fadeIn("slow");
     $("#sm").prop("checked", false);
     $("#sk").prop("checked", false);
     $("#di").prop("checked", false);
     $.ajax({
       type: 'GET',
-      url: '/api/user/' + nip,
+      url: '/api-sys/user/'+instansi+"/"+nip,
       headers: {
         'Authorization': 'Bearer {{sesi}}'
       },
       dataType: 'json',
       success: function (data) {
-
-        var akses = data.data.akses;
-        var smu = "";
-        if (akses) {
-          var max = akses.split(",").length;
-          var data_akses = akses.split(",");
-          for (var index = 0; index < max; index++) {
-            if (data_akses[index] == "suratmasuk") {
-              $("#sm").prop("checked", true);
-            }
-
-            if (data_akses[index] == "suratkeluar") {
-              $("#sk").prop("checked", true);
-            }
-
-            if (data_akses[index] == "disposisi") {
-              $("#di").prop("checked", true);
-            }
-
-             if (data_akses[index] == "konsepsurat") {
-              $("#konsepsurat").prop("checked", true);
-            }
-
-          }
-        }
         $("#pegawai").val(data.data.nip);
         $("#nama_lengkap").val(data.data.nama_lengkap);
         $("#nohp").val(data.data.nohp);
