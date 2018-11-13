@@ -670,6 +670,7 @@
   }
 
   function simpen() {
+    $("#tombol_submit").addClass("disabled");
     $("#loader").fadeIn();
     //Pemeriksa//
     var arr_pemeriksa = $("#arr_pemeriksa").val();
@@ -737,6 +738,7 @@
             });
           $("#loader").hide();
         }
+        $("#tombol_submit").removeClass("disabled");
       },
       error: function (data) {
         swal("Gagal!", data.message, "error");
@@ -882,7 +884,7 @@
     if (n == (x.length - 1)) {
       document.getElementById("nextBtn").innerHTML = "Submit";
       $("#nextBtn").hide();
-      $("#submit").html("<a class='btn btn-success' onclick='simpen()' style='color:white'>Submit</a>");
+      $("#submit").html("<a class='btn btn-success' onclick='simpen()' id='tombol_submit' style='color:white'>Submit</a>");
     } else {
       $("#nextBtn").show();
       $("#submit").html("");

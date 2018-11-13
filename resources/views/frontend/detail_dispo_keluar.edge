@@ -493,7 +493,7 @@
           '<textarea style="width:100%"" class="form-control" id="isi_komentar" name="isi_komentar" rows="5" placeholder="Tuliskan Komentar"></textarea>';
         isi += '</div>';
         isi += '<div class="form-group">';
-        isi += '<a class="btn btn-primary" style="float:right;color:white;" onclick="dokomen()">Submit</a>';
+        isi += '<a class="btn btn-primary" style="float:right;color:white;" id="tombol_komen" onclick="dokomen()">Submit</a>';
         isi += '</div>';
         isi += '</form>';
 
@@ -563,6 +563,7 @@
 
 
   function dokomen() {
+    $("#tombol_komen").addClass("disabled");
     $.ajax({
       type: 'POST',
       headers: {
@@ -576,6 +577,7 @@
         } else if (data.success == true) {
           window.location.reload();
         }
+        $("#tombol_komen").removeClass("disabled");
       },
       error: function (data) {
         swal("Gagal!", data.message, "error");

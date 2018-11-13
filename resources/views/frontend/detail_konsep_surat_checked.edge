@@ -131,7 +131,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success" style='float:right'>
+          <button type="submit" class="btn btn-success" id="tombol_submit" style='float:right'>
             <i class='icon md-plus'></i>&nbsp;Simpan</button>
         </div>
       </form>
@@ -600,6 +600,7 @@
   }
 
   $("#simpan").submit(function () {
+    $("#tombol_submit").addClass("disabled");
     $.ajax({
       type: 'PUT',
       url: '/api/konsep-surat/checkingConcept/{{params.id}}',
@@ -622,6 +623,7 @@
             }
           );
         }
+        $("#tombol_submit").removeClass("disabled");
       },
       error: function (data) {
         swal("Gagal!", "Perubahan Status Gagal.", "error");

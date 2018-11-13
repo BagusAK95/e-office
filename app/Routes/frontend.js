@@ -597,4 +597,11 @@ Route.get('/admin/log', ({
 })
 
 //End Admin//
+Route.get('/coba', ({
+  view
+}) => {
+  return view.render('frontend/coba', {})
+})
+
 //------------------------------------ End Main System ---------------------------------//
+
