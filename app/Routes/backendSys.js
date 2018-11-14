@@ -283,21 +283,6 @@ Route.group(() => {
    *         description: Daftar Akses Menu
    *         required: false
    *         type: string
-   *       - name: kop_surat
-   *         in: formData
-   *         description: Kop Surat
-   *         required: false
-   *         type: string
-   *       - name: ttd
-   *         in: formData
-   *         description: Tanda Tangan
-   *         required: false
-   *         type: string
-   *       - name: ttd_stempel
-   *         in: formData
-   *         description: Tanda Tangan beserta Stempel
-   *         required: false
-   *         type: string
    *       - name: status
    *         in: formData
    *         description: 0=Non Aktif, 1=Aktif
