@@ -287,7 +287,7 @@ Route.group(() => {
     *         required: false
     *         type: string
     */
-    Route.put('/user/:nip', 'UserController.edit_sys').middleware('checkTokenSys')
+    Route.put('/user/:nip', 'UserController.edit_Sys').middleware('checkTokenSys')
 
     /**
     * @swagger
