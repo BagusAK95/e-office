@@ -179,6 +179,33 @@ class SuratKeluarController {
         }
     }
 
+    async updateConceptChecked({ params, request, auth }) {
+        try {
+            const user = await auth.getUser()
+            const data = request.all()
+
+            const dataPemeriksa = await SuratPemeriksa.query()
+                                                      .where({ id_surat_keluar: params.id, nip_pemeriksa: user.nip })
+                                                      .first()
+            if (dataPemeriksa) {
+                data.status_surat = 1
+                data.keyword = ''.concat(data.nama_pembuat, ' | ', data.nama_penandatangan, ' | ', data.perihal)
+                
+                const updateSurat = await SuratKeluar.query()
+                                                        .where({ instansi_pengirim: user.instansi, id: params.id })
+                                                        .update(data)
+
+                Log.add(user, 'Merevisi Konsep Surat Atas Nama ' + data.nama_penandatangan, data)
+
+                return Response.format(true, null, updateSurat)
+            } else {
+                return Response.format(false, 'Pemeriksa tidak ditemukan', null)
+            }
+        } catch (error) {            
+            return Response.format(false, error, null)
+        }
+    }
+
     async detailConcept({ params, auth }) {
         try {
             const user = await auth.getUser()
