@@ -51,7 +51,7 @@ class UserController {
         try {
             const user = await auth.getUser()
 
-            let data = request.only(['nohp', 'email', 'foto', 'password', 'level', 'akses', 'status', 'ttd', 'ttd_stempel'])
+            let data = request.only(['nohp', 'email', 'foto', 'password', 'level', 'akses', 'status'])
             if (data.password != null) {
                 data.password = await Hash.make(data.password)
             }
@@ -375,7 +375,7 @@ class UserController {
 
     async edit_Sys({ params, request }) {
         try {
-            let data = request.only(['instansi', 'kode_lokasi', 'kode_jabatan', 'nama_jabatan', 'kode_eselon', 'golongan', 'nohp', 'email', 'foto', 'password', 'level', 'akses', 'status'])
+            let data = request.only(['instansi', 'kode_lokasi', 'kode_jabatan', 'nama_jabatan', 'kode_eselon', 'golongan', 'nohp', 'email', 'foto', 'password', 'level', 'akses', 'status', 'kop_surat', 'ttd', 'ttd_stempel'])
             if (data.password != null) {
                 data.password = await Hash.make(data.password)
             }
