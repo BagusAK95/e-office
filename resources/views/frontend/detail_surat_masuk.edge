@@ -206,7 +206,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success" style='float:right'>
+          <button type="submit" class="btn btn-success" id="tombol_submit" style='float:right'>
             <i class='icon md-plus'></i>&nbsp;Simpan</button>
         </div>
       </form>
@@ -734,7 +734,7 @@
           '<textarea style="width:100%"" class="form-control" id="isi_komentar" name="isi_komentar" rows="5" placeholder="Tuliskan Komentar"></textarea>';
         isi += '</div>';
         isi += '<div class="form-group">';
-        isi += '<a class="btn btn-primary" style="float:right;color:white;" onclick="dokomen()">Submit</a>';
+        isi += '<a class="btn btn-primary" style="float:right;color:white;" id="tombol_komen" onclick="dokomen()">Submit</a>';
         isi += '</div>';
         isi += '</form>';
 
@@ -767,7 +767,7 @@
             sts += "<br><span style='font-size: 8pt;'>" + tanggal_keterangan(element.tgl_selesai) + "</span>";
           } else if (element.status == 2) {
             sts = "<a onclick=ket('" + encodeURIComponent(element.isi_disposisi) +
-              "')><span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Ditolak</span></a>";
+              "')><span style='color:white;' class='badge badge-pill badge-lg badge-danger'>Dikembalikan</span></a>";
             sts += "<br><span style='font-size: 8pt;'>-</span>";
           } else {
             if (element.tgl_baca) {
@@ -806,6 +806,7 @@
 
 
   function dokomen() {
+    $("#tombol_komen").addClass("disabled");
     $.ajax({
       type: 'POST',
       headers: {
@@ -819,6 +820,7 @@
         } else if (data.success == true) {
           window.location.reload();
         }
+        $("#tombol_komen").removeClass("disabled");
       },
       error: function (data) {
         swal("Gagal!", data.message, "error");
@@ -870,6 +872,7 @@
   }
 
   $("#simpan").submit(function () {
+    $("#tombol_submit").addClass("disabled");
     var id_surat_masuk = $("#id_surat_masuk").val();
     var instruksi = $("#instruksi").val();
     var keamanan = $("#keamanan").val();
@@ -909,6 +912,7 @@
               }
             );
           }
+          $("#tombol_submit").removeClass("disabled");
         },
         error: function (data) {
           swal("Gagal!", "Disposisi Gagal.", "error");

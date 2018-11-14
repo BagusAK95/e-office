@@ -555,6 +555,36 @@ Route.get('/admin/detail-kantor/:id', ({
   })
 })
 
+
+Route.get('/admin/detail-user/:id/:instansi', ({
+  session,
+  params,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_detail_user', {
+    sesi,
+    params
+  })
+})
+
+Route.post('/profile-picture-admin', async ({
+  request
+}) => {
+
+  const profilePic = request.file('file', {
+    types: ['image'],
+    size: '2mb'
+  })
+
+  const a = profilePic.subtype
+  const namabaru = `${new Date().getTime()}.${a}`
+  await profilePic.move(Helpers.publicPath('uploads'), {
+    name: namabaru
+  })
+  return "/uploads/"+namabaru
+}) 
+
 //Log
 Route.get('/admin/log', ({
   session,
@@ -567,4 +597,11 @@ Route.get('/admin/log', ({
 })
 
 //End Admin//
+Route.get('/coba', ({
+  view
+}) => {
+  return view.render('frontend/coba', {})
+})
+
 //------------------------------------ End Main System ---------------------------------//
+

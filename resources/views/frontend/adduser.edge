@@ -286,6 +286,7 @@
   }
 
   function simpan() {
+    $("#tombol_submit").addClass("disabled");
     var akses = "";
     if ($("#sm").val()) {
       akses += $("#sm").val();
@@ -323,6 +324,7 @@
             }
           );
         }
+        $("#tombol_submit").removeClass("disabled");
       },
       error: function (data) {
         swal("Gagal!", data.message, "error");
@@ -394,7 +396,7 @@
     if (n == (x.length - 1)) {
       document.getElementById("nextBtn").innerHTML = "Submit";
       $("#nextBtn").hide();
-      $("#submit").html("<a onclick='simpan()' class='btn btn-success' style='color:white'>Simpan</a>");
+      $("#submit").html("<a onclick='simpan()' class='btn btn-success' id='tombol_submit' style='color:white'>Simpan</a>");
     } else {
       $("#nextBtn").show();
       $("#submit").html("");

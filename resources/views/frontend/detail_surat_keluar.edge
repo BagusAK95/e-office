@@ -168,7 +168,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success" style='float:right'>
+          <button type="submit" class="btn btn-success" style='float:right' id="tombol_submit">
             <i class='icon md-mail-send'></i>&nbsp;Kirim</button>
         </div>
       </form>
@@ -275,7 +275,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success">Simpan</button>
+          <button type="submit" class="btn btn-success" id="tombol_submit2">Simpan</button>
         </div>
       </form>
     </div>
@@ -779,7 +779,7 @@
   }
 
   $("#simpan").submit(function () {
-
+    $("#tombol_submit").addClass("disabled");
     $.ajax({
       type: 'POST',
       url: '/api/surat-keluar/{{params.id}}',
@@ -803,6 +803,7 @@
             }
           );
         }
+        $("#tombol_submit").removeClass("disabled");
       },
       error: function (data) {
         swal("Gagal!", "Surat Gagal terkirim.", "error");
@@ -812,6 +813,7 @@
   });
 
   $("#simpan2").submit(function () {
+    $("#tombol_submit2").addClass("disabled");
     $.ajax({
       type: 'PUT',
       url: '/api/surat-pengiriman/' + $("#id_pengiriman").val(),
@@ -834,6 +836,7 @@
             }
           );
         }
+        $("#tombol_submit2").removeClass("disabled");
       },
       error: function (data) {
         swal("Gagal!", "Resi Gagal Tersimpan.", "error");
