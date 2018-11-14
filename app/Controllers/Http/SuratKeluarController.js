@@ -10,6 +10,7 @@ const Notification = use('App/Helpers/NotificationHelper')
 const MasterKantor = use('App/Models/MasterKantor')
 const Login = use('App/Models/Login')
 const Log = use('App/Helpers/LogHelper')
+const Pdf = require('html-pdf')
 
 class SuratKeluarController {
     async add({ request, auth }) {
@@ -348,6 +349,9 @@ class SuratKeluarController {
                 const listTembusan = arrTembusan.map((elem) => {
                     return elem.nama_instansi;
                 }).join('|');
+                const lampiran = '/uploads/' + new Date().getTime() + '.pdf'
+
+                Pdf.create(dataSurat.isi_surat, { format: 'Letter' }).toFile('./public' + lampiran)
 
                 arrPenerima.forEach(async (penerima) => {
                     if (penerima.id_instansi) {
@@ -366,8 +370,7 @@ class SuratKeluarController {
                             keamanan: dataSurat.keamanan,
                             kecepatan: dataSurat.kecepatan,
                             ringkasan: dataSurat.ringkasan,
-                            isi_surat: dataSurat.isi_surat,
-                            lampiran: data.lampiran,
+                            lampiran: lampiran,
                             status_surat: 0
                         })
 
@@ -419,7 +422,7 @@ class SuratKeluarController {
                             keamanan: dataSurat.keamanan,
                             kecepatan: dataSurat.kecepatan,
                             ringkasan: dataSurat.ringkasan,
-                            isi_surat: dataSurat.isi_surat,
+                            lampiran: lampiran,
                             status_surat: 0
                         })
 
