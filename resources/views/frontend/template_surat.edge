@@ -1,0 +1,297 @@
+@layout('frontend/main') 
+@section('content')
+
+<div class="page-content container-fluid">
+ <div class="row">
+   <div class="col-xxl-4 col-lg-12">
+     <!-- Example Panel With Heading -->
+     <div class="panel panel-bordered panel-primary">
+       <div class="panel-heading">
+         <h3 class="panel-title">
+           <i class="icon md-layers"></i>&nbsp;Template Surat</h3>
+       </div>
+       <div class="panel-body">
+         <div class="example example-grid">
+           <div class="row">
+             <div class="col-sm-12 col-lg-6">
+               <div class="addsurat">
+                 <div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'>
+                   <div class='btn-group' role='group'>
+                     <a href='/template-surat/add' class='btn btn-icon btn-primary'>
+                       <i class='icon md-plus' aria-hidden='true'></i>
+                     </a>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <table class="table datatable table-striped table-bordered table-hover" data-role="content">
+           <thead>
+             <tr>
+               <th width='800px'>JUDUL</th>
+               <th>ACTION</th>
+             </tr>
+           </thead>
+           <tbody id="body">
+           </tbody>
+         </table>
+         <div id="pagination"></div>
+         <span id="showing"></span>
+       </div>
+     </div>
+     <!-- End Example Panel With Heading -->
+   </div>
+ </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="editmodaln" class="modal fade modal-primary show"
+ style="display: none;">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h4 class="modal-title">Edit Data Tujuan Surat -
+         <span id="orange"></span>
+       </h4>
+     </div>
+     <div class="modal-body">
+       <div class="panel-body container-fluid">
+         <form autocomplete="off" id="simpan">
+           <div class="form-group" data-plugin="formMaterial">
+             <label class="form-control-label" for="inputEmail">Nama&nbsp;</label>
+             <input type="text" id="nama" class="form-control">
+           </div>
+           <div class="form-group" data-plugin="formMaterial">
+             <label class="form-control-label" for="inputEmail">Instansi&nbsp;</label>
+             <select name="instansi" id="instansi" class="form-control pegawai_tembusan" onchange="do_otomatis()" data-plugin="select2"
+               multiple="">
+             </select>
+             <input type="hidden" name="json" id="json" class="form-control">
+           </div>
+           <br>
+           <div style="float:right">
+             <button type="submit" class="btn btn-success waves-effect waves-classic">Simpan</button>
+           </div>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+<script>
+ $(document).ready(function () {
+   /*Main*/
+   $("#loader").fadeIn("slow");
+   cek_session();
+   cek_token();
+   /*End Main*/
+
+   /*Page*/
+   showbrand(1);
+   $("#loader").fadeOut("xslow");
+   /*Page*/
+ });
+
+ function getsession() {
+   $.ajax({
+     type: 'GET',
+     url: '/getlevel',
+     success: function (data) {
+       //alert(data)
+       if (data == 3) {
+         $(".add").css('display', 'block');
+         $(".delete").css('display', 'block');
+       } else if (data == 2) {
+         $(".add").css("display", "none");
+         $(".delete").css("display", "none");
+       } else if (data == 1) {
+         $(".add").css("display", "none");
+         $(".delete").css("display", "none");
+       } else if (data == 4) {
+         $(".add").css("display", "none");
+         $(".delete").css("display", "none");
+       }
+     },
+     error: function (data) {
+
+     }
+   });
+ }
+
+ function dopagin() {
+   var halaman = $("#pagin").val();
+   showbrand(halaman);
+ }
+
+
+ function showbrand(page) {
+   $.ajax({
+     type: 'GET',
+     url: '/api/template-surat?page=' + page + '&limit=10',
+     headers: {
+       'Authorization': 'Bearer {{sesi}}'
+     },
+     dataType: 'json',
+     success: function (data) {
+       var text = "";
+       $.each(data.data.data, function (index, element) {
+         var tr_data = "<tr><td>" + element.judul + "</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/template-surat/detail/" +
+              element.id +
+              "'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a><a style='color:white' class='btn btn-icon btn-primary' href='/template-surat/edit/" +
+              element.id +
+              "'><i class='icon md-edit' aria-hidden='true'></i></a><button onclick=delete_data('" +
+           element.id +
+           "') type='button' class='btn btn-icon btn-primary'><i class='icon md-delete' aria-hidden='true'></i></button></div></div></td></tr>";
+         text += tr_data;
+       });
+
+       $("#body").html(text).show();
+
+       var disbalenext = '';
+       if (data.data.lastPage == data.data.page) {
+         disbalenext = 'disabled';
+       }
+
+       var prev = "";
+       if (page == 1) {
+         prev = "disabled";
+       }
+
+
+       if(data.data.total>0)
+       {
+
+       $("#pagination").html(
+         "<center><BR><div class='btn-group' aria-label='Basic example' role='group'><button class='btn btn-sm btn-primary btn-pill-left' " +
+         prev + " onclick=showbrand(1)><i class='icon fa-angle-double-left'></i></button><button " + prev +
+         " class='btn btn-xs btn-primary' onclick=showbrand(" + (data.data.page - 1) +
+         ")><i class='icon fa-angle-left'></i></button> <button class='btn btn-xs btn-primary' style='width:50px'> Page </button> <input type='text' style='width:50px;text-align: center;' class='pagin' id='pagin' onblur='dopagin()'  onkeypress='return isNumber(event)'  value='" +
+         data.data.page + "'><button class='btn btn-xs btn-primary' style='width:50px'> of " + data.data.lastPage +
+         " </button><button class='btn btn-xs btn-primary' " + disbalenext + " onclick=showbrand(" + (data.data
+           .page + 1) +
+         ")><i class='icon fa-angle-right'></i></button><button class='btn btn-xs btn-primary btn-pill-right' onclick=showbrand(" +
+         data.data.lastPage + ") " + disbalenext +
+         "><i class='icon fa-angle-double-right'></i></button></div><br>Showing " + data.data.page + " to " +
+         data.data.perPage + " of " + data.data.total + " entries").show();
+       }
+       else
+       {
+         var tr_data = "<tr><td align='center' colspan='4'>Data tidak tersedia.</td></tr>";
+         $("#body").html(tr_data).show();
+       }
+
+       getsession();
+       $("#loader").fadeOut("xslow");
+     }
+   });
+ }
+
+
+
+ function isNumber(evt) {
+   evt = (evt) ? evt : window.event;
+   var charCode = (evt.which) ? evt.which : evt.keyCode;
+   if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+     return false;
+   }
+   return true;
+ }
+
+
+
+ function delete_data(id) {
+   if (confirm('Yakin menghapus data ini?')) {
+     $.ajax({
+       type: 'DELETE',
+       url: '/api/template-surat/' + id,
+       headers: {
+         'Authorization': 'Bearer {{sesi}}'
+       },
+       dataType: 'json',
+       success: function (data) {
+         if (data.success == false) {
+           swal("Gagal!", "Hapus data gagal.", "error");
+         } else if (data.success == true) {
+           swal({
+               title: "Berhasil",
+               text: "Berhasil hapus data.",
+               type: "success"
+             },
+             function () {
+               location.reload();
+             }
+           );
+         }
+       },
+       error: function () {
+         return false;
+       }
+     });
+   } else {
+     return false;
+   }
+ }
+
+ function tanggal_indo(tanggal) {
+   moment.locale('id');
+   return moment(tanggal).format("LL");
+ }
+
+ function tanggal_jam_indo(tanggal) {
+   moment.locale('id');
+   return moment(tanggal).format("LLL");
+ }
+
+ function kantor() {
+   $.ajax({
+     type: 'GET',
+     url: '/api/master-kantor/listAllParent',
+     headers: {
+       'Authorization': 'Bearer {{sesi}}'
+     },
+     dataType: 'json',
+     success: function (data) {
+       var isi = "";
+       $.each(data.data, function (index, element) {
+         isi += "<option value='" + element.kdlokasi + "-" + element.nmlokasi + "'>" + element.nmlokasi +
+           "</option>";
+       })
+       $(".pegawai_tembusan").html(isi).show();
+     },
+     error: function () {
+       return false;
+     }
+   });
+ }
+
+ function do_otomatis() {
+   var arr_tembusan = $("#instansi").val();
+
+   var isi_arr_tembusan = "[";
+   var nomor = 1;
+   var panjang = arr_tembusan.length;
+   $.each(arr_tembusan, function (index, da) {
+     var all = da.split("-");
+     var id = all[0];
+     var nama = all[1];
+     isi_arr_tembusan += "{";
+     isi_arr_tembusan += '"id_instansi": "' + id + '","nama_instansi": "' + nama + '"';
+     isi_arr_tembusan += "}";
+     if (nomor < panjang) {
+       isi_arr_tembusan += ",";
+     }
+     nomor++;
+   });
+   isi_arr_tembusan += "]";
+
+   $("#json").val(isi_arr_tembusan);
+
+   var isin = $("#json").val();
+   if (isin == "[]") {
+     var isi_arr_tembusan = "";
+     $("#json").val(isi_arr_tembusan);
+   }
+ }
+
+</script>
+@endsection

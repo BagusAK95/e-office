@@ -1,5 +1,57 @@
 @layout('frontend/main') 
 @section('content')
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=kpsq48neqp0x6qzh9ryz8xk08p4o1gq10dukr2g2ilxxedt9"></script> 
+<script>
+ tinymce.init({
+  selector: '#isisurat',
+  height: 500,
+  theme: 'modern',
+  plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount tinymcespellchecker a11ychecker imagetools mediaembed  linkchecker contextmenu colorpicker textpattern help',
+  toolbar1: 'formatselect | bold italic strikethrough forecolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+  image_advtab: true,
+  templates: [
+    { title: 'Test template 1', content: 'Test 1' },
+    { title: 'Test template 2', content: 'Test 2' }
+  ],
+   // enable title field in the Image dialog
+  image_title: true, 
+  // enable automatic uploads of images represented by blob or data URIs
+  automatic_uploads: true,
+  // URL of our upload handler (for more details check: https://www.tinymce.com/docs/configure/file-image-upload/#images_upload_url)
+  // images_upload_url: 'postAcceptor.php',
+  // here we add custom filepicker only to Image dialog
+  file_picker_types: 'image', 
+  // and here's our custom image picker
+  file_picker_callback: function(cb, value, meta) {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    // Note: In modern browsers input[type="file"] is functional without 
+    // even adding it to the DOM, but that might not be the case in some older
+    // or quirky browsers like IE, so you might want to add it to the DOM
+    // just in case, and visually hide it. And do not forget do remove it
+    // once you do not need it anymore.
+    input.onchange = function() {
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.onload = function () {
+        // Note: Now we need to register the blob in TinyMCEs image blob
+        // registry. In the next release this part hopefully won't be
+        // necessary, as we are looking to handle it internally.
+        var id = 'blobid' + (new Date()).getTime();
+        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+        var base64 = reader.result.split(',')[1];
+        var blobInfo = blobCache.create(id, file, base64);
+        blobCache.add(blobInfo);
+        // call the callback and populate the Title field with the file name
+        cb(blobInfo.blobUri(), { title: file.name });
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  }
+ });
+ </script>
 <div class="page-content container-fluid">
   <div class="row">
     <div class="col-xxl-4 col-lg-12">
@@ -205,9 +257,16 @@
                       <label class="form-control-label" for="inputEmail">Ringkasan</label>
                       <textarea class="form-control" name="ringkasan" id="ringkasan"></textarea>
                     </div>
+
+                    <div class="form-group" data-plugin="formMaterial">
+                      <label class="form-control-label" for="inputEmail">Pilih Template Surat</label>
+                      <select class="form-control" name="template" id="template" onchange="pilih_template()">
+                      </select>
+                    </div>
+
                     <div class="form-group" data-plugin="formMaterial">
                       <label class="form-control-label" for="inputEmail">Isi Surat</label>
-                      <textarea class="form-control" name="isisurat" id="isisurat" data-plugin="summernote" data-plugin-options='{"toolbar":[["style", ["bold", "italic", "underline", "clear"]],["color", ["color"]],["para", ["ul", "ol", "paragraph"]]]}'></textarea>
+                      <textarea class="form-control" name="isisurat" id="isisurat"></textarea>
                     </div>
                   </div>
 
@@ -386,6 +445,7 @@
     showbrand();
     showbrand2();
     semua();
+    template();
     $("#loader").fadeOut("xslow");
     /*Page*/
   });
@@ -455,6 +515,45 @@
             "'>" + element.nama_lengkap + "</option>";
         })
         $("#arr_pemeriksa").html(isi).show();
+      },
+      error: function () {
+        return false;
+      }
+    });
+  }
+
+  function template() {
+    $.ajax({
+      type: 'GET',
+      url: '/api/template-surat?page=1&limit=99999',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        var isi = "<option value='0' disabled selected>Pilih Template Surat</option>";
+        $.each(data.data.data, function (index, element) {
+          isi += "<option value='"+element.id +"'>"+element.judul+"</option>";
+        })
+        $("#template").html(isi).show();
+      },
+      error: function () {
+        return false;
+      }
+    });
+  }
+
+  function pilih_template() {
+    $.ajax({
+      type: 'GET',
+      url: '/api/template-surat/'+$("#template").val(),
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+        var isi = data.data.isi;
+        tinyMCE.activeEditor.setContent(isi);
       },
       error: function () {
         return false;
@@ -696,7 +795,7 @@
     }
 
     //End Pemeriksa//;
-    var textareaValue = $('#isisurat').summernote('code');
+    var textareaValue = tinyMCE.get('isisurat').getContent();
 
 
     var isinepenerima = "[]";
@@ -722,7 +821,7 @@
         .val() + "&lampiran=" + $("#lampiran").val() + jeniss + "&arr_pemeriksa=" + gabung + "&perihal=" + $(
           "#perihal").val() + "&dari_surat_masuk=" + $("#dari_surat_masuk").val() + "&keamanan=" + $("#keamanan").val() +
         "&kecepatan=" + $("#kecepatan").val() + "&klasifikasi=" + $("#klasifikasi").val() + "&ringkasan=" + $(
-          "#ringkasan").val() + "&isi_surat=" + textareaValue,
+          "#ringkasan").val() + "&isi_surat=" + escape(textareaValue),
       success: function (datanya) {
         if (datanya.success == false) {
           swal("Gagal!", datanya.message, "error");

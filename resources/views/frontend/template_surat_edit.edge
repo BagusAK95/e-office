@@ -1,0 +1,199 @@
+@layout('frontend/main')
+@section('content')
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=kpsq48neqp0x6qzh9ryz8xk08p4o1gq10dukr2g2ilxxedt9"></script> 
+<script>
+ tinymce.init({
+  selector: 'textarea',
+  height: 500,
+  theme: 'modern',
+  plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount tinymcespellchecker a11ychecker imagetools mediaembed  linkchecker contextmenu colorpicker textpattern help',
+  toolbar1: 'formatselect | bold italic strikethrough forecolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
+  image_advtab: true,
+  templates: [
+    { title: 'Test template 1', content: 'Test 1' },
+    { title: 'Test template 2', content: 'Test 2' }
+  ],
+
+   // enable title field in the Image dialog
+  image_title: true, 
+  // enable automatic uploads of images represented by blob or data URIs
+  automatic_uploads: true,
+  // URL of our upload handler (for more details check: https://www.tinymce.com/docs/configure/file-image-upload/#images_upload_url)
+  // images_upload_url: 'postAcceptor.php',
+  // here we add custom filepicker only to Image dialog
+  file_picker_types: 'image', 
+  // and here's our custom image picker
+  file_picker_callback: function(cb, value, meta) {
+    var input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    
+    // Note: In modern browsers input[type="file"] is functional without 
+    // even adding it to the DOM, but that might not be the case in some older
+    // or quirky browsers like IE, so you might want to add it to the DOM
+    // just in case, and visually hide it. And do not forget do remove it
+    // once you do not need it anymore.
+
+    input.onchange = function() {
+      var file = this.files[0];
+      
+      var reader = new FileReader();
+      reader.onload = function () {
+        // Note: Now we need to register the blob in TinyMCEs image blob
+        // registry. In the next release this part hopefully won't be
+        // necessary, as we are looking to handle it internally.
+        var id = 'blobid' + (new Date()).getTime();
+        var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+        var base64 = reader.result.split(',')[1];
+        var blobInfo = blobCache.create(id, file, base64);
+        blobCache.add(blobInfo);
+
+        // call the callback and populate the Title field with the file name
+        cb(blobInfo.blobUri(), { title: file.name });
+      };
+      reader.readAsDataURL(file);
+    };
+    
+    input.click();
+  }
+
+
+  
+ });
+ </script>
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-xxl-4 col-lg-12">
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-layers"></i>&nbsp;Edit Template Surat</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-lg-12">
+            <!-- Example Default -->
+            <style>
+              .tab {
+                display: none;
+              }
+
+              .steping {}
+
+              .steping.active {
+                opacity: 1;
+              }
+
+              .steping.finish {
+                color: #fff;
+                background-color: #3f51b5;
+              }
+
+            </style>
+            <form autocomplete="off" id="simpan">
+              <!--Main-->
+              <div class="panel">
+                <div class="panel-body container-fluid">
+                <form id="form">
+                  <div class="form-group" data-plugin="formMaterial">
+                    <label class="form-control-label" for="inputEmail">Judul&nbsp;</label>
+                    <input type="text" id="judul" name="judul" class="form-control">
+                  </div>
+
+                  <div class="form-group" data-plugin="formMaterial">
+                    <label class="form-control-label"  for="inputEmail">Isi&nbsp;</label>
+                        <textarea id="isi" name="isi"></textarea>
+                    </label>
+                  </div>
+
+                  <br>
+                  <a class="btn btn-danger waves-classic" href="/template-surat" style="color:white">Batal</a>
+                  <div style="float:right">
+                    <div style="overflow:auto;">
+                      <div style="float:right;">
+                        <a class='btn btn-success' onclick='simpen()' style='color:white'>Submit</a>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                </form>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Example Panel With Heading -->
+  </div>
+</div>
+</div>
+<script>
+  // Handle the event that fires when a tag is added
+  $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn();
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    show_detail()
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+  function simpen() {
+    //tinyMCE.triggerSave();
+    var ed = tinyMCE.get('isi').getContent();
+    //var isi = $tinymce.get('isi').getContent();
+    $("#loader").fadeIn();
+    $.ajax({
+      type: 'PUT',
+      url: '/api/template-surat/{{params.id}}',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      data: "id={{params.id}}&judul=" + $("#judul").val() + "&isi="+escape(ed),
+      success: function (datanya) {
+        if (datanya.success == false) {
+          swal("Gagal!", datanya.message, "error");
+        } else if (datanya.success == true) {
+          swal({
+              title: "Berhasil",
+              text: "Berhasil Menyimpan data.",
+              type: "success"
+            },
+            function () {
+              window.location.href = "/template-surat";
+            });
+          $("#loader").hide();
+        }
+      },
+      error: function (data) {
+        swal("Gagal!", data.message, "error");
+      }
+    });
+    return false;
+  }
+
+  function show_detail() {
+    $.ajax({
+      type: 'GET',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      url: '/api/template-surat/{{params.id}}',
+      success: function (data) {
+        var element = data.data;
+        $("#judul").val(element.judul);
+        $("#isi").html(element.isi);
+      },
+      error: function (data) {
+
+      }
+    });
+  }
+
+</script>
+@endsection

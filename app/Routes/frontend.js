@@ -97,6 +97,19 @@ Route.get('/user', ({
   })
 }).middleware('checkAccess:admin')
 
+//User
+Route.get('/user/:id', ({
+  session,
+  params,
+  view
+}) => {
+  const sesi = session.get('token');
+  return view.render('frontend/user_edit', {
+    sesi,
+    params
+  })
+}).middleware('checkAccess:admin')
+
 Route.get('/user/add', ({
   session,
   view
@@ -390,6 +403,53 @@ Route.get('/surat-tembusan/:id', async function ({
   })
 }).middleware('checkAccess:employe,suratmasuk')
 //End Tembusan//
+
+
+Route.get('/template-surat', async function ({
+  session,
+  view
+}) {
+  const sesi = session.get('token');
+  return view.render('frontend/template_surat', {
+    sesi
+  })
+}).middleware('checkAccess:employe,konsepsurat')
+
+Route.get('/template-surat/add', async function ({
+  session,
+  view
+}) {
+  const sesi = session.get('token');
+  return view.render('frontend/template_surat_add', {
+    sesi
+  })
+}).middleware('checkAccess:employe,konsepsurat')
+
+Route.get('/template-surat/detail/:id', async function ({
+  session,
+  params,
+  view
+}) {
+  const sesi = session.get('token');
+  return view.render('frontend/template_surat_detail', {
+    params,
+    sesi
+  })
+}).middleware('checkAccess:employe,konsepsurat')
+
+Route.get('/template-surat/edit/:id', async function ({
+  session,
+  params,
+  view
+}) {
+  const sesi = session.get('token');
+  return view.render('frontend/template_surat_edit', {
+    params,
+    sesi
+  })
+}).middleware('checkAccess:employe,konsepsurat')
+
+
 
 Route.get('/log-activity', async function ({
   session,

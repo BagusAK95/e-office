@@ -1,0 +1,103 @@
+@layout('frontend/main')
+@section('content')
+<style>
+</style>
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-xxl-4 col-lg-12">
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-layers"></i>&nbsp;Detail Template Surat</h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-lg-12">
+            <!-- Example Default -->
+            <style>
+              .tab {
+                display: none;
+              }
+
+              .steping {}
+
+              .steping.active {
+                opacity: 1;
+              }
+
+              .steping.finish {
+                color: #fff;
+                background-color: #3f51b5;
+              }
+
+            </style>
+            <form autocomplete="off" id="simpan">
+              <!--Main-->
+              <div class="panel">
+                <div class="panel-body container-fluid">
+                <form id="form">
+                  <div class="form-group" data-plugin="formMaterial">
+                    <h4><label class="form-control-label" for="inputEmail"><b>Judul</b>&nbsp;</label></h4><br>
+                    <span id="judul" class="example1">
+
+                    </span>
+                  </div>
+
+                  <div class="form-group" data-plugin="formMaterial">
+                    <h4><label class="form-control-label"  for="inputEmail"><b>Isi</b>&nbsp;</label></h4><br>
+                    <span id="isi" class="example1">
+                        
+                    </span>
+                  </div>
+
+                  <br>
+                  <a class="btn btn-danger waves-classic" href="/template-surat" style="color:white;float:right">Kembali</a>
+                  
+                  <br>
+                  <br>
+                </form>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Example Panel With Heading -->
+  </div>
+</div>
+</div>
+<script>
+  // Handle the event that fires when a tag is added
+  $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn();
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    show_detail();
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+
+ function show_detail() {
+    $.ajax({
+      type: 'GET',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      url: '/api/template-surat/{{params.id}}',
+      success: function (data) {
+        var element = data.data;
+        $("#judul").html(element.judul);
+        $("#isi").html(element.isi);
+      },
+      error: function (data) {
+
+      }
+    });
+  }
+</script>
+@endsection

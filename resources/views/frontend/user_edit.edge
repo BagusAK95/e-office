@@ -1,0 +1,580 @@
+@layout('frontend/main') 
+@section('content')
+
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-xxl-4 col-lg-12">
+      <div id="cover-spin" style="width:100%"></div>
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-assignment-account"></i>&nbsp;Edit User - <span id="orange"></span></h3>
+          <div class="panel-actions">
+            <a class="panel-action icon md-minus" data-toggle="panel-collapse" aria-expanded="true" aria-hidden="true"></a>
+          </div>
+        </div>
+        <div class="panel-body">
+                <div class="panel-body container-fluid">
+                        <form autocomplete="off" id="simpan">
+                          <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                            <label class="form-control-label" for="inputEmail">NIP</label>
+                            <input type="hidden" readonly id="pegawai" name="nip" class="form-control">
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                            <label class="form-control-label" for="inputEmail">Nama Lengkap</label>
+                            <input type="text" class="form-control" name="nama_lengkap" id="nama_lengkap" readonly>
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">No HP</label>
+                            <input type="text" class="form-control" name="nohp" id="nohp">
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">Email</label>
+                            <input type="email" class="form-control" name="email" id="email">
+                          </div>
+                          <!--<div class="form-group" data-plugin="formMaterial">
+                                   <label class="form-control-label" for="inputEmail">Foto</label>
+                                       <input type="file" name="foto" class="form-control btn" >
+                                   </div>-->
+                          <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                            <label class="form-control-label" for="inputEmail">Kode Lokasi</label>
+                            <input type="text" class="form-control" name="kode_lokasi" id="kode_lokasi" readonly>
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                            <label class="form-control-label" for="inputEmail">Kode Jabatan </label>
+                            <input type="text" class="form-control" name="kode_jabatan" id="kode_jabatan" readonly>
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                            <label class="form-control-label" for="inputEmail">Nama Jabatan </label>
+                            <input type="text" class="form-control" name="nama_jabatan" id="nama_jabatan" readonly>
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                            <label class="form-control-label" for="inputEmail">Kode Eselon </label>
+                            <input type="text" class="form-control" name="kode_eselon" id="kode_eselon" readonly>
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial" style='display: none'>
+                            <label class="form-control-label" for="inputEmail">Golongan</label>
+                            <input type="text" class="form-control" name="golongan" id="golongan" readonly>
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">Level</label>
+                            <select name="level" id="level" class="form-control">
+                              <option value="1">Admin</option>
+                              <option value="2">Pimpinan</option>
+                              <option value="3">Tata Usaha</option>
+                              <option value="4">Staff</option>
+                              <option value="5">Sekretaris</option>
+                            </select>
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">Status</label>
+                            <select name="status" id="status" class="form-control">
+                              <option value="1">Aktif</option>
+                              <option value="0">Non Aktif</option>
+                            </select>
+                          </div>
+                          <div class="form-group" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">Akses</label>
+                            <BR>
+                            <input type="checkbox" name="sm" id="sm" value="suratmasuk"> Surat Masuk
+                            <br>
+                            <input type="checkbox" name="sk" id="sk" value="suratkeluar"> Surat Keluar
+                            <br>
+                            <input type="checkbox" name="di" id="di" value="disposisi"> Disposisi
+                            <br>
+                            <input type="checkbox" name="konsepsurat" id="konsepsurat" value="konsepsurat"> Konsep Surat
+                            <br>
+              
+                          </div>
+                          <div class="form-group khusus_pimpinan" style="display:none;" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">KOP Surat</label>
+                            <div class="input-group">
+                            <input type="text" readonly name="kop_surat" id="kop_surat" class="form-control" > 
+                            <span class="input-group-append">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                              <i class="md-collection-plus"></i>&nbsp;Upload File</button>
+                            </div>
+                          </span>
+                          </div>
+                          <div class="form-group khusus_pimpinan" style="display:none;" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">TTD</label>
+                            <div class="input-group">
+                            <input type="text" readonly name="ttd" id="ttd" class="form-control" > 
+                            <span class="input-group-append">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2">
+                              <i class="md-collection-plus"></i>&nbsp;Upload File</button>
+                            </div>
+                          </span>
+                          </div>
+                          <div class="form-group khusus_pimpinan" style="display:none;" data-plugin="formMaterial">
+                            <label class="form-control-label" for="inputEmail">TTD Stempel</label>
+                            <div class="input-group">
+                            <input type="text" readonly name="ttd_stempel" id="ttd_stempel" class="form-control" > 
+                            <span class="input-group-append">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal3">
+                              <i class="md-collection-plus"></i>&nbsp;Upload File</button>
+                            </div>
+                          </span>
+                          </div>
+                          <br>
+                         
+                         
+                          <br>
+                          <div style="float:right">
+                            <a href="/user" class="btn btn-danger waves-effect waves-classic">Kembali</a>
+                            <button type="submit" class="btn btn-success waves-effect waves-classic">Simpan</button>
+                          </div>
+                        </form>
+                      </div>
+                        
+                      <div class="row khusus_pimpinan" style="display:none;">
+                            <div class="col-sm-12 col-lg-4">
+                                <h5><b><center>Kop Surat</center></b><br></h5>
+                                <div id="kop_surat_i"></div>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <h5><b><center>Tanda Tangan</center></b><br></h5>
+                                <div id="ttd_i"></div>
+                            </div>
+                            <div class="col-sm-12 col-lg-4">
+                                <h5><b><center>Tanda Tangan Dan Stempel</center></b><br></h5>
+                                <div id="ttd_stempel_i"></div>
+                            </div>
+                        </div>
+        </div>
+      </div>
+      <!-- End Example Panel With Heading -->
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="myModal" aria-hidden="true" aria-labelledby="examplePositionSidebar" role="dialog"
+tabindex="-1">
+<div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Upload Gambar KOP Surat</h4>
+        </div>
+        <form method="post" enctype='multipart/form-data' id="upload_lampiran">
+          <div class="modal-body">
+            <input type="file" name="file" id="file" accept="image/*">
+            <br>
+            <center>
+              <div class="loader vertical-align-middle loader-ellipsis" style="display: none;"></div>
+            </center>
+            <br>
+            <span style="color:red">*Note : Tipe file Image</span>
+  
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Upload</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+<div class="modal fade" id="myModal2" aria-hidden="true" aria-labelledby="examplePositionSidebar" role="dialog"
+tabindex="-1">
+<div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Upload Gambar Tanda Tangan</h4>
+        </div>
+        <form method="post" enctype='multipart/form-data' id="upload_lampiran2">
+          <div class="modal-body">
+            <input type="file" name="file" id="file" accept="image/*">
+            <br>
+            <center>
+              <div class="loader vertical-align-middle loader-ellipsis" style="display: none;"></div>
+            </center>
+            <br>
+            <span style="color:red">*Note : Tipe file Image</span>
+  
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Upload</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModal3" aria-hidden="true" aria-labelledby="examplePositionSidebar" role="dialog"
+tabindex="-1">
+<div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Upload Gambar Tanda Tangan Dan Stempel</h4>
+        </div>
+        <form method="post" enctype='multipart/form-data' id="upload_lampiran3">
+          <div class="modal-body">
+            <input type="file" name="file" id="file" accept="image/*">
+            <br>
+            <center>
+              <div class="loader vertical-align-middle loader-ellipsis" style="display: none;"></div>
+            </center>
+            <br>
+            <span style="color:red">*Note : Tipe file Image</span>
+  
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Upload</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+<script>
+  $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn("slow");
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    editcok();
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+
+
+  /*Edit Data Function*/
+  function editcok() {
+    $("#loader").fadeIn("slow");
+    $("#sm").prop("checked", false);
+    $("#sk").prop("checked", false);
+    $("#di").prop("checked", false);
+    $.ajax({
+      type: 'GET',
+      url: '/api/user/{{params.id}}',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      dataType: 'json',
+      success: function (data) {
+
+        var akses = data.data.akses;
+        var smu = "";
+        if (akses) {
+          var max = akses.split(",").length;
+          var data_akses = akses.split(",");
+          for (var index = 0; index < max; index++) {
+            if (data_akses[index] == "suratmasuk") {
+              $("#sm").prop("checked", true);
+            }
+
+            if (data_akses[index] == "suratkeluar") {
+              $("#sk").prop("checked", true);
+            }
+
+            if (data_akses[index] == "disposisi") {
+              $("#di").prop("checked", true);
+            }
+
+             if (data_akses[index] == "konsepsurat") {
+              $("#konsepsurat").prop("checked", true);
+            }
+
+          }
+        }
+        $("#pegawai").val(data.data.nip);
+        $("#nama_lengkap").val(data.data.nama_lengkap);
+        $("#nohp").val(data.data.nohp);
+        $("#email").val(data.data.email);
+        $("#kode_lokasi").val(data.data.kode_lokasi);
+        $("#kode_jabatan").val(data.data.kode_jabatan);
+        $("#nama_jabatan").val(data.data.nama_jabatan);
+        $("#golongan").val(data.data.golongan);
+        $("#level").val(data.data.level);
+
+        if(data.data.level==2)
+        {
+            $(".khusus_pimpinan").show();
+        }
+        else
+        {
+            $(".khusus_pimpinan").hide();
+        }
+
+        $("#status").val(data.data.status);
+        $("#kode_eselon").val(data.data.kode_eselon);
+        
+        $("#kop_surat").val(data.data.kop_surat);
+        $("#ttd").val(data.data.ttd);
+        $("#ttd_stempel").val(data.data.ttd_stempel);
+
+        if(data.data.kop_surat)
+        {
+            $("#kop_surat_i").html("<a href='"+data.data.kop_surat+"' target='_blank'><center><img src='"+data.data.kop_surat+"' width='300px' height='200px'></center></a>").show();
+        }
+
+        if(data.data.ttd)
+        {
+            $("#ttd_i").html("<a href='"+data.data.ttd+"' target='_blank'><center><img src='"+data.data.ttd+"' width='300px' height='200px'></center></a>").show();
+        }
+
+        if(data.data.ttd_stempel)
+        {
+            $("#ttd_stempel_i").html("<a href='"+data.data.ttd_stempel+"' target='_blank'><center><img src='"+data.data.ttd_stempel+"' width='300px' height='200px'></center></a>").show();
+        }
+        
+
+        $("#orange").html(data.data.nama_lengkap).show();
+        $("#loader").fadeOut("xslow");
+        $('#editmodaln').modal('show');
+      },
+      error: function () {
+        return false;
+      }
+    });
+  }
+  /*End Edit Data Function*/
+
+  /*Save Data Function*/
+  
+  $("#cok").submit(function (event) {
+    alert("asdsadsd");
+    return false;
+  });
+  $("#simpan").submit(function (event) {
+
+
+    $("#loader").fadeIn("slow");
+    var akses = "";
+    if ($("#sm").is(':checked')) {
+      akses += $("#sm").val();
+    }
+
+    if ($("#sk").is(':checked')) {
+      akses += "," + $("#sk").val();
+    }
+
+    if ($("#di").is(':checked')) {
+      akses += "," + $("#di").val();
+    }
+
+    if ($("#konsepsurat").is(':checked')) {
+      akses += "," + $("#konsepsurat").val();
+    }
+
+    $.ajax({
+      type: 'PUT',
+      url: '/api/user/' + $("#pegawai").val(),
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      data: "nama_lengkap=" + $("#nama_lengkap").val() + "&nohp=" + $("#nohp").val() + "&email=" + $("#email").val() +
+        "&kode_lokasi=" + $("#kode_lokasi").val() + "&kode_jabatan=" + $("#kode_jabatan").val() +
+        "&nama_jabatan=" + $("#nama_jabatan").val() + "&golongan=" + $("#golongan").val() + "&level=" + $(
+          "#level").val() + "&status=" + $("#status").val() + "&akses=" + akses + "&kop_surat="+$("#kop_surat").val()+"&ttd="+$("#ttd").val()+"&ttd_stempel="+$("#ttd_stempel").val(),
+      success: function (data) {
+        if (data.success == false) {
+          swal("Gagal!", "Gagal Menyimpan data.", "error");
+        } else if (data.success == true) {
+          swal({
+              title: "Berhasil",
+              text: "Berhasil Menyimpan data.",
+              type: "success"
+            },
+            function () {
+              location.reload();
+            }
+          );
+        }
+
+        $("#loader").fadeOut("xslow");
+      },
+      error: function (data) {
+        swal("Gagal!", "Gagal Menyimpan data.", "error");
+      }
+    });
+    return false;
+  });
+  /*End Save Data Function*/
+
+  /*Addon Function*/
+  function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  $('#upload_lampiran').on('submit', function (e) {
+    $(".loader").show();
+    var date = new Date();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+
+
+    var all = $("#file").val();
+    var neww = all.split(".");
+    var eks = neww[1];
+
+    if ((eks == "jpg") || (eks == "JPG") || (eks == "png") || (eks == "JPEG") || (eks == "jpeg")) {
+      e.preventDefault();
+      var form = e.target;
+      var data = new FormData(form);
+      $.ajax({
+        url: "/upload_file",
+        method: form.method,
+        processData: false,
+        contentType: false,
+        data: data,
+        processData: false,
+        success: function (msg) {
+          if(msg)
+          {
+            $("#kop_surat").val("/uploads/" + msg);
+            swal("Berhasil Upload File.",data.message, "success");
+          }
+          else
+          {
+            swal("Gagal Upload File.",data.message, "error");
+          }
+         
+          $(".loader").hide();
+          $(".modal").modal("hide");
+        },
+        error: function () {
+          $(".loader").hide();
+          $(".modal").modal("hide");
+        }
+      });
+    } else {
+      alert("Tipe file tidak sesuai!");
+      $(".loader").hide();
+    }
+    return false;
+  });
+
+
+
+  $('#upload_lampiran2').on('submit', function (e) {
+    $(".loader").show();
+    var date = new Date();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+
+
+    var all = $("#file").val();
+    var neww = all.split(".");
+    var eks = neww[1];
+
+    if ((eks == "jpg") || (eks == "JPG") || (eks == "png") || (eks == "JPEG") || (eks == "jpeg")) {
+      e.preventDefault();
+      var form = e.target;
+      var data = new FormData(form);
+      $.ajax({
+        url: "/upload_file",
+        method: form.method,
+        processData: false,
+        contentType: false,
+        data: data,
+        processData: false,
+        success: function (msg) {
+          if(msg)
+          {
+            $("#ttd").val("/uploads/" + msg);
+            swal("Berhasil Upload File.",data.message, "success");
+          }
+          else
+          {
+            swal("Gagal Upload File.",data.message, "error");
+          }
+         
+          $(".loader").hide();
+          $(".modal").modal("hide");
+        },
+        error: function () {
+          $(".loader").hide();
+          $(".modal").modal("hide");
+        }
+      });
+    } else {
+      alert("Tipe file tidak sesuai!");
+      $(".loader").hide();
+    }
+    return false;
+  });
+
+  $('#upload_lampiran3').on('submit', function (e) {
+    $(".loader").show();
+    var date = new Date();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var seconds = date.getSeconds();
+
+
+    var all = $("#file").val();
+    var neww = all.split(".");
+    var eks = neww[1];
+
+    if ((eks == "jpg") || (eks == "JPG") || (eks == "png") || (eks == "JPEG") || (eks == "jpeg")) {
+      e.preventDefault();
+      var form = e.target;
+      var data = new FormData(form);
+      $.ajax({
+        url: "/upload_file",
+        method: form.method,
+        processData: false,
+        contentType: false,
+        data: data,
+        processData: false,
+        success: function (msg) {
+          if(msg)
+          {
+            $("#ttd_stempel").val("/uploads/" + msg);
+            swal("Berhasil Upload File.",data.message, "success");
+          }
+          else
+          {
+            swal("Gagal Upload File.",data.message, "error");
+          }
+         
+          $(".loader").hide();
+          $(".modal").modal("hide");
+        },
+        error: function () {
+          $(".loader").hide();
+          $(".modal").modal("hide");
+        }
+      });
+    } else {
+      alert("Tipe file tidak sesuai!");
+      $(".loader").hide();
+    }
+    return false;
+  });
+</script>
+@endsection
