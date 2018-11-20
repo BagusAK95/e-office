@@ -61,7 +61,7 @@
       <div class="panel panel-bordered panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <i class="icon md-plus"></i>&nbsp;Revisi Konsep Surat</h3>
+            <i class="icon md-plus"></i>&nbsp;Edit Konsep Surat</h3>
         </div>
         <div class="panel-body">
           <div class="col-lg-12">
@@ -689,7 +689,7 @@
     var ikii = nip_penandatangan.split("-");
     $.ajax({
       type: 'PUT',
-      url: '/api/konsep-surat/{{params.id}}',
+      url: '/api/konsep-surat/pemeriksa/{{params.id}}',
       headers: {
         'Authorization': 'Bearer {{sesi}}'
       },
@@ -710,7 +710,7 @@
               type: "success"
             },
             function () {
-              window.location.href = "/konsep-surat/maked";
+              window.location.href = "/konsep-surat/checked";
             });
           $("#loader").hide();
         }

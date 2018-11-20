@@ -313,6 +313,18 @@ Route.get('/konsep-surat/edit/:id', async function ({
   })
 }).middleware('checkAccess:employe,konsepsurat')
 
+Route.get('/konsep-surat-checked/edit/:id', async function ({
+  session,
+  params,
+  view
+}) {
+  const sesi = session.get('token');
+  return view.render('frontend/edit_konsep_surat_checked', {
+    params,
+    sesi
+  })
+}).middleware('checkAccess:employe,konsepsurat')
+
 Route.get('/konsep-surat/checked', async function ({
   session,
   params,
@@ -378,6 +390,31 @@ Route.get('/surat-keluar/:id', async function ({
     sesi
   })
 }).middleware('checkAccess:employe,suratkeluar')
+
+Route.get('/isi-surat-keluar/:id', async function ({
+  session,
+  params,
+  view
+}) {
+  const sesi = session.get('token');
+  return view.render('frontend/isi_surat_keluar', {
+    params,
+    sesi
+  })
+}).middleware('checkAccess:employe,konsepsurat')
+
+Route.get('/isi-surat-keluar/keluar/:id', async function ({
+  session,
+  params,
+  view
+}) {
+  const sesi = session.get('token');
+  return view.render('frontend/isi_surat_keluar2', {
+    params,
+    sesi
+  })
+}).middleware('checkAccess:employe,konsepsurat')
+
 //End Surat Keluar//
 
 //Tembusan//

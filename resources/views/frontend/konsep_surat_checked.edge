@@ -215,7 +215,9 @@
           var tr_data = "<tr><td>" + tgl_surat + "</td><td><b>" + element.nama_pembuat + "</b><br>" + element
             .jabatan_pembuat + "</td><td>" + nama_instansis + "</td><td>" + element.perihal +
             "</td><td align='center'>" + sts +
-            "</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a href='/konsep-surat/checked/" +
+            "</td><td><div class='btn-toolbar' aria-label='Toolbar with button groups' role='toolbar'><div class='btn-group' role='group'><a style='color:white' class='btn btn-icon btn-primary' href='/konsep-surat-checked/edit/" +
+              element.id +
+              "'><i class='icon md-edit' aria-hidden='true'></i></a><a href='/konsep-surat/checked/" +
             element.id +
             "'class='btn btn-icon btn-primary'><i class='icon md-eye' aria-hidden='true' style='color:white'></i></a></div></div></td></tr>";
           text += tr_data;

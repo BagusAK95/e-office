@@ -50,6 +50,7 @@
                   <th>ESELON</th>
                   <th>GOLONGAN</th>
                   <th>LEVEL</th>
+                  <th>MOBILE DEVICE</th>
                   <th style='width:120px'>ACTION</th>
                 </tr>
               </thead>
@@ -362,6 +363,12 @@
           if (element.kode_eselon == null) {
             eselon = "-";
           }
+          
+          var devicse = "-";
+          if (element.firebase_info != null) {
+            var jsondoc = JSON.parse(element.firebase_info);
+            devicse = besar(jsondoc.device)+" ("+besar(jsondoc.model)+")";
+          }
 
 
           var golongan = element.golongan;
@@ -370,7 +377,7 @@
           }
           var tr_data = "<tr><td>" + element.nip + "</td><td>" + element.nama_lengkap + "</td><td>" + eselon +
             "</td><td>" + golongan + "</td><td>" + level +
-            "</td><td align='center'><a class='btn btn-icon btn-primary' target='_blank' href='/admin/detail-user/" +
+            "</td><td>"+devicse+"</td><td align='center'><a class='btn btn-icon btn-primary' target='_blank' href='/admin/detail-user/" +
             element.nip +"/"+element.instansi+"'><i class='icon md-edit' aria-hidden='true'></i></a></td></tr>";
           text += tr_data;
         });
@@ -416,7 +423,10 @@
     });
   }
   /*End Show Data Function*/
-
+  function besar(text)
+  {
+    return text.toUpperCase();
+  }
   /*Show Detail Function*/
   function detail(nip) {
     $("#loader").fadeIn("slow");

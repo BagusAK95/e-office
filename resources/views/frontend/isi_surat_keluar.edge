@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>Isi Surat</title>
+    </head>
+    <body>
+        <center><div class="" id="tabel"></div></center>
+    </body>
+<script src="/material/global/vendor/jquery/jquery.js"></script>
+<script>
+    showtable();
+
+    function showtable() {
+        
+    //alert("ssdsd");
+    $.ajax({
+      type: 'GET',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      url: '/api/konsep-surat/{{params.id}}',
+      success: function (data) {
+        if(data.success==false)
+        {
+          swal({
+              title: "Gagal",
+              text: data.message,
+              type: "error"
+            },
+            function () {
+              window.location.href = "/konsep-surat/maked";
+            }
+          );
+        }
+        else
+        {
+        var element = data.data;
+        var tabel = element.isi_surat;
+        $("#tabel").html(tabel).show();
+        }
+        //showdisposisi();
+      },
+      error: function (data) {
+
+      }
+    });
+  }
+</script>
+
+</html>

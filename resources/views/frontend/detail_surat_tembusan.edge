@@ -543,6 +543,12 @@
         if (element.jabatan_pimpinan) {
           jabatanpimpinan = element.jabatan_pimpinan;
         }
+        
+        var isisurat = "-";
+        if(element.isi_surat)
+        {
+          isisurat = element.isi_surat;
+        }
 
         var tabel = "";
         var tabel2 = "";
@@ -560,7 +566,7 @@
           jabatanpimpinan + "</td></tr>";
 
         tabel2 += "<tr><th bgcolor='#f1f1f1' width='100%' colspan='2'>ISI</th></tr>";
-        tabel2 += "<tr><td width='50%' colspan='2'>" + element.isi_surat + "</td></tr>";
+        tabel2 += "<tr><td width='50%' colspan='2'>" + isisurat + "</td></tr>";
         tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KLASIFIKASI</th><td width='50%'>" + kla + "</td></tr>";
         tabel2 += "<tr><th bgcolor='#f1f1f1' width='50%'>KECEPATAN</th><td width='50%'>" + kecepatan +
           "</td></tr>";
