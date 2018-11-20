@@ -10,7 +10,6 @@ class editKonsepSurat {
       jabatan_penandatangan: 'required',
       tgl_surat: 'required',
       arr_penerima: 'required',
-      arr_pemeriksa: 'required',
       perihal: 'required',
       keamanan: 'required',
       kecepatan: 'required',
