@@ -345,7 +345,7 @@ class SuratKeluarController {
                 dataSurat.nama_tata_usaha = user.nama_lengkap
                 dataSurat.jabatan_tata_usaha = user.nama_jabatan
                 dataSurat.status_surat = 4
-                dataSurat.isi_surat = dataSurat.isi_surat.replace('<img src="' + dataPimpinan.ttd + '" width="300px" />', '<img src="' + dataPimpinan.ttd_stempel + '" width="300px" />')
+                dataSurat.isi_surat = dataSurat.isi_surat.replace('<img src="https://latihaneoffice.patikab.go.id' + dataPimpinan.ttd + '" width="300px" />', '<img src="https://latihaneoffice.patikab.go.id' + dataPimpinan.ttd_stempel + '" width="300px" />')
                 dataSurat.save()
 
                 const dataPengirim = await MasterKantor.find(dataSurat.instansi_pengirim)
@@ -356,7 +356,7 @@ class SuratKeluarController {
                 }).join('|');
                 const lampiran = '/uploads/' + new Date().getTime() + '.pdf'
 
-                Pdf.create(dataSurat.isi_surat, { format: 'Letter' }).toFile('./public' + lampiran)
+                Pdf.create(dataSurat.isi_surat, { width: '35.0cm', height: '43.7cm' }).toFile('./public' + lampiran)
 
                 arrPenerima.forEach(async (penerima) => {
                     if (penerima.id_instansi) {
