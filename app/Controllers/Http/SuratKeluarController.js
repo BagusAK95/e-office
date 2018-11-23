@@ -345,7 +345,7 @@ class SuratKeluarController {
                 dataSurat.nama_tata_usaha = user.nama_lengkap
                 dataSurat.jabatan_tata_usaha = user.nama_jabatan
                 dataSurat.status_surat = 4
-                dataSurat.isi_surat = dataSurat.isi_surat.replace('<img src="' + dataPimpinan.ttd + '" />', '<img src="' + dataPimpinan.ttd_stempel + '" />')
+                dataSurat.isi_surat = dataSurat.isi_surat.replace('<img src="' + dataPimpinan.ttd + '" width="300px" />', '<img src="' + dataPimpinan.ttd_stempel + '" width="300px" />')
                 dataSurat.save()
 
                 const dataPengirim = await MasterKantor.find(dataSurat.instansi_pengirim)
