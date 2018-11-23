@@ -1388,7 +1388,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.post('/konsep-surat', 'SuratKeluarController.add').validator('addKonsepSurat').middleware('checkToken:employe,konsepsurat')
+  Route.post('/konsep-surat', 'SuratKeluarController.add')
 
   /**
    * @swagger
