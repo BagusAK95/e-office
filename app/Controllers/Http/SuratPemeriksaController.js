@@ -63,9 +63,14 @@ class SuratPemeriksaController {
                                                                         .where({ level: 3, instansi: user.instansi })
                                                                         .first()
                                         if (dataTataUsaha) {
+                                            const dataPimpinan = await Login.query()
+                                                                        .where({ level: 2, instansi: user.instansi })
+                                                                        .first()
+
                                             dataSurat.nip_tata_usaha = dataTataUsaha.nip
                                             dataSurat.nama_tata_usaha = dataTataUsaha.nama_lengkap
                                             dataSurat.jabatan_tata_usaha = dataTataUsaha.nama_jabatan
+                                            dataSurat.isi_surat = dataSurat.isi_surat.replace('<img src="Kop Surat" />', '<img src="' + dataPimpinan.kop_surat + '" />').replace('<img src="Tanda Tangan" />', '<img src="' + dataPimpinan.ttd + '" />')
                                             await dataSurat.save()
 
                                             Notification.send(user, [dataTataUsaha.nip], 'Menambahkan Surat Keluar', '/surat-keluar/' + params.id_surat_keluar)

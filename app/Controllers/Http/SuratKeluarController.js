@@ -334,6 +334,10 @@ class SuratKeluarController {
                                             .where({ instansi_pengirim: user.instansi, id: params.id })
                                             .first()
             if (dataSurat) {
+                const dataPimpinan = await Login.query()
+                                                .where({ level: 2, instansi: user.instansi })
+                                                .first()
+                                                                        
                 dataSurat.nomor_surat = data.nomor_surat
                 dataSurat.nomor_agenda = data.nomor_agenda
                 dataSurat.lampiran = data.lampiran
@@ -341,6 +345,7 @@ class SuratKeluarController {
                 dataSurat.nama_tata_usaha = user.nama_lengkap
                 dataSurat.jabatan_tata_usaha = user.nama_jabatan
                 dataSurat.status_surat = 4
+                dataSurat.isi_surat = dataSurat.isi_surat.replace('<img src="Kop Surat" />', '<img src="' + dataPimpinan.kop_surat + '" />').replace('<img src="Tanda Tangan" />', '<img src="' + dataPimpinan.ttd_stempel + '" />')
                 dataSurat.save()
 
                 const dataPengirim = await MasterKantor.find(dataSurat.instansi_pengirim)
