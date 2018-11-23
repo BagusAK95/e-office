@@ -6,8 +6,7 @@ class sendSuratKeluar {
   get rules () {
     return {
       nomor_surat: 'required',
-      nomor_agenda: 'required',
-      lampiran: 'required'
+      nomor_agenda: 'required'
     }
   }
 
