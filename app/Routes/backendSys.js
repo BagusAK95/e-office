@@ -410,6 +410,24 @@ Route.group(() => {
 
   /**
    * @swagger
+   * /master-kantor/{id}:
+   *   get:
+   *     tags:
+   *       - Master Kantor
+   *     summary: Detail
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: id
+   *         in: path
+   *         description: Id
+   *         required: true
+   *         type: string
+   */
+  Route.get('/master-kantor/:id', 'MasterKantorController.detail_Sys').middleware('checkTokenSys')
+
+  /**
+   * @swagger
    * /master-jabatan/listAll:
    *   get:
    *     tags:

@@ -230,6 +230,22 @@ class MasterKantorController {
         }
     }
 
+
+    /* System */
+
+    async detail_Sys({ params }) {
+        try {
+            const data = await MasterKantor.query().where('kdlokasi', params.id).first()
+            if (data) {
+                return Response.format(true, null, data)
+            } else {
+                return Response.format(false, 'Kantor tidak ditemukan', null)
+            }
+        } catch (error) {
+            return Response.format(false, error, null)
+        }
+    }
+
     async update_Sys({ params, request }) {
         try {
             const data = request.only(['pimpinan', 'singkatan'])
