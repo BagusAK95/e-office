@@ -502,7 +502,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.post('/template-surat', 'SuratTemplateController.add').validator('addTemplateSurat').middleware('checkTokenSys')
+  Route.post('/template-surat', 'SuratTemplateController.add_Sys').validator('addTemplateSurat').middleware('checkTokenSys')
 
   /**
    * @swagger
@@ -532,7 +532,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.put('/template-surat/:id', 'SuratTemplateController.edit').validator('editTemplateSurat').middleware('checkTokenSys')
+  Route.put('/template-surat/:id', 'SuratTemplateController.edit_Sys').validator('editTemplateSurat').middleware('checkTokenSys')
 
   /**
    * @swagger
@@ -552,7 +552,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.delete('/template-surat/:id', 'SuratTemplateController.delete').middleware('checkTokenSys')
+  Route.delete('/template-surat/:id', 'SuratTemplateController.delete_Sys').middleware('checkTokenSys')
 
   /**
    * @swagger
@@ -577,7 +577,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.get('/template-surat', 'SuratTemplateController.list').middleware('checkTokenSys')
+  Route.get('/template-surat', 'SuratTemplateController.list_Sys').middleware('checkTokenSys')
 
   /**
    * @swagger
@@ -597,5 +597,5 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.get('/template-surat/:id', 'SuratTemplateController.detail').middleware('checkTokenSys')
+  Route.get('/template-surat/:id', 'SuratTemplateController.detail_Sys').middleware('checkTokenSys')
 }).prefix('api-sys')
