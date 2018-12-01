@@ -56,8 +56,10 @@
               <button data-target="#exampleNiftyFlipHorizontal3" data-toggle="modal" type="button" class="btn btn-info" style="display:none"
                 id="tambah_pengecek">
                 <i class='md-shield-check'></i>&nbsp;Tambah Pemeriksa</button>
-              <button data-target="#exampleNiftyFlipHorizontal" data-toggle="modal" type="button" class="btn btn-success">
-                <i class='md-edit'></i>&nbsp;Ubah Status</button>
+              <button data-target="#exampleNiftyFlipHorizontala" style="color:white" data-toggle="modal" type="button" class="btn btn-warning">
+                <i class='md-close'></i>&nbsp;Revisi</button>
+              <button data-target="#exampleNiftyFlipHorizontalb" data-toggle="modal" type="button" class="btn btn-success">
+                <i class='md-assignment-check'></i>&nbsp;Disetujui</button>
               <a href='/konsep-surat/checked' class='btn btn-danger' style='color:white'>
                 <i class='md-undo'></i>&nbsp;Kembali</a>
             </li>
@@ -140,6 +142,88 @@
 </div>
 <!-- End Modal -->
 <!-- Modal -->
+<div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontala" aria-hidden="true" aria-labelledby="exampleModalTitle"
+  role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Status Direvisi</h4>
+      </div>
+      <form id="simpan" class="simpan">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xxl-4 col-lg-12">
+              <!-- Example Panel With Heading -->
+              <div class="panel-body">
+                <div class="col-lg-12">
+                  <div class="form-group " data-plugin="formMaterial" style="display:none;">
+                    <label class="form-control-label" for="inputEmail">Status</label>
+                    <select class="form-control" name="status" id="status">
+                      <option value="2" selected=''>Revisi</option>
+                    </select>
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial">
+                    <label class="form-control-label" for="inputEmail">Keterangan</label>
+                    <textarea class="form-control" name="keterangan" id="input_keterangan"></textarea>
+                  </div>
+                </div>
+              </div>
+              <!-- End Example Panel With Heading -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-warning" style="color:white" id="tombol_submit" style='float:right'>
+            <i class='icon md-close'></i>&nbsp;Revisi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade modal-3d-flip-horizontal" id="exampleNiftyFlipHorizontalb" aria-hidden="true" aria-labelledby="exampleModalTitle"
+  role="dialog" tabindex="-1">
+  <div class="modal-dialog modal-simple">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Status Disetujui</h4>
+      </div>
+      <form id="simpan" class="simpan2">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xxl-4 col-lg-12">
+              <!-- Example Panel With Heading -->
+              <div class="panel-body">
+                <div class="col-lg-12">
+                  <div class="form-group " data-plugin="formMaterial" style="display:none;">
+                    <label class="form-control-label" for="inputEmail">Status</label>
+                    <select class="form-control" name="status" id="status2">
+                      <option value="3" selected=''>Disetujui</option>
+                    </select>
+                  </div>
+                  <div class="form-group" data-plugin="formMaterial">
+                    <label class="form-control-label" for="inputEmail">Keterangan</label>
+                    <textarea class="form-control" name="keterangan" id="input_keterangan2"></textarea>
+                  </div>
+                </div>
+              </div>
+              <!-- End Example Panel With Heading -->
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" id="tombol_submit" style='float:right'>
+            <i class='icon md-assignment-check'></i>&nbsp;Disetujui</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
 <div class="modal fade modal-3d-flip-horizontal" id="lampiransurat" aria-hidden="true" aria-labelledby="exampleModalTitle"
   role="dialog" tabindex="-1">
   <div class="modal-dialog modal-simple">
@@ -166,7 +250,7 @@
       <div class="modal-header">
         <h4 class="modal-title">Tambahkan Pemeriksa</h4>
       </div>
-      <form id="simpan">
+      <form id="">
         <div class="modal-body">
           <div class="row">
             <div class="col-xxl-4 col-lg-12">
@@ -600,7 +684,7 @@
     return moment(tanggal).format("LLL");
   }
 
-  $("#simpan").submit(function () {
+  $(".simpan").submit(function () {
     $("#tombol_submit").addClass("disabled");
     $.ajax({
       type: 'PUT',
@@ -610,6 +694,40 @@
       },
       data: "id_surat_keluar={{params.id}}" + "&status=" + $("#status").val() + "&keterangan=" + $(
         "#input_keterangan").val(),
+      success: function (data) {
+        if (data.success == false) {
+          swal("Gagal!", "Perubahan Status Gagal.", "error");
+        } else if (data.success == true) {
+          swal({
+              title: "Berhasil",
+              text: data.message,
+              type: "success"
+            },
+            function () {
+              window.location.href = "/konsep-surat/checked";
+            }
+          );
+        }
+        $("#tombol_submit").removeClass("disabled");
+      },
+      error: function (data) {
+        swal("Gagal!", "Perubahan Status Gagal.", "error");
+      }
+    });
+    return false;
+  });
+
+
+    $(".simpan2").submit(function () {
+    $("#tombol_submit").addClass("disabled");
+    $.ajax({
+      type: 'PUT',
+      url: '/api/konsep-surat/checkingConcept/{{params.id}}',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      data: "id_surat_keluar={{params.id}}" + "&status=" + $("#status2").val() + "&keterangan=" + $(
+        "#input_keterangan2").val(),
       success: function (data) {
         if (data.success == false) {
           swal("Gagal!", "Perubahan Status Gagal.", "error");

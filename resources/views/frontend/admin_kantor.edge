@@ -21,7 +21,7 @@
                 <tr>
                   <th>KODE</th>
                   <th>NAMA</th>
-                  <!--<th style='width:120px'>ACTION</th>-->
+                  <th style='width:120px'>ACTION</th>
                 </tr>
               </thead>
               <tbody id="body">
@@ -316,7 +316,8 @@
       success: function (data) {
         var text = "";
         $.each(data.data.data, function (index, element) {
-          var tr_data = "<tr><td>" + element.kdlokasi + "</td><td><a style='text-decoration: none;' href='/admin/detail-kantor/"+element.kdlokasi+"'>" + element.nmlokasi + "</a></td>"+
+          var tr_data = "<tr><td>" + element.kdlokasi + "</td><td><a style='text-decoration: none;' href='/admin/detail-kantor/"+element.kdlokasi+"'>" + element.nmlokasi + "</a><td align='center'><a class='btn btn-icon btn-primary' target='_blank' href='/admin/edit-kantor/" +
+            element.kdlokasi+"'><i class='icon md-edit' aria-hidden='true'></i></a></td></td>"+
             "</tr>";
           text += tr_data;
         });

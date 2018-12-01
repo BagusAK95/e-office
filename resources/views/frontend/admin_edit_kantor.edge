@@ -1,0 +1,136 @@
+@layout('frontend/admin_main')
+@section('content')
+<div class="page-content container-fluid">
+  <div class="row">
+    <div class="col-xxl-4 col-lg-12">
+      <!-- Example Panel With Heading -->
+      <div class="panel panel-bordered panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            <i class="icon md-layers"></i>&nbsp;Setting Kantor - <span id="nama"></span></h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-lg-12">
+            <!-- Example Default -->
+            <style>
+              .tab {
+                display: none;
+              }
+
+              .steping {}
+
+              .steping.active {
+                opacity: 1;
+              }
+
+              .steping.finish {
+                color: #fff;
+                background-color: #3f51b5;
+              }
+
+            </style>
+            <form autocomplete="off" id="simpan">
+              <!--Main-->
+              <div class="panel">
+                <div class="panel-body container-fluid">
+                <form id="form">
+                  <div class="form-group" data-plugin="formMaterial">
+                    <label class="form-control-label" for="inputEmail">Pimpinan&nbsp;</label>
+                    <input type="text" id="pimpinan" name="pimpinan" class="form-control">
+                  </div>
+
+                  <div class="form-group" data-plugin="formMaterial">
+                    <label class="form-control-label"  for="inputEmail">Singkatan&nbsp;</label>
+                        <input type="text" id="singkatan" name="singkatan" class="form-control">
+                    </label>
+                  </div>
+
+                  <br>
+                  <a class="btn btn-danger waves-classic" onclick="window.close();" style="color:white">Batal</a>
+                  <div style="float:right">
+                    <div style="overflow:auto;">
+                      <div style="float:right;">
+                        <a class='btn btn-success' onclick='simpen()' style='color:white'>Submit</a>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                </form>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Example Panel With Heading -->
+  </div>
+</div>
+</div>
+<script>
+  // Handle the event that fires when a tag is added
+  $(document).ready(function () {
+    /*Main*/
+    $("#loader").fadeIn();
+    cek_session();
+    cek_token();
+    /*End Main*/
+
+    /*Page*/
+    show_detail()
+    $("#loader").fadeOut("xslow");
+    /*Page*/
+  });
+  function simpen() {
+    $("#loader").fadeIn();
+    $.ajax({
+      type: 'PUT',
+      url: '/api-sys/master-kantor/{{params.id}}',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      data: "id={{params.id}}&pimpinan=" + $("#pimpinan").val() + "&singkatan="+$("#singkatan").val(),
+      success: function (datanya) {
+        if (datanya.success == false) {
+          swal("Gagal!", datanya.message, "error");
+        } else if (datanya.success == true) {
+          swal({
+              title: "Berhasil",
+              text: "Berhasil Menyimpan data.",
+              type: "success"
+            },
+            function () {
+              window.location.href = "/admin/edit-kantor/{{params.id}}";
+            });
+          $("#loader").hide();
+        }
+      },
+      error: function (data) {
+        swal("Gagal!", data.message, "error");
+      }
+    });
+    return false;
+  }
+
+  function show_detail() {
+    $.ajax({
+      type: 'GET',
+      headers: {
+        'Authorization': 'Bearer {{sesi}}'
+      },
+      url: '/api-sys/master-kantor/{{params.id}}',
+      success: function (data) {
+        var element = data.data;
+        $("#pimpinan").val(element.pimpinan);
+        $("#singkatan").val(element.singkatan);
+        $("#nama").html(element.nmlokasi);
+      },
+      error: function (data) {
+
+      }
+    });
+  }
+
+</script>
+@endsection

@@ -450,7 +450,7 @@ Route.get('/template-surat', async function ({
   return view.render('frontend/template_surat', {
     sesi
   })
-}).middleware('checkAccess:employe,konsepsurat')
+}).middleware('checkAccess:admin')
 
 Route.get('/template-surat/add', async function ({
   session,
@@ -460,7 +460,7 @@ Route.get('/template-surat/add', async function ({
   return view.render('frontend/template_surat_add', {
     sesi
   })
-}).middleware('checkAccess:employe,konsepsurat')
+}).middleware('checkAccess:admin')
 
 Route.get('/template-surat/detail/:id', async function ({
   session,
@@ -472,7 +472,7 @@ Route.get('/template-surat/detail/:id', async function ({
     params,
     sesi
   })
-}).middleware('checkAccess:employe,konsepsurat')
+}).middleware('checkAccess:admin')
 
 Route.get('/template-surat/edit/:id', async function ({
   session,
@@ -484,7 +484,7 @@ Route.get('/template-surat/edit/:id', async function ({
     params,
     sesi
   })
-}).middleware('checkAccess:employe,konsepsurat')
+}).middleware('checkAccess:admin')
 
 
 
@@ -651,6 +651,17 @@ Route.get('/admin/detail-kantor/:id', ({
     params
   })
 })
+Route.get('/admin/edit-kantor/:id', ({
+  session,
+  params,
+  view
+}) => {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_edit_kantor', {
+    sesi,
+    params
+  })
+})
 
 
 Route.get('/admin/detail-user/:id/:instansi', ({
@@ -664,6 +675,53 @@ Route.get('/admin/detail-user/:id/:instansi', ({
     params
   })
 })
+
+
+// TEMPLATE SURAT ADMIN //
+Route.get('/admin/template-surat', async function ({
+  session,
+  view
+}) {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_template_surat', {
+    sesi
+  })
+})
+
+Route.get('/admin/template-surat/add', async function ({
+  session,
+  view
+}) {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_template_surat_add', {
+    sesi
+  })
+})
+
+Route.get('/admin/template-surat/detail/:id', async function ({
+  session,
+  params,
+  view
+}) {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_template_surat_detail', {
+    params,
+    sesi
+  })
+})
+
+Route.get('/admin/template-surat/edit/:id', async function ({
+  session,
+  params,
+  view
+}) {
+  const sesi = session.get('token_admin');
+  return view.render('frontend/admin_template_surat_edit', {
+    params,
+    sesi
+  })
+})
+// END TEMPLATE SURAT ADMIN //
 
 Route.post('/profile-picture-admin', async ({
   request
