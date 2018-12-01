@@ -382,6 +382,34 @@ Route.group(() => {
 
   /**
    * @swagger
+   * /master-kantor/{id}:
+   *   put:
+   *     tags:
+   *       - Master Kantor
+   *     summary: Update
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: id
+   *         in: path
+   *         description: Id
+   *         required: true
+   *         type: string
+   *       - name: pimpinan
+   *         in: formData
+   *         description: Sebutan untuk Pimpinan (Kepala, Directur, dll)
+   *         required: true
+   *         type: string
+   *       - name: singkatan
+   *         in: formData
+   *         description: Singkatan OPD
+   *         required: true
+   *         type: string
+   */
+  Route.put('/master-kantor/:id', 'MasterKantorController.update_Sys').middleware('checkTokenSys')
+
+  /**
+   * @swagger
    * /master-jabatan/listAll:
    *   get:
    *     tags:
@@ -431,4 +459,125 @@ Route.group(() => {
    *         type: string
    */
   Route.get('/log', 'LogController.list_Sys').middleware('checkTokenSys')
+
+
+  /**
+   * @swagger
+   * /template-surat:
+   *   post:
+   *     tags:
+   *       - Template Surat
+   *     summary: Add
+   *     consumes:
+   *       - application/x-www-form-urlencoded
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: judul
+   *         in: formData
+   *         description: Judul Surat
+   *         required: true
+   *         type: string
+   *       - name: isi
+   *         in: formData
+   *         description: Isi surat
+   *         required: true
+   *         type: string
+   */
+  Route.post('/template-surat', 'SuratTemplateController.add').validator('addTemplateSurat').middleware('checkTokenSys')
+
+  /**
+   * @swagger
+   * /template-surat/{id}:
+   *   put:
+   *     tags:
+   *       - Template Surat
+   *     summary: Edit
+   *     consumes:
+   *       - application/x-www-form-urlencoded
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: id
+   *         in: path
+   *         description: Id
+   *         required: true
+   *         type: string
+   *       - name: judul
+   *         in: formData
+   *         description: Judul Surat
+   *         required: true
+   *         type: string
+   *       - name: isi
+   *         in: formData
+   *         description: Isi surat
+   *         required: true
+   *         type: string
+   */
+  Route.put('/template-surat/:id', 'SuratTemplateController.edit').validator('editTemplateSurat').middleware('checkTokenSys')
+
+  /**
+   * @swagger
+   * /template-surat/{id}:
+   *   delete:
+   *     tags:
+   *       - Template Surat
+   *     summary: Delete
+   *     consumes:
+   *       - application/x-www-form-urlencoded
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: id
+   *         in: path
+   *         description: Id
+   *         required: true
+   *         type: string
+   */
+  Route.delete('/template-surat/:id', 'SuratTemplateController.delete').middleware('checkTokenSys')
+
+  /**
+   * @swagger
+   * /template-surat:
+   *   get:
+   *     tags:
+   *       - Template Surat
+   *     summary: List
+   *     consumes:
+   *       - application/x-www-form-urlencoded
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: page
+   *         in: query
+   *         description: Halaman
+   *         required: true
+   *         type: string
+   *       - name: limit
+   *         in: query
+   *         description: Data per Halaman
+   *         required: true
+   *         type: string
+   */
+  Route.get('/template-surat', 'SuratTemplateController.list').middleware('checkTokenSys')
+
+  /**
+   * @swagger
+   * /template-surat/{id}:
+   *   get:
+   *     tags:
+   *       - Template Surat
+   *     summary: Detail
+   *     consumes:
+   *       - application/x-www-form-urlencoded
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: id
+   *         in: path
+   *         description: Id
+   *         required: true
+   *         type: string
+   */
+  Route.get('/template-surat/:id', 'SuratTemplateController.detail').middleware('checkTokenSys')
 }).prefix('api-sys')

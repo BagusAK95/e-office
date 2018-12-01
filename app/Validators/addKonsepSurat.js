@@ -15,7 +15,6 @@ class addKonsepSurat {
       keamanan: 'required',
       kecepatan: 'required',
       klasifikasi: 'required',
-      ringkasan: 'required',
       isi_surat: 'required'
     }
   }

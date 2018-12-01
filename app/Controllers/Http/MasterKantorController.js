@@ -229,6 +229,21 @@ class MasterKantorController {
             return Response.format(false, error, null)            
         }
     }
+
+    async update_Sys({ params, request }) {
+        try {
+            const data = request.only(['pimpinan', 'singkatan'])
+            
+            const edit = await MasterKantor.query().where('kdlokasi', params.id).update(data)
+            if (edit > 0) {
+                return Response.format(true, null, edit)
+            } else {
+                return Response.format(false, 'Kantor tidak ditemukan', null)
+            }
+        } catch (error) {
+            return Response.format(false, error, null)
+        }
+    }
 }
 
 module.exports = MasterKantorController

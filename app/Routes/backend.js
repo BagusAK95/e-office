@@ -1902,7 +1902,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.post('/template-surat', 'SuratTemplateController.add').validator('addTemplateSurat').middleware('checkToken:employe,konsepsurat')
+  Route.post('/template-surat', 'SuratTemplateController.add').validator('addTemplateSurat').middleware('checkToken:admin')
 
   /**
    * @swagger
@@ -1932,7 +1932,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.put('/template-surat/:id', 'SuratTemplateController.edit').validator('editTemplateSurat').middleware('checkToken:employe,konsepsurat')
+  Route.put('/template-surat/:id', 'SuratTemplateController.edit').validator('editTemplateSurat').middleware('checkToken:admin')
 
   /**
    * @swagger
@@ -1952,7 +1952,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.delete('/template-surat/:id', 'SuratTemplateController.delete').middleware('checkToken:employe,konsepsurat')
+  Route.delete('/template-surat/:id', 'SuratTemplateController.delete').middleware('checkToken:admin')
 
   /**
    * @swagger
