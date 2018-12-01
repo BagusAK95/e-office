@@ -1977,7 +1977,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.get('/template-surat', 'SuratTemplateController.list').middleware('checkToken:employe,konsepsurat')
+  Route.get('/template-surat', 'SuratTemplateController.list').middleware('checkToken')
 
   /**
    * @swagger
@@ -1997,7 +1997,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.get('/template-surat/:id', 'SuratTemplateController.detail').middleware('checkToken:employe,konsepsurat')
+  Route.get('/template-surat/:id', 'SuratTemplateController.detail').middleware('checkToken')
 
   /**
    * @swagger
