@@ -577,7 +577,7 @@ Route.group(() => {
    *         required: true
    *         type: string
    */
-  Route.get('/template-surat', 'SuratTemplateController.list_Sys').middleware('checkTokenSys')
+  Route.get('/template-surat', 'SuratTemplateController.list_Sys')
 
   /**
    * @swagger

@@ -104,13 +104,9 @@ class SuratTemplateController {
 
     async add_Sys({ request, auth }) {
         try {
-            const user = await auth.getUser()
-            
             let data = request.all()
             
             const insert = await SuratTemplate.create(data)
-
-            Log.add(user, 'Membuat Template Surat Berjudul ' + data.judul, insert)
 
             return Response.format(true, null, insert)            
         } catch (error) {
@@ -120,7 +116,6 @@ class SuratTemplateController {
 
     async edit_Sys({ request, params, auth }) {
         try {
-            const user = await auth.getUser()
             const data = request.all()
 
             const dataTemplate = await SuratTemplate.query()
@@ -130,8 +125,6 @@ class SuratTemplateController {
                 dataTemplate.judul = data.judul
                 dataTemplate.isi = data.isi
                 await dataTemplate.save()
-
-                Log.add(user, 'Mengubah Template Surat Berjudul ' + data.judul, data)
 
                 return Response.format(true, null, 1)
             } else {
@@ -144,16 +137,12 @@ class SuratTemplateController {
 
     async delete_Sys({ params, auth }) {
         try {
-            const user = await auth.getUser()
-
             const dataTemplate = await SuratTemplate.query()
                                                     .where({ id: params.id })
                                                     .first()
             if (dataTemplate) {
                 await dataTemplate.delete()
                 
-                Log.add(user, 'Menghapus Template Surat Berjudul ' + dataTemplate.judul, dataTemplate)
-
                 return Response.format(true, null, 1)
             } else {
                 return Response.format(false, 'Template Surat tidak ditemukan', null)
@@ -165,11 +154,8 @@ class SuratTemplateController {
 
     async list_Sys({ request, auth }) {
         try {
-            const user = await auth.getUser()
             const data = await SuratTemplate.query()
                                             .paginate(Number(request.get().page), Number(request.get().limit))
-
-            Log.add(user, 'Melihat Daftar Template Surat Pada Halaman ' + request.get().page)
 
             return Response.format(true, null, data)
         } catch (error) {
@@ -179,12 +165,10 @@ class SuratTemplateController {
 
     async detail_Sys({ params, auth }) {
         try {
-            const user = await auth.getUser()
             const data = await SuratTemplate.query()
                                             .where({ id: params.id })
                                             .first()
             if (data) {
-                Log.add(user, 'Melihat Detail Template Surat Dengan Judul ' + data.judul)
 
                 return Response.format(true, null, data)
             } else {
