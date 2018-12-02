@@ -11,6 +11,7 @@ const MasterKantor = use('App/Models/MasterKantor')
 const Login = use('App/Models/Login')
 const Log = use('App/Helpers/LogHelper')
 const Pdf = require('html-pdf')
+const Template = use('App/Helpers/TemplateHelper')
 
 class SuratKeluarController {
     async add({ request, auth }) {
@@ -220,7 +221,9 @@ class SuratKeluarController {
                                           .with('klasifikasi_')
                                           .with('surat_masuk_')
                                           .first()
-            if (data) {    
+            if (data) {
+                data.preview = await Template.format(params.id, false)
+                
                 const update = await SuratPemeriksa.query()
                                                    .where({ id_surat_keluar: params.id, nip_pemeriksa: user.nip })
                                                    .update({ tgl_baca: new Date() })
@@ -328,6 +331,7 @@ class SuratKeluarController {
     async sendMail({ params, request, auth }) {
         try {
             const user = await auth.getUser()
+            const lampiran = '/uploads/' + new Date().getTime() + '.pdf'
             const data = request.only(['nomor_surat', 'nomor_agenda', 'lampiran'])
 
             const dataSurat = await SuratKeluar.query()
@@ -345,7 +349,7 @@ class SuratKeluarController {
                 dataSurat.nama_tata_usaha = user.nama_lengkap
                 dataSurat.jabatan_tata_usaha = user.nama_jabatan
                 dataSurat.status_surat = 4
-                dataSurat.isi_surat = dataSurat.isi_surat.replace('<img src="https://latihaneoffice.patikab.go.id' + dataPimpinan.ttd + '" width="300px" />', '<img src="https://latihaneoffice.patikab.go.id' + dataPimpinan.ttd_stempel + '" width="300px" />')
+                dataSurat.lampiran = lampiran
                 dataSurat.save()
 
                 const dataPengirim = await MasterKantor.find(dataSurat.instansi_pengirim)
@@ -354,9 +358,8 @@ class SuratKeluarController {
                 const listTembusan = arrTembusan.map((elem) => {
                     return elem.nama_instansi;
                 }).join('|');
-                const lampiran = '/uploads/' + new Date().getTime() + '.pdf'
 
-                Pdf.create(dataSurat.isi_surat, { width: '35.0cm', height: '43.7cm' }).toFile('./public' + lampiran)
+                Pdf.create(await Template.format(params.id, true), { width: '35.0cm', height: '43.7cm' }).toFile('./public' + lampiran)
 
                 arrPenerima.forEach(async (penerima) => {
                     if (penerima.id_instansi) {
