@@ -310,6 +310,8 @@ class SuratKeluarController {
                                           .with('pengiriman_')
                                           .first()
             if (data) {
+                data.preview = await Template.format(params.id, false)
+
                 if (data.nip_tata_usaha == user.nip) {
                     if (data.tgl_baca_tata_usaha == null) {
                         data.tgl_baca_tata_usaha = new Date()
