@@ -310,14 +310,14 @@ class SuratKeluarController {
                                           .with('pengiriman_')
                                           .first()
             if (data) {
-                data.preview = await Template.format(params.id, false)
-
                 if (data.nip_tata_usaha == user.nip) {
                     if (data.tgl_baca_tata_usaha == null) {
                         data.tgl_baca_tata_usaha = new Date()
                         await data.save()
                     }
                 }
+
+                data.preview = await Template.format(params.id, false)
                 
                 Log.add(user, 'Melihat Detail Surat Keluar Atas Nama ' + data.nama_penandatangan)
 
