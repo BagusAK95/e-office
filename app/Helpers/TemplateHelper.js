@@ -28,6 +28,64 @@ const TemplateHelper = {
             break;
         }
 
+        let pangkat = ''
+        switch (pimpinan.golongan) {
+          case 'I/a':
+            pangkat = 'Juru Muda'
+            break;
+          case 'I/b':
+            pangkat = 'Juru Muda Tingkat I'
+            break;
+          case 'I/c':
+            pangkat = 'Juru'
+            break;
+          case 'I/d':
+            pangkat = 'Juru Tingkat I'
+            break;
+          case 'II/a':
+            pangkat = 'Pengatur Muda'
+            break;
+          case 'II/b':
+            pangkat = 'Pengatur Muda Tingkat I'
+            break;
+          case 'II/c':
+            pangkat = 'Pengatur'
+            break;
+          case 'II/d':
+            pangkat = 'Pengatur Tingkat 1'
+            break;
+          case 'III/a':
+            pangkat = 'Penata Muda'
+            break;
+          case 'III/b':
+            pangkat = 'Penata Muda Tingkat I'
+            break;
+          case 'III/c':
+            pangkat = 'Penata'
+            break;
+          case 'III/d':
+            pangkat = 'Penata Tingkat I'
+            break;
+          case 'IV/a':
+            pangkat = 'Pembina'
+            break;
+          case 'IV/b':
+            pangkat = 'Pembina Tingkat I'
+            break;
+          case 'IV/c':
+            pangkat = 'Pembina Utama Muda'
+            break;
+          case 'IV/d':
+            pangkat = 'Pembina Utama Madya'
+            break;
+          case 'IV/e':
+            pangkat = 'Pembina Utama'
+            break;
+          default:
+            pangkat = ''
+            break;
+        }
+
         const arrIdPenerima = JSON.parse(surat.arr_penerima).map((e) => e.id_instansi)
         const arrDataPenerima = await MasterKantor.query().whereIn('kdlokasi', arrIdPenerima)
         const arrStrpenerima = []
@@ -52,6 +110,7 @@ const TemplateHelper = {
         html = html.replace('{Perihal}', surat.perihal)
         html = html.replace('{Jabatan}', pimpinan.nama_jabatan)
         html = html.replace('{Nama}', pimpinan.nama_lengkap)
+        html = html.replace('{Pangkat}', pangkat)
         html = html.replace('{NIP}', pimpinan.nip)
 
         resolve(html)
