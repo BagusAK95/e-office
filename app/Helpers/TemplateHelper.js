@@ -8,7 +8,6 @@ const TemplateHelper = {
   format: async function (id, status) {
     const surat = await SuratKeluar.find(id)
     const pimpinan = await Login.find(surat.nip_penandatangan)
-    const kantor = await MasterKantor.find(pimpinan.instansi)
 
     return new Promise((resolve, reject) => {
       fs.readFile('template.html', async (err, data) => {
@@ -49,7 +48,6 @@ const TemplateHelper = {
         html = html.replace('{Nomor}', surat.nomor_surat)
         html = html.replace('{Tujuan}', arrStrpenerima.join(''))
         html = html.replace('{Isi}', surat.isi_surat)
-        html = html.replace('{Instansi}', kantor.nmlokasi)
         html = html.replace('{Sifat}', sifat)
         html = html.replace('{Perihal}', surat.perihal)
         html = html.replace('{Jabatan}', pimpinan.nama_jabatan)
