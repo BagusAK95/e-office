@@ -222,7 +222,7 @@ class SuratKeluarController {
                                           .with('surat_masuk_')
                                           .first()
             if (data) {
-                data.preview = await Template.format(params.id, false)
+                data.preview = await Template.format(params.id, false, false)
                 
                 const update = await SuratPemeriksa.query()
                                                    .where({ id_surat_keluar: params.id, nip_pemeriksa: user.nip })
@@ -317,7 +317,7 @@ class SuratKeluarController {
                     }
                 }
 
-                data.preview = await Template.format(params.id, false)
+                data.preview = await Template.format(params.id, false, true)
                 
                 Log.add(user, 'Melihat Detail Surat Keluar Atas Nama ' + data.nama_penandatangan)
 
@@ -361,7 +361,7 @@ class SuratKeluarController {
                     return elem.nama_instansi;
                 }).join('|');
 
-                Pdf.create(await Template.format(params.id, true), { width: '35.0cm', height: '43.7cm' }).toFile('./public' + lampiran)
+                Pdf.create(await Template.format(params.id, true, true), { width: '35.0cm', height: '43.7cm' }).toFile('./public' + lampiran)
 
                 arrPenerima.forEach(async (penerima) => {
                     if (penerima.id_instansi) {

@@ -5,7 +5,7 @@ const MasterKantor = use('App/Models/MasterKantor')
 const Login = use('App/Models/Login')
 
 const TemplateHelper = {
-  format: async function (id, status) {
+  format: async function (id, disetujui, tandaTangan) {
     const surat = await SuratKeluar.find(id)
     const pimpinan = await Login.find(surat.nip_penandatangan)
 
@@ -97,8 +97,8 @@ const TemplateHelper = {
         })
 
         html = html.replace('{Kop}', '<img src="http://latihaneoffice.patikab.go.id' + pimpinan.kop_surat + '" />')
-        if (status === false) {
-          html = html.replace('{Tanda Tangan}', '<img src="http://latihaneoffice.patikab.go.id' + pimpinan.ttd + '" width="300px" />')
+        if (disetujui === false) {
+          if (tandaTangan) html = html.replace('{Tanda Tangan}', '<img src="http://latihaneoffice.patikab.go.id' + pimpinan.ttd + '" width="300px" />')
         } else {
           html = html.replace('{Tanda Tangan}', '<img src="http://latihaneoffice.patikab.go.id' + pimpinan.ttd_stempel + '" width="300px" />')
         }
