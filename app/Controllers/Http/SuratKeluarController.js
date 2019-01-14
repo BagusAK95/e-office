@@ -63,7 +63,7 @@ class SuratKeluarController {
                 sql.push(`tgl_surat <= '` + request.get().tgl_akhir + `'`)
             }
             if (request.get().keyword) {
-                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
+                sql.push(`keyword LIKE '%` + request.get().keyword + `%'`)
             }
             sql.push(`instansi_pengirim = '` + user.instansi + `'`)
             sql.push('status_surat BETWEEN 1 AND 2')
@@ -117,7 +117,7 @@ class SuratKeluarController {
                 sql.push(`tgl_surat <= '` + request.get().tgl_akhir + `'`)
             }
             if (request.get().keyword) {
-                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
+                sql.push(`keyword LIKE '%` + request.get().keyword + `%'`)
             }
             sql.push(`instansi_pengirim = '` + user.instansi + `'`)
             sql.push(`nip_pembuat = '` + user.nip + `'`)
@@ -251,7 +251,7 @@ class SuratKeluarController {
                 sql.push(`tgl_surat <= '` + request.get().tgl_akhir + `'`)
             }
             if (request.get().keyword) {
-                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
+                sql.push(`keyword LIKE '%` + request.get().keyword + `%'`)
             }
             sql.push('status_surat BETWEEN 3 AND 4')
 

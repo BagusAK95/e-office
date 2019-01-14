@@ -96,7 +96,7 @@ class UserController {
 
             let sql = []
             if (request.get().keyword) {
-                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
+                sql.push(`keyword LIKE '%` + request.get().keyword + `%'`)
             }
             sql.push('level not in (1,3)')
             sql.push('instansi = ' + user.instansi)
@@ -358,7 +358,7 @@ class UserController {
         try {
             let sql = []
             if (request.get().keyword) {
-                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
+                sql.push(`keyword LIKE '%` + request.get().keyword + `%'`)
             }
             sql.push('instansi = ' + request.get().instansi)
 

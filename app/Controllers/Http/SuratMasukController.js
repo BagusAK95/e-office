@@ -59,7 +59,7 @@ class SuratMasukController {
                 sql.push(`tgl_surat <= '` + request.get().tgl_akhir + `'`)
             }
             if (request.get().keyword) {
-                sql.push(`MATCH(keyword) AGAINST('` + request.get().keyword + `' IN BOOLEAN MODE)`)
+                sql.push(`keyword LIKE '%` + request.get().keyword + `%'`)
             }
 
             switch (user.level) {
