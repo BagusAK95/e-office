@@ -63,14 +63,15 @@ class DisposisiController {
             if (request.get().tgl_akhir) {
                 sql.push(`tgl_disposisi <= '` + request.get().tgl_akhir + `'`)
             }
-            if (request.get().keyword) {
-                sql.push(`keyword LIKE '%` + request.get().keyword + `%'`)
-            }
 
             //Get data dari database
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
-                                        .with('surat_')
+                                        .with('surat_', (builder) => {
+                                            if (request.get().keyword) {
+                                                builder.whereRaw(`keyword LIKE '%` + request.get().keyword + `%'`)
+                                            }
+                                        })
                                         .orderBy('tgl_disposisi', 'desc')
                                         .paginate(Number(request.get().page), Number(request.get().limit))
             
@@ -96,14 +97,15 @@ class DisposisiController {
             if (request.get().tgl_akhir) {
                 sql.push(`tgl_disposisi <= '` + request.get().tgl_akhir + `'`)
             }
-            if (request.get().keyword) {
-                sql.push(`keyword LIKE '%` + request.get().keyword + `%'`)
-            }
 
             //Ambil data dari database
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
-                                        .with('surat_')
+                                        .with('surat_', (builder) => {
+                                            if (request.get().keyword) {
+                                                builder.whereRaw(`keyword LIKE '%` + request.get().keyword + `%'`)
+                                            }
+                                        })
                                         .orderBy('tgl_disposisi', 'desc')
                                         .paginate(Number(request.get().page), Number(request.get().limit))
 
