@@ -104,6 +104,8 @@ class DisposisiController {
                                         .with('surat_', (builder) => {
                                             if (request.get().keyword) {
                                                 builder.whereRaw(`keyword LIKE '%` + request.get().keyword + `%'`)
+                                            } else {
+                                                builder.whereRaw(`keyword IS NOT NULL`)
                                             }
                                         })
                                         .orderBy('tgl_disposisi', 'desc')
