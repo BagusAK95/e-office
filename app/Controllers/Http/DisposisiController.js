@@ -101,11 +101,10 @@ class DisposisiController {
             //Ambil data dari database
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
-                                        .with('surat_', (builder) => {
+                                        .with('surat_')
+                                        .whereHas('surat_', (builder) => {
                                             if (request.get().keyword) {
                                                 builder.whereRaw(`keyword LIKE '%` + request.get().keyword + `%'`)
-                                            } else {
-                                                builder.whereRaw(`keyword IS NOT NULL`)
                                             }
                                         })
                                         .orderBy('tgl_disposisi', 'desc')
