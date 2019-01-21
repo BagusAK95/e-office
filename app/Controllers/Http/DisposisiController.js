@@ -67,7 +67,8 @@ class DisposisiController {
             //Get data dari database
             const data = await Disposisi.query()
                                         .whereRaw(sql.join(' AND '))
-                                        .with('surat_', (builder) => {
+                                        .with('surat_')
+                                        .whereHas('surat_', (builder) => {
                                             if (request.get().keyword) {
                                                 builder.whereRaw(`keyword LIKE '%` + request.get().keyword + `%'`)
                                             }
