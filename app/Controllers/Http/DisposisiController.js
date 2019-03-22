@@ -20,28 +20,33 @@ class DisposisiController {
                 data.jabatan_pengirim = user.nama_jabatan
                 data.keyword = ''.concat(data.nama_penerima, ' | ', data.isi_disposisi)
 
-                const insert = await Disposisi.create(data) //insert ke database
+                const checkExist = await Disposisi.query().where({ instansi: data.instansi, id_surat_masuk: data.id_surat_masuk, nip_penerima: data.nip_penerima, nip_pengirim: data.nip_pengirim }).first()
+                if (!checkExist) {
+                    const insert = await Disposisi.create(data) //insert ke database
 
-                const disposisi = await Disposisi.query().where({ instansi: user.instansi, id_surat_masuk: data.id_surat_masuk, nip_penerima: user.nip }).first()
-                if (disposisi) {
-                    if (disposisi.status == 0) {
-                        disposisi.status = 1
-                        disposisi.save()
+                    const disposisi = await Disposisi.query().where({ instansi: user.instansi, id_surat_masuk: data.id_surat_masuk, nip_penerima: user.nip }).first()
+                    if (disposisi) {
+                        if (disposisi.status == 0) {
+                            disposisi.status = 1
+                            disposisi.save()
 
-                        const surat = await SuratMasuk.find(disposisi.id_surat_masuk)
-                        if (surat) {
-                            Notification.send(user, [disposisi.nip_pengirim], 'Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + disposisi.id)                                                    
+                            const surat = await SuratMasuk.find(disposisi.id_surat_masuk)
+                            if (surat) {
+                                Notification.send(user, [disposisi.nip_pengirim], 'Menyelesaikan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-keluar/' + disposisi.id)                                                    
+                            }
                         }
                     }
+
+                    //Kirim Notifikasi ke penerima
+                    Notification.send(user, [data.nip_penerima], 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-masuk/' + insert.id)
+
+                    //Tambah Log
+                    Log.add(user, 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat + ' Untuk ' + data.nama_penerima, insert)
+
+                    return Response.format(true, null, insert)
+                } else {
+                    return Response.format(true, null, checkExist)
                 }
-
-                //Kirim Notifikasi ke penerima
-                Notification.send(user, [data.nip_penerima], 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat, '/disposisi-masuk/' + insert.id)
-
-                //Tambah Log
-                Log.add(user, 'Mengirimkan Disposisi Surat Nomor ' + surat.nomor_surat + ' Untuk ' + data.nama_penerima, insert)
-
-                return Response.format(true, null, insert)
             } else {
                 return Response.format(false, 'Surat masuk tidak ditemukan', null)
             }
