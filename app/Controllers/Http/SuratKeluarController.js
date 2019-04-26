@@ -223,7 +223,7 @@ class SuratKeluarController {
                                           .first()
             if (data) {
                 data.preview = await Template.format(params.id, false, false)
-                data.status_pemeriksa = JSON.parse(JSON.stringify(data)).pemeriksa_.filter(e => e.nip_pemeriksa == user.nip).status
+                data.status_pemeriksa = JSON.parse(JSON.stringify(data)).pemeriksa_.map(e => e.nip_pemeriksa == user.nip).status
                 
                 const update = await SuratPemeriksa.query()
                                                    .where({ id_surat_keluar: params.id, nip_pemeriksa: user.nip })
